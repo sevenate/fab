@@ -3,8 +3,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:ca="clr-namespace:Caliburn.PresentationFramework.Actions;assembly=Caliburn.PresentationFramework"
-			 xmlns:rm="clr-namespace:Caliburn.PresentationFramework.RoutedMessaging;assembly=Caliburn.PresentationFramework"
+			 xmlns:cal="http://www.caliburnproject.org"
 			 mc:Ignorable="d"
 			 d:DesignHeight="300"
 			 d:DesignWidth="400"
@@ -13,6 +12,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<ItemsControl x:Name="Parts">
 			<ItemsControl.ItemsPanel>
@@ -22,8 +22,8 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<HyperlinkButton ca:Action.Target="{Binding}"
-							rm:Message.Attach="Enter"
+					<HyperlinkButton cal:Action.Target="{Binding}"
+									 cal:Message.Attach="Enter"
 							ToolTipService.ToolTip="{Binding DisplayName}"
 							MinWidth="75"
 							MinHeight="23"
@@ -35,5 +35,19 @@
 						Grid.Row="1"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
+		<TextBlock x:Name="Version"
+				   TextWrapping="Wrap"
+				   Grid.Row="2"
+				   HorizontalAlignment="Right"
+				   VerticalAlignment="Center"
+				   Margin="0,5"
+				   Foreground="#FF868686" />
+		<TextBlock x:Name="Copyright"
+				   TextWrapping="Wrap"
+				   Grid.Row="2"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="0,5"
+				   Foreground="#FF868686" />
 	</Grid>
 </UserControl>

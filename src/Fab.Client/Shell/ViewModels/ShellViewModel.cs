@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
@@ -7,6 +8,7 @@ using Caliburn.PresentationFramework.RoutedMessaging;
 using Caliburn.ShellFramework.History;
 using Caliburn.ShellFramework.Questions;
 using Caliburn.ShellFramework.Results;
+using Fab.Client.Common;
 using Fab.Client.Models;
 
 namespace Fab.Client.Shell.ViewModels
@@ -25,6 +27,22 @@ namespace Fab.Client.Shell.ViewModels
 		public IObservableCollection<IPart> Parts
 		{
 			get { return parts; }
+		}
+
+		/// <summary>
+		/// Gets current application version.
+		/// </summary>
+		public string Version
+		{
+			get { return "v" + Utility.AppVersion; }
+		}
+
+		/// <summary>
+		/// Gets copyright information.
+		/// </summary>
+		public string Copyright
+		{
+			get { return "Copyright © 2009-" + DateTime.Now.Year + " nReez Software. All rights reserved."; }
 		}
 
 		protected override void OnInitialize()
