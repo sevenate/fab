@@ -14,10 +14,10 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://thor/fab/UserService.svc" binding="basicHttpBinding"
+            <endpoint address="http://localhost:33809/UserService.svc" binding="basicHttpBinding"
                 bindingConfiguration="BasicHttpBinding_IUserService" contract="UserServiceReference.IUserService"
                 name="BasicHttpBinding_IUserService" />
-            <endpoint address="http://thor/fab/MoneyService.svc" binding="basicHttpBinding"
+            <endpoint address="http://localhost:33809/MoneyService.svc" binding="basicHttpBinding"
                 bindingConfiguration="BasicHttpBinding_IMoneyService" contract="MoneyServiceReference.IMoneyService"
                 name="BasicHttpBinding_IMoneyService" />
         </client>
