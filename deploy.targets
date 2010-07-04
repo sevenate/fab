@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+***********************************************************************************************
+deploy.targets
+
+This file contains all deployment tasks for Fab.Server project.
+
+Copyright (C) 2009-2010 nReez Software. All rights reserved.
+***********************************************************************************************
+-->
+
+<Project DefaultTargets="Deploy"
+		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<UsingTask
+		AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll"
+		TaskName="MSBuild.Community.Tasks.Xml.XmlMassUpdate"/>
+
+	<UsingTask
+		AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll"
+		TaskName="MSBuild.Community.Tasks.Unzip"/>
+
+	<UsingTask
+		AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll"
+		TaskName="MSBuild.Community.Tasks.Zip"/>
+
+	<PropertyGroup>
+		<SourceRoot>.\src</SourceRoot>
+		<BinRoot>.\bin</BinRoot>
+		<DeployRoot>.\deploy</DeployRoot>
+	</PropertyGroup>
+
+	<Target Name="Deploy">
+		<CallTarget Targets="Prepare" />
+		<CallTarget Targets="DeploySite" />
+		<CallTarget Targets="DeployServer" />
+		<CallTarget Targets="DeployImport" />
+	</Target>
+
+	<Target Name="Prepare">
+		<RemoveDir Condition="Exists('$(DeployRoot)')"
+				   Directories="$(DeployRoot)" />
+		<MakeDir Directories="$(DeployRoot)" />
+	</Target>
+
+	<Target Name="DeploySite">
+		<PropertyGroup>
+			<SourceFolder>$(SourceRoot)\Fab.Client.Web</SourceFolder>
+			<DeployFolder>$(DeployRoot)\Fab.Silverlight</DeployFolder>
+			<SilverSourceFolder>$(SourceRoot)\Fab.Client</SilverSourceFolder>
+		</PropertyGroup>
+
+		<Message Text="Deploying Fab Site" />
+
+		<RemoveDir Condition="Exists('$(DeployFolder)')"
+				   Directories="$(DeployFolder)" />
+		<MakeDir Directories="$(DeployFolder)" />
+
+		<CreateItem Include="$(SourceFolder)\**\*.*"
+					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config">
+			<Output TaskParameter="Include"
+					ItemName="SiteReleaseFiles"/>
+		</CreateItem>
+
+		<Copy SourceFiles="@(SiteReleaseFiles)"
+			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
+
+		<Unzip ZipFileName="$(DeployFolder)\ClientBin\SilverFAB.xap"
+			   TargetDirectory="$(DeployFolder)\ClientBin\SilverFAB" />
+
+		<XmlMassUpdate ContentFile="$(DeployFolder)\ClientBin\SilverFAB\ServiceReferences.ClientConfig"
+					   SubstitutionsFile="$(SilverSourceFolder)\ServiceReferences-prod.ClientConfig" />
+
+		<CreateItem Include="$(DeployFolder)\ClientBin\SilverFAB\*.*">
+			<Output TaskParameter="Include"
+					ItemName="SilverReleaseFiles"/>
+		</CreateItem>
+
+		<Zip Files="@(SilverReleaseFiles)"
+			 WorkingDirectory="$(DeployFolder)\ClientBin\SilverFAB"
+			 ZipFileName="$(DeployFolder)\ClientBin\SilverFAB.xap"
+			 ZipLevel="7" /> <!-- default zip level = 6 -->
+
+		<RemoveDir Condition="Exists('$(DeployFolder)\ClientBin\SilverFAB')"
+				   Directories="$(DeployFolder)\ClientBin\SilverFAB" />
+
+	</Target>
+
+	<Target Name="DeployServer">
+		<PropertyGroup>
+			<SourceFolder>$(SourceRoot)\Fab.Server</SourceFolder>
+			<DeployFolder>$(DeployRoot)\Fab</DeployFolder>
+		</PropertyGroup>
+
+		<Message Text="Deploying Fab Server" />
+
+		<RemoveDir Condition="Exists('$(DeployFolder)')"
+				   Directories="$(DeployFolder)" />
+		<MakeDir Directories="$(DeployFolder)" />
+
+		<CreateItem Include="$(SourceFolder)\**\*.*"
+					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\App_Data\*.mdf;$(SourceFolder)\App_Data\*_log.ldf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config">
+			<Output TaskParameter="Include"
+					ItemName="ServerReleaseFiles"/>
+		</CreateItem>
+
+		<Copy SourceFiles="@(ServerReleaseFiles)"
+			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
+
+	</Target>
+
+	<Target Name="DeployImport">
+		<PropertyGroup>
+			<BinFolder>$(BinRoot)\Fab.Server.Import</BinFolder>
+			<SourceFolder>$(SourceRoot)\Fab.Server.Import</SourceFolder>
+			<DeployFolder>$(DeployRoot)\ImportTool</DeployFolder>
+		</PropertyGroup>
+
+		<Message Text="Deploying Fab Import Tool" />
+
+		<RemoveDir Condition="Exists('$(DeployFolder)')"
+				   Directories="$(DeployFolder)" />
+		<MakeDir Directories="$(DeployFolder)" />
+
+		<CreateItem Include="$(BinFolder)\**\*.*"
+					Exclude="$(BinFolder)\**\*.vshost.*;$(BinFolder)\**\*.pdb;">
+			<Output TaskParameter="Include"
+					ItemName="ImportReleaseFiles"/>
+		</CreateItem>
+
+		<Copy SourceFiles="@(ImportReleaseFiles)"
+			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
+
+	</Target>
+
+</Project>

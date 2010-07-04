@@ -304,6 +304,7 @@
     <None Include="Service References\UserServiceReference\UserService1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="ServiceReferences-prod.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\OutOfBrowserSettings.xml" />
