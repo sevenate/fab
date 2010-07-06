@@ -39,7 +39,7 @@
 				   Timeout="5000">
 			<Output TaskParameter="Revision" PropertyName="Build" />
 		</HgVersion>
-		<Version Major="$(MajorVersion)" Minor="$(MinorVersion)" Build="$(Build)" VersionFile=".\src\version.txt" RevisionType="BuildIncrement" >
+		<Version Major="$(MajorVersion)" Minor="$(MinorVersion)" Build="$(Build)" VersionFile=".\bin\version.txt" RevisionType="BuildIncrement" >
                 <Output TaskParameter="Major" PropertyName="Major" />
                 <Output TaskParameter="Minor" PropertyName="Minor" />
                 <Output TaskParameter="Revision" PropertyName="Revision" />

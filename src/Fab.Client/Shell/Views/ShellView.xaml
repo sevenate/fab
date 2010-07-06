@@ -36,6 +36,7 @@
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
 		<TextBlock x:Name="Version"
+				   ToolTipService.ToolTip="Client Version"
 				   TextWrapping="Wrap"
 				   Grid.Row="2"
 				   HorizontalAlignment="Right"
