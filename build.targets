@@ -5,11 +5,17 @@
 		 DefaultTargets="BuildMSBuild">
 
 	<UsingTask TaskName="MSBuild.Community.Tasks.AssemblyInfo" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<!--
 	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	-->
+	<UsingTask TaskName="nReez.MSBuild.Tasks.Version" AssemblyFile=".\tools\MSBuildExtensions\nReez.MSBuild.Tasks.dll" />
 	<UsingTask TaskName="MSBuild.Mercurial.HgVersion" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Mercurial\MSBuild.Mercurial.dll" />
 
 	<PropertyGroup>
 		<BuildThis>Fab.sln</BuildThis>
+		<MajorVersion>0</MajorVersion>
+		<MinorVersion>2</MinorVersion>
+		<VersionString>Alpha</VersionString>
 		<ProductName>FAB</ProductName>
 		<CompanyName>nReez, LLC</CompanyName>
 		<Copyright>Copyright © nReez 2010</Copyright>
@@ -33,7 +39,7 @@
 				   Timeout="5000">
 			<Output TaskParameter="Revision" PropertyName="Build" />
 		</HgVersion>
-		<Version Major="0" Minor="2" Build="$(Build)" VersionFile="version.txt" RevisionType="BuildIncrement" >
+		<Version Major="$(MajorVersion)" Minor="$(MinorVersion)" Build="$(Build)" VersionFile=".\src\version.txt" RevisionType="BuildIncrement" >
                 <Output TaskParameter="Major" PropertyName="Major" />
                 <Output TaskParameter="Minor" PropertyName="Minor" />
                 <Output TaskParameter="Revision" PropertyName="Revision" />
@@ -86,8 +92,9 @@
 					  AssemblyDelaySign="false"
 					  AssemblyKeyName=""
 					  AssemblyCulture=""
-					  AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+					  AssemblyVersion="$(Major).$(Minor).$(Build)"
 					  AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
+					  AssemblyInformationalVersion="$(Major).$(Minor) $(VersionString)"
 					  AssemblyConfiguration="$(Configuration)"
 					  ComVisible="false" />
 	</Target>
@@ -96,7 +103,7 @@
 			DependsOnTargets="GenerateAssemblyInfo">
 		<MSBuild Projects="$(BuildThis)" Targets="Clean" />
 		<MSBuild Projects="$(BuildThis)" />
-		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
+		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision) $(VersionString)" />
 	</Target>
 
 </Project>
