@@ -5,8 +5,9 @@
 *************************************************************
 -->
 
-<Project DefaultTargets="Build"
-		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+		 ToolsVersion="3.5"
+		 DefaultTargets="Build">
 
 	<!--
 	Move out "obj\" subfolder from project folder to keep clean "src" with source and ploject files only.

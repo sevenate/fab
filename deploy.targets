@@ -4,26 +4,20 @@
 ***********************************************************************************************
 deploy.targets
 
-This file contains all deployment tasks for Fab.Server project.
+This file contains all deployment tasks for FAB project.
 
 Copyright (C) 2009-2010 nReez Software. All rights reserved.
 ***********************************************************************************************
 -->
 
-<Project DefaultTargets="Deploy"
-		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+		 ToolsVersion="3.5"
+		 DefaultTargets="Deploy">
 
-	<UsingTask
-		AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll"
-		TaskName="MSBuild.Community.Tasks.Xml.XmlMassUpdate"/>
-
-	<UsingTask
-		AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll"
-		TaskName="MSBuild.Community.Tasks.Unzip"/>
-
-	<UsingTask
-		AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll"
-		TaskName="MSBuild.Community.Tasks.Zip"/>
+	<UsingTask TaskName="MSBuild.Community.Tasks.Xml.XmlMassUpdate" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Unzip" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Zip" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
 
 	<PropertyGroup>
 		<SourceRoot>.\src</SourceRoot>
