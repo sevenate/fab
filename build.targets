@@ -29,7 +29,7 @@
 	</PropertyGroup>
 
 	<Target Name="ExtractRevision">
-		<Version Major="0" Minor="2" VersionFile="version.txt" RevisionType="Increment" >
+		<Version Major="0" Minor="2" VersionFile="version.txt" RevisionType="BuildIncrement" >
                 <Output TaskParameter="Major" PropertyName="Major" />
                 <Output TaskParameter="Minor" PropertyName="Minor" />
                 <Output TaskParameter="Revision" PropertyName="Revision" />
