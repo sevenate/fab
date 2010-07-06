@@ -34,7 +34,7 @@ namespace Fab.Client.Shell.ViewModels
 		/// </summary>
 		public string Version
 		{
-			get { return "v" + Utility.AppVersion; }
+			get { return Utility.AppVersion; }
 		}
 
 		/// <summary>

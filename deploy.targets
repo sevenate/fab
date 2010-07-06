@@ -14,10 +14,10 @@ Copyright (C) 2009-2010 nReez Software. All rights reserved.
 		 ToolsVersion="3.5"
 		 DefaultTargets="Deploy">
 
-	<UsingTask TaskName="MSBuild.Community.Tasks.Xml.XmlMassUpdate" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
-	<UsingTask TaskName="MSBuild.Community.Tasks.Unzip" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
-	<UsingTask TaskName="MSBuild.Community.Tasks.Zip" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
-	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile=".\tools\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Xml.XmlMassUpdate" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Unzip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Zip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
 
 	<PropertyGroup>
 		<SourceRoot>.\src</SourceRoot>
