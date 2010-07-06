@@ -36,6 +36,7 @@
 		<Version Major="0" Minor="2" Build="$(Build)" VersionFile="version.txt" RevisionType="BuildIncrement" >
                 <Output TaskParameter="Major" PropertyName="Major" />
                 <Output TaskParameter="Minor" PropertyName="Minor" />
+                <Output TaskParameter="Build" PropertyName="Build" />
                 <Output TaskParameter="Revision" PropertyName="Revision" />
 		</Version>
 		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
