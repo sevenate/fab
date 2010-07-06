@@ -29,15 +29,15 @@
 	</PropertyGroup>
 
 	<Target Name="ExtractRevision">
-		<Version Major="0" Minor="2" VersionFile="version.txt" RevisionType="BuildIncrement" >
-                <Output TaskParameter="Major" PropertyName="Major" />
-                <Output TaskParameter="Minor" PropertyName="Minor" />
-                <Output TaskParameter="Revision" PropertyName="Revision" />
-		</Version>
 		<HgVersion LocalPath="$(MSBuildProjectDirectory)"
 				   Timeout="5000">
 			<Output TaskParameter="Revision" PropertyName="Build" />
 		</HgVersion>
+		<Version Major="0" Minor="2" Build="$(Build)" VersionFile="version.txt" RevisionType="BuildIncrement" >
+                <Output TaskParameter="Major" PropertyName="Major" />
+                <Output TaskParameter="Minor" PropertyName="Minor" />
+                <Output TaskParameter="Revision" PropertyName="Revision" />
+		</Version>
 		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
 		<CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)">
 			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
@@ -96,6 +96,7 @@
 			DependsOnTargets="GenerateAssemblyInfo">
 		<MSBuild Projects="$(BuildThis)" Targets="Clean" />
 		<MSBuild Projects="$(BuildThis)" />
+		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
 	</Target>
 
 </Project>
