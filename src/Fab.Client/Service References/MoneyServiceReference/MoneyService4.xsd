@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://thor/fab/MoneyService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://thor/fab/MoneyService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
-  <xs:import schemaLocation="http://thor/fab/MoneyService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core" />
+  <xs:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
+  <xs:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core" />
   <xs:element name="CreateAccount">
     <xs:complexType>
       <xs:sequence>
@@ -14,7 +14,9 @@
   </xs:element>
   <xs:element name="CreateAccountResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateAccountResult" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateAccount">
@@ -85,7 +87,9 @@
   </xs:element>
   <xs:element name="CreateCategoryResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateCategoryResult" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateCategory">

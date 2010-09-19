@@ -13,9 +13,8 @@
 		<local:AddUpdateStringConverter x:Key="AddUpdateStringConverter" />
 		<local:CancelClearStringConverter x:Key="CancelClearStringConverter" />
 	</UserControl.Resources>
-	<Grid x:Name="LayoutRoot"
-		  Background="White">
-		<StackPanel MinWidth="155">
+	<Grid x:Name="LayoutRoot">
+		<StackPanel MinWidth="250">
 			<TextBlock Text="Add Transfer" />
 			<TextBlock TextWrapping="Wrap"
 					   Text="Date" />

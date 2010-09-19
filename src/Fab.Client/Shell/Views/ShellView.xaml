@@ -4,51 +4,51 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:cal="http://www.caliburnproject.org"
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 mc:Ignorable="d"
 			 d:DesignHeight="300"
 			 d:DesignWidth="400"
 			 Language="{Binding Language, Source={StaticResource CultureSettings}}">
-	<Grid x:Name="LayoutRoot">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
+		<Grid x:Name="LayoutRoot"
+			  Background="{StaticResource Brush_WindowBackground}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
 		<ItemsControl x:Name="Parts">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<StackPanel Orientation="Horizontal" />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<HyperlinkButton cal:Action.Target="{Binding}"
-									 cal:Message.Attach="Enter"
-							ToolTipService.ToolTip="{Binding DisplayName}"
-							MinWidth="75"
-							MinHeight="23"
-							Content="{Binding DisplayName}" />
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-		<ContentControl x:Name="ActiveScreen"
-						Grid.Row="1"
-						VerticalContentAlignment="Stretch"
-						HorizontalContentAlignment="Stretch" />
-		<TextBlock x:Name="Version"
-				   ToolTipService.ToolTip="Client Version"
-				   TextWrapping="Wrap"
-				   Grid.Row="2"
-				   HorizontalAlignment="Right"
-				   VerticalAlignment="Center"
-				   Margin="0,5"
-				   Foreground="#FF868686" />
-		<TextBlock x:Name="Copyright"
-				   TextWrapping="Wrap"
-				   Grid.Row="2"
-				   HorizontalAlignment="Center"
-				   VerticalAlignment="Center"
-				   Margin="0,5"
-				   Foreground="#FF868686" />
-	</Grid>
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<HyperlinkButton cal:Action.Target="{Binding}"
+										 cal:Message.Attach="Enter"
+										 ToolTipService.ToolTip="{Binding DisplayName}"
+										 MinWidth="75"
+										 MinHeight="23"
+										 Content="{Binding DisplayName}" />
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			<ContentControl x:Name="ActiveScreen"
+							Grid.Row="1"
+							VerticalContentAlignment="Stretch"
+							HorizontalContentAlignment="Stretch" />
+			<TextBlock x:Name="Version"
+					   ToolTipService.ToolTip="Client Version"
+					   TextWrapping="Wrap"
+					   Grid.Row="2"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"
+					   Foreground="#FF868686" />
+			<TextBlock x:Name="Copyright"
+					   TextWrapping="Wrap"
+					   Grid.Row="2"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Foreground="#FF868686" />
+		</Grid>
 </UserControl>

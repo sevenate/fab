@@ -12,8 +12,11 @@
 				<ResourceDictionary Source="Resources/Primitives.xaml" />
 				<ResourceDictionary Source="Resources/AutoCompleteComboBox.xaml" />
 				<ResourceDictionary Source="Themes/generic.xaml" />
+				<ResourceDictionary Source="Resources/BS_ResourceDictionary_Basic.xaml" />
+				<ResourceDictionary Source="Resources/BS_ResourceDictionary_Advanced.xaml" />
+				<ResourceDictionary Source="Resources/BS_ResourceDictionary_Brushes.xaml" />
 			</ResourceDictionary.MergedDictionaries>
+			<Windows:CultureSettings x:Key="CultureSettings" />
 		</ResourceDictionary>
-		<Windows:CultureSettings x:Key="CultureSettings" />
 	</Application.Resources>
 </ApplicationModel:CaliburnApplication>
