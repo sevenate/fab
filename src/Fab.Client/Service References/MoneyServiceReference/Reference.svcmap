@@ -18,14 +18,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://thor/Fab/MoneyService.svc?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost/StagingFab/MoneyService.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MoneyService.wsdl" MetadataType="Wsdl" ID="9e14c1cd-721d-4089-8b2f-0558378786c0" SourceId="1" SourceUrl="http://thor/Fab/MoneyService.svc?wsdl" />
-    <MetadataFile FileName="MoneyService.xsd" MetadataType="Schema" ID="2e219fd5-3c31-4819-a80b-aab1c29e540b" SourceId="1" SourceUrl="http://thor/fab/MoneyService.svc?xsd=xsd0" />
-    <MetadataFile FileName="MoneyService1.xsd" MetadataType="Schema" ID="4067a70d-4152-4e08-98e3-f66182c80427" SourceId="1" SourceUrl="http://thor/fab/MoneyService.svc?xsd=xsd1" />
-    <MetadataFile FileName="MoneyService2.xsd" MetadataType="Schema" ID="8b9f7c7d-5b61-42d9-af3c-6529382e5fd8" SourceId="1" SourceUrl="http://thor/fab/MoneyService.svc?xsd=xsd2" />
-    <MetadataFile FileName="MoneyService3.xsd" MetadataType="Schema" ID="d530b2a8-03f1-4fc0-96d5-3343de6770a7" SourceId="1" SourceUrl="http://thor/fab/MoneyService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MoneyService4.xsd" MetadataType="Schema" ID="610a2a09-a7a2-4acf-b3c6-b7b384bfb30f" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MoneyService1.wsdl" MetadataType="Wsdl" ID="193650b0-e2bb-488b-b6ab-d5d28b19bcd2" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?wsdl" />
+    <MetadataFile FileName="MoneyService41.xsd" MetadataType="Schema" ID="fe91b8f8-732d-4e53-8803-2158df3946bd" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MoneyService42.xsd" MetadataType="Schema" ID="5368a80f-1e99-46cf-98f5-83565d006039" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MoneyService43.xsd" MetadataType="Schema" ID="c37a80e5-7c38-4325-bdbd-05c85993b53a" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

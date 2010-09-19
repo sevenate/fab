@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Server.Tests", "src\Fab.Server.Tests\Fab.Server.Tests.csproj", "{7306F78E-0F68-4A9B-A7AF-E8330BC4A119}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Client", "src\Fab.Client\Fab.Client.csproj", "{C75F0C64-CBBF-4B29-9E9E-A362AC3A4760}"
+	ProjectSection(ProjectDependencies) = postProject
+		{192B90DA-497A-4986-9863-1AFAF66A1332} = {192B90DA-497A-4986-9863-1AFAF66A1332}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Client.Web", "src\Fab.Client.Web\Fab.Client.Web.csproj", "{97B81B5E-1F5A-4142-AF1B-21B73579F49A}"
 EndProject

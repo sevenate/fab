@@ -55,7 +55,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.20310.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -119,6 +119,8 @@
     <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Theming.ExpressionDark, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Theming.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
@@ -203,6 +205,9 @@
     <Compile Include="Shell\Views\BusyView.xaml.cs">
       <DependentUpon>BusyView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shell\Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\Views\QuestionDialogView.xaml.cs">
       <DependentUpon>QuestionDialogView.xaml</DependentUpon>
     </Compile>
@@ -241,6 +246,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Resources\BS_ResourceDictionary_Advanced.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\BS_ResourceDictionary_Basic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\BS_ResourceDictionary_Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Primitives.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -251,6 +273,10 @@
     </Page>
     <Page Include="Shell\Views\BusyView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\Views\LoginView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\Views\QuestionDialogView.xaml">
@@ -287,27 +313,26 @@
     <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.TransactionRecord.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService.wsdl" />
-    <None Include="Service References\MoneyServiceReference\MoneyService.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService1.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService1.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService41.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService2.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService42.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService3.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService43.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService.wsdl" />
-    <None Include="Service References\UserServiceReference\UserService.xsd">
+    <None Include="Service References\UserServiceReference\UserService1.wsdl" />
+    <None Include="Service References\UserServiceReference\UserService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService1.xsd">
+    <None Include="Service References\UserServiceReference\UserService21.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="ServiceReferences-prod.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\OutOfBrowserSettings.xml" />

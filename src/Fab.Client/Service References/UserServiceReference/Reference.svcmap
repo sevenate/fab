@@ -18,12 +18,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://thor/Fab/UserService.svc?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost/StagingFab/UserService.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="UserService.xsd" MetadataType="Schema" ID="691a34b9-a57f-48d1-b6d4-bb735efb442a" SourceId="1" SourceUrl="http://thor/fab/UserService.svc?xsd=xsd0" />
-    <MetadataFile FileName="UserService1.xsd" MetadataType="Schema" ID="d0a9fcd4-8a26-4a84-a78c-a9c55a7c556a" SourceId="1" SourceUrl="http://thor/fab/UserService.svc?xsd=xsd1" />
-    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="16ef31e2-b40e-4831-9aee-52582a12a122" SourceId="1" SourceUrl="http://thor/Fab/UserService.svc?wsdl" />
+    <MetadataFile FileName="UserService1.wsdl" MetadataType="Wsdl" ID="c1a96508-3e09-4bba-acf4-ac20cb75763a" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?wsdl" />
+    <MetadataFile FileName="UserService2.xsd" MetadataType="Schema" ID="e998b67a-3bc0-478e-911d-d199c30fd9a0" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserService21.xsd" MetadataType="Schema" ID="809d9267-13d6-482b-be2d-84bebdad7366" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
