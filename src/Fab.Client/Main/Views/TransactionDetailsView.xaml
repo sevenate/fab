@@ -8,8 +8,8 @@
 			 xmlns:Controls="clr-namespace:Fab.Client.Controls"
 			 xmlns:cal="http://www.caliburnproject.org"
 			 mc:Ignorable="d"
-			 d:DesignHeight="350"
-			 d:DesignWidth="300">
+			 d:DesignHeight="320"
+			 d:DesignWidth="200">
 	<UserControl.Resources>
 <!--		<Style x:Key="ComboToggleButton"-->
 <!--			   TargetType="ToggleButton">-->
@@ -186,7 +186,7 @@
 		<local:CancelClearStringConverter x:Key="CancelClearStringConverter" />
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot">
-		<StackPanel MinWidth="250">
+		<StackPanel>
 			<TextBlock Text="Add or Edit Transaction" />
 			<StackPanel Orientation="Horizontal">
 				<RadioButton Content="Expense"

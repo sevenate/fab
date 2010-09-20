@@ -27,12 +27,6 @@
 				Value="12" />
 		<Setter Property="BorderThickness"
 				Value="1" />
-		<Setter Property="Padding"
-				Value="5" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Stretch" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Stretch" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="sdk:TabControl">
@@ -195,6 +189,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="sdk:TabItem">
 		<Setter Property="Foreground"
@@ -209,14 +205,6 @@
 				Value="12" />
 		<Setter Property="IsTabStop"
 				Value="False" />
-		<Setter Property="BorderThickness"
-				Value="1" />
-		<Setter Property="Padding"
-				Value="15,10" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Stretch" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Stretch" />
 		<Setter Property="MinWidth"
 				Value="5" />
 		<Setter Property="MinHeight"
@@ -399,14 +387,8 @@
 		</Setter>
 	</Style>
 	<Style TargetType="sdk:DataGridCell">
-		<Setter Property="Padding"
-				Value="3" />
 		<Setter Property="Background"
 				Value="Transparent" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Stretch" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Stretch" />
 		<Setter Property="IsTabStop"
 				Value="False" />
 		<Setter Property="Template">
@@ -485,6 +467,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<ControlTemplate x:Key="TopLeftHeaderTemplate"
 					 TargetType="sdk:DataGridColumnHeader">
@@ -519,8 +503,7 @@
 					   Height="1"
 					   Grid.RowSpan="2"
 					   StrokeThickness="1"
-					   VerticalAlignment="Bottom"
-					   Width="Auto" />
+					   VerticalAlignment="Bottom" />
 		</Grid>
 	</ControlTemplate>
 	<ControlTemplate x:Key="TopRightHeaderTemplate"
@@ -563,8 +546,6 @@
 				Value="VisibleWhenSelected" />
 		<Setter Property="BorderBrush"
 				Value="{StaticResource Brush_BorderInner}" />
-		<Setter Property="BorderThickness"
-				Value="1" />
 		<Setter Property="DragIndicatorStyle">
 			<Setter.Value>
 				<Style TargetType="ContentControl">
@@ -834,16 +815,10 @@
 	<Style TargetType="sdk:DataGridColumnHeader">
 		<Setter Property="Foreground"
 				Value="{StaticResource Brush_Foreground}" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Stretch" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Center" />
 		<Setter Property="IsTabStop"
 				Value="False" />
 		<Setter Property="SeparatorBrush"
 				Value="{StaticResource Brush_BorderInner}" />
-		<Setter Property="Padding"
-				Value="6,8" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="sdk:DataGridColumnHeader">
@@ -948,6 +923,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="MinWidth" Value="0"/>
 	</Style>
 	<Style TargetType="sdk:DataGridRow">
 		<Setter Property="IsTabStop"
@@ -1380,14 +1357,10 @@
 				Value="{StaticResource Brush_DarkTextBG}" />
 		<Setter Property="FontSize"
 				Value="10" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Center" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Center" />
 		<Setter Property="MinWidth"
-				Value="40" />
+				Value="0" />
 		<Setter Property="MinHeight"
-				Value="42" />
+				Value="0" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="System_Windows_Controls_Primitives:CalendarButton">
@@ -1510,14 +1483,10 @@
 				Value="{StaticResource Brush_DarkTextBG}" />
 		<Setter Property="FontSize"
 				Value="10" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Center" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Center" />
 		<Setter Property="MinWidth"
-				Value="5" />
+				Value="0" />
 		<Setter Property="MinHeight"
-				Value="5" />
+				Value="0" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="System_Windows_Controls_Primitives:CalendarDayButton">
@@ -1687,10 +1656,6 @@
 		</Setter>
 	</Style>
 	<Style TargetType="System_Windows_Controls_Primitives:DatePickerTextBox">
-		<Setter Property="VerticalContentAlignment"
-				Value="Center" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Left" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="System_Windows_Controls_Primitives:DatePickerTextBox">
@@ -1774,24 +1739,14 @@
 		</Setter>
 		<Setter Property="Foreground"
 				Value="{StaticResource Brush_Foreground}" />
-		<Setter Property="Padding"
-				Value="10,5" />
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="MinWidth" Value="0"/>
 	</Style>
 	<Style TargetType="sdk:ChildWindow">
 		<Setter Property="IsTabStop"
 				Value="false" />
 		<Setter Property="TabNavigation"
 				Value="Cycle" />
-		<Setter Property="HorizontalAlignment"
-				Value="Center" />
-		<Setter Property="VerticalAlignment"
-				Value="Center" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Stretch" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Stretch" />
-		<Setter Property="BorderThickness"
-				Value="1" />
 		<Setter Property="BorderBrush"
 				Value="{StaticResource Brush_BorderOuter}" />
 		<Setter Property="OverlayBrush"
@@ -1972,6 +1927,8 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="MinWidth" Value="0"/>
 	</Style>
 	<Style TargetType="sdk:Label">
 		<Setter Property="Foreground"
@@ -1982,8 +1939,6 @@
 				Value="12" />
 		<Setter Property="IsTabStop"
 				Value="False" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Left" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="sdk:Label">
@@ -2045,14 +2000,14 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="MinWidth" Value="0"/>
 	</Style>
 	<Style TargetType="sdk:DatePicker">
 		<Setter Property="IsTabStop"
 				Value="False" />
 		<Setter Property="Background"
 				Value="{StaticResource Brush_DarkGradInset}" />
-		<Setter Property="Padding"
-				Value="5,0" />
 		<Setter Property="SelectionBackground"
 				Value="{StaticResource Brush_DarkTextBG}" />
 		<Setter Property="BorderBrush"

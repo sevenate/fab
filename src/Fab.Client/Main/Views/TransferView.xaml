@@ -6,15 +6,15 @@
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:local="clr-namespace:Fab.Client.Common"
 			 mc:Ignorable="d"
-			 d:DesignWidth="300"
-			 d:DesignHeight="350">
+			 d:DesignWidth="200"
+			 d:DesignHeight="320">
 	<UserControl.Resources>
 		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
 		<local:AddUpdateStringConverter x:Key="AddUpdateStringConverter" />
 		<local:CancelClearStringConverter x:Key="CancelClearStringConverter" />
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot">
-		<StackPanel MinWidth="250">
+		<StackPanel>
 			<TextBlock Text="Add Transfer" />
 			<TextBlock TextWrapping="Wrap"
 					   Text="Date" />

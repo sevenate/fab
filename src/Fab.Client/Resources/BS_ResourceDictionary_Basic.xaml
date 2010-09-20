@@ -16,8 +16,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="15,10" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">
@@ -83,6 +81,9 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="Padding" Value="5"/>
 	</Style>
 	<Style TargetType="CheckBox">
 		<Setter Property="Foreground"
@@ -91,8 +92,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="15,10" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="CheckBox">
@@ -195,6 +194,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="MinWidth" Value="0"/>
 	</Style>
 	<Style TargetType="ToggleButton">
 		<Setter Property="Foreground"
@@ -203,8 +204,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="15,10" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="ToggleButton">
@@ -292,6 +291,9 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="Padding" Value="5"/>
 	</Style>
 	<Style TargetType="RadioButton">
 		<Setter Property="Foreground"
@@ -300,8 +302,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="15,10" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="RadioButton">
@@ -403,6 +403,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="TextBox">
 		<Setter Property="Foreground"
@@ -411,8 +413,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="10,10" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="TextBox">
@@ -482,12 +482,15 @@
 						<ScrollViewer x:Name="ContentElement"
 									  BorderThickness="0"
 									  IsTabStop="False"
-									  Padding="{TemplateBinding Padding}"
-									  VerticalAlignment="Center" />
+									  Padding="{TemplateBinding Padding}" />
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="Padding" Value="3"/>
+		<Setter Property="TextWrapping" Value="Wrap"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="TextBlock">
 		<Setter Property="Foreground"
@@ -496,8 +499,8 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="10,10" />
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="HyperlinkButton">
 		<Setter Property="Foreground"
@@ -506,14 +509,8 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="2,0,2,0" />
 		<Setter Property="Cursor"
 				Value="Hand" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Left" />
-		<Setter Property="VerticalContentAlignment"
-				Value="Top" />
 		<Setter Property="Background"
 				Value="Transparent" />
 		<Setter Property="Template">
@@ -594,6 +591,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style x:Key="ThumbStyle_Slider"
 		   TargetType="Thumb">
@@ -684,6 +683,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="Slider">
 		<Setter Property="BorderThickness"
@@ -828,6 +829,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<ControlTemplate x:Key="HorizontalDecrementTemplate"
 					 TargetType="RepeatButton">
@@ -1562,10 +1565,6 @@
 		</Grid>
 	</ControlTemplate>
 	<Style TargetType="ScrollBar">
-		<Setter Property="MinWidth"
-				Value="17" />
-		<Setter Property="MinHeight"
-				Value="17" />
 		<Setter Property="IsTabStop"
 				Value="False" />
 		<Setter Property="Template">
@@ -2433,6 +2432,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="ScrollViewer">
 		<Setter Property="FontFamily"
@@ -2515,6 +2516,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style  TargetType="ComboBoxItem">
 		<Setter Property="Foreground"
@@ -2523,8 +2526,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="5,10" />
 		<Setter Property="HorizontalContentAlignment"
 				Value="Left" />
 		<Setter Property="VerticalContentAlignment"
@@ -2606,6 +2607,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="ComboBox">
 		<Setter Property="Foreground"
@@ -2618,8 +2621,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="15,10" />
 		<Setter Property="HorizontalContentAlignment"
 				Value="Left" />
 		<Setter Property="BorderThickness"
@@ -2737,10 +2738,10 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="ListBoxItem">
-		<Setter Property="Padding"
-				Value="3,6" />
 		<Setter Property="HorizontalContentAlignment"
 				Value="Left" />
 		<Setter Property="VerticalContentAlignment"
@@ -2821,10 +2822,10 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<Style TargetType="ListBox">
-		<Setter Property="Padding"
-				Value="1" />
 		<Setter Property="Background"
 				Value="{StaticResource Brush_WindowBackground}" />
 		<Setter Property="Foreground"
@@ -2951,6 +2952,8 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 	<ControlTemplate x:Key="CommonValidationToolTipTemplate"
 					 TargetType="ToolTip">
@@ -3155,16 +3158,10 @@
 		</Grid>
 	</ControlTemplate>
 	<Style TargetType="ProgressBar">
-		<Setter Property="Height"
-				Value="20" />
 		<Setter Property="Foreground"
 				Value="{StaticResource Brush_Foreground}" />
 		<Setter Property="Background"
 				Value="{StaticResource Brush_DarkGradInset}" />
-		<Setter Property="BorderThickness"
-				Value="1" />
-		<Setter Property="Maximum"
-				Value="100" />
 		<Setter Property="IsTabStop"
 				Value="False" />
 		<Setter Property="BorderBrush"
@@ -3519,6 +3516,8 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="MinWidth" Value="0"/>
 	</Style>
 	<ControlTemplate x:Key="ValidationToolTipTemplate">
 		<Grid x:Name="Root"
@@ -3613,8 +3612,6 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
-		<Setter Property="Padding"
-				Value="10,10" />
 		<Setter Property="BorderBrush"
 				Value="{StaticResource Brush_BorderOuter}" />
 		<Setter Property="Template">
@@ -3768,5 +3765,7 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="MinHeight" Value="0"/>
 	</Style>
 </ResourceDictionary>
