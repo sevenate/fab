@@ -24,7 +24,7 @@
 						Grid.Column="1"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
-		<StackPanel Grid.Column="2">
+		<StackPanel Grid.Column="2" Width="200">
 			<ContentControl x:Name="AddNew"
 							VerticalContentAlignment="Stretch"
 							HorizontalContentAlignment="Stretch" />
