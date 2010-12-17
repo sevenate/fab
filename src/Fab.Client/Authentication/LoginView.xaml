@@ -1,0 +1,82 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:Controls="clr-namespace:Fab.Client.Controls" xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors" xmlns:Authentication="clr-namespace:Fab.Client.Authentication" x:Class="Fab.Client.Authentication.LoginView"
+			 mc:Ignorable="d"
+			 HorizontalAlignment="Center"
+			 VerticalAlignment="Center"
+			 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
+			 TabNavigation="Cycle">
+	<Grid x:Name="LayoutRoot"
+		  Background="{StaticResource Brush_WindowBackground}">
+		<StackPanel MinWidth="260"
+					Margin="50, 10">
+			<Controls:WatermarkedTextbox x:Name="Username"
+										 Margin="0, 10, 0, 5"
+										 TabIndex="0"
+										 Text="import2"
+										 Watermark="Username">
+				<Interactivity:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+					<Behaviors:FocusBehavior HasInitialFocus="True" />
+				</Interactivity:Interaction.Behaviors>
+			</Controls:WatermarkedTextbox>
+			<Controls:WatermarkedTextbox x:Name="Password"
+										 Margin="0, 5"
+										 TabIndex="1"
+										 Text="import"
+										 Watermark="Password"
+										 Visibility="{Binding ElementName=ShowCharacters, Path=IsChecked, Converter={StaticResource boolToVisibility}}">
+				<Interactivity:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+					<Behaviors:FocusBehavior IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
+				</Interactivity:Interaction.Behaviors>
+			</Controls:WatermarkedTextbox>
+			<PasswordBox x:Name="PasswordHiden"
+						 Margin="0, 5"
+						 TabIndex="1"
+						 Visibility="{Binding ElementName=ShowCharacters, Path=IsChecked, Converter={StaticResource boolToVisibilityInvert}}">
+				<Interactivity:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+					<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
+				</Interactivity:Interaction.Behaviors>
+			</PasswordBox>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<CheckBox x:Name="ShowCharacters"
+						  Content="Show characters"
+						  Margin="0, 10"
+						  HorizontalAlignment="Left"
+						  TabIndex="2">
+					<Interactivity:Interaction.Behaviors>
+						<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+					</Interactivity:Interaction.Behaviors>
+				</CheckBox>
+				<CheckBox x:Name="RememberMe"
+						  Grid.Column="1"
+						  Content="Remember me"
+						  Margin="0,10"
+						  HorizontalAlignment="Right"
+						  TabIndex="3">
+					<Interactivity:Interaction.Behaviors>
+						<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+					</Interactivity:Interaction.Behaviors>
+				</CheckBox>
+			</Grid>
+			<TextBlock x:Name="Status"
+					   Foreground="Red"
+					   Text="The username or password provided is incorrect."
+					   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" />
+			<Button x:Name="Login"
+					Content="Login"
+					MinWidth="75"
+					Margin="0, 10"
+					HorizontalAlignment="Center"
+					TabIndex="4" />
+		</StackPanel>
+	</Grid>
+</UserControl>

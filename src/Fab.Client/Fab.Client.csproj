@@ -89,24 +89,11 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Caliburn.Core">
-      <HintPath>..\..\ext\Silverlight 4\Caliburn.Core.dll</HintPath>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\..\ext\Silverlight 4\Caliburn.Micro.dll</HintPath>
     </Reference>
-    <Reference Include="Caliburn.PresentationFramework">
-      <HintPath>..\..\ext\Silverlight 4\Caliburn.PresentationFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.ShellFramework">
-      <HintPath>..\..\ext\Silverlight 4\Caliburn.ShellFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Unity">
-      <HintPath>..\..\ext\Silverlight 4\Caliburn.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\ext\Silverlight 4\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\..\ext\Silverlight 4\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ComponentModel.Composition.Initialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -119,73 +106,102 @@
     <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="System.Windows.Controls.Theming.ExpressionDark, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="System.Windows.Controls.Theming.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Generated.cs">
-      <Link>AssemblyInfo.Generated.cs</Link>
+      <Link>Properties\AssemblyInfo.Generated.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\AddUpdateStringConverter.cs" />
-    <Compile Include="Common\CancelClearStringConverter.cs" />
-    <Compile Include="Common\NegativeToRedConverter.cs" />
-    <Compile Include="Common\InvertBooleanConverter.cs" />
-    <Compile Include="Common\Utility.cs" />
-    <Compile Include="Common\ZeroToEmptyStringConverter.cs" />
-    <Compile Include="Common\CultureSettings.cs" />
-    <Compile Include="Common\DateTimeUtcToLocalConverter.cs" />
-    <Compile Include="Controls\AutoCompleteComboBox.cs" />
-    <Compile Include="Main\ViewModels\AccountsViewModel.cs" />
-    <Compile Include="Main\ViewModels\CategoriesViewModel.cs" />
-    <Compile Include="Main\ViewModels\IAccountsViewModel.cs" />
-    <Compile Include="Main\ViewModels\ICategoriesViewModel.cs" />
-    <Compile Include="Main\ViewModels\IMoneyTrackerViewModel.cs" />
-    <Compile Include="Main\ViewModels\ITransactionDetailsViewModel.cs" />
-    <Compile Include="Main\ViewModels\ITransactionsViewModel.cs" />
-    <Compile Include="Main\ViewModels\ITransferViewModel.cs" />
-    <Compile Include="Main\ViewModels\TransactionDetailsViewModel.cs" />
-    <Compile Include="Main\ViewModels\BaseViewModel.cs" />
-    <Compile Include="Main\ViewModels\MoneyTrackerViewModel.cs" />
-    <Compile Include="Main\ViewModels\TransactionsViewModel.cs" />
-    <Compile Include="Main\ViewModels\TransferViewModel.cs" />
-    <Compile Include="Main\Views\AccountsView.xaml.cs">
+    <Compile Include="Framework\Behaviors\DefaultButtonBehavior.cs" />
+    <Compile Include="Framework\Behaviors\FocusBehavior.cs" />
+    <Compile Include="Authentication\PasswordBindBehavior.cs" />
+    <Compile Include="Framework\Converters\AddUpdateStringConverter.cs" />
+    <Compile Include="Framework\Converters\BooleanToOpacityConverter.cs" />
+    <Compile Include="Framework\Converters\BooleanToVisibilityInvertConverter.cs" />
+    <Compile Include="Framework\Converters\CancelClearStringConverter.cs" />
+    <Compile Include="Framework\Converters\NegativeToRedConverter.cs" />
+    <Compile Include="Framework\Converters\BooleanToNotBooleanConverter.cs" />
+    <Compile Include="Framework\ApplicationExtensions.cs" />
+    <Compile Include="Framework\Converters\ZeroToEmptyStringConverter.cs" />
+    <Compile Include="Framework\CultureSettings.cs" />
+    <Compile Include="Framework\Converters\DateTimeUtcToLocalConverter.cs" />
+    <Compile Include="Framework\Controls\AutoCompleteComboBox.cs" />
+    <Compile Include="Framework\Controls\WatermarkedTextbox.xaml.cs">
+      <DependentUpon>WatermarkedTextbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Framework\ApplicationCloseCheck.cs" />
+    <Compile Include="Framework\Filters\AsyncAttribute.cs" />
+    <Compile Include="Framework\Filters\IContextAware.cs" />
+    <Compile Include="Framework\Filters\IExecutionWrapper.cs" />
+    <Compile Include="Framework\Controls\CustomTransitionControl.cs" />
+    <Compile Include="Framework\Converters\NullToCollapsedConverter.cs" />
+    <Compile Include="Framework\Filters\DependenciesAttribute.cs" />
+    <Compile Include="Framework\Filters\DoNotExecuteAttribute.cs" />
+    <Compile Include="Framework\ExecuteActionResult.cs" />
+    <Compile Include="Framework\Filters\ExecutionWrapperBase.cs" />
+    <Compile Include="Framework\FilterFramework.cs" />
+    <Compile Include="Framework\FilterManager.cs" />
+    <Compile Include="Framework\ICanBeBusy.cs" />
+    <Compile Include="Framework\IDocumentWorkspace.cs" />
+    <Compile Include="Framework\Filters\IFilter.cs" />
+    <Compile Include="Framework\Loader.cs" />
+    <Compile Include="Framework\Filters\PreviewAttribute.cs" />
+    <Compile Include="Framework\Filters\RescueAttribute.cs" />
+    <Compile Include="Framework\Filters\SetBusyAttribute.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesViewModel.cs" />
+    <Compile Include="MoneyTracker\Accounts\IAccountsViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\ICategoriesViewModel.cs" />
+    <Compile Include="MoneyTracker\TransactionDetails\ITransactionDetailsViewModel.cs" />
+    <Compile Include="MoneyTracker\Transactions\ITransactionsViewModel.cs" />
+    <Compile Include="MoneyTracker\Transfers\ITransferViewModel.cs" />
+    <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsViewModel.cs" />
+    <Compile Include="Framework\DocumentBase.cs" />
+    <Compile Include="MoneyTracker\Transactions\TransactionsViewModel.cs" />
+    <Compile Include="MoneyTracker\Transfers\TransferViewModel.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsView.xaml.cs">
       <DependentUpon>AccountsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\Views\CategoriesView.xaml.cs">
+    <Compile Include="MoneyTracker\Categories\CategoriesView.xaml.cs">
       <DependentUpon>CategoriesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\Views\TransactionDetailsView.xaml.cs">
+    <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsView.xaml.cs">
       <DependentUpon>TransactionDetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\Views\MoneyTrackerView.xaml.cs">
-      <DependentUpon>MoneyTrackerView.xaml</DependentUpon>
+    <Compile Include="MoneyTracker\MoneyModuleView.xaml.cs">
+      <DependentUpon>MoneyModuleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\Views\TransactionsView.xaml.cs">
+    <Compile Include="MoneyTracker\Transactions\TransactionsView.xaml.cs">
       <DependentUpon>TransactionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\BindingHelper.cs" />
-    <Compile Include="Main\Views\TransferView.xaml.cs">
+    <Compile Include="Framework\BindingHelper.cs" />
+    <Compile Include="MoneyTracker\Transfers\TransferView.xaml.cs">
       <DependentUpon>TransferView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountsResult.cs" />
-    <Compile Include="Models\BusyScreen.cs" />
-    <Compile Include="Models\AddTransactionResult.cs" />
-    <Compile Include="Models\CategoriesResult.cs" />
-    <Compile Include="Models\AddTransferResult.cs" />
-    <Compile Include="Models\UpdateTransferResult.cs" />
-    <Compile Include="Models\EditTransactionResult.cs" />
-    <Compile Include="Models\DeleteTransactionResult.cs" />
-    <Compile Include="Models\LoadTransactionResult.cs" />
-    <Compile Include="Models\IShell.cs" />
-    <Compile Include="Models\IPart.cs" />
-    <Compile Include="Main\Part.cs" />
-    <Compile Include="Models\GetAllTransactionsResult.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsResult.cs" />
+    <Compile Include="MoneyTracker\TransactionDetails\AddTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesResult.cs" />
+    <Compile Include="MoneyTracker\Transfers\AddTransferResult.cs" />
+    <Compile Include="Framework\IDialogManager.cs" />
+    <Compile Include="Framework\IHaveShutdownTask.cs" />
+    <Compile Include="Framework\IMessageBox.cs" />
+    <Compile Include="Framework\MessageBoxOptions.cs" />
+    <Compile Include="MoneyTracker\Transfers\UpdateTransferResult.cs" />
+    <Compile Include="MoneyTracker\TransactionDetails\EditTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Transactions\DeleteTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Transactions\LoadTransactionResult.cs" />
+    <Compile Include="Framework\IShell.cs" />
+    <Compile Include="Framework\IModule.cs" />
+    <Compile Include="MoneyTracker\MoneyModuleViewModel.cs" />
+    <Compile Include="MoneyTracker\Transactions\GetAllTransactionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\MoneyServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -197,21 +213,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Shell\Configuration.cs" />
-    <Compile Include="Shell\Controls\Spinner.xaml.cs">
+    <Compile Include="Shell\ApplicationCloseStrategy.cs" />
+    <Compile Include="Framework\Controls\Spinner.xaml.cs">
       <DependentUpon>Spinner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shell\ViewModels\ShellViewModel.cs" />
-    <Compile Include="Shell\Views\BusyView.xaml.cs">
-      <DependentUpon>BusyView.xaml</DependentUpon>
+    <Compile Include="Shell\DialogConductorView.xaml.cs">
+      <DependentUpon>DialogConductorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shell\Views\LoginView.xaml.cs">
+    <Compile Include="Shell\DialogConductorViewModel.cs" />
+    <Compile Include="Shell\MessageBoxViewModel.cs" />
+    <Compile Include="Shell\ScreensBootstrapper.cs" />
+    <Compile Include="Authentication\AuthenticateResult.cs" />
+    <Compile Include="Authentication\ILoginViewModel.cs" />
+    <Compile Include="Authentication\LoginViewModel.cs" />
+    <Compile Include="Shell\ShellViewModel.cs" />
+    <Compile Include="Authentication\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shell\Views\QuestionDialogView.xaml.cs">
-      <DependentUpon>QuestionDialogView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\Views\ShellView.xaml.cs">
+    <Compile Include="Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -222,27 +241,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Main\Views\AccountsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Main\Views\CategoriesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Main\Views\TransactionDetailsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Main\Views\MoneyTrackerView.xaml">
+    <Page Include="Framework\Controls\WatermarkedTextbox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Main\Views\TransactionsView.xaml">
+    <Page Include="MoneyTracker\Accounts\AccountsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Main\Views\TransferView.xaml">
+    <Page Include="MoneyTracker\Categories\CategoriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\TransactionDetails\TransactionDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\MoneyModuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MoneyTracker\Transactions\TransactionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\Transfers\TransferView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -251,43 +274,39 @@
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
-    <Page Include="Resources\BS_ResourceDictionary_Advanced.xaml">
+    <Page Include="Themes\BS_ResourceDictionary_Advanced.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\BS_ResourceDictionary_Basic.xaml">
+    <Page Include="Themes\BS_ResourceDictionary_Basic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\BS_ResourceDictionary_Brushes.xaml">
+    <Page Include="Themes\BS_ResourceDictionary_Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Primitives.xaml">
+    <Page Include="Framework\Controls\Spinner.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Shell\Controls\Spinner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Shell\Views\BusyView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Shell\Views\LoginView.xaml">
+    <Page Include="Authentication\LoginView.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Shell\Views\QuestionDialogView.xaml">
+    <Page Include="Shell\DialogConductorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Shell\Views\ShellView.xaml">
+    <Page Include="Shell\MessageBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\AutoCompleteComboBox.xaml">
+    <Page Include="Themes\AutoCompleteComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -374,6 +393,7 @@
     <WCFMetadataStorage Include="Service References\MoneyServiceReference\" />
     <WCFMetadataStorage Include="Service References\UserServiceReference\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <Import Project="..\..\msbuild.common.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
