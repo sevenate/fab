@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="Fab.Client.MoneyTracker.Transactions.TransactionsView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:Common="clr-namespace:Fab.Client.Common"
+			 xmlns:cal="http://www.caliburnproject.org"
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+			 mc:Ignorable="d"
+			 d:DesignHeight="480"
+			 d:DesignWidth="640">
+	<UserControl.Resources>
+		<Common:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
+		<Common:ZeroToEmptyStringConverter x:Key="ZeroToEmptyStringConverter" />
+		<Common:NegativeToRedConverter x:Key="NegativeToRedConverter" />
+		<Style x:Key="MoneyText"
+			   TargetType="TextBlock">
+			<Setter Property="HorizontalAlignment"
+					Value="Right" />
+		</Style>
+	</UserControl.Resources>
+	<Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<TextBlock Text="Transactions" />
+		<sdk:DataGrid x:Name="TransactionsGrid"
+					  Grid.Row="1"
+					  AutoGenerateColumns="False"
+					  ItemsSource="{Binding Path=TransactionRecords}">
+			<sdk:DataGrid.Columns>
+				<sdk:DataGridTextColumn Header="Id"
+										IsReadOnly="True"
+										Binding="{Binding Path=TransactionId}"
+										Visibility="Collapsed" />
+				<sdk:DataGridTemplateColumn Header="Date"
+											MinWidth="75">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock VerticalAlignment="Center"
+									   Text="{Binding Path=Date, Converter={StaticResource DateTimeUtcToLocalConverter}, StringFormat=d}"
+									   ToolTipService.ToolTip="{Binding Path=Date, Converter={StaticResource DateTimeUtcToLocalConverter}, StringFormat=F}" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+					<sdk:DataGridTemplateColumn.CellEditingTemplate>
+						<DataTemplate>
+							<sdk:DatePicker VerticalAlignment="Center"
+											IsTodayHighlighted="True"
+											SelectedDateFormat="Long"
+											SelectedDate="{Binding Path=Date, Mode=TwoWay, Converter={StaticResource DateTimeUtcToLocalConverter}}" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellEditingTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTextColumn Header="Category"
+										MinWidth="75"
+										Binding="{Binding Path=Category.Name}" />
+				<sdk:DataGridTextColumn Header="Comment"
+										Binding="{Binding Path=Comment}"
+										Width="*" />
+				<sdk:DataGridTextColumn Header="Expense"
+										MinWidth="75"
+										ElementStyle="{StaticResource MoneyText}"
+										Binding="{Binding Path=Expense, Converter={StaticResource ZeroToEmptyStringConverter}, StringFormat=C}" />
+				<sdk:DataGridTextColumn Header="Income"
+										MinWidth="75"
+										ElementStyle="{StaticResource MoneyText}"
+										Binding="{Binding Path=Income, Converter={StaticResource ZeroToEmptyStringConverter}, StringFormat=C}" />
+				<sdk:DataGridTemplateColumn Header="Balance"
+											MinWidth="75"
+											IsReadOnly="True">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource MoneyText}"
+									   Foreground="{Binding Path=Balance, Converter={StaticResource NegativeToRedConverter}}"
+									   Text="{Binding Path=Balance, StringFormat=C}" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn Width="75"
+											CanUserResize="False"
+											CanUserReorder="False"
+											CanUserSort="False"
+											IsReadOnly="True">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button Content="Edit"
+									ToolTipService.ToolTip="Edit"
+									cal:Message.Attach="EditTransaction($dataContext)" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn Width="75"
+											CanUserResize="False"
+											CanUserReorder="False"
+											CanUserSort="False"
+											IsReadOnly="True">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button Content="Delete"
+									ToolTipService.ToolTip="Delete"
+									cal:Message.Attach="DeleteTransaction($dataContext)" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+			</sdk:DataGrid.Columns>
+		</sdk:DataGrid>
+		<StackPanel Grid.Row="2"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<TextBlock Text="{Binding Path=TransactionRecords.Count}"
+					   VerticalAlignment="Center" />
+			<Button x:Name="DownloadAllTransactions"
+					Content="Refresh"
+					MinWidth="75"
+					MinHeight="23" />
+		</StackPanel>
+	</Grid>
+</UserControl>

@@ -91,7 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Generated.cs">
-      <Link>AssemblyInfo.Generated.cs</Link>
+      <Link>Properties\AssemblyInfo.Generated.cs</Link>
     </Compile>
     <Compile Include="AdminService.svc.cs">
       <DependentUpon>AdminService.svc</DependentUpon>
