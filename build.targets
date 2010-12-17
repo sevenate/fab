@@ -92,7 +92,7 @@
 					  AssemblyDelaySign="false"
 					  AssemblyKeyName=""
 					  AssemblyCulture=""
-					  AssemblyVersion="$(Major).$(Minor).$(Build)"
+					  AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
 					  AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
 					  AssemblyInformationalVersion="$(Major).$(Minor) $(VersionString)"
 					  AssemblyConfiguration="$(Configuration)"
