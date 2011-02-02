@@ -5,6 +5,7 @@
 // <summary>Unit tests for MoneyService.</summary>
 
 using System;
+using Fab.Server.Core;
 using Xunit;
 
 namespace Fab.Server.Tests
@@ -349,6 +350,231 @@ namespace Fab.Server.Tests
 			Assert.Equal(2, transactionRecords.Count);
 		}
 
+		/// <summary>
+		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// </summary>
+		[Fact]
+		public void GetTransactionsNotOlderThenDate()
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			service.CreateAccount(userId, "Test Account 1", 1);
+			var accounts = service.GetAllAccounts(userId);
+			service.CreateCategory(userId, "Test Category 1", 1);
+			var categories = service.GetAllCategories(userId);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Old income", null);
+			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Not older then expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date3, 6, 1, "New expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Newest expense", categories[0].Id);
+
+			var filter = new QueryFilter
+			             	{
+			             		NotOlderThen = date2
+			             	};
+			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+
+			Assert.NotNull(transactionRecords);
+			Assert.Equal(2, transactionRecords.Count);
+			Assert.Equal("New expense", transactionRecords[0].Comment);
+			Assert.Equal(date3, transactionRecords[0].Date);
+			Assert.Equal("Newest expense", transactionRecords[1].Comment);
+			Assert.Equal(date4, transactionRecords[1].Date);
+		}
+
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// </summary>
+		[Fact]
+		public void GetTransactionsUpToDate()
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			service.CreateAccount(userId, "Test Account 1", 1);
+			var accounts = service.GetAllAccounts(userId);
+			service.CreateCategory(userId, "Test Category 1", 1);
+			var categories = service.GetAllCategories(userId);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+
+			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Old income", null);
+			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Up to expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date3, 6, 1, "New expense", categories[0].Id);
+
+			var filter = new QueryFilter
+			             	{
+			             		Upto = date2
+			             	};
+			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+
+			Assert.NotNull(transactionRecords);
+			Assert.Equal(2, transactionRecords.Count);
+			Assert.Equal("Old income", transactionRecords[0].Comment);
+			Assert.Equal(date1, transactionRecords[0].Date);
+			Assert.Equal("Up to expense", transactionRecords[1].Comment);
+			Assert.Equal(date2, transactionRecords[1].Date);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// </summary>
+		[Fact]
+		public void GetTransactionsByText()
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			service.CreateAccount(userId, "Test Account 1", 1);
+			var accounts = service.GetAllAccounts(userId);
+			service.CreateCategory(userId, "Test Category 1", 1);
+			var categories = service.GetAllCategories(userId);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
+			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+
+			var filter = new QueryFilter
+			             	{
+								Contains = "exp"
+			             	};
+			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+
+			Assert.NotNull(transactionRecords);
+			Assert.Equal(2, transactionRecords.Count);
+			Assert.Equal("Some expense", transactionRecords[0].Comment);
+			Assert.Equal(date2, transactionRecords[0].Date);
+			Assert.Equal("Another expense", transactionRecords[1].Comment);
+			Assert.Equal(date3, transactionRecords[1].Date);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// </summary>
+		[Fact]
+		public void GetTransactionsWithSkiping()
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			service.CreateAccount(userId, "Test Account 1", 1);
+			var accounts = service.GetAllAccounts(userId);
+			service.CreateCategory(userId, "Test Category 1", 1);
+			var categories = service.GetAllCategories(userId);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
+			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+
+			var filter = new QueryFilter
+						 {
+						 	Skip = 2
+						 };
+			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+
+			Assert.NotNull(transactionRecords);
+			Assert.Equal(2, transactionRecords.Count);
+			Assert.Equal("Another expense", transactionRecords[0].Comment);
+			Assert.Equal(date3, transactionRecords[0].Date);
+			Assert.Equal("Yet another ...", transactionRecords[1].Comment);
+			Assert.Equal(date4, transactionRecords[1].Date);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// </summary>
+		[Fact]
+		public void GetTransactionsWithTaking()
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			service.CreateAccount(userId, "Test Account 1", 1);
+			var accounts = service.GetAllAccounts(userId);
+			service.CreateCategory(userId, "Test Category 1", 1);
+			var categories = service.GetAllCategories(userId);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
+			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+
+			var filter = new QueryFilter
+			{
+				Take = 2
+			};
+			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+
+			Assert.NotNull(transactionRecords);
+			Assert.Equal(2, transactionRecords.Count);
+			Assert.Equal("Some income", transactionRecords[0].Comment);
+			Assert.Equal(date1, transactionRecords[0].Date);
+			Assert.Equal("Some expense", transactionRecords[1].Comment);
+			Assert.Equal(date2, transactionRecords[1].Date);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// </summary>
+		[Fact]
+		public void GetTransactionsWithSkipingAndTaking()
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			service.CreateAccount(userId, "Test Account 1", 1);
+			var accounts = service.GetAllAccounts(userId);
+			service.CreateCategory(userId, "Test Category 1", 1);
+			var categories = service.GetAllCategories(userId);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
+			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
+			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+
+			var filter = new QueryFilter
+			{
+				Skip = 2,
+				Take = 1
+			};
+			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+
+			Assert.NotNull(transactionRecords);
+			Assert.Equal(1, transactionRecords.Count);
+			Assert.Equal("Another expense", transactionRecords[0].Comment);
+			Assert.Equal(date3, transactionRecords[0].Date);
+		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.UpdateTransaction"/> method.
