@@ -790,6 +790,134 @@ namespace Fab.Server
 			return records;
 		}
 
+		/// <summary>
+		/// Return filtered list of the not deleted transaction records for specific account.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account Id.</param>
+		/// <returns>List of transaction records.</returns>
+		/// <param name="filter">Specify conditions for filtering transactions.</param>
+		public IList<TransactionRecord> GetTransactions(Guid userId, int accountId, IQueryFilter filter)
+		{
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("User ID must not be empty.");
+			}
+
+			if (filter == null)
+			{
+				throw new ArgumentNullException("filter");
+			}
+
+			var records = new List<TransactionRecord>();
+
+			// Bug: warning security weakness!
+			// Check User.IsDisabled + Account.IsDeleted also
+			using (var mc = new ModelContainer())
+			{
+				var query = from p in mc.Postings
+				            where p.Account.Id == accountId
+				                && !p.Journal.IsDeleted
+				                && p.Journal.JournalType != (byte) JournalType.Canceled
+				            orderby p.Date, p.Journal.Id
+							select new
+							{
+								Posting = p,
+								p.Journal,
+								p.Journal.Category,
+								p.Journal.JournalType
+							};
+
+				if (!string.IsNullOrEmpty(filter.Contains))
+				{
+					query = from t in query
+							where t.Journal.Comment.Contains(filter.Contains)
+							   || t.Category.Name.Contains(filter.Contains)
+							select t;
+				}
+
+				if (filter.NotOlderThen.HasValue)
+				{
+					query = from t in query
+							where t.Posting.Date > filter.NotOlderThen.Value
+							select t;
+				}
+
+				if (filter.Upto.HasValue)
+				{
+					query = from t in query
+							where t.Posting.Date <= filter.Upto.Value
+							select t;
+				}
+
+				// Todo: consider dynamic order specification
+				//query = query.OrderBy(t => t.Posting.Date);
+
+				if (filter.Skip.HasValue)
+				{
+					query = query.Skip(filter.Skip.Value);
+				}
+
+				if (filter.Take.HasValue)
+				{
+					query = query.Take(filter.Take.Value);
+				}
+
+				var res = query.ToList();
+
+				// No transactions take place yet, so nothing to return
+				if (res.Count == 0)
+				{
+					return records;
+				}
+
+				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
+
+				decimal income = 0;
+				decimal expense = 0;
+				decimal balance = 0;
+
+				foreach (var r in res)
+				{
+					balance += r.Posting.Amount;
+
+					switch (r.JournalType)
+					{
+						// Deposit
+						case 1:
+							income = r.Posting.Amount;
+							expense = 0;
+							break;
+
+						// Withdrawal
+						case 2:
+							income = 0;
+							expense = -r.Posting.Amount;
+							break;
+
+						// Transfer
+						case 3:
+							income = r.Posting.Amount > 0 ? r.Posting.Amount : 0;	// positive is "TO this account"
+							expense = r.Posting.Amount < 0 ? -r.Posting.Amount : 0;	// negative is "FROM this account"
+							break;
+					}
+
+					records.Add(new TransactionRecord
+					{
+						TransactionId = r.Journal.Id,
+						Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+						Category = categoryMapper.Map(r.Category),
+						Income = income,
+						Expense = expense,
+						Balance = balance,
+						Comment = r.Journal.Comment
+					});
+				}
+			}
+
+			return records;
+		}
+
 		#endregion
 
 		#endregion

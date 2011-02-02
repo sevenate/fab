@@ -267,6 +267,16 @@ namespace Fab.Server.Core
 		[OperationContract]
 		IList<TransactionRecord> GetAllTransactions(Guid userId, int accountId);
 
+		/// <summary>
+		/// Return filtered list of the not deleted transaction records for specific account.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="filter">Specify conditions for filtering transactions.</param>
+		/// <returns>List of transaction records.</returns>
+		[OperationContract]
+		IList<TransactionRecord> GetTransactions(Guid userId, int accountId, IQueryFilter filter);
+
 		#endregion
 	}
 }

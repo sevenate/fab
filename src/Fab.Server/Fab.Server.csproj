@@ -103,6 +103,8 @@
     <Compile Include="Core\DTO\PostingDTO.cs" />
     <Compile Include="Core\DTO\TransactionDTO.cs" />
     <Compile Include="Core\DTO\UserDTO.cs" />
+    <Compile Include="Core\IQueryFilter.cs" />
+    <Compile Include="Core\QueryFilter.cs" />
     <Compile Include="MoneyService.svc.cs">
       <DependentUpon>MoneyService.svc</DependentUpon>
     </Compile>
