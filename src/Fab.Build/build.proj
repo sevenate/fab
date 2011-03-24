@@ -18,7 +18,7 @@
 		<VersionString>Alpha</VersionString>
 		<ProductName>FAB</ProductName>
 		<CompanyName>nReez, LLC</CompanyName>
-		<Copyright>Copyright © nReez 2010</Copyright>
+		<Copyright>Copyright © nReez 2011</Copyright>
 		<Trademark>All Rights Reserved</Trademark>
 	</PropertyGroup>
 	
@@ -26,7 +26,7 @@
 	<PropertyGroup>
 		<RepositoryRoot>..\..</RepositoryRoot>
 		<ResponseTimeout>5000</ResponseTimeout>
-		<OutputVersionFile>..\..\bin\version.txt</OutputVersionFile>
+		<OutputVersionFile>..\version.txt</OutputVersionFile>
 		<OutputAssemblyInfoFile>..\AssemblyInfo.Generated.cs</OutputAssemblyInfoFile>
 	</PropertyGroup>
 
