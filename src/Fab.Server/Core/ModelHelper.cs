@@ -1,18 +1,11 @@
 // <copyright file="ModelHelper.cs" company="HD">
 //  Copyright (c) 2010 HD. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-02-15</date>
-// </author>
-// <editor name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-02-15</date>
-// </editor>
-// <summary>Helper for Entity Framework model container processing.</summary>
+// <author name="Andrew Levshoff" email="78@hd.com" date="2010-02-15" />
 
 using System;
 using System.Linq;
+using Fab.Server.Core.Enums;
 
 namespace Fab.Server.Core
 {
@@ -26,6 +19,8 @@ namespace Fab.Server.Core
 		/// </summary>
 		private static readonly Guid SystemUserId = new Guid("6184b6dd-26d0-4d06-ba2c-95c850ccfebe");
 
+		#region Users
+
 		/// <summary>
 		/// Check is user <paramref name="login"/> name is not used by some one else.
 		/// </summary>
@@ -35,7 +30,7 @@ namespace Fab.Server.Core
 		internal static bool IsLoginAvailable(ModelContainer mc, string login)
 		{
 			return mc.Users.Where(u => u.Login == login)
-							.SingleOrDefault() == null;
+						   .SingleOrDefault() == null;
 		}
 
 		/// <summary>
@@ -46,8 +41,8 @@ namespace Fab.Server.Core
 		/// <returns>User instance.</returns>
 		internal static User GetUserById(ModelContainer mc, Guid userId)
 		{
-			User user = mc.Users.Where(u => u.Id == userId)
-							.SingleOrDefault();
+			User user = mc.Users.Where(u => u.Id == userId && !u.IsDisabled)
+								.SingleOrDefault();
 
 			if (user == null)
 			{
@@ -56,6 +51,10 @@ namespace Fab.Server.Core
 
 			return user;
 		}
+
+		#endregion
+
+		#region Accounts
 
 		/// <summary>
 		/// Get <see cref="Account"/> from model container by unique user ID and account ID.
@@ -66,7 +65,7 @@ namespace Fab.Server.Core
 		internal static Account GetAccountById(ModelContainer mc, int accountId)
 		{
 			Account account = mc.Accounts.Include("AssetType")
-								.Where(a => a.Id == accountId)
+								.Where(a => a.Id == accountId && !a.IsClosed)
 								.SingleOrDefault();
 
 			if (account == null)
@@ -98,6 +97,29 @@ namespace Fab.Server.Core
 		}
 
 		/// <summary>
+		/// Update account's cached "first posting date" and "last posting date"
+		/// to the date of new posting if is is out of current range.
+		/// </summary>
+		/// <param name="account">Account to update.</param>
+		/// <param name="date">New posting date.</param>
+		private static void UpdateAccountPeriod(Account account, DateTime date)
+		{
+			if (!account.FirstPostingDate.HasValue || account.FirstPostingDate > date)
+			{
+				account.FirstPostingDate = date;
+			}
+
+			if (!account.LastPostingDate.HasValue || account.LastPostingDate < date)
+			{
+				account.LastPostingDate = date;
+			}
+		}
+
+		#endregion
+
+		#region Categories
+
+		/// <summary>
 		/// Get <see cref="Category"/> from model container by unique user ID and category ID.
 		/// </summary>
 		/// <param name="mc">Entity Framework model container.</param>
@@ -105,8 +127,8 @@ namespace Fab.Server.Core
 		/// <returns>Category instance</returns>
 		internal static Category GetCategoryById(ModelContainer mc, int categoryId)
 		{
-			Category category = mc.Categories.Where(c => c.Id == categoryId)
-									.SingleOrDefault();
+			Category category = mc.Categories.Where(c => c.Id == categoryId && c.Deleted == null)
+											 .SingleOrDefault();
 
 			if (category == null)
 			{
@@ -115,6 +137,10 @@ namespace Fab.Server.Core
 
 			return category;
 		}
+
+		#endregion
+
+		#region Asset Types
 
 		/// <summary>
 		/// Get <see cref="AssetType"/> from model container by unique ID.
@@ -125,7 +151,7 @@ namespace Fab.Server.Core
 		internal static AssetType GetAssetTypeById(ModelContainer mc, int assetTypeId)
 		{
 			AssetType assetType = mc.AssetTypes.Where(at => at.Id == assetTypeId)
-									.SingleOrDefault();
+											   .SingleOrDefault();
 
 			if (assetType == null)
 			{
@@ -135,32 +161,34 @@ namespace Fab.Server.Core
 			return assetType;
 		}
 
+		#endregion
+
+		#region Journals
+
 		/// <summary>
-		/// Get <see cref="Transaction"/> from model container by unique ID.
+		/// Get transaction from model container by unique ID.
 		/// </summary>
 		/// <param name="mc">Entity Framework model container.</param>
-		/// <param name="transactionId">The transaction ID.</param>
-		/// <returns>Transaction instance.</returns>
-		internal static Transaction GetTransacionById(ModelContainer mc, int transactionId)
+		/// <param name="journalId">The journal ID.</param>
+		/// <returns>Journal instance.</returns>
+		internal static Journal GetJournalById(ModelContainer mc, int journalId)
 		{
 			// Todo: consider using not all includes here to increase performance and decrease traffic
 
-			var transacion = mc.Journals.Include("Postings")
-										 .Include("Category")
-										 .Where(j => j.Id == transactionId
-												 && j is Transaction
-												 && j.IsDeleted == false)
-										 .SingleOrDefault() as Transaction;
+			var journal = mc.Journals.Include("Postings")
+									 .Include("Category")
+									 .Where(j => j.Id == journalId)
+									 .SingleOrDefault();
 
-			if (transacion == null)
+			if (journal == null)
 			{
-				throw new Exception("Transaction with ID = " + transactionId + " not found.");
+				throw new Exception("Journal with ID = " + journalId + " not found.");
 			}
 
 			// Todo: Consider do NOT include posting account information into result transaction
 			// to increase performance and decrease traffic
 
-			foreach (var posting in transacion.Postings)
+			foreach (var posting in journal.Postings)
 			{
 				if (!posting.AccountReference.IsLoaded)
 				{
@@ -168,10 +196,10 @@ namespace Fab.Server.Core
 				}
 			}
 
-			return transacion;
+			return journal;
 		}
 
-		// Todo: add user ID account ID to the GetTransacionById() method call to
+		// Todo: add user ID account ID to the GetJournalById() method call to
 		// join them with transaction ID to prevent unauthorized delete 
 		// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
 
@@ -179,21 +207,33 @@ namespace Fab.Server.Core
 		/// Delete specific transaction.
 		/// </summary>
 		/// <param name="mc">Entity Framework model container.</param>
-		/// <param name="transactionId">The transaction ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		internal static void DeleteTransaction(ModelContainer mc, int transactionId, DateTime operationDate)
+		/// <param name="journalId">The journal ID.</param>
+		internal static void DeleteJournal(ModelContainer mc, int journalId)
 		{
-			Transaction transaction = GetTransacionById(mc, transactionId);
-			transaction.IsDeleted = true;
+			Journal journal = GetJournalById(mc, journalId);
 
+			// decrement popularity of the journal if any
+			if (journal.Category != null)
+			{
+				journal.Category.Popularity--;
+			}
+
+			// Create "deleted" journal
 			var deletedJournal = new DeletedJournal
 			                     	{
-			                     		JournalType = (byte)JournalType.Canceled,
-										Comment = "Correction pair for deleted journal # " + transaction.Id,
-										OriginalJournal = transaction
+										Id = journal.Id,
+										JournalType = journal.JournalType,
+										Comment = journal.Comment,
+										Rate = journal.Rate,
+										Quantity = journal.Quantity,
+										Category = journal.Category,
 			                     	};
 
-			foreach (var posting in transaction.Postings)
+			// Delete operation date should be the same for all "deleted" postings
+			var deletedDate = DateTime.UtcNow;
+
+			// Load and copy original journal postings to the deleted journal
+			foreach (var posting in journal.Postings.ToList())
 			{
 				if (!posting.AccountReference.IsLoaded)
 				{
@@ -205,58 +245,72 @@ namespace Fab.Server.Core
 					posting.AssetTypeReference.Load();
 				}
 
-				mc.Postings.AddObject(new Posting
+				// Copy postings from the original "postings" to the "deleted postings" table
+				// and associate each of them with "deleted journal"
+				mc.DeletedPostings.AddObject(new DeletedPosting
 				                      	{
-				                      		Account = posting.Account,
+											Id = posting.Id,
+											Date = posting.Date,
+				                      		Amount = posting.Amount,
+											Deleted = deletedDate,
+											Account = posting.Account,
 				                      		AssetType = posting.AssetType,
-				                      		Date = operationDate,
-				                      		Amount = -posting.Amount,
-				                      		Journal = deletedJournal
+											DeletedJournal = deletedJournal
 				                      	});
+
+				// Update cached account balance
+				posting.Account.Balance -= posting.Amount;
+
+				// Update cached postings count
+				posting.Account.PostingsCount--;
+
+				// Delete original postings
+				mc.Postings.DeleteObject(posting);
 			}
 
-			mc.Journals.AddObject(deletedJournal);
+			// Add "deleted" journal
+			mc.DeletedJournals.AddObject(deletedJournal);
+
+			// Delete original journal 
+			mc.Journals.DeleteObject(journal);
 		}
 
+		#endregion
+
+		#region Transactions
+
 		/// <summary>
-		/// Create deposit or withdrawal transaction: (<paramref name="price"/> * <paramref name="quantity"/>) amount of assets
-		/// to/from the <paramref name="accountId"/> with optional <paramref name="comment"/> and
-		/// group it under <paramref name="categoryId"/> if necessary.
+		/// Create deposit or withdrawal transaction with the
+		/// <paramref name="rate"/> * <paramref name="quantity"/> amount of funds
+		/// added to or written off from the <paramref name="accountId"/>.
 		/// </summary>
 		/// <param name="mc">Entity Framework model container.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="accountId">Account 1 ID</param>
-		/// <param name="journalType"><see cref="JournalType.Deposit"/> or <see cref="JournalType.Withdrawal"/> only</param>
-		/// <param name="categoryId">The category ID.</param>
-		/// <param name="price">Price of the item.</param>
+		/// <param name="accountId">Account ID</param>
+		/// <param name="journalType"><see cref="JournalType.Deposit"/> or <see cref="JournalType.Withdrawal"/> only.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
 		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="categoryId">Category ID.</param>
 		/// <param name="comment">Comment notes.</param>
-		internal static void CreateTransaction(
-			ModelContainer mc,
-			DateTime operationDate,
-			int accountId,
-			JournalType journalType,
-			int? categoryId,
-			decimal price,
-			decimal quantity,
-			string comment)
+		/// <returns>Created journal instance.</returns>
+		internal static Journal CreateTransaction(ModelContainer mc, int accountId, JournalType journalType, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment)
 		{
-			var amount = price * quantity;
-
 			var targetAccount = GetAccountById(mc, accountId);
 			var cashAccount = GetSystemAccount(mc, targetAccount.AssetType.Id);
 
-			var transaction = new Transaction
+			var journal = new Journal
 			                  	{
 			                  		JournalType = (byte)journalType,
-			                  		Price = price,
+			                  		Rate = rate,
 			                  		Quantity = quantity,
 			                  		Comment = comment
 			                  	};
 
 			if (categoryId.HasValue)
 			{
-				transaction.Category = GetCategoryById(mc, categoryId.Value);
+				var category = GetCategoryById(mc, categoryId.Value);
+				category.Popularity++;
+				journal.Category = category;
 			}
 
 			var creditAccount = journalType == JournalType.Deposit
@@ -267,80 +321,278 @@ namespace Fab.Server.Core
 			                   	? cashAccount
 			                   	: targetAccount;
 
+			var amount = rate * quantity;
+
 			var creditPosting = new Posting
 			                    	{
 			                    		Account = creditAccount,
 			                    		AssetType = creditAccount.AssetType,
-			                    		Date = operationDate,
-			                    		Amount = amount,
-			                    		Journal = transaction
+			                    		Date = date,
+										Amount = amount,
+			                    		Journal = journal
 			                    	};
 
 			var debitPosting = new Posting
 			                   	{
 			                   		Account = debitAccount,
 			                   		AssetType = debitAccount.AssetType,
-			                   		Date = operationDate,
-			                   		Amount = -amount,
-			                   		Journal = transaction
+			                   		Date = date,
+									Amount = -amount,
+			                   		Journal = journal
 			                   	};
 
-			mc.Journals.AddObject(transaction);
+			mc.Journals.AddObject(journal);
 			mc.Postings.AddObject(creditPosting);
 			mc.Postings.AddObject(debitPosting);
+
+			// Update cached account balance
+			creditAccount.Balance += amount;
+			debitAccount.Balance -= amount;
+
+			// Update cached postings count
+			creditAccount.PostingsCount++;
+			debitAccount.PostingsCount++;
+
+			UpdateAccountPeriod(creditAccount, date);
+			UpdateAccountPeriod(debitAccount, date);
+
+			return journal;
 		}
 
 		/// <summary>
-		/// Create transfer transaction: the <paramref name="amount"/> of assets are moved
-		/// from <paramref name="account1Id"/> to <paramref name="account2Id"/> of
-		/// with optional <paramref name="comment"/> about operation.
+		/// Update deposit or withdrawal transaction with the
+		/// <paramref name="rate"/> * <paramref name="quantity"/> amount of funds.
 		/// </summary>
 		/// <param name="mc">Entity Framework model container.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="account1Id">Account 1 ID.</param>
-		/// <param name="account2Id">Account 2 ID.</param>
-		/// <param name="amount">Amount of assets.</param>
-		/// <param name="comment">Comment notes.</param>
-		internal static void CreateTransfer(
-			ModelContainer mc,
-			DateTime operationDate,
-			int account1Id,
-			int account2Id,
-			decimal amount,
-			string comment)
+		/// <param name="accountId">Account ID</param>
+		/// <param name="transactionId">Original deposit or withdrawal transaction ID.</param>
+		/// <param name="isDeposit">Specify is the updating transaction was "deposit" (<c>true</c> value) or "withdrawal" (<c>false</c> value).</param>
+		/// <param name="date">New operation date.</param>
+		/// <param name="rate">New rate of the item.</param>
+		/// <param name="quantity">New quantity of the item.</param>
+		/// <param name="categoryId">New category ID.</param>
+		/// <param name="comment">New comment notes.</param>
+		internal static void UpdateTransaction(ModelContainer mc, int accountId, int transactionId, bool isDeposit, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment)
 		{
-			var sourceAccount = GetAccountById(mc, account1Id);
-			var targetAccount = GetAccountById(mc, account2Id);
+			// Todo: add user ID account ID to the GetJournalById() method call to
+			// join them with transaction ID to prevent unauthorized delete 
+			// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
+			var journal = GetJournalById(mc, transactionId);
 
-			var transaction = new Transaction
+			if (journal.JournalType != (byte) JournalType.Deposit
+			    && journal.JournalType != (byte) JournalType.Withdrawal)
+			{
+				throw new NotSupportedException(String.Format("Only {0} and {1} journal types supported.", JournalType.Deposit, JournalType.Withdrawal));
+			}
+
+			var targetAccount = GetAccountById(mc, accountId);
+			var cashAccount = GetSystemAccount(mc, targetAccount.AssetType.Id);
+
+			var targetAccountPosting = journal.Postings.Where(p => p.Account.Id == targetAccount.Id).Single();
+			var cashAccountPosting = journal.Postings.Where(p => p.Account.Id == cashAccount.Id).Single();
+
+			// Decrement cached account balance by the previous transaction amount
+			if (journal.JournalType == (byte) JournalType.Deposit)
+			{
+				targetAccount.Balance -= targetAccountPosting.Amount;
+				cashAccount.Balance += cashAccountPosting.Amount;
+			}
+			else
+			{
+				// JournalType.Withdrawal
+				targetAccount.Balance += targetAccountPosting.Amount;
+				cashAccount.Balance -= cashAccountPosting.Amount;
+			}
+
+			// Note: cached postings count will be the same after update transaction operation
+
+			var amount = rate * quantity;
+
+			if (isDeposit)
+			{
+				journal.JournalType = (byte)JournalType.Deposit;
+				targetAccountPosting.Amount = amount;
+				targetAccount.Balance += amount;
+				cashAccountPosting.Amount = -amount;
+				cashAccount.Balance -= amount;
+			}
+			else
+			{
+				journal.JournalType = (byte)JournalType.Withdrawal;
+				targetAccountPosting.Amount = -amount;
+				targetAccount.Balance -= amount;
+				cashAccountPosting.Amount = amount;
+				cashAccount.Balance += amount;
+			}
+
+			targetAccountPosting.Date = date;
+			cashAccountPosting.Date = date;
+
+			journal.Rate = rate;
+			journal.Quantity = quantity;
+			journal.Comment = comment;
+
+			if (journal.Category != null && (!categoryId.HasValue || journal.Category.Id != categoryId))
+			{
+				journal.Category.Popularity--;
+			}
+
+			if (categoryId.HasValue && (journal.Category == null || journal.Category.Id != categoryId))
+			{
+				var category = GetCategoryById(mc, categoryId.Value);
+				category.Popularity++;
+				journal.Category = category;
+			}
+
+			UpdateAccountPeriod(targetAccount, date);
+			UpdateAccountPeriod(cashAccount, date);
+
+			mc.SaveChanges();
+		}
+
+		#endregion
+
+		#region Transfers
+
+		/// <summary>
+		/// Create transfer transaction: the <paramref name="rate"/> * <paramref name="quantity"/> of funds
+		/// are moved from <paramref name="fromAccountId"/> account to <paramref name="toAccountId"/> account.
+		/// </summary>
+		/// <param name="mc">Entity Framework model container.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="fromAccountId">The account from which the funds will be written off.</param>
+		/// <param name="toAccountId">The account for which funds will be been credited.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="comment">Comment notes.</param>
+		/// <returns>Created journal instance.</returns>
+		internal static Journal CreateTransfer(ModelContainer mc, DateTime date, int fromAccountId, int toAccountId, decimal rate, decimal quantity, string comment)
+		{
+			var sourceAccount = GetAccountById(mc, fromAccountId);
+			var targetAccount = GetAccountById(mc, toAccountId);
+
+			var journal = new Journal
 			                  	{
 			                  		JournalType = (byte)JournalType.Transfer,
-			                  		Price = amount,
-			                  		Quantity = 1,
-			                  		Comment = comment
+			                  		Rate = rate,
+									Quantity = quantity,
+			                  		Comment = comment,
+									Category = null	// Not used for transfers
 			                  	};
+
+			var amount = rate * quantity;
 
 			var creditPosting = new Posting
 			                    	{
-			                    		Date = operationDate,
-			                    		Amount = amount,
-			                    		Journal = transaction,
+			                    		Date = date,
+										Amount = amount,
+			                    		Journal = journal,
 			                    		Account = targetAccount,
 			                    		AssetType = targetAccount.AssetType
 			                    	};
 
 			var debitPosting = new Posting
 			                   	{
-			                   		Date = operationDate,
-			                   		Amount = -amount,
-			                   		Journal = transaction,
+			                   		Date = date,
+									Amount = -rate * quantity,
+			                   		Journal = journal,
 			                   		Account = sourceAccount,
 			                   		AssetType = sourceAccount.AssetType
 			                   	};
 
-			mc.Journals.AddObject(transaction);
+			mc.Journals.AddObject(journal);
 			mc.Postings.AddObject(creditPosting);
 			mc.Postings.AddObject(debitPosting);
+
+			// Update cached account balance
+			targetAccount.Balance += amount;
+			sourceAccount.Balance -= amount;
+
+			// Update cached postings count
+			targetAccount.PostingsCount++;
+			sourceAccount.PostingsCount++;
+			
+			UpdateAccountPeriod(sourceAccount, date);
+			UpdateAccountPeriod(targetAccount, date);
+
+			return journal;
 		}
+
+		/// <summary>
+		/// Update transfer transaction: the <paramref name="rate"/> * <paramref name="quantity"/> of funds
+		/// are moved from <paramref name="fromAccountId"/> account to <paramref name="toAccountId"/> account.
+		/// </summary>
+		/// <param name="mc">Entity Framework model container.</param>
+		/// <param name="transactionId">Original transfer transaction ID.</param>
+		/// <param name="fromAccountId">The account from which the funds will be written off.</param>
+		/// <param name="toAccountId">The account for which funds will be been credited.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="comment">Comment notes.</param>
+		internal static void UpdateTransfer(ModelContainer mc, int transactionId, int fromAccountId, int toAccountId, DateTime date, decimal rate, decimal quantity, string comment)
+		{
+			// Todo: add user ID account ID to the GetJournalById() method call to
+			// join them with transaction ID to prevent unauthorized delete 
+			// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
+			var journal = GetJournalById(mc, transactionId);
+
+			if (journal.JournalType != (byte)JournalType.Transfer)
+			{
+				throw new NotSupportedException(String.Format("Only {0} journal type supported.", JournalType.Transfer));
+			}
+
+			var sourceAccountPosting = journal.Postings.Where(p => p.Amount < 0).Single();
+			var targetAccountPosting = journal.Postings.Where(p => p.Amount >= 0).Single();
+
+			if (sourceAccountPosting.AccountReference.IsLoaded)
+			{
+				sourceAccountPosting.AccountReference.Load();
+			}
+
+			if (targetAccountPosting.AccountReference.IsLoaded)
+			{
+				targetAccountPosting.AccountReference.Load();
+			}
+
+			// Decrement cached account balance by the previous transfer amount
+			sourceAccountPosting.Account.Balance -= sourceAccountPosting.Amount;
+			targetAccountPosting.Account.Balance -= targetAccountPosting.Amount;
+
+			// Update cached postings count for accounts involved into previous transfer operation
+			sourceAccountPosting.Account.PostingsCount--;
+			targetAccountPosting.Account.PostingsCount--;
+
+			var sourceAccount = GetAccountById(mc, fromAccountId);
+			var targetAccount = GetAccountById(mc, toAccountId);
+
+			var amount = rate*quantity;
+
+			sourceAccountPosting.Amount = -amount;
+			sourceAccount.Balance -= amount;
+			targetAccountPosting.Amount = amount;
+			targetAccount.Balance += amount;
+
+			// Update cached postings count for new accounts involved into updated transfer operation
+			sourceAccount.PostingsCount++;
+			targetAccount.PostingsCount++;
+
+			sourceAccountPosting.Account = sourceAccount;
+			targetAccountPosting.Account = targetAccount;
+
+			sourceAccountPosting.Date = date;
+			targetAccountPosting.Date = date;
+
+			journal.Rate = rate;
+			journal.Quantity = quantity;
+			journal.Comment = comment;
+
+			UpdateAccountPeriod(sourceAccount, date);
+			UpdateAccountPeriod(targetAccount, date);
+
+			mc.SaveChanges();
+		}
+
+		#endregion
 	}
 }

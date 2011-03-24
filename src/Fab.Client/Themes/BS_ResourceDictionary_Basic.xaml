@@ -2743,7 +2743,7 @@
 	</Style>
 	<Style TargetType="ListBoxItem">
 		<Setter Property="HorizontalContentAlignment"
-				Value="Left" />
+				Value="Stretch" />
 		<Setter Property="VerticalContentAlignment"
 				Value="Top" />
 		<Setter Property="Background"

@@ -5,6 +5,7 @@
 // <summary>Category data transfer object.</summary>
 
 using System.Runtime.Serialization;
+using Fab.Server.Core.Enums;
 
 namespace Fab.Server.Core.DTO
 {
@@ -30,12 +31,12 @@ namespace Fab.Server.Core.DTO
 		/// Gets or sets category name.
 		/// </summary>
 		[DataMember]
-		public byte CategoryType { get; set; }
+		public CategoryType CategoryType { get; set; }
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a category is deleted.
+		/// Gets or sets a value indicating how many times this category was used.
 		/// </summary>
 		[DataMember]
-		public bool IsDeleted { get; set; }
+		public int Popularity { get; set; }
 	}
 }

@@ -2,7 +2,6 @@
 // 	Copyright (c) 2010 HD. All rights reserved.
 // </copyright>
 // <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-13" />
-// <summary>General transaction detail view model interface.</summary>
 
 using Fab.Client.MoneyServiceReference;
 

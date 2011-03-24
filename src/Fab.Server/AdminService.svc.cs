@@ -47,6 +47,7 @@ namespace Fab.Server
 			{
 				var user = ModelHelper.GetUserById(mc, userId);
 				user.IsDisabled = true;
+				user.DisabledChanged = DateTime.UtcNow;
 				mc.SaveChanges();
 			}
 		}

@@ -4,6 +4,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:Accounts="clr-namespace:Fab.Client.MoneyTracker.Accounts"
+			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
 			 mc:Ignorable="d"
 			 d:DesignHeight="300"
 			 d:DesignWidth="400"
@@ -16,10 +17,51 @@
 		</Grid.RowDefinitions>
 		<TextBlock Text="Accounts" />
 		<ListBox x:Name="Accounts"
-				 Grid.Row="1">
+				 Grid.Row="1"
+				 HorizontalContentAlignment="Stretch">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<TextBlock Text="{Binding Name}" />
+					<StackPanel Orientation="Vertical">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0"
+									   Text="{Binding Path=Name}"
+									   HorizontalAlignment="Left" />
+							<TextBlock Grid.Column="1"
+									   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColorConverter}}"
+									   Text="{Binding Path=Balance, StringFormat=C}"
+									   HorizontalAlignment="Right" />
+						</Grid>
+						<Controls:DockPanel Margin="0,3,0,0">
+							<TextBlock Text="{Binding Path=PostingsCount}"
+									   ToolTipService.ToolTip="Postings count"
+									   FontSize="10"
+									   Foreground="Gray"
+									   FontStyle="Italic" />
+							<TextBlock Controls:DockPanel.Dock="Right"
+									   HorizontalAlignment="Right"
+									   FontSize="10"
+									   Foreground="Gray"
+									   FontStyle="Italic"
+									   Text="{Binding Path=LastPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat=d}"
+									   ToolTipService.ToolTip="{Binding Path=LastPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat='Last posting on {0:F}'}" />
+							<TextBlock Controls:DockPanel.Dock="Right"
+									   FontSize="10"
+									   Foreground="Gray"
+									   FontStyle="Italic"
+									   Text=" - " />
+							<TextBlock Controls:DockPanel.Dock="Right"
+									   HorizontalAlignment="Right"
+									   FontSize="10"
+									   Foreground="Gray"
+									   FontStyle="Italic"
+									   Text="{Binding Path=FirstPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat=d}"
+									   ToolTipService.ToolTip="{Binding Path=FirstPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat='First posting on {0:F}'}" />
+						</Controls:DockPanel>
+					</StackPanel>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>

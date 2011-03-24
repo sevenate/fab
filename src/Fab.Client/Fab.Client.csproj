@@ -92,6 +92,9 @@
     <Reference Include="Caliburn.Micro">
       <HintPath>..\..\ext\Silverlight 4\Caliburn.Micro.dll</HintPath>
     </Reference>
+    <Reference Include="SilverlightContrib.Controls">
+      <HintPath>..\..\ext\Silverlight 4\SilverlightContrib.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.ComponentModel.Composition.Initialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217" />
@@ -120,14 +123,20 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authentication\LoggedInMessage.cs" />
+    <Compile Include="Authentication\LoggedOutMessage.cs" />
+    <Compile Include="Authentication\UserCredentials.cs" />
     <Compile Include="Framework\Behaviors\DefaultButtonBehavior.cs" />
     <Compile Include="Framework\Behaviors\FocusBehavior.cs" />
     <Compile Include="Authentication\PasswordBindBehavior.cs" />
+    <Compile Include="Framework\EnumWrapper.cs" />
+    <Compile Include="Framework\EnumWrapperList.cs" />
     <Compile Include="Framework\Converters\AddUpdateStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToOpacityConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToVisibilityInvertConverter.cs" />
     <Compile Include="Framework\Converters\CancelClearStringConverter.cs" />
-    <Compile Include="Framework\Converters\NegativeToRedConverter.cs" />
+    <Compile Include="Framework\Converters\ZeroToVisibilityConverter.cs" />
+    <Compile Include="Framework\Converters\BalanceToColorConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToNotBooleanConverter.cs" />
     <Compile Include="Framework\ApplicationExtensions.cs" />
     <Compile Include="Framework\Converters\ZeroToEmptyStringConverter.cs" />
@@ -161,7 +170,10 @@
     <Compile Include="MoneyTracker\Accounts\IAccountsViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\ICategoriesViewModel.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\ITransactionDetailsViewModel.cs" />
+    <Compile Include="MoneyTracker\Transactions\GetBalanceResult.cs" />
+    <Compile Include="MoneyTracker\Transactions\DateRange.cs" />
     <Compile Include="MoneyTracker\Transactions\ITransactionsViewModel.cs" />
+    <Compile Include="MoneyTracker\Transactions\TransactionRecord.cs" />
     <Compile Include="MoneyTracker\Transfers\ITransferViewModel.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsViewModel.cs" />
     <Compile Include="Framework\DocumentBase.cs" />
@@ -201,7 +213,7 @@
     <Compile Include="Framework\IShell.cs" />
     <Compile Include="Framework\IModule.cs" />
     <Compile Include="MoneyTracker\MoneyModuleViewModel.cs" />
-    <Compile Include="MoneyTracker\Transactions\GetAllTransactionsResult.cs" />
+    <Compile Include="MoneyTracker\Transactions\GetTransactionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\MoneyServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -326,23 +338,23 @@
     <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.CategoryDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.TransactionDTO.datasource">
+    <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.JournalDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.TransactionRecord.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService1.wsdl" />
-    <None Include="Service References\MoneyServiceReference\MoneyService4.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService41.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService42.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService11.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService43.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\UserServiceReference\UserService1.wsdl" />

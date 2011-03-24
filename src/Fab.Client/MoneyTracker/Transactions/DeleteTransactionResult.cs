@@ -7,9 +7,9 @@ namespace Fab.Client.MoneyTracker.Transactions
 {
 	public class DeleteTransactionResult : IResult
 	{
-		private readonly Guid userId;
 		private readonly int accountId;
 		private readonly int transactionId;
+		private readonly Guid userId;
 
 		public DeleteTransactionResult(Guid userId, int accountId, int transactionId)
 		{
@@ -18,26 +18,33 @@ namespace Fab.Client.MoneyTracker.Transactions
 			this.transactionId = transactionId;
 		}
 
+		#region IResult Members
+
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
 
 		public void Execute(ActionExecutionContext context)
 		{
 			var proxy = new MoneyServiceClient();
 
-			proxy.DeleteTransactionCompleted += OnDeleteCompleted;
-			proxy.DeleteTransactionAsync(userId,
-										 accountId,
-										 transactionId,
-										 DateTime.UtcNow
-										 );
+			proxy.DeleteJournalCompleted += OnDeleteCompleted;
+			proxy.DeleteJournalAsync(userId,
+			                         accountId,
+			                         transactionId,
+			                         DateTime.UtcNow
+				);
 		}
+
+		#endregion
 
 		private void OnDeleteCompleted(object s, AsyncCompletedEventArgs e)
 		{
 			if (e.Error != null)
 			{
 				Caliburn.Micro.Execute.OnUIThread(
-					() => Completed(this, new ResultCompletionEventArgs { Error = e.Error }));
+					() => Completed(this, new ResultCompletionEventArgs
+					                      {
+					                      	Error = e.Error
+					                      }));
 			}
 			else
 			{

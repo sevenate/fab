@@ -15,11 +15,9 @@ namespace Fab.Client.MoneyTracker.Transactions
 	/// </summary>
 	public class LoadTransactionResult : IResult
 	{
-		private readonly Guid userId;
 		private readonly int accountId;
 		private readonly int transactionId;
-
-		public TransactionDTO Transaction { get; set; }
+		private readonly Guid userId;
 
 		public LoadTransactionResult(Guid userId, int accountId, int transactionId)
 		{
@@ -28,28 +26,38 @@ namespace Fab.Client.MoneyTracker.Transactions
 			this.transactionId = transactionId;
 		}
 
+		public JournalDTO Transaction { get; set; }
+
+		#region IResult Members
+
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
 
 		public void Execute(ActionExecutionContext context)
 		{
 			var proxy = new MoneyServiceClient();
 
-			proxy.GetTransactionCompleted += (sender, args) =>
-			                                 	{
-													if (args.Error != null)
-													{
-														Caliburn.Micro.Execute.OnUIThread(
-															() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
-													}
-													else
-													{
-														Transaction = args.Result;
-														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
-													}
-			                                 	};
-			proxy.GetTransactionAsync(userId,
-									  accountId,
-									  transactionId);
+			proxy.GetJournalCompleted += (sender, args) =>
+			                             {
+			                             	if (args.Error != null)
+			                             	{
+			                             		Caliburn.Micro.Execute.OnUIThread(
+			                             			() => Completed(this, new ResultCompletionEventArgs
+			                             			                      {
+			                             			                      	Error = args.Error
+			                             			                      }));
+			                             	}
+			                             	else
+			                             	{
+			                             		Transaction = args.Result;
+			                             		Caliburn.Micro.Execute.OnUIThread(
+			                             			() => Completed(this, new ResultCompletionEventArgs()));
+			                             	}
+			                             };
+			proxy.GetJournalAsync(userId,
+			                      accountId,
+			                      transactionId);
 		}
+
+		#endregion
 	}
 }

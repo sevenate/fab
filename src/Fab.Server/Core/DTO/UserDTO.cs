@@ -56,5 +56,11 @@ namespace Fab.Server.Core.DTO
 		/// </summary>
 		[DataMember]
 		public bool IsDisabled { get; set; }
+
+		/// <summary>
+		/// Gets or sets a date when <see cref="IsDisabled"/> value was last changed.
+		/// </summary>
+		[DataMember]
+		public DateTime? DisabledChanged { get; set; }
 	}
 }

@@ -8,10 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Windows.Data;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
+using Fab.Client.MoneyTracker.Categories;
 using Fab.Client.MoneyTracker.TransactionDetails;
 using Fab.Client.MoneyTracker.Transfers;
 
@@ -26,14 +29,14 @@ namespace Fab.Client.MoneyTracker.Transactions
 		#region Fields
 
 		/// <summary>
-		/// Transactions owner ID.
-		/// </summary>
-		private readonly Guid userId = new Guid("DC57BFF0-57A6-4BFC-9104-5F323ABBEDAB"); // 7F06BFA6-B675-483C-9BF3-F59B88230382
-
-		/// <summary>
 		/// Gets or sets <see cref="IAccountsViewModel"/>.
 		/// </summary>
 		private IAccountsViewModel accountsVM;
+
+		/// <summary>
+		/// Gets or sets <see cref="ICategoriesViewModel"/>.
+		/// </summary>
+		private ICategoriesViewModel categoriesVM;
 
 		/// <summary>
 		/// Gets or sets <see cref="ITransactionDetailsViewModel"/>.
@@ -78,10 +81,17 @@ namespace Fab.Client.MoneyTracker.Transactions
 		/// </summary>
 		/// <param name="accountsVM">Accounts view model.</param>
 		[ImportingConstructor]
-		public TransactionsViewModel(IAccountsViewModel accountsVM, ITransactionDetailsViewModel transactionDetailsVM, ITransferViewModel transferVM)
+		public TransactionsViewModel(IAccountsViewModel accountsVM, ICategoriesViewModel categoriesVM, ITransactionDetailsViewModel transactionDetailsVM, ITransferViewModel transferVM, IEventAggregator eventAggregator)
 		{
 			TransactionRecords = new BindableCollection<TransactionRecord>();
+
+			Intervals = new EnumWrapperList<DateRange>();
+			fromDate = DateTime.Now.Date;
+			selectedDateRange = DateRange.Day;
+			UpdateTillDate(false);
+			
 			this.accountsVM = accountsVM;
+			this.categoriesVM = categoriesVM;
 			this.transactionDetailsVM = transactionDetailsVM;
 			this.transferVM = transferVM;
 
@@ -92,6 +102,8 @@ namespace Fab.Client.MoneyTracker.Transactions
 					CurrentAccount = this.accountsVM.Accounts.CurrentItem as AccountDTO;
 				}
 			};
+
+			eventAggregator.Subscribe(this);
 		}
 
 		#endregion
@@ -104,6 +116,199 @@ namespace Fab.Client.MoneyTracker.Transactions
 		public IObservableCollection<TransactionRecord> TransactionRecords { get; private set; }
 
 		/// <summary>
+		/// Account balance at the <see cref="FromDate"/> moment.
+		/// </summary>
+		private decimal startBalance;
+
+		/// <summary>
+		/// Gets or sets account balance at the <see cref="FromDate"/> moment.
+		/// </summary>
+		public decimal StartBalance
+		{
+			get { return startBalance; }
+			set
+			{
+				startBalance = value;
+				NotifyOfPropertyChange(() => StartBalance);
+			}
+		}
+
+		/// <summary>
+		/// Account balance at the <see cref="TillDate"/> moment.
+		/// </summary>
+		private decimal endBalance;
+
+		/// <summary>
+		/// Gets or sets account balance at the <see cref="TillDate"/> moment.
+		/// </summary>
+		public decimal EndBalance
+		{
+			get { return endBalance; }
+			set
+			{
+				endBalance = value;
+				NotifyOfPropertyChange(() => EndBalance);
+			}
+		}
+
+		/// <summary>
+		/// Total income for the filtered period.
+		/// </summary>
+		private decimal totalIncome;
+
+		/// <summary>
+		/// Gets or sets total income for the filtered period.
+		/// </summary>
+		public decimal TotalIncome
+		{
+			get { return totalIncome; }
+			set
+			{
+				totalIncome = value;
+				NotifyOfPropertyChange(() => TotalIncome);
+			}
+		}
+
+		/// <summary>
+		/// Total expense for the filtered period.
+		/// </summary>
+		private decimal totalExpense;
+
+		/// <summary>
+		/// Gets or sets total expense for the filtered period.
+		/// </summary>
+		public decimal TotalExpense
+		{
+			get { return totalExpense; }
+			set
+			{
+				totalExpense = value;
+				NotifyOfPropertyChange(() => TotalExpense);
+			}
+		}
+
+		/// <summary>
+		/// Account balance difference for the filtered period.
+		/// </summary>
+		private decimal balanceDiff;
+
+		/// <summary>
+		/// Gets or sets account balance difference for the filtered period.
+		/// </summary>
+		public decimal BalanceDiff
+		{
+			get { return balanceDiff; }
+			set
+			{
+				balanceDiff = value;
+				NotifyOfPropertyChange(() => BalanceDiff);
+			}
+		}
+
+		/// <summary>
+		/// Start date for filtering transactions.
+		/// </summary>
+		private DateTime fromDate;
+
+		/// <summary>
+		/// Gets or sets start date for filtering transactions.
+		/// </summary>
+		public DateTime FromDate
+		{
+			get { return fromDate; }
+			set
+			{
+				fromDate = value;
+				UpdateTillDate(true);
+				NotifyOfPropertyChange(() => FromDate);
+				NotifyOfPropertyChange(() => Period);
+			}
+		}
+
+		/// <summary>
+		/// Start date for filtering transactions.
+		/// </summary>
+		private DateTime tillDate;
+
+		/// <summary>
+		/// Gets or sets end date for filtering transactions.
+		/// </summary>
+		public DateTime TillDate
+		{
+			get { return tillDate; }
+			set
+			{
+				tillDate = value;
+				NotifyOfPropertyChange(() => TillDate);
+				NotifyOfPropertyChange(() => Period);
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets filter date period text ("FromDate - TillDate" or "FromDate" only).
+		/// </summary>
+		public string Period
+		{
+			get
+			{
+				return FromDate.Date == TillDate.Date
+						? FromDate.Date.ToLongDateString()
+						: FromDate.Date.ToLongDateString() + " - " + TillDate.Date.ToLongDateString();
+			}
+		}
+
+		/// <summary>
+		/// Gets available date range values to specify end date for filtering transactions.
+		/// </summary>
+		public EnumWrapperList<DateRange> Intervals { get; private set; }
+
+		/// <summary>
+		/// Selected date range for filtering transactions.
+		/// </summary>
+		private DateRange selectedDateRange;
+
+		/// <summary>
+		/// Gets or sets selected date range for filtering transactions.
+		/// </summary>
+		public DateRange SelectedDateRange
+		{
+			get { return selectedDateRange; }
+			set
+			{
+				selectedDateRange = value;
+				UpdateTillDate(true);
+				NotifyOfPropertyChange(() => SelectedDateRange);
+			}
+		}
+
+		private void UpdateTillDate(bool reloadTransactions)
+		{
+			switch (SelectedDateRange)
+			{
+				case DateRange.Day:
+					TillDate = FromDate.AddDays(1).AddMilliseconds(-1);
+					break;
+
+				case DateRange.FourDays:
+					TillDate = FromDate.AddDays(4).AddMilliseconds(-1);
+					break;
+
+				case DateRange.Week:
+					TillDate = FromDate.AddDays(7).AddMilliseconds(-1);
+					break;
+
+				case DateRange.Month:
+					TillDate = FromDate.AddMonths(1).AddMilliseconds(-1);
+					break;
+			}
+
+			if (reloadTransactions)
+			{
+				Coroutine.Execute(DownloadAllTransactions().GetEnumerator());
+			}
+		}
+
+		/// <summary>
 		/// Download all transactions for specific account of the specific user.
 		/// </summary>
 		/// <returns>Operation result.</returns>
@@ -111,11 +316,77 @@ namespace Fab.Client.MoneyTracker.Transactions
 		{
 			yield return Loader.Show("Loading...");
 
-			var request = new GetAllTransactionsResult(userId, CurrentAccount.Id);
-			yield return request;
+			// Determine previous account balance
+			var balanceResult = new GetBalanceResult(UserCredentials.Current.UserId, CurrentAccount.Id, FromDate.ToUniversalTime());
+			yield return balanceResult;
+
+			StartBalance = balanceResult.Balance;
+
+			// Get filtered transactions during specified time frame
+			var queryFilterDTO = new QueryFilter
+			                     	{
+			                     		NotOlderThen = FromDate.ToUniversalTime(),
+										Upto = TillDate.AddMilliseconds(1).ToUniversalTime(),
+			                     	};
+			var transactionsResult = new GetTransactionsResult(UserCredentials.Current.UserId, CurrentAccount.Id, queryFilterDTO);
+			yield return transactionsResult;
 
 			TransactionRecords.Clear();
-			TransactionRecords.AddRange(request.TransactionRecords);
+
+			decimal income = 0;
+			decimal expense = 0;
+			decimal incomeForPeriod = 0;
+			decimal expenseForPeriod = 0;
+			decimal balance = balanceResult.Balance;
+			CategoryDTO category = null;
+
+			foreach (var r in transactionsResult.TransactionRecords)
+			{
+				balance += r.Amount;
+
+				if (r is DepositDTO)
+				{
+					income = r.Amount;
+					incomeForPeriod += r.Amount;
+					expense = 0;
+					category = categoriesVM.Categories.Where(c => c.Id == ((DepositDTO) r).CategoryId).SingleOrDefault();
+				}
+				else if (r is WithdrawalDTO)
+				{
+					income = 0;
+					expense = -r.Amount;
+					expenseForPeriod += r.Amount;
+					category = categoriesVM.Categories.Where(c => c.Id == ((WithdrawalDTO)r).CategoryId).SingleOrDefault();
+				}
+				else if (r is IncomingTransferDTO)
+				{
+					income = r.Amount;		// positive is "TO this account"
+					incomeForPeriod += r.Amount;
+					expense = 0;
+				}
+				else if (r is OutgoingTransferDTO)
+				{
+					income = 0;
+					expense = -r.Amount;	// negative is "FROM this account"
+					expenseForPeriod += r.Amount;
+				}
+
+				TransactionRecords.Add(new TransactionRecord
+				{
+					TransactionId = r.Id,
+					Date = DateTime.SpecifyKind(r.Date, DateTimeKind.Utc),
+					Category = category,
+					Income = income,
+					Expense = expense,
+					Balance = balance,
+					Comment = r.Comment
+				});
+			}
+
+			EndBalance = balance;
+			TotalIncome = incomeForPeriod;
+			TotalExpense = expenseForPeriod;
+			BalanceDiff = incomeForPeriod + expenseForPeriod;
 
 			if (Reloaded != null)
 			{
@@ -145,7 +416,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 			yield return Loader.Show("Deleting...");
 
 			// Remove transaction on server
-			var request = new DeleteTransactionResult(userId, CurrentAccount.Id, transactionRecord.TransactionId);
+			var request = new DeleteTransactionResult(UserCredentials.Current.UserId, CurrentAccount.Id, transactionRecord.TransactionId);
 			yield return request;
 
 			// Remove transaction locally
@@ -174,27 +445,46 @@ namespace Fab.Client.MoneyTracker.Transactions
 			yield return Loader.Show("Load transaction details...");
 
 			// Remove transaction on server
-			var request = new LoadTransactionResult(userId, CurrentAccount.Id, transactionRecord.TransactionId);
+			var request = new LoadTransactionResult(UserCredentials.Current.UserId, CurrentAccount.Id, transactionRecord.TransactionId);
 			yield return request;
 
-			// Todo: use JournalType enumeration here instead of byte.
-			switch (request.Transaction.JournalType)
+			if (request.Transaction is TransactionDTO)
 			{
-				case 1:
-				case 2:
-					transactionDetailsVM.Edit(request.Transaction);
-					break;
-
-				case 3:
-					transferVM.Edit(request.Transaction);
-					break;
-
-				default:
-					throw new NotSupportedException("Transaction with journal type " + request.Transaction.JournalType +
-					                                " is not editable.");
+				transactionDetailsVM.Edit(request.Transaction as TransactionDTO);
+			}
+			else if (request.Transaction is TransferDTO)
+			{
+				transferVM.Edit(request.Transaction as TransferDTO, currentAccount.Id);
+			}
+			else
+			{
+				throw new NotSupportedException("Transaction of type " + request.Transaction.GetType() +
+												" is not editable.");
 			}
 
 			yield return Loader.Hide();
 		}
+
+		#region Implementation of IHandle<in LoggedOutMessage>
+
+		/// <summary>
+		/// Handles the <see cref="LoggedOutMessage"/>.
+		/// </summary>
+		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
+		public void Handle(LoggedOutMessage message)
+		{
+			TransactionRecords.Clear();
+			CurrentAccount = null;
+			StartBalance = 0;
+			EndBalance = 0;
+			TotalIncome = 0;
+			TotalExpense = 0;
+			BalanceDiff = 0;
+			FromDate = DateTime.UtcNow;
+			TillDate = DateTime.UtcNow;
+			SelectedDateRange = DateRange.Day;
+		}
+
+		#endregion
 	}
 }

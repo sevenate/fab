@@ -40,12 +40,12 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 			if (isDeposit)
 			{
 				proxy.DepositCompleted += OnSavingCompleted;
-				proxy.DepositAsync(userId, accountId, operationDate, price, quantity, comment, categoryId);
+				proxy.DepositAsync(userId, accountId, operationDate, price, quantity, categoryId, comment);
 			}
 			else
 			{
 				proxy.WithdrawalCompleted += OnSavingCompleted;
-				proxy.WithdrawalAsync(userId, accountId, operationDate, price, quantity, comment, categoryId);
+				proxy.WithdrawalAsync(userId, accountId, operationDate, price, quantity, categoryId, comment);
 			}
 		}
 

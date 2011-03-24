@@ -1,27 +1,20 @@
-// <copyright file="IAccountsViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+// <copyright file="IAccountsViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-04-13</date>
-// </author>
-// <editor name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-04-13</date>
-// </editor>
-// <summary>General accounts view model interface.</summary>
+// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-04-13" />
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 
 namespace Fab.Client.MoneyTracker.Accounts
 {
 	/// <summary>
 	/// General accounts view model interface.
 	/// </summary>
-	public interface IAccountsViewModel
+	public interface IAccountsViewModel : IHandle<LoggedOutMessage>
 	{
 		/// <summary>
 		/// Gets accounts for specific user.

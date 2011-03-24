@@ -5,7 +5,10 @@
 // <summary>Unit tests for MoneyService.</summary>
 
 using System;
-using Fab.Server.Core;
+using System.Linq;
+using Fab.Server.Core.DTO;
+using Fab.Server.Core.Enums;
+using Fab.Server.Core.Filters;
 using Xunit;
 
 namespace Fab.Server.Tests
@@ -15,64 +18,79 @@ namespace Fab.Server.Tests
 	/// </summary>
 	public class MoneyServiceTests
 	{
-		#region Account Service
+		#region Accounts
 
 		/// <summary>
-		/// Test <see cref="MoneyService.CreateAccount"/> method.
+		/// Test <see cref="MoneyService.CreateAccount"/> and <see cref="MoneyService.GetAccount"/> methods.
 		/// </summary>
 		[Fact]
-		public void CreateAccount()
+		// ReSharper disable InconsistentNaming
+		public void Create_and_Get_Account()
+		// ReSharper restore InconsistentNaming
 		{
-			const string expectedAccountName = "Test Account";
+			const string accountName = "Test Account";
+			const int assetType = 1;
+
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
 
-			int accountId = service.CreateAccount(userId, expectedAccountName, 1);
+			var accountId = service.CreateAccount(userId, accountName, assetType);
+			DateTime date = DateTime.UtcNow;
+			var account = service.GetAccount(userId, accountId);
 
-			var accounts = service.GetAllAccounts(userId);
-			Assert.Equal(1, accounts.Count);
-			Assert.Equal(expectedAccountName, accounts[0].Name);
+			Assert.Equal(assetType, account.AssetTypeId);
+			Assert.Equal(accountName, account.Name);
+			Assert.Equal(0, account.Balance);
+			Assert.Equal(DateTimeKind.Utc, account.Created.Kind);
+			// account creation date should not be too old
+			Assert.True(account.Created.AddSeconds(30) > date);
 		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.UpdateAccount"/> method.
 		/// </summary>
 		[Fact]
-		public void UpdateAccount()
+// ReSharper disable InconsistentNaming
+		public void Update_Account()
+// ReSharper restore InconsistentNaming
 		{
-			const string accountName = "Test Account";
-			const string expectedNewAccountName = "Renamed Account";
-			const int assetType = 1;
-			const int expectedNewAssetType = 2;
+			const string accountName = "Renamed Account";
+			const int assetType = 2;
+
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, accountName, assetType);
-			var accounts = service.GetAllAccounts(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			DateTime date = DateTime.UtcNow;
 
-			service.UpdateAccount(userId, accounts[0].Id, expectedNewAccountName, expectedNewAssetType);
+			service.UpdateAccount(userId, accountId, accountName, assetType);
+			var account = service.GetAccount(userId, accountId);
 
-			accounts = service.GetAllAccounts(userId);
-			Assert.Equal(1, accounts.Count);
-			Assert.Equal(expectedNewAccountName, accounts[0].Name);
-			Assert.Equal(expectedNewAssetType, accounts[0].AssetType.Id);
+			Assert.Equal(accountName, account.Name);
+			Assert.Equal(assetType, account.AssetTypeId);
+			Assert.Equal(0, account.Balance);
+			Assert.Equal(DateTimeKind.Utc, account.Created.Kind);
+			// account creation date should not be too old
+			Assert.True(account.Created.AddSeconds(30) > date);
 		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.DeleteAccount"/> method.
 		/// </summary>
 		[Fact]
-		public void DeleteAccount()
+// ReSharper disable InconsistentNaming
+		public void Delete_Account()
+// ReSharper restore InconsistentNaming
 		{
-			const string accountName = "Test Account";
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, accountName, 1);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
 			var accounts = service.GetAllAccounts(userId);
+			Assert.Equal(1, accounts.Count);
 
-			service.DeleteAccount(userId, accounts[0].Id);
+			service.DeleteAccount(userId, accountId);
 
 			accounts = service.GetAllAccounts(userId);
 			Assert.Equal(0, accounts.Count);
@@ -82,83 +100,114 @@ namespace Fab.Server.Tests
 		/// Test <see cref="MoneyService.GetAllAccounts"/> method.
 		/// </summary>
 		[Fact]
-		public void GetAllAccounts()
+// ReSharper disable InconsistentNaming
+		public void Get_All_Accounts()
+// ReSharper restore InconsistentNaming
 		{
-			const string expectedAccountName = "Test Account";
+			const string accountName1 = "Test Account #1";
+			const string accountName2 = "Test Account #2";
+			const int assetType1 = 1;
+			const int assetType2 = 2;
+
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, expectedAccountName, 1);
+			service.CreateAccount(userId, accountName1, assetType1);
+			DateTime date1 = DateTime.UtcNow;
+			service.CreateAccount(userId, accountName2, assetType2);
+			DateTime date2 = DateTime.UtcNow;
 
 			var accounts = service.GetAllAccounts(userId);
 
-			Assert.Equal(1, accounts.Count);
-			Assert.Equal(expectedAccountName, accounts[0].Name);
-			Assert.NotNull(accounts[0].AssetType);
-			Assert.Equal(1, accounts[0].AssetType.Id);
+			Assert.Equal(2, accounts.Count);
+			// accounts should be ordered by creation date
+			Assert.True(accounts[1].Created > accounts[0].Created);
+			
+			Assert.Equal(accountName1, accounts[0].Name);
+			Assert.Equal(assetType1, accounts[0].AssetTypeId);
+			Assert.Equal(0, accounts[0].Balance);
+			Assert.Equal(DateTimeKind.Utc, accounts[0].Created.Kind);
+			// account creation date should not be too old
+			Assert.True(accounts[0].Created.AddSeconds(30) > date1);
+
+			Assert.Equal(accountName2, accounts[1].Name);
+			Assert.Equal(assetType2, accounts[1].AssetTypeId);
+			Assert.Equal(0, accounts[1].Balance);
+			Assert.Equal(DateTimeKind.Utc, accounts[1].Created.Kind);
+			// account creation date should not be too old
+			Assert.True(accounts[1].Created.AddSeconds(30) > date2);
 		}
 
 		#endregion
 
-		#region Category Service
+		#region Categories
 
 		/// <summary>
-		/// Test <see cref="MoneyService.CreateCategory"/> method.
+		/// Test <see cref="MoneyService.CreateCategory"/> and <see cref="MoneyService.GetCategory"/> methods.
 		/// </summary>
 		[Fact]
-		public void CreateCategory()
+// ReSharper disable InconsistentNaming
+		public void Create_and_Get_Category()
+// ReSharper restore InconsistentNaming
 		{
-			const string expectedCategoryName = "Test Category";
-			const byte categoryType = 1;
+			const string categoryName = "Test Category";
+			const CategoryType categoryType = CategoryType.Withdrawal;
+			const int categoryPopularity = 0;
+
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
 
-			int categoryId = service.CreateCategory(userId, expectedCategoryName, categoryType);
+			var categoryId = service.CreateCategory(userId, categoryName, categoryType);
 
-			var categories = service.GetAllCategories(userId);
-			Assert.Equal(1, categories.Count);
-			Assert.Equal(expectedCategoryName, categories[0].Name);
-			Assert.Equal(categoryType, categories[0].CategoryType);
+			var category = service.GetCategory(userId, categoryId);
+
+			Assert.Equal(categoryName, category.Name);
+			Assert.Equal(categoryType, category.CategoryType);
+			Assert.Equal(categoryPopularity, category.Popularity);
 		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.UpdateCategory"/> method.
 		/// </summary>
 		[Fact]
-		public void UpdateCategory()
+// ReSharper disable InconsistentNaming
+		public void Update_Category()
+// ReSharper restore InconsistentNaming
 		{
-			const string categoryName = "Test Category";
-			const string expectedNewCategoryName = "Renamed Category";
-			const byte categoryType = 1;
-			const byte expectedNewCategoryType = 2;
+			const string categoryName = "Renamed Category";
+			const CategoryType categoryType = CategoryType.Deposit;
+			const int popularity = 0;
+
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateCategory(userId, categoryName, categoryType);
-			var categories = service.GetAllCategories(userId);
+			var categoryId = service.CreateCategory(userId, "Test Category", CategoryType.Withdrawal);
 
-			service.UpdateCategory(userId, categories[0].Id, expectedNewCategoryName, expectedNewCategoryType);
-
-			categories = service.GetAllCategories(userId);
-			Assert.Equal(1, categories.Count);
-			Assert.Equal(expectedNewCategoryName, categories[0].Name);
-			Assert.Equal(expectedNewCategoryType, categories[0].CategoryType);
+			service.UpdateCategory(userId, categoryId, categoryName, categoryType);
+			var category = service.GetCategory(userId, categoryId);
+			
+			Assert.Equal(categoryName, category.Name);
+			Assert.Equal(categoryType, category.CategoryType);
+			Assert.Equal(popularity, category.Popularity);
 		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.DeleteCategory"/> method.
 		/// </summary>
 		[Fact]
-		public void DeleteCategory()
+// ReSharper disable InconsistentNaming
+		public void Delete_Category()
+// ReSharper restore InconsistentNaming
 		{
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateCategory(userId, "Test Category", 1);
+			var categoryId = service.CreateCategory(userId, "Test Category", CategoryType.Withdrawal);
 			var categories = service.GetAllCategories(userId);
+			Assert.Equal(1, categories.Count);
 
-			service.DeleteCategory(userId, categories[0].Id);
+			service.DeleteCategory(userId, categoryId);
 
 			categories = service.GetAllCategories(userId);
 			Assert.Equal(0, categories.Count);
@@ -168,444 +217,871 @@ namespace Fab.Server.Tests
 		/// Test <see cref="MoneyService.GetAllCategories"/> method.
 		/// </summary>
 		[Fact]
-		public void GetAllCategories()
+// ReSharper disable InconsistentNaming
+		public void Get_All_Categories()
+// ReSharper restore InconsistentNaming
 		{
-			const string expectedCategoryName = "Test Category";
-			const byte expectedNewCategoryType = 1;
+			const string categoryName1 = "Withdrawal Category";
+			const string categoryName2 = "Deposit Category";
+			const CategoryType categoryType1 = CategoryType.Deposit;
+			const CategoryType categoryType2 = CategoryType.Withdrawal;
+			const int popularity = 0;
+
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateCategory(userId, expectedCategoryName, expectedNewCategoryType);
+			service.CreateCategory(userId, categoryName1, categoryType1);
+			service.CreateCategory(userId, categoryName2, categoryType2);
 
 			var categories = service.GetAllCategories(userId);
 
-			Assert.Equal(1, categories.Count);
-			Assert.Equal(expectedCategoryName, categories[0].Name);
-			Assert.Equal(expectedNewCategoryType, categories[0].CategoryType);
+			Assert.Equal(2, categories.Count);
+
+			// categories should be ordered by name
+
+			Assert.Equal(categoryName2, categories[0].Name);
+			Assert.Equal(categoryType2, categories[0].CategoryType);
+			Assert.Equal(popularity, categories[0].Popularity);
+
+			Assert.Equal(categoryName1, categories[1].Name);
+			Assert.Equal(categoryType1, categories[1].CategoryType);
+			Assert.Equal(popularity, categories[1].Popularity);
 		}
 
 		#endregion
 
-		#region Transaction Service
+		#region Journals, Transactions and Transfers
 
 		/// <summary>
 		/// Test <see cref="MoneyService.GetAllAssetTypes"/> method.
 		/// </summary>
 		[Fact]
-		public void GetAllAssetTypes()
+// ReSharper disable InconsistentNaming
+		public void Get_All_AssetTypes()
+// ReSharper restore InconsistentNaming
 		{
 			var service = new MoneyService();
 
 			var assets = service.GetAllAssetTypes();
 
+			// by default there are only 4 asset types: UAH, USD, EUR and RUR
 			Assert.Equal(4, assets.Count);
+
+			// and they should be sorted by name
+			Assert.Equal(3, assets[0].Id);
+			Assert.Equal("EUR", assets[0].Name);
+			Assert.Equal(4, assets[1].Id);
+			Assert.Equal("RUR", assets[1].Name);
+			Assert.Equal(1, assets[2].Id);
+			Assert.Equal("UAH", assets[2].Name);
+			Assert.Equal(2, assets[3].Id);
+			Assert.Equal("USD", assets[3].Name);
 		}
 
 		/// <summary>
-		/// Test <see cref="MoneyService.Deposit"/> method.
+		/// Test <see cref="MoneyService.Deposit"/>  and <see cref="MoneyService.DeleteJournal"/> methods.
 		/// </summary>
 		[Fact]
-		public void Deposit()
+// ReSharper disable InconsistentNaming
+		public void Deposit_and_Delete()
+// ReSharper restore InconsistentNaming
 		{
 			var service = new MoneyService();
 			var userService = new UserService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var account = service.GetAccount(userId, accountId);
+			Assert.Equal(0, account.Balance);
 
-			service.Deposit(userId, accounts[0].Id, DateTime.Now, 25, 2, "Some income comment", categories[0].Id);
+			var categoryId = service.CreateCategory(userId, "Test Category", CategoryType.Deposit);
+			var category = service.GetCategory(userId, categoryId);
+			Assert.Equal(0, category.Popularity);
+
+			var journalId = service.Deposit(userId, accountId, DateTime.UtcNow, 25, 2, categoryId, "Some income");
+
+			account = service.GetAccount(userId, accountId);
+			Assert.Equal(50, account.Balance);
+
+			category = service.GetCategory(userId, categoryId);
+			Assert.Equal(1, category.Popularity);
+
+			service.DeleteJournal(userId, accountId, journalId);
+
+			account = service.GetAccount(userId, accountId);
+			Assert.Equal(0, account.Balance);
+
+			category = service.GetCategory(userId, categoryId);
+			Assert.Equal(0, category.Popularity);
 		}
 
 		/// <summary>
-		/// Test <see cref="MoneyService.Withdrawal"/> method.
+		/// Test <see cref="MoneyService.Withdrawal"/> and <see cref="MoneyService.DeleteJournal"/> methods.
 		/// </summary>
 		[Fact]
-		public void Withdrawal()
+// ReSharper disable InconsistentNaming
+		public void Withdrawal_and_Delete()
+// ReSharper restore InconsistentNaming
 		{
 			var service = new MoneyService();
 			var userService = new UserService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryId = service.CreateCategory(userId, "Test Category", CategoryType.Withdrawal);
+			
+			var journalId = service.Withdrawal(userId, accountId, DateTime.UtcNow, 13, 10, categoryId, "Some expense");
 
-			service.Withdrawal(userId, accounts[0].Id, DateTime.Now, 13, 10, "Some expense comment", categories[0].Id);
+			var account = service.GetAccount(userId, accountId);
+			Assert.Equal(-130, account.Balance);
+
+			var category = service.GetCategory(userId, categoryId);
+			Assert.Equal(1, category.Popularity);
+
+			service.DeleteJournal(userId, accountId, journalId);
+
+			account = service.GetAccount(userId, accountId);
+			Assert.Equal(0, account.Balance);
+
+			category = service.GetCategory(userId, categoryId);
+			Assert.Equal(0, category.Popularity);
 		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.Transfer"/> method.
 		/// </summary>
 		[Fact]
-		public void Transfer()
+// ReSharper disable InconsistentNaming
+		public void Create_and_Delete_Transfer()
+// ReSharper restore InconsistentNaming
 		{
 			var service = new MoneyService();
 			var userService = new UserService();
 			var userId1 = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
 			var userId2 = userService.Register("testUser2" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId1, "Test Account 1", 1);
-			service.CreateAccount(userId2, "Test Account 2", 1);
-			var accounts1 = service.GetAllAccounts(userId1);
-			var accounts2 = service.GetAllAccounts(userId2);
+			var accountId1 = service.CreateAccount(userId1, "Test Account 1", 1);
+			var accountId2 = service.CreateAccount(userId2, "Test Account 2", 1);
 
-			service.Transfer(userId1, accounts1[0].Id, userId2, accounts2[0].Id, DateTime.Now, 78, "Some transfer comment");
+			var transferId = service.Transfer(userId1, accountId1, accountId2, DateTime.UtcNow, 78, 10, "Some transfer comment");
+
+			var account = service.GetAccount(userId1, accountId1);
+			Assert.Equal(-780, account.Balance);
+
+			account = service.GetAccount(userId2, accountId2);
+			Assert.Equal(780, account.Balance);
+
+			service.DeleteJournal(userId1, accountId1, transferId);
+
+			account = service.GetAccount(userId1, accountId1);
+			Assert.Equal(0, account.Balance);
+
+			account = service.GetAccount(userId2, accountId2);
+			Assert.Equal(0, account.Balance);
 		}
 
 		/// <summary>
-		/// Test <see cref="MoneyService.GetTransaction"/> method.
+		/// Test <see cref="MoneyService.GetJournal"/> method.
 		/// </summary>
 		[Fact]
-		public void GetTransaction()
+// ReSharper disable InconsistentNaming
+		public void Get_Deposit_Journal()
+// ReSharper restore InconsistentNaming
 		{
-			const string accountName = "Test Account 1";
-			const string categoryName = "Test Category 1";
-			const byte categoryType = 1;
+			const decimal rate = 25;
+			const decimal quantity = 10;
+			const decimal amount = rate * quantity;
+			const string comment = "Some income";
+			DateTime date = DateTime.UtcNow;
+
+			var service = new MoneyService();
+			var userService = new UserService();
+			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryId = service.CreateCategory(userId, "Test Category", CategoryType.Deposit);
+			var depositId = service.Deposit(userId, accountId, date, rate, quantity, categoryId, comment);
+
+			var deposit = service.GetJournal(userId, accountId, depositId) as DepositDTO;
+
+			Assert.NotNull(deposit);
+			Assert.Equal(amount, deposit.Amount);
+			Assert.Equal(categoryId, deposit.CategoryId);
+			Assert.Equal(comment, deposit.Comment);
+			Assert.True(Math.Abs(date.Ticks - deposit.Date.Ticks) < 100000);
+			Assert.Equal(quantity, deposit.Quantity);
+			Assert.Equal(rate, deposit.Rate);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetJournal"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Get_Withdrawal_Journal()
+		// ReSharper restore InconsistentNaming
+		{
+			const decimal rate = 75;
+			const decimal quantity = 2;
+			const decimal amount = rate * quantity;
+			const string comment = "Some expense";
+			DateTime date = DateTime.UtcNow;
+
+			var service = new MoneyService();
+			var userService = new UserService();
+			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryId = service.CreateCategory(userId, "Test Category", CategoryType.Withdrawal);
+			var withdrawalId = service.Withdrawal(userId, accountId, date, rate, quantity, categoryId, comment);
+
+			var withdrawal = service.GetJournal(userId, accountId, withdrawalId) as WithdrawalDTO;
+
+			Assert.NotNull(withdrawal);
+			Assert.Equal(-amount, withdrawal.Amount);
+			Assert.Equal(categoryId, withdrawal.CategoryId);
+			Assert.Equal(comment, withdrawal.Comment);
+			Assert.True(Math.Abs(date.Ticks - withdrawal.Date.Ticks) < 100000);
+			Assert.Equal(quantity, withdrawal.Quantity);
+			Assert.Equal(rate, withdrawal.Rate);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetJournal"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Get_Incoming_and_Outgoing_Transfer_Journals()
+		// ReSharper restore InconsistentNaming
+		{
+			const decimal rate = 25;
+			const decimal quantity = 10;
+			const decimal amount = rate*quantity;
+			const string comment = "Some transfer";
+			DateTime date = DateTime.UtcNow;
+
 			var service = new MoneyService();
 			var userService = new UserService();
 			var userId1 = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId1, accountName, 1);
-			var accounts1 = service.GetAllAccounts(userId1);
-			service.CreateCategory(userId1, categoryName, categoryType);
-			var categories = service.GetAllCategories(userId1);
-			service.Deposit(userId1, accounts1[0].Id, DateTime.Now, 25, 10, "Some income comment", categories[0].Id);
+			var userId2 = userService.Register("testUser2" + Guid.NewGuid(), "testPassword");
+			var accountId1 = service.CreateAccount(userId1, "Test Account 1", 1);
+			var accountId2 = service.CreateAccount(userId2, "Test Account 2", 1);
 
-			var transactions = service.GetAllTransactions(userId1, accounts1[0].Id);
-			
-			Assert.Equal(1, transactions.Count);
+			var transferId = service.Transfer(userId1, accountId1, accountId2, date, rate, quantity, comment);
 
-			var transaction = service.GetTransaction(userId1, accounts1[0].Id, transactions[0].TransactionId);
+			var outgoingTransferDTO = service.GetJournal(userId1, accountId1, transferId) as OutgoingTransferDTO;
 
-			Assert.NotNull(transaction);
-			Assert.Equal(2, transaction.Postings.Count);
-			
-			Assert.NotNull(transaction.Category);
-			Assert.Equal(categoryName, transaction.Category.Name);
-			Assert.Equal(categoryType, transaction.Category.CategoryType);
-			
-			Assert.NotNull(transaction.Postings[0].Account);
-			Assert.Equal(accountName, transaction.Postings[0].Account.Name);
+			Assert.NotNull(outgoingTransferDTO);
+			Assert.Equal(-amount, outgoingTransferDTO.Amount);
+			Assert.Equal(comment, outgoingTransferDTO.Comment);
+			Assert.True(Math.Abs(date.Ticks - outgoingTransferDTO.Date.Ticks) < 100000);
+			Assert.Equal(quantity, outgoingTransferDTO.Quantity);
+			Assert.Equal(rate, outgoingTransferDTO.Rate);
+			Assert.Equal(accountId2, outgoingTransferDTO.SecondAccountId);
+
+			var incomingTransferDTO = service.GetJournal(userId1, accountId2, transferId) as IncomingTransferDTO;
+
+			Assert.NotNull(incomingTransferDTO);
+			Assert.Equal(amount, incomingTransferDTO.Amount);
+			Assert.Equal(comment, incomingTransferDTO.Comment);
+			Assert.True(Math.Abs(date.Ticks - incomingTransferDTO.Date.Ticks) < 100000);
+			Assert.Equal(quantity, incomingTransferDTO.Quantity);
+			Assert.Equal(rate, incomingTransferDTO.Rate);
+			Assert.Equal(accountId1, incomingTransferDTO.SecondAccountId);
 		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.GetAccountBalance"/> method.
 		/// </summary>
 		[Fact]
-		public void GetAccountBalance()
+// ReSharper disable InconsistentNaming
+		public void Get_Account_Balance()
+// ReSharper restore InconsistentNaming
 		{
 			var service = new MoneyService();
 			var userService = new UserService();
-			var userId1 = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			var userId2 = userService.Register("testUser2" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId1, "Test Account 1", 1);
-			service.CreateAccount(userId2, "Test Account 2", 1);
-			var accounts1 = service.GetAllAccounts(userId1);
-			var accounts2 = service.GetAllAccounts(userId2);
-			service.CreateCategory(userId1, "Test Category 1", 1);
-			var categories1 = service.GetAllCategories(userId1);
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			var accountId1 = service.CreateAccount(userId, "Test Account 1", 1);
+			var accountId2 = service.CreateAccount(userId, "Test Account 2", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Test Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Test Category", CategoryType.Withdrawal);
+			
+			service.Deposit(userId, accountId1, DateTime.UtcNow, 25, 10, null, "Some income");
 
-			service.Deposit(userId1, accounts1[0].Id, DateTime.Now, 25, 10, "Some income comment", null);
-
-			var balance = service.GetAccountBalance(userId1, accounts1[0].Id);
+			var balance = service.GetAccountBalance(userId, accountId1, DateTime.UtcNow);
 			Assert.Equal(250, balance);
+			
+			var categories = service.GetAllCategories(userId);
+			Assert.Equal(2, categories.Count);
+			Assert.Equal(0, categories.Single(c => c.CategoryType == CategoryType.Deposit).Popularity);
+			Assert.Equal(0, categories.Single(c => c.CategoryType == CategoryType.Withdrawal).Popularity);
 
-			service.Withdrawal(userId1, accounts1[0].Id, DateTime.Now, 10, 5, "Some expense comment", categories1[0].Id);
+			service.Deposit(userId, accountId1, DateTime.UtcNow, 5, 2, categoryDepositId, "Small income");
 
-			balance = service.GetAccountBalance(userId1, accounts1[0].Id);
-			Assert.Equal(200, balance);
+			balance = service.GetAccountBalance(userId, accountId1, DateTime.UtcNow);
+			Assert.Equal(260, balance);
+			
+			categories = service.GetAllCategories(userId);
+			Assert.Equal(2, categories.Count);
+			Assert.Equal(1, categories.Single(c => c.CategoryType == CategoryType.Deposit).Popularity);
+			Assert.Equal(0, categories.Single(c => c.CategoryType == CategoryType.Withdrawal).Popularity);
 
-			balance = service.GetAccountBalance(userId2, accounts2[0].Id);
+			service.Withdrawal(userId, accountId1, DateTime.UtcNow, 10, 5, categoryWithdrawalId, "Some expense");
+
+			balance = service.GetAccountBalance(userId, accountId1, DateTime.UtcNow);
+			Assert.Equal(210, balance);
+
+			categories = service.GetAllCategories(userId);
+			Assert.Equal(2, categories.Count);
+			Assert.Equal(1, categories.Single(c => c.CategoryType == CategoryType.Deposit).Popularity);
+			Assert.Equal(1, categories.Single(c => c.CategoryType == CategoryType.Withdrawal).Popularity);
+
+			balance = service.GetAccountBalance(userId, accountId2, DateTime.UtcNow);
 			Assert.Equal(0, balance);
 
-			service.Transfer(userId1, accounts1[0].Id, userId2, accounts2[0].Id, DateTime.Now, 75, "Some transfer comment");
+			service.Transfer(userId, accountId1, accountId2, DateTime.UtcNow, 30, 2, "Some transfer");
 
-			balance = service.GetAccountBalance(userId1, accounts1[0].Id);
-			Assert.Equal(125, balance);
+			balance = service.GetAccountBalance(userId, accountId1, DateTime.UtcNow);
+			Assert.Equal(150, balance);
 
-			balance = service.GetAccountBalance(userId2, accounts2[0].Id);
-			Assert.Equal(75, balance);
+			balance = service.GetAccountBalance(userId, accountId2, DateTime.UtcNow);
+			Assert.Equal(60, balance);
 		}
 
 		/// <summary>
-		/// Test <see cref="MoneyService.GetAllTransactions"/> method.
+		/// Test <see cref="MoneyService.GetJournals"/> method.
 		/// </summary>
 		[Fact]
-		public void GetAllTransactions()
+// ReSharper disable InconsistentNaming
+		public void Get_All_Journals()
+// ReSharper restore InconsistentNaming
 		{
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
-
-			service.Deposit(userId, accounts[0].Id, DateTime.Now, 25, 10, "Some income comment", null);
-			service.Withdrawal(userId, accounts[0].Id, DateTime.Now, 10, 5, "Some expense comment", categories[0].Id);
-
-			var transactionRecords = service.GetAllTransactions(userId, accounts[0].Id);
-
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(2, transactionRecords.Count);
-		}
-
-		/// <summary>
-		/// Test <see cref="MoneyService.GetTransactions"/> method.
-		/// </summary>
-		[Fact]
-		public void GetTransactionsNotOlderThenDate()
-		{
-			var userService = new UserService();
-			var service = new MoneyService();
-			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Old income", null);
-			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Not older then expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date3, 6, 1, "New expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Newest expense", categories[0].Id);
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Some income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			service.Withdrawal(userId, accountId, date3, 7, 5, null, "Another expense");
+			service.Withdrawal(userId, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+
+			var filter = new QueryFilter();
+			var journals = service.GetJournals(userId, accountId, filter);
+
+			Assert.NotNull(journals);
+			Assert.Equal(4, journals.Count);
+			Assert.True(journals[0] is DepositDTO);
+			Assert.True(journals[1] is WithdrawalDTO);
+			Assert.True(journals[2] is WithdrawalDTO);
+			Assert.True(journals[3] is WithdrawalDTO);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetJournals"/> method.
+		/// </summary>
+		[Fact]
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_Not_Older_Then()
+// ReSharper restore InconsistentNaming
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Old income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Not older then expense");
+			service.Withdrawal(userId, accountId, date3, 6, 1, null, "New expense");
+			service.Withdrawal(userId, accountId, date4, 7, 2, categoryWithdrawalId, "Newest expense");
 
 			var filter = new QueryFilter
 			             	{
 			             		NotOlderThen = date2
 			             	};
-			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+			var journals = service.GetJournals(userId, accountId, filter);
 
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(2, transactionRecords.Count);
-			Assert.Equal("New expense", transactionRecords[0].Comment);
-			Assert.Equal(date3, transactionRecords[0].Date);
-			Assert.Equal("Newest expense", transactionRecords[1].Comment);
-			Assert.Equal(date4, transactionRecords[1].Date);
+			Assert.NotNull(journals);
+			Assert.Equal(3, journals.Count);
+			Assert.Equal("Not older then expense", journals[0].Comment);
+			Assert.Equal(10, journals[0].Rate);
+			Assert.Equal(5, journals[0].Quantity);
+			Assert.Equal(-50, journals[0].Amount);
+			Assert.Equal(date2, journals[0].Date);
+			Assert.True(journals[0] is WithdrawalDTO);
+			Assert.Equal("New expense", journals[1].Comment);
+			Assert.Equal(6, journals[1].Rate);
+			Assert.Equal(1, journals[1].Quantity);
+			Assert.Equal(-6, journals[1].Amount);
+			Assert.Equal(date3, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
+			Assert.Equal("Newest expense", journals[2].Comment);
+			Assert.Equal(7, journals[2].Rate);
+			Assert.Equal(2, journals[2].Quantity);
+			Assert.Equal(-14, journals[2].Amount);
+			Assert.Equal(date4, journals[2].Date);
+			Assert.True(journals[2] is WithdrawalDTO);
 		}
 
-
 		/// <summary>
-		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// Test <see cref="MoneyService.GetJournals"/> method.
 		/// </summary>
 		[Fact]
-		public void GetTransactionsUpToDate()
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_UpTo()
+// ReSharper restore InconsistentNaming
 		{
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
-
-			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
-			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
-			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
-
-			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Old income", null);
-			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Up to expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date3, 6, 1, "New expense", categories[0].Id);
-
-			var filter = new QueryFilter
-			             	{
-			             		Upto = date2
-			             	};
-			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
-
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(2, transactionRecords.Count);
-			Assert.Equal("Old income", transactionRecords[0].Comment);
-			Assert.Equal(date1, transactionRecords[0].Date);
-			Assert.Equal("Up to expense", transactionRecords[1].Comment);
-			Assert.Equal(date2, transactionRecords[1].Date);
-		}
-
-		/// <summary>
-		/// Test <see cref="MoneyService.GetTransactions"/> method.
-		/// </summary>
-		[Fact]
-		public void GetTransactionsByText()
-		{
-			var userService = new UserService();
-			var service = new MoneyService();
-			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
-			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Old income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Up to expense");
+			service.Withdrawal(userId, accountId, date3, 6, 1, null, "New expense");
+			service.Withdrawal(userId, accountId, date4, 7, 2, categoryWithdrawalId, "Newest expense");
 
 			var filter = new QueryFilter
+			             	{
+			             		Upto = date3
+			             	};
+			var journals = service.GetJournals(userId, accountId, filter);
+
+			Assert.NotNull(journals);
+			Assert.Equal(2, journals.Count);
+			Assert.Equal("Old income", journals[0].Comment);
+			Assert.Equal(25, journals[0].Rate);
+			Assert.Equal(10, journals[0].Quantity);
+			Assert.Equal(250, journals[0].Amount);
+			Assert.Equal(date1, journals[0].Date);
+			Assert.True(journals[0] is DepositDTO);
+			Assert.Equal("Up to expense", journals[1].Comment);
+			Assert.Equal(10, journals[1].Rate);
+			Assert.Equal(5, journals[1].Quantity);
+			Assert.Equal(-50, journals[1].Amount);
+			Assert.Equal(date2, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetJournals"/> method.
+		/// </summary>
+		[Fact]
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_Text()
+// ReSharper restore InconsistentNaming
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Some income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			service.Withdrawal(userId, accountId, date3, 1, 5, null, "Another expense");
+			service.Withdrawal(userId, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+
+			var filter = new TextSearchFilter
 			             	{
 								Contains = "exp"
 			             	};
-			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+			var journals = service.GetJournals(userId, accountId, filter);
 
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(2, transactionRecords.Count);
-			Assert.Equal("Some expense", transactionRecords[0].Comment);
-			Assert.Equal(date2, transactionRecords[0].Date);
-			Assert.Equal("Another expense", transactionRecords[1].Comment);
-			Assert.Equal(date3, transactionRecords[1].Date);
+			Assert.NotNull(journals);
+			Assert.Equal(2, journals.Count);
+			Assert.Equal("Some expense", journals[0].Comment);
+			Assert.Equal(10, journals[0].Rate);
+			Assert.Equal(5, journals[0].Quantity);
+			Assert.Equal(-50, journals[0].Amount);
+			Assert.Equal(date2, journals[0].Date);
+			Assert.True(journals[0] is WithdrawalDTO);
+			Assert.Equal("Another expense", journals[1].Comment);
+			Assert.Equal(1, journals[1].Rate);
+			Assert.Equal(5, journals[1].Quantity);
+			Assert.Equal(-5, journals[1].Amount);
+			Assert.Equal(date3, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
 		}
 
 		/// <summary>
-		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// Test <see cref="MoneyService.GetJournals"/> method.
 		/// </summary>
 		[Fact]
-		public void GetTransactionsWithSkiping()
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_Skiping()
+// ReSharper restore InconsistentNaming
 		{
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
-			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Some income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			service.Withdrawal(userId, accountId, date3, 1, 5, null, "Another expense");
+			service.Withdrawal(userId, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter
 						 {
 						 	Skip = 2
 						 };
-			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+			var journals = service.GetJournals(userId, accountId, filter);
 
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(2, transactionRecords.Count);
-			Assert.Equal("Another expense", transactionRecords[0].Comment);
-			Assert.Equal(date3, transactionRecords[0].Date);
-			Assert.Equal("Yet another ...", transactionRecords[1].Comment);
-			Assert.Equal(date4, transactionRecords[1].Date);
+			Assert.NotNull(journals);
+			Assert.Equal(2, journals.Count);
+			Assert.Equal("Another expense", journals[0].Comment);
+			Assert.Equal(1, journals[0].Rate);
+			Assert.Equal(5, journals[0].Quantity);
+			Assert.Equal(-5, journals[0].Amount);
+			Assert.Equal(date3, journals[0].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
+			Assert.Equal("Yet another ...", journals[1].Comment);
+			Assert.Equal(3, journals[1].Rate);
+			Assert.Equal(2, journals[1].Quantity);
+			Assert.Equal(-6, journals[1].Amount);
+			Assert.Equal(date4, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
 		}
 
 		/// <summary>
-		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// Test <see cref="MoneyService.GetJournals"/> method.
 		/// </summary>
 		[Fact]
-		public void GetTransactionsWithTaking()
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_Taking()
+// ReSharper restore InconsistentNaming
 		{
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
-			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Some income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			service.Withdrawal(userId, accountId, date3, 1, 5, null, "Another expense");
+			service.Withdrawal(userId, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter
 			{
 				Take = 2
 			};
-			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+			var journals = service.GetJournals(userId, accountId, filter);
 
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(2, transactionRecords.Count);
-			Assert.Equal("Some income", transactionRecords[0].Comment);
-			Assert.Equal(date1, transactionRecords[0].Date);
-			Assert.Equal("Some expense", transactionRecords[1].Comment);
-			Assert.Equal(date2, transactionRecords[1].Date);
+			Assert.NotNull(journals);
+			Assert.Equal(2, journals.Count);
+			Assert.Equal("Some income", journals[0].Comment);
+			Assert.Equal(25, journals[0].Rate);
+			Assert.Equal(10, journals[0].Quantity);
+			Assert.Equal(250, journals[0].Amount);
+			Assert.Equal(date1, journals[0].Date);
+			Assert.True(journals[0] is DepositDTO);
+			Assert.Equal("Some expense", journals[1].Comment);
+			Assert.Equal(10, journals[1].Rate);
+			Assert.Equal(5, journals[1].Quantity);
+			Assert.Equal(-50, journals[1].Amount);
+			Assert.Equal(date2, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
 		}
 
 		/// <summary>
-		/// Test <see cref="MoneyService.GetTransactions"/> method.
+		/// Test <see cref="MoneyService.GetJournals"/> method.
 		/// </summary>
 		[Fact]
-		public void GetTransactionsWithSkipingAndTaking()
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_Skiping_Taking()
+// ReSharper restore InconsistentNaming
 		{
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			service.Deposit(userId, accounts[0].Id, date1, 25, 10, "Some income", null);
-			service.Withdrawal(userId, accounts[0].Id, date2, 10, 5, "Some expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date3, 1, 5, "Another expense", categories[0].Id);
-			service.Withdrawal(userId, accounts[0].Id, date4, 3, 2, "Yet another ...", categories[0].Id);
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Some income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			service.Withdrawal(userId, accountId, date3, 7, 5, null, "Another expense");
+			service.Withdrawal(userId, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter
 			{
 				Skip = 2,
 				Take = 1
 			};
-			var transactionRecords = service.GetTransactions(userId, accounts[0].Id, filter);
+			var journals = service.GetJournals(userId, accountId, filter);
 
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(1, transactionRecords.Count);
-			Assert.Equal("Another expense", transactionRecords[0].Comment);
-			Assert.Equal(date3, transactionRecords[0].Date);
+			Assert.NotNull(journals);
+			Assert.Equal(1, journals.Count);
+			Assert.Equal("Another expense", journals[0].Comment);
+			Assert.Equal(7, journals[0].Rate);
+			Assert.Equal(5, journals[0].Quantity);
+			Assert.Equal(-35, journals[0].Amount);
+			Assert.Equal(date3, journals[0].Date);
+			Assert.True(journals[0] is WithdrawalDTO);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetJournalsCount"/> method.
+		/// </summary>
+		[Fact]
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_Count_All()
+// ReSharper restore InconsistentNaming
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Some income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			service.Withdrawal(userId, accountId, date3, 7, 5, null, "Another expense");
+			service.Withdrawal(userId, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+
+			var journalsCount = service.GetJournalsCount(userId, accountId, new QueryFilter());
+
+			Assert.Equal(4, journalsCount);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.GetJournalsCount"/> method.
+		/// </summary>
+		[Fact]
+// ReSharper disable InconsistentNaming
+		public void Get_Journals_Count_DateRange()
+// ReSharper restore InconsistentNaming
+		{
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
+
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Some income");
+			service.Withdrawal(userId, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			service.Withdrawal(userId, accountId, date3, 7, 5, null, "Another expense");
+			service.Withdrawal(userId, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+
+			var filter = new QueryFilter
+			{
+				NotOlderThen = date1,
+				Upto = date3
+			};
+			var journalsCount = service.GetJournalsCount(userId, accountId, filter);
+
+			Assert.Equal(2, journalsCount);
 		}
 
 		/// <summary>
 		/// Test <see cref="MoneyService.UpdateTransaction"/> method.
 		/// </summary>
 		[Fact]
-		public void UpdateTransaction()
+// ReSharper disable InconsistentNaming
+		public void Update_Transaction()
+// ReSharper restore InconsistentNaming
 		{
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
-			service.CreateAccount(userId, "Test Account 1", 1);
-			var accounts = service.GetAllAccounts(userId);
-			service.CreateCategory(userId, "Test Category 1", 1);
-			var categories = service.GetAllCategories(userId);
+			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var categoryDepositId = service.CreateCategory(userId, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = service.CreateCategory(userId, "Withdrawal Category", CategoryType.Withdrawal);
 
-			service.Deposit(userId, accounts[0].Id, DateTime.Now, 25, 10, "Some income comment", null);
-			service.Withdrawal(userId, accounts[0].Id, DateTime.Now, 10, 5, "Some expense comment", categories[0].Id);
-			
-			var balance = service.GetAccountBalance(userId, accounts[0].Id);
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+
+			service.Deposit(userId, accountId, date1, 25, 10, categoryDepositId, "Income comment");
+			service.Withdrawal(userId, accountId, date2, 10, 5, null, "Expense comment");
+
+			var balance = service.GetAccountBalance(userId, accountId, DateTime.UtcNow);
 			Assert.Equal(200, balance);
+			
+			var account = service.GetAccount(userId, accountId);
+			Assert.Equal(200, account.Balance);
 
-			var transactionRecords = service.GetAllTransactions(userId, accounts[0].Id);
-			var transactionId = transactionRecords[0].TransactionId;
+			var depositCategory = service.GetCategory(userId, categoryDepositId);
+			var withdrawalCategory = service.GetCategory(userId, categoryWithdrawalId);
 
-			Assert.NotNull(transactionRecords);
-			Assert.Equal(2, transactionRecords.Count);
+			Assert.Equal(1, depositCategory.Popularity);
+			Assert.Equal(0, withdrawalCategory.Popularity);
 
-			service.UpdateTransaction(transactionId, userId, accounts[0].Id, DateTime.Now, 32, 20, "Updated income", categories[0].Id, false);
+			var journals = service.GetJournals(userId, accountId, new QueryFilter());
 
-			balance = service.GetAccountBalance(userId, accounts[0].Id);
+			Assert.NotNull(journals);
+			Assert.Equal(2, journals.Count);
+			Assert.Equal("Income comment", journals[0].Comment);
+			Assert.Equal(25, journals[0].Rate);
+			Assert.Equal(10, journals[0].Quantity);
+			Assert.Equal(250, journals[0].Amount);
+			Assert.Equal(date1, journals[0].Date);
+			Assert.True(journals[0] is DepositDTO);
+			Assert.Equal(categoryDepositId, ((DepositDTO) journals[0]).CategoryId);
+
+			var journalId = journals[0].Id;
+
+			service.UpdateTransaction(userId, accountId, journalId, false, date3, 32, 20, categoryWithdrawalId, "This is dept and not income!");
+
+			balance = service.GetAccountBalance(userId, accountId, DateTime.UtcNow);
 			Assert.Equal(-690, balance);
+
+			account = service.GetAccount(userId, accountId);
+			Assert.Equal(-690, account.Balance);
+
+			depositCategory = service.GetCategory(userId, categoryDepositId);
+			withdrawalCategory = service.GetCategory(userId, categoryWithdrawalId);
+
+			Assert.Equal(0, depositCategory.Popularity);
+			Assert.Equal(1, withdrawalCategory.Popularity);
+
+			journals = service.GetJournals(userId, accountId, new QueryFilter());
+
+			Assert.NotNull(journals);
+			Assert.Equal(2, journals.Count);
+			Assert.Equal("This is dept and not income!", journals[1].Comment);
+			Assert.Equal(32, journals[1].Rate);
+			Assert.Equal(20, journals[1].Quantity);
+			Assert.Equal(-640, journals[1].Amount);
+			Assert.Equal(date3, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
+			Assert.Equal(categoryWithdrawalId, ((WithdrawalDTO) journals[1]).CategoryId);
+		}
+
+		/// <summary>
+		/// Test <see cref="MoneyService.UpdateTransfer"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Update_Transfer()
+		// ReSharper restore InconsistentNaming
+		{
+			const decimal rate = 75;
+			const decimal quantity = 10;
+			const decimal amount = rate * quantity;
+			const string comment = "Outgoing transfer";
+
+			const decimal rate2 = 3;
+			const decimal quantity2 = 40;
+			const decimal amount2 = rate2 * quantity2;
+			const string comment2 = "Another outgoing transfer";
+
+			var userService = new UserService();
+			var service = new MoneyService();
+			var userId1 = userService.Register("testUser1" + Guid.NewGuid(), "testPassword");
+			var userId2 = userService.Register("testUser2" + Guid.NewGuid(), "testPassword");
+			var accountId1 = service.CreateAccount(userId1, "Test Account 1-1", 1);
+			var accountId2 = service.CreateAccount(userId2, "Test Account 2", 1);
+			var accountId3 = service.CreateAccount(userId1, "Test Account 1-2", 1);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+
+			var transferId = service.Transfer(userId1, accountId1, accountId2, date1, rate, quantity, comment);
+
+			var account = service.GetAccount(userId1, accountId1);
+			Assert.Equal(-amount, account.Balance);
+
+			account = service.GetAccount(userId2, accountId2);
+			Assert.Equal(amount, account.Balance);
+
+			account = service.GetAccount(userId1, accountId3);
+			Assert.Equal(0, account.Balance);
+
+			Assert.Equal(-amount, service.GetAccountBalance(userId1, accountId1, DateTime.UtcNow));
+			Assert.Equal(amount, service.GetAccountBalance(userId2, accountId2, DateTime.UtcNow));
+			Assert.Equal(0, service.GetAccountBalance(userId1, accountId3, DateTime.UtcNow));
+
+			var trasfer = service.GetJournal(userId1, accountId1, transferId);
+
+			Assert.NotNull(trasfer);
+			Assert.Equal(comment, trasfer.Comment);
+			Assert.Equal(rate, trasfer.Rate);
+			Assert.Equal(quantity, trasfer.Quantity);
+			Assert.Equal(-amount, trasfer.Amount);
+			Assert.Equal(date1, trasfer.Date);
+			Assert.True(trasfer is OutgoingTransferDTO);
+			Assert.Equal(accountId2, ((OutgoingTransferDTO) trasfer).SecondAccountId);
+
+			service.UpdateTransfer(userId1, transferId, accountId1, accountId3, date2, rate2, quantity2, comment2);
+
+			account = service.GetAccount(userId1, accountId1);
+			Assert.Equal(-amount2, account.Balance);
+
+			account = service.GetAccount(userId2, accountId2);
+			Assert.Equal(0, account.Balance);
+
+			account = service.GetAccount(userId1, accountId3);
+			Assert.Equal(amount2, account.Balance);
+
+			Assert.Equal(-amount2, service.GetAccountBalance(userId1, accountId1, DateTime.UtcNow));
+			Assert.Equal(0, service.GetAccountBalance(userId2, accountId2, DateTime.UtcNow));
+			Assert.Equal(amount2, service.GetAccountBalance(userId1, accountId3, DateTime.UtcNow));
+
+			trasfer = service.GetJournal(userId1, accountId1, transferId);
+
+			Assert.NotNull(trasfer);
+			Assert.Equal(comment2, trasfer.Comment);
+			Assert.Equal(rate2, trasfer.Rate);
+			Assert.Equal(quantity2, trasfer.Quantity);
+			Assert.Equal(-amount2, trasfer.Amount);
+			Assert.Equal(date2, trasfer.Date);
+			Assert.True(trasfer is OutgoingTransferDTO);
+			Assert.Equal(accountId3, ((OutgoingTransferDTO)trasfer).SecondAccountId);
 		}
 
 		#endregion

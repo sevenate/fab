@@ -8,7 +8,7 @@ namespace Fab.Client.Authentication
 	{
 		public string Username { get; private set; }
 		public string Password { get; private set; }
-		public Guid UserId { get; private set; }
+		public UserCredentials Credentials { get; private set; }
 		public bool Succeeded { get; set; }
 
 		public AuthenticateResult(string username, string password)
@@ -36,7 +36,7 @@ namespace Fab.Client.Authentication
 												}
 												else
 												{
-													UserId = args.Result;
+													Credentials = new UserCredentials(args.Result);
 													Succeeded = true;
 													Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 												}

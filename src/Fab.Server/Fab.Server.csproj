@@ -22,6 +22,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +46,6 @@
     <Reference Include="EmitMapper">
       <HintPath>..\..\ext\.NET 4\EmitMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Security" />
@@ -70,12 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminService.svc" />
+    <Content Include="App_Data\StagingFab.mdf" />
+    <Content Include="App_Data\StagingFab_log.ldf">
+      <DependentUpon>StagingFab.mdf</DependentUpon>
+    </Content>
     <Content Include="Database\Fill Test Data.sql" />
     <Content Include="MoneyService.svc" />
-    <None Include="App_Data\Database.mdf" />
-    <None Include="App_Data\Database_log.ldf">
-      <DependentUpon>Database.mdf</DependentUpon>
-    </None>
     <None Include="Database\Create.sql" />
     <None Include="Database\Fill.sql" />
     <Content Include="UserService.svc" />
@@ -99,18 +99,27 @@
     <Compile Include="Core\DTO\AccountDTO.cs" />
     <Compile Include="Core\DTO\AssetTypeDTO.cs" />
     <Compile Include="Core\DTO\CategoryDTO.cs" />
-    <Compile Include="Core\DTO\CategoryType.cs" />
-    <Compile Include="Core\DTO\PostingDTO.cs" />
+    <Compile Include="Core\Enums\CategoryType.cs" />
+    <Compile Include="Core\DTO\DepositDTO.cs" />
+    <Compile Include="Core\DTO\IncomingTransferDTO.cs" />
+    <Compile Include="Core\DTO\JournalDTO.cs" />
+    <Compile Include="Core\DTO\OutgoingTransferDTO.cs" />
+    <Compile Include="Core\DTO\TransferDTO.cs" />
     <Compile Include="Core\DTO\TransactionDTO.cs" />
     <Compile Include="Core\DTO\UserDTO.cs" />
-    <Compile Include="Core\IQueryFilter.cs" />
-    <Compile Include="Core\QueryFilter.cs" />
+    <Compile Include="Core\DTO\WithdrawalDTO.cs" />
+    <Compile Include="Core\Filters\CategoryFilter.cs" />
+    <Compile Include="Core\Filters\IQueryFilter.cs" />
+    <Compile Include="Core\Filters\QueryFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Filters\TextSearchFilter.cs" />
     <Compile Include="MoneyService.svc.cs">
       <DependentUpon>MoneyService.svc</DependentUpon>
     </Compile>
     <Compile Include="Core\IAdminService.cs" />
     <Compile Include="Core\IMoneyService.cs" />
-    <Compile Include="Core\DTO\JournalType.cs" />
+    <Compile Include="Core\Enums\JournalType.cs" />
     <Compile Include="Core\Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -118,7 +127,6 @@
     </Compile>
     <Compile Include="Core\IUserService.cs" />
     <Compile Include="Core\ModelHelper.cs" />
-    <Compile Include="Core\DTO\TransactionRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserService.svc.cs">
       <DependentUpon>UserService.svc</DependentUpon>
