@@ -6,12 +6,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Objects.DataClasses;
 using System.Linq;
 using EmitMapper;
 using EmitMapper.MappingConfiguration;
 using Fab.Server.Core;
 using Fab.Server.Core.DTO;
+using Fab.Server.Core.Enums;
+using Fab.Server.Core.Filters;
 
 namespace Fab.Server
 {
@@ -43,33 +44,61 @@ namespace Fab.Server
 				throw new ArgumentException("Account name must not be empty.");
 			}
 
-			// Remove leading and closing spaces
-			string accountName = name.Trim();
-
 			// Check account name max length
-			if (accountName.Length > 50)
+			if (name.Length > 50)
 			{
 				throw new Exception("Account name is too long. Maximum length is 50.");
 			}
 
 			using (var mc = new ModelContainer())
 			{
-				User user = ModelHelper.GetUserById(mc, userId);
-				AssetType assetType = ModelHelper.GetAssetTypeById(mc, assetTypeId);
+				var user = ModelHelper.GetUserById(mc, userId);
+				var assetType = ModelHelper.GetAssetTypeById(mc, assetTypeId);
 
 				var account = new Account
-				              	{
-									Name = accountName,
-				              		Created = DateTime.UtcNow,
-				              		IsDeleted = false,
-				              		User = user,
-				              		AssetType = assetType
-				              	};
+				              {
+				              	User = user,
+				              	AssetType = assetType,
+				              	Name = name,
+				              	Created = DateTime.UtcNow,
+				              	Balance = 0,
+				              	IsClosed = false,
+				              	ClosedChanged = null,
+								PostingsCount = 0,
+								FirstPostingDate = null,
+								LastPostingDate = null,
+							  };
 
 				mc.Accounts.AddObject(account);
 				mc.SaveChanges();
 
 				return account.Id;
+			}
+		}
+
+		/// <summary>
+		/// Retrieve specific accounts by ID.
+		/// </summary>
+		/// <param name="userId">User unique ID.</param>
+		/// <param name="accountId">Account ID to retrieve.</param>
+		/// <returns>Account data transfer object.</returns>
+		public AccountDTO GetAccount(Guid userId, int accountId)
+		{
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("User ID must not be empty.");
+			}
+
+			using (var mc = new ModelContainer())
+			{
+				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(
+					new DefaultMapConfig()
+						.MatchMembers((m1, m2) => m1 == m2 || m1 + "Id" == m2)
+						.ConvertUsing<AssetType, int>(type => type.Id)
+						.ConvertUsing<DateTime, DateTime>(type => DateTime.SpecifyKind(type, DateTimeKind.Utc))
+					);
+
+				return accountMapper.Map(ModelHelper.GetAccountById(mc, accountId));
 			}
 		}
 
@@ -94,10 +123,10 @@ namespace Fab.Server
 
 			using (var mc = new ModelContainer())
 			{
-				Account account = ModelHelper.GetAccountById(mc, accountId);
-				AssetType assetType = ModelHelper.GetAssetTypeById(mc, assetTypeId);
+				var account = ModelHelper.GetAccountById(mc, accountId);
+				var assetType = ModelHelper.GetAssetTypeById(mc, assetTypeId);
 
-				account.Name = name.Trim();
+				account.Name = name;
 				account.AssetType = assetType;
 
 				mc.SaveChanges();
@@ -118,9 +147,10 @@ namespace Fab.Server
 
 			using (var mc = new ModelContainer())
 			{
-				Account account = ModelHelper.GetAccountById(mc, accountId);
+				var account = ModelHelper.GetAccountById(mc, accountId);
 
-				account.IsDeleted = true;
+				account.IsClosed = true;
+				account.ClosedChanged = DateTime.UtcNow;
 
 				mc.SaveChanges();
 			}
@@ -140,13 +170,15 @@ namespace Fab.Server
 
 			using (var mc = new ModelContainer())
 			{
-				var assetTypeMapper = ObjectMapperManager.DefaultInstance.GetMapper<AssetType, AssetTypeDTO>();
 				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(
-										new DefaultMapConfig()
-										.ConvertUsing<AssetType, AssetTypeDTO>(assetTypeMapper.Map));
+					new DefaultMapConfig()
+						.MatchMembers((m1, m2) => m1 == m2 || m1 + "Id" == m2)
+						.ConvertUsing<AssetType, int>(type => type.Id)
+						.ConvertUsing<DateTime, DateTime>(type => DateTime.SpecifyKind(type, DateTimeKind.Utc))
+					);
 
 				return mc.Accounts.Include("AssetType")
-					.Where(a => a.User.Id == userId && a.IsDeleted == false)
+					.Where(a => a.User.Id == userId && a.IsClosed == false)
 					.OrderBy(a => a.Created)
 					.ToList()
 					.Select(accountMapper.Map)
@@ -155,12 +187,13 @@ namespace Fab.Server
 		}
 
 		/// <summary>
-		/// Get current account balance.
+		/// Gets account balance before specific date.
 		/// </summary>
 		/// <param name="userId">Unique user ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <returns>Current account balance.</returns>
-		public decimal GetAccountBalance(Guid userId, int accountId)
+		/// <param name="dateTime">Specific date.</param>
+		/// <returns>Account balance at the specific date.</returns>
+		public decimal GetAccountBalance(Guid userId, int accountId, DateTime dateTime)
 		{
 			if (userId == Guid.Empty)
 			{
@@ -172,10 +205,11 @@ namespace Fab.Server
 			using (var mc = new ModelContainer())
 			{
 				// Todo: Fix Sum() of Postings when there is no any posting yet.
-				var firstPosting = mc.Postings.Where(p => p.Account.Id == accountId)
+				var firstPosting = mc.Postings.Where(p => p.Account.Id == accountId && p.Date < dateTime)
 					.FirstOrDefault();
+
 				balance = firstPosting != null
-				          	? mc.Postings.Where(p => p.Account.Id == accountId)
+				          	? mc.Postings.Where(p => p.Account.Id == accountId && p.Date < dateTime)
 				          	  	.Sum(p => p.Amount)
 				          	: 0;
 			}
@@ -194,7 +228,7 @@ namespace Fab.Server
 		/// <param name="name">Category name.</param>
 		/// <param name="categoryType">Category type.</param>
 		/// <returns>Created category ID.</returns>
-		public int CreateCategory(Guid userId, string name, byte categoryType)
+		public int CreateCategory(Guid userId, string name, CategoryType categoryType)
 		{
 			if (userId == Guid.Empty)
 			{
@@ -206,31 +240,49 @@ namespace Fab.Server
 				throw new ArgumentException("Category name must not be empty.");
 			}
 
-			// Remove leading and closing spaces
-			string categoryName = name.Trim();
-
 			// Check category name max length
-			if (categoryName.Length > 50)
+			if (name.Length > 50)
 			{
 				throw new Exception("Category name is too long. Maximum length is 50.");
 			}
 
 			using (var mc = new ModelContainer())
 			{
-				User user = ModelHelper.GetUserById(mc, userId);
+				var user = ModelHelper.GetUserById(mc, userId);
 
 				var category = new Category
-				               	{
-									Name = categoryName,
-									CategoryType = categoryType,
-				               		IsDeleted = false,
-				               		User = user
-				               	};
+				               {
+				               	User = user,
+				               	Name = name,
+				               	CategoryType = (byte) categoryType,
+				               	Popularity = 0,
+				               	Deleted = null,
+				               };
 
 				mc.Categories.AddObject(category);
 				mc.SaveChanges();
 
 				return category.Id;
+			}
+		}
+
+		/// <summary>
+		/// Retrieve specific category by ID.
+		/// </summary>
+		/// <param name="userId">User unique ID.</param>
+		/// <param name="categoryId">Category ID to retrieve.</param>
+		/// <returns>Category data transfer object.</returns>
+		public CategoryDTO GetCategory(Guid userId, int categoryId)
+		{
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("User ID must not be empty.");
+			}
+
+			using (var mc = new ModelContainer())
+			{
+				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
+				return categoryMapper.Map(ModelHelper.GetCategoryById(mc, categoryId));
 			}
 		}
 
@@ -241,7 +293,7 @@ namespace Fab.Server
 		/// <param name="categoryId">Category ID.</param>
 		/// <param name="name">Category new name.</param>
 		/// <param name="categoryType">Category new type.</param>
-		public void UpdateCategory(Guid userId, int categoryId, string name, byte categoryType)
+		public void UpdateCategory(Guid userId, int categoryId, string name, CategoryType categoryType)
 		{
 			if (userId == Guid.Empty)
 			{
@@ -255,10 +307,10 @@ namespace Fab.Server
 
 			using (var mc = new ModelContainer())
 			{
-				Category category = ModelHelper.GetCategoryById(mc, categoryId);
+				var category = ModelHelper.GetCategoryById(mc, categoryId);
 
-				category.Name = name.Trim();
-				category.CategoryType = categoryType;
+				category.Name = name;
+				category.CategoryType = (byte) categoryType;
 
 				mc.SaveChanges();
 			}
@@ -278,9 +330,9 @@ namespace Fab.Server
 
 			using (var mc = new ModelContainer())
 			{
-				Category category = ModelHelper.GetCategoryById(mc, categoryId);
+				var category = ModelHelper.GetCategoryById(mc, categoryId);
 
-				category.IsDeleted = true;
+				category.Deleted = DateTime.UtcNow;
 
 				mc.SaveChanges();
 			}
@@ -296,18 +348,393 @@ namespace Fab.Server
 			using (var mc = new ModelContainer())
 			{
 				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
+				var categories = mc.Categories.Where(c => c.User.Id == userId && c.Deleted == null)
+											  .OrderBy(c => c.Name)
+											  .ToList();
 
-				return mc.Categories.Where(c => c.User.Id == userId && c.IsDeleted == false)
-					.OrderBy(c => c.Name)
-					.ToList()
-					.Select(categoryMapper.Map)
-					.ToList();
+				return categories.Select(categoryMapper.Map).ToList();
 			}
 		}
 
 		#endregion
 
-		#region Transactions
+		#region Journals
+
+		/// <summary>
+		/// Delete specific journal record.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="journalId">Journal ID.</param>
+		public void DeleteJournal(Guid userId, int accountId, int journalId)
+		{
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("User ID must not be empty.");
+			}
+
+			//Todo: check user permission (user ID and account ID) before deleting transaction.
+
+			using (var mc = new ModelContainer())
+			{
+				ModelHelper.DeleteJournal(mc, journalId);
+				mc.SaveChanges();
+			}
+		}
+
+		/// <summary>
+		/// Return single journal record (either <see cref="TransactionDTO"/> or <see cref="TransferDTO"/>).
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="journalId">Journal ID.</param>
+		/// <returns>Journal record details.</returns>
+		public JournalDTO GetJournal(Guid userId, int accountId, int journalId)
+		{
+			using (var mc = new ModelContainer())
+			{
+				/*
+				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>();
+				var postingMapper = ObjectMapperManager.DefaultInstance.GetMapper<Posting, PostingDTO>();
+				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
+				var transactionMapper = ObjectMapperManager.DefaultInstance.GetMapper<Journal, TransactionDTO>(
+										new DefaultMapConfig()
+										.ConvertUsing<Account, AccountDTO>(accountMapper.Map)
+										.ConvertUsing<EntityCollection<Posting>, List<PostingDTO>>(postings => postings.Select(postingMapper.Map).ToList())
+										.ConvertUsing<Posting, PostingDTO>(postingMapper.Map)
+										.ConvertUsing<Category, CategoryDTO>(categoryMapper.Map));
+				 */
+
+				// Todo: add user ID account ID to the GetJournalById() method call to
+				// join them with transaction ID to prevent unauthorized delete 
+				// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
+
+				/*
+				return transactionMapper.Map(ModelHelper.GetJournalById(mc, journalId));
+				 */
+
+				var journal = ModelHelper.GetJournalById(mc, journalId);
+
+				var posting = journal.Postings.Where(p => p.Account.Id == accountId).Single();
+
+				switch (journal.JournalType)
+				{
+					case (byte) JournalType.Deposit:
+						return new DepositDTO
+						       {
+						       	Amount = posting.Amount,
+						       	CategoryId =
+						       		journal.Category != null && journal.Category.Deleted == null ? journal.Category.Id : (int?) null,
+						       	Comment = journal.Comment,
+						       	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+						       	Id = journal.Id,
+						       	Quantity = journal.Quantity,
+						       	Rate = journal.Rate
+						       };
+
+					case (byte) JournalType.Withdrawal:
+						return new WithdrawalDTO
+						       {
+						       	Amount = posting.Amount,
+						       	CategoryId =
+						       		journal.Category != null && journal.Category.Deleted == null ? journal.Category.Id : (int?) null,
+						       	Comment = journal.Comment,
+						       	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+						       	Id = journal.Id,
+						       	Quantity = journal.Quantity,
+						       	Rate = journal.Rate
+						       };
+
+					case (byte) JournalType.Transfer:
+					{
+						var posting2 = journal.Postings.Where(p => p.Account.Id != accountId).Single();
+
+						return posting.Amount >= 0
+						       	? (JournalDTO) new IncomingTransferDTO
+						       	               {
+						       	               	Amount = posting.Amount,
+						       	               	Comment = journal.Comment,
+						       	               	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+						       	               	Id = journal.Id,
+						       	               	Quantity = journal.Quantity,
+						       	               	Rate = journal.Rate,
+						       	               	SecondAccountId = posting2.Account.Id
+						       	               }
+						       	: new OutgoingTransferDTO
+						       	  {
+						       	  	Amount = posting.Amount,
+						       	  	Comment = journal.Comment,
+						       	  	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+						       	  	Id = journal.Id,
+						       	  	Quantity = journal.Quantity,
+						       	  	Rate = journal.Rate,
+						       	  	SecondAccountId = posting2.Account.Id
+						       	  };
+					}
+					default:
+						throw new NotSupportedException(string.Format("Unknown journal type - {0}.", journal.JournalType));
+				}
+			}
+		}
+
+		/// <summary>
+		/// Return filtered journal records count.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="queryFilter">Specify conditions for filtering journal records.</param>
+		/// <returns>Filtered journal records count.</returns>
+		public int GetJournalsCount(Guid userId, int accountId, IQueryFilter queryFilter)
+		{
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("User ID must not be empty.");
+			}
+
+			if (queryFilter == null)
+			{
+				throw new ArgumentNullException("queryFilter");
+			}
+
+			var count = 0;
+
+			// Bug: warning security weakness!
+			// Check User.IsDisabled + Account.IsDeleted also
+			using (var mc = new ModelContainer())
+			{
+				//TODO: remove duplicated code with GetJournals() method
+				var query = from p in mc.Postings
+				            where p.Account.Id == accountId
+				            orderby p.Date , p.Journal.Id
+				            select new
+				                   {
+				                   	Posting = p,
+				                   	p.Journal,
+				                   	p.Journal.Category,
+				                   	p.Journal.JournalType
+				                   };
+
+				if (queryFilter is TextSearchFilter)
+				{
+					var textSearchFilter = queryFilter as TextSearchFilter;
+
+					if (!string.IsNullOrEmpty(textSearchFilter.Contains))
+					{
+						query = from t in query
+								where t.Journal.Comment.Contains(textSearchFilter.Contains)
+									  || t.Category.Name.Contains(textSearchFilter.Contains)
+								select t;
+					}
+				}
+
+				if (queryFilter is CategoryFilter)
+				{
+					var categoryFilter = queryFilter as CategoryFilter;
+
+					if (categoryFilter.CategoryId.HasValue)
+					{
+						query = from c in query
+								where c.Category != null && c.Category.Id == categoryFilter.CategoryId.Value
+								select c;
+					}
+				}
+
+				if (queryFilter.NotOlderThen.HasValue)
+				{
+					query = from t in query
+							where t.Posting.Date >= queryFilter.NotOlderThen.Value
+					        select t;
+				}
+
+				if (queryFilter.Upto.HasValue)
+				{
+					query = from t in query
+							where t.Posting.Date < queryFilter.Upto.Value
+					        select t;
+				}
+
+				// Todo: consider dynamic order specification
+				//query = query.OrderBy(t => t.Posting.Date);
+
+				if (queryFilter.Skip.HasValue)
+				{
+					query = query.Skip(queryFilter.Skip.Value);
+				}
+
+				if (queryFilter.Take.HasValue)
+				{
+					query = query.Take(queryFilter.Take.Value);
+				}
+				// End of duplicated code
+
+				count = query.Count();
+			}
+
+			return count;
+		}
+
+		/// <summary>
+		/// Return filtered list of journal records for specific account.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="queryFilter">Specify conditions for filtering journal records.</param>
+		/// <returns>List of journal records.</returns>
+		public IList<JournalDTO> GetJournals(Guid userId, int accountId, IQueryFilter queryFilter)
+		{
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("User ID must not be empty.");
+			}
+
+			if (queryFilter == null)
+			{
+				throw new ArgumentNullException("queryFilter");
+			}
+
+			var records = new List<JournalDTO>();
+
+			// Bug: warning security weakness!
+			// Check User.IsDisabled + Account.IsDeleted also
+			using (var mc = new ModelContainer())
+			{
+				//TODO: remove duplicated code with GetJournalsCounts() method
+				var query = from p in mc.Postings
+				            where p.Account.Id == accountId
+				            orderby p.Date , p.Journal.Id
+				            select new
+				                   {
+				                   	Posting = p,
+				                   	p.Journal,
+				                   	p.Journal.Category,
+				                   	p.Journal.JournalType
+				                   };
+
+				if (queryFilter is TextSearchFilter)
+				{
+					var textSearchFilter = queryFilter as TextSearchFilter;
+
+					if (!string.IsNullOrEmpty(textSearchFilter.Contains))
+					{
+						query = from t in query
+								where t.Journal.Comment.Contains(textSearchFilter.Contains)
+									  || t.Category.Name.Contains(textSearchFilter.Contains)
+						        select t;
+					}
+				}
+
+				if (queryFilter is CategoryFilter)
+				{
+					var categoryFilter = queryFilter as CategoryFilter;
+
+					if (categoryFilter.CategoryId.HasValue)
+					{
+						query = from c in query
+								where c.Category != null && c.Category.Id == categoryFilter.CategoryId
+								select c;
+					}
+				}
+
+				if (queryFilter.NotOlderThen.HasValue)
+				{
+					query = from t in query
+					        where t.Posting.Date >= queryFilter.NotOlderThen.Value
+					        select t;
+				}
+
+				if (queryFilter.Upto.HasValue)
+				{
+					query = from t in query
+					        where t.Posting.Date < queryFilter.Upto.Value
+					        select t;
+				}
+
+				// Todo: consider dynamic order specification
+				//query = query.OrderBy(t => t.Posting.Date);
+
+				if (queryFilter.Skip.HasValue)
+				{
+					query = query.Skip(queryFilter.Skip.Value);
+				}
+
+				if (queryFilter.Take.HasValue)
+				{
+					query = query.Take(queryFilter.Take.Value);
+				}
+				// End of duplicated code
+
+				var res = query.ToList();
+
+				// No transactions take place yet, so nothing to return
+				if (res.Count == 0)
+				{
+					return records;
+				}
+
+				foreach (var r in res)
+				{
+					switch (r.JournalType)
+					{
+						case (byte) JournalType.Deposit:
+							records.Add(new DepositDTO
+							            {
+							            	Amount = r.Posting.Amount,
+							            	CategoryId = r.Category != null && r.Category.Deleted == null ? r.Category.Id : (int?) null,
+							            	Comment = r.Journal.Comment,
+							            	Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+							            	Id = r.Journal.Id,
+							            	Quantity = r.Journal.Quantity,
+							            	Rate = r.Journal.Rate
+							            });
+							break;
+
+						case (byte) JournalType.Withdrawal:
+							records.Add(new WithdrawalDTO
+							            {
+							            	Amount = r.Posting.Amount,
+							            	CategoryId = r.Category != null && r.Category.Deleted == null ? r.Category.Id : (int?) null,
+							            	Comment = r.Journal.Comment,
+											Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+							            	Id = r.Journal.Id,
+							            	Quantity = r.Journal.Quantity,
+							            	Rate = r.Journal.Rate
+							            });
+							break;
+
+						case (byte) JournalType.Transfer:
+							var t = r.Posting.Amount >= 0
+							        	? (TransferDTO) new IncomingTransferDTO
+							        	                {
+							        	                	Amount = r.Posting.Amount,
+							        	                	Comment = r.Journal.Comment,
+															Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+							        	                	Id = r.Journal.Id,
+							        	                	Quantity = r.Journal.Quantity,
+							        	                	Rate = r.Journal.Rate,
+							        	                	SecondAccountId = null // will be fetched with separate request to server if needed
+							        	                }
+							        	: new OutgoingTransferDTO
+							        	  {
+							        	  	Amount = r.Posting.Amount,
+							        	  	Comment = r.Journal.Comment,
+											Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+							        	  	Id = r.Journal.Id,
+							        	  	Quantity = r.Journal.Quantity,
+							        	  	Rate = r.Journal.Rate,
+							        	  	SecondAccountId = null // will be fetched with separate request to server if needed
+							        	  };
+							records.Add(t);
+
+							break;
+
+						default:
+							throw new NotSupportedException(string.Format("Unknown journal type - {0}.", r.JournalType));
+					}
+				}
+			}
+
+			return records;
+		}
 
 		/// <summary>
 		/// Gets all available asset types (i.e. "currency names").
@@ -319,228 +746,54 @@ namespace Fab.Server
 			{
 				var assetTypeMapper = ObjectMapperManager.DefaultInstance.GetMapper<AssetType, AssetTypeDTO>();
 
-				return mc.AssetTypes.ToList()
+				return mc.AssetTypes
+					.OrderBy(c => c.Name)
+					.ToList()
 					.Select(assetTypeMapper.Map)
 					.ToList();
 			}
 		}
 
+		#endregion
+
+		#region Transactions
+
 		/// <summary>
-		/// Deposit (<paramref name="price"/> * <paramref name="quantity"/>) amount to the
-		/// <paramref name="accountId"/> of the <paramref name="userId"/> with optional <paramref name="comment"/> and
-		/// group it under <paramref name="categoryId"/> if necessary.
+		/// Create new deposit transaction for specific account.
+		/// The total amount of funds will be calculated as <paramref name="rate"/> * <paramref name="quantity"/>
+		/// and will be added to the <paramref name="accountId"/>.
 		/// </summary>
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="price">Price of the item.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
 		/// <param name="quantity">Quantity of the item.</param>
-		/// <param name="comment">Comment notes.</param>
 		/// <param name="categoryId">The category ID.</param>
-		public void Deposit(
-			Guid userId,
-			int accountId,
-			DateTime operationDate,
-			decimal price,
-			decimal quantity,
-			string comment,
-			int? categoryId)
+		/// <param name="comment">Comment notes.</param>
+		/// <returns>Created deposit transaction ID.</returns>
+		public int Deposit(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId,
+		                   string comment)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			// Remove leading and closing spaces
-			string commentNote = comment.Trim();
-
-			// Check comment max length
-			if (commentNote.Length > 256)
-			{
-				throw new Exception("Comment is too long. Maximum length is 256.");
-			}
-
-			// Check price positiveness
-			if (price < 0)
-			{
-				throw new Exception("Price must not be less then 0.");
-			}
-
-			// Check quantity positiveness
-			if (quantity < 0)
-			{
-				throw new Exception("Quantity must not be less then 0.");
-			}
-
-			var dateTime = operationDate.ToUniversalTime();
-
-			using (var mc = new ModelContainer())
-			{
-				ModelHelper.CreateTransaction(mc, dateTime, accountId, JournalType.Deposit, categoryId, price, quantity, commentNote);
-				mc.SaveChanges();
-			}
+			return CreateTransaction(userId, accountId, true, date, rate, quantity, categoryId, comment);
 		}
 
 		/// <summary>
-		/// Withdrawal (<paramref name="price"/> * <paramref name="quantity"/>) amount from the
-		/// <paramref name="accountId"/> of the <paramref name="userId"/> with optional <paramref name="comment"/> and
-		/// group it under <paramref name="categoryId"/> if necessary.
+		/// Create new withdrawal transaction for specific account.
+		/// The total amount of funds will be calculated as <paramref name="rate"/> * <paramref name="quantity"/>
+		/// and will be subtracted from the <paramref name="accountId"/>.
 		/// </summary>
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="price">Price of the item.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
 		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="categoryId">The category ID.</param>
 		/// <param name="comment">Comment notes.</param>
-		/// <param name="categoryId">The category Id.</param>
-		public void Withdrawal(
-			Guid userId,
-			int accountId,
-			DateTime operationDate,
-			decimal price,
-			decimal quantity,
-			string comment,
-			int? categoryId)
+		/// <returns>Created withdrawal transaction ID.</returns>
+		public int Withdrawal(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId,
+		                      string comment)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			// Remove leading and closing spaces
-			string commentNote = comment.Trim();
-
-			// Check comment max length
-			if (commentNote.Length > 256)
-			{
-				throw new Exception("Comment is too long. Maximum length is 256.");
-			}
-
-			// Check price positiveness
-			if (price < 0)
-			{
-				throw new Exception("Price must not be less then 0.");
-			}
-
-			// Check quantity positiveness
-			if (quantity < 0)
-			{
-				throw new Exception("Quantity must not be less then 0.");
-			}
-
-			var dateTime = operationDate.ToUniversalTime();
-
-			using (var mc = new ModelContainer())
-			{
-				ModelHelper.CreateTransaction(mc, dateTime, accountId, JournalType.Withdrawal, categoryId, price, quantity, commentNote);
-				mc.SaveChanges();
-			}
-		}
-
-		/// <summary>
-		/// Transfer from <paramref name="account1Id"/> of <paramref name="user1Id"/> to
-		/// <paramref name="account2Id"/> of <paramref name="user2Id"/> the <paramref name="amount"/> of assets
-		/// with optional <paramref name="comment"/> about operation.
-		/// </summary>
-		/// <param name="user1Id">User 1 unique ID.</param>
-		/// <param name="account1Id">Account 1 ID.</param>
-		/// <param name="user2Id">User 2 unique ID.</param>
-		/// <param name="account2Id">Account 2 ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="amount">Amount of assets.</param>
-		/// <param name="comment">Comment notes.</param>
-		public void Transfer(
-			Guid user1Id,
-			int account1Id,
-			Guid user2Id,
-			int account2Id,
-			DateTime operationDate,
-			decimal amount,
-			string comment)
-		{
-			if (user1Id == Guid.Empty)
-			{
-				throw new ArgumentException("User1 ID must not be empty.");
-			}
-
-			if (user2Id == Guid.Empty)
-			{
-				throw new ArgumentException("User2 ID must not be empty.");
-			}
-			
-			// Remove leading and closing spaces
-			string commentNote = comment.Trim();
-
-			// Check comment max length
-			if (commentNote.Length > 256)
-			{
-				throw new Exception("Comment is too long. Maximum length is 256.");
-			}
-
-			// Check amount positiveness
-			if (amount < 0)
-			{
-				throw new Exception("Amount must not be less then 0.");
-			}
-
-			var dateTime = operationDate.ToUniversalTime();
-
-			using (var mc = new ModelContainer())
-			{
-				ModelHelper.CreateTransfer(mc, dateTime, account1Id, account2Id, amount, commentNote);
-				mc.SaveChanges();
-			}
-		}
-
-		/// <summary>
-		/// Return full data about single transaction data.
-		/// </summary>
-		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account ID.</param>
-		/// <param name="transactionId">Transaction ID.</param>
-		/// <returns>Single transaction data.</returns>
-		public TransactionDTO GetTransaction(Guid userId, int accountId, int transactionId)
-		{
-			using (var mc = new ModelContainer())
-			{
-				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>();
-				var postingMapper = ObjectMapperManager.DefaultInstance.GetMapper<Posting, PostingDTO>();
-				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
-				var transactionMapper = ObjectMapperManager.DefaultInstance.GetMapper<Transaction, TransactionDTO>(
-										new DefaultMapConfig()
-										.ConvertUsing<Account, AccountDTO>(accountMapper.Map)
-										.ConvertUsing<EntityCollection<Posting>, List<PostingDTO>>(postings => postings.Select(postingMapper.Map).ToList())
-										.ConvertUsing<Posting, PostingDTO>(postingMapper.Map)
-										.ConvertUsing<Category, CategoryDTO>(categoryMapper.Map));
-
-				// Todo: add user ID account ID to the GetTransacionById() method call to
-				// join them with transaction ID to prevent unauthorized delete 
-				// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
-				return transactionMapper.Map(ModelHelper.GetTransacionById(mc, transactionId));
-			}
-		}
-
-		/// <summary>
-		/// Delete specific transaction.
-		/// </summary>
-		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account ID.</param>
-		/// <param name="transactionId">Transaction ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		public void DeleteTransaction(Guid userId, int accountId, int transactionId, DateTime operationDate)
-		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			var dateTime = operationDate.ToUniversalTime();
-
-			using (var mc = new ModelContainer())
-			{
-				ModelHelper.DeleteTransaction(mc, transactionId, dateTime);
-				mc.SaveChanges();
-			}
+			return CreateTransaction(userId, accountId, false, date, rate, quantity, categoryId, comment);
 		}
 
 		/// <summary>
@@ -550,372 +803,217 @@ namespace Fab.Server
 		/// Transfer transaction are not updatable with this method.
 		/// To update transfer transaction use <see cref="UpdateTransfer"/> method instead.
 		/// </remarks>
-		/// <param name="transactionId">Transaction ID.</param>
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="price">Price of the item.</param>
-		/// <param name="quantity">Quantity of the item.</param>
-		/// <param name="comment">Comment notes.</param>
-		/// <param name="categoryId">The category Id.</param>
+		/// <param name="transactionId">Transaction ID.</param>
 		/// <param name="isDeposit">
-		/// <c>true</c> means that transaction is "Deposit";
-		/// <c>false</c> means that transaction is "Withdrawal".
+		/// 	<c>true</c> means that transaction is "Deposit";
+		/// 	<c>false</c> means that transaction is "Withdrawal".
 		/// </param>
-		public void UpdateTransaction(
-			int transactionId,
-			Guid userId,
-			int accountId,
-			DateTime operationDate,
-			decimal price,
-			decimal quantity,
-			string comment,
-			int? categoryId,
-			bool isDeposit)
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="categoryId">The category Id.</param>
+		/// <param name="comment">Comment notes.</param>
+		/// <exception cref="NotSupportedException">
+		/// Only <see cref="JournalType.Deposit"/> and <see cref="JournalType.Withdrawal"/> journal types are supported.
+		/// </exception>
+		public void UpdateTransaction(Guid userId, int accountId, int transactionId, bool isDeposit, DateTime date,
+		                              decimal rate, decimal quantity, int? categoryId, string comment)
 		{
 			if (userId == Guid.Empty)
 			{
 				throw new ArgumentException("User ID must not be empty.");
 			}
 
-			// Remove leading and closing spaces
-			string commentNote = comment.Trim();
-
 			// Check comment max length
-			if (commentNote.Length > 256)
+			if (comment.Length > 256)
 			{
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
 
-			// Check price positiveness
-			if (price < 0)
+			// Check rate positiveness
+			if (rate <= 0)
 			{
-				throw new Exception("Price must not be less then 0.");
+				throw new Exception("Rate must not be less then or equal to 0.");
 			}
 
 			// Check quantity positiveness
-			if (quantity < 0)
+			if (quantity <= 0)
 			{
-				throw new Exception("Quantity must not be less then 0.");
+				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
-
-			var dateTime = operationDate.ToUniversalTime();
 
 			using (var mc = new ModelContainer())
 			{
-				// Todo: add user ID account ID to the GetTransacionById() method call to
-				// join them with transaction ID to prevent unauthorized delete 
-				// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
-				Transaction transaction = ModelHelper.GetTransacionById(mc, transactionId);
-
-				if (transaction.JournalType != (byte)JournalType.Deposit
-					&& transaction.JournalType != (byte)JournalType.Withdrawal)
-				{
-					throw new NotSupportedException(string.Format("Only {0} and {1} journal types supported.", JournalType.Deposit, JournalType.Withdrawal));
-				}
-
-				ModelHelper.DeleteTransaction(mc, transactionId, dateTime);
-				ModelHelper.CreateTransaction(
-					mc,
-					dateTime,
-					accountId,
-					isDeposit
-						? JournalType.Deposit
-						: JournalType.Withdrawal,
-					categoryId,
-					price,
-					quantity,
-					commentNote);
-				mc.SaveChanges();
+				ModelHelper.UpdateTransaction(mc, accountId, transactionId, isDeposit, date, rate, quantity, categoryId, comment);
 			}
 		}
 
 		/// <summary>
-		/// Update specific transfer transaction.
+		/// Create new deposit or withdrawal transaction for specific account.
+		/// The total amount of funds will be calculated as <paramref name="rate"/> * <paramref name="quantity"/>
+		/// and will be positive if the <paramref name="isDeposit"/> is <c>true</c>;
+		/// otherwise the amount will be negative.
 		/// </summary>
-		/// <remarks>
-		/// Deposit or withdrawal transactions are not updatable with this method.
-		/// To update deposit or withdrawal transaction use <see cref="UpdateTransaction"/> method instead.
-		/// </remarks>
-		/// <param name="transactionId">Transfer transaction ID.</param>
-		/// <param name="user1Id">User 1 unique ID.</param>
-		/// <param name="account1Id">Account 1 ID.</param>
-		/// <param name="user2Id">User 2 unique ID.</param>
-		/// <param name="account2Id">Account 2 ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="amount">Amount of assets.</param>
+		/// <param name="userId">User unique ID.</param>
+		/// <param name="accountId">Account ID.</param>
+		/// <param name="isDeposit">
+		/// 	<c>true</c> means that transaction is "Deposit";
+		/// 	<c>false</c> means that transaction is "Withdrawal".
+		/// </param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="categoryId">The category ID.</param>
 		/// <param name="comment">Comment notes.</param>
-		/// <exception cref="NotSupportedException">
-		/// Only <see cref="JournalType.Transfer"/> journal type supported.
-		/// </exception>
-		public void UpdateTransfer(
-			int transactionId,
-			Guid user1Id,
-			int account1Id,
-			Guid user2Id,
-			int account2Id,
-			DateTime operationDate,
-			decimal amount,
-			string comment)
+		/// <returns>Created transaction ID.</returns>
+		private static int CreateTransaction(Guid userId, int accountId, bool isDeposit, DateTime date, decimal rate,
+		                                     decimal quantity, int? categoryId, string comment)
 		{
-			if (user1Id == Guid.Empty)
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("User ID must not be empty.");
+			}
+
+			// Check comment max length
+			if (comment.Length > 256)
+			{
+				throw new Exception("Comment is too long. Maximum length is 256.");
+			}
+
+			// Check rate positiveness
+			if (rate <= 0)
+			{
+				throw new Exception("Rate must not be less then or equal to 0.");
+			}
+
+			// Check quantity positiveness
+			if (quantity <= 0)
+			{
+				throw new Exception("Quantity must not be less then or equal to 0.");
+			}
+
+			using (var mc = new ModelContainer())
+			{
+				var journal = ModelHelper.CreateTransaction(mc, accountId, isDeposit ? JournalType.Deposit : JournalType.Withdrawal,
+				                                            date, rate, quantity, categoryId, comment);
+				mc.SaveChanges();
+				return journal.Id;
+			}
+		}
+
+		#endregion
+
+		#region Transfers
+
+		/// <summary>
+		/// Transfer from <paramref name="fromAccountId"/> to <paramref name="toAccountId"/>
+		/// the <paramref name="rate"/> * <paramref name="quantity"/> amount of funds.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="fromAccountId">The account from which the funds will be written off.</param>
+		/// <param name="toAccountId">The account for which funds will be been credited.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="comment">Comment notes.</param>
+		/// <returns>Created transfer ID.</returns>
+		/// <remarks> <paramref name="toAccountId"/> could be from another user.</remarks>
+		public int Transfer(Guid userId, int fromAccountId, int toAccountId, DateTime date, decimal rate,
+		                    decimal quantity, string comment)
+		{
+			if (userId == Guid.Empty)
 			{
 				throw new ArgumentException("User1 ID must not be empty.");
 			}
 
-			if (user2Id == Guid.Empty)
+			// Check accounts IDs difference
+			if (fromAccountId == toAccountId)
 			{
-				throw new ArgumentException("User2 ID must not be empty.");
+				throw new Exception("Account's IDs must be different.");
 			}
 
-			// Remove leading and closing spaces
-			string commentNote = comment.Trim();
-
 			// Check comment max length
-			if (commentNote.Length > 256)
+			if (comment.Length > 256)
 			{
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
 
-			// Check amount positiveness
-			if (amount < 0)
+			// Check rate positiveness
+			if (rate <= 0)
 			{
-				throw new Exception("Amount must not be less then 0.");
+				throw new Exception("Rate must not be less then or equal to 0.");
 			}
 
-			var dateTime = operationDate.ToUniversalTime();
+			// Check quantity positiveness
+			if (quantity <= 0)
+			{
+				throw new Exception("Quantity must not be less then or equal to 0.");
+			}
 
 			using (var mc = new ModelContainer())
 			{
-				// Todo: add user ID account ID to the GetTransacionById() method call to
-				// join them with transaction ID to prevent unauthorized delete 
-				// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
-				Transaction transaction = ModelHelper.GetTransacionById(mc, transactionId);
-
-				if (transaction.JournalType != (byte)JournalType.Transfer)
-				{
-					throw new NotSupportedException(string.Format("Only {0} journal type supported.", JournalType.Transfer));
-				}
-				
-				ModelHelper.DeleteTransaction(mc, transactionId, dateTime);
-				ModelHelper.CreateTransfer(mc, dateTime, account1Id, account2Id, amount, commentNote);
+				var journal = ModelHelper.CreateTransfer(mc, date, fromAccountId, toAccountId, rate, quantity, comment);
 				mc.SaveChanges();
+				return journal.Id;
 			}
 		}
 
 		/// <summary>
-		/// Return all not deleted transaction records for specific account.
+		/// Update specific transfer details.
 		/// </summary>
+		/// <remarks>
+		/// Deposit or withdrawal transactions are not updatable with this method.
+		/// To update deposit or withdrawal transaction use <see cref="UpdateTransaction(System.Guid,int,int,bool,System.DateTime,decimal,decimal,System.Nullable{int},string)"/> method instead.
+		/// </remarks>
 		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account Id.</param>
-		/// <returns>List of transaction records.</returns>
-		public IList<TransactionRecord> GetAllTransactions(Guid userId, int accountId)
+		/// <param name="transactionId">Transfer transaction ID.</param>
+		/// <param name="fromAccountId">The account from which the funds will be written off.</param>
+		/// <param name="toAccountId">The account for which funds will be been credited.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="comment">Comment notes.</param>
+		/// <exception cref="NotSupportedException">
+		/// Only <see cref="JournalType.Transfer"/> journal type supported.
+		/// </exception>
+		public void UpdateTransfer(Guid userId, int transactionId, int fromAccountId, int toAccountId, DateTime date,
+		                           decimal rate, decimal quantity, string comment)
 		{
 			if (userId == Guid.Empty)
 			{
-				throw new ArgumentException("User ID must not be empty.");
+				throw new ArgumentException("User1 ID must not be empty.");
 			}
 
-			var records = new List<TransactionRecord>();
+			// Check accounts IDs difference
+			if (fromAccountId == toAccountId)
+			{
+				throw new Exception("Account's IDs must be different.");
+			}
 
-			// Bug: warning security weakness!
-			// Check User.IsDisabled + Account.IsDeleted also
+			// Check comment max length
+			if (comment.Length > 256)
+			{
+				throw new Exception("Comment is too long. Maximum length is 256.");
+			}
+
+			// Check rate positiveness
+			if (rate <= 0)
+			{
+				throw new Exception("Rate must not be less then or equal to 0.");
+			}
+
+			// Check quantity positiveness
+			if (quantity <= 0)
+			{
+				throw new Exception("Quantity must not be less then or equal to 0.");
+			}
+
 			using (var mc = new ModelContainer())
 			{
-				var postings = from p in mc.Postings
-				               where p.Account.Id == accountId
-				                     && !p.Journal.IsDeleted
-									 && p.Journal.JournalType != (byte)JournalType.Canceled
-				               orderby p.Date, p.Journal.Id
-				               select new
-				                      	{
-				                      		Posting = p,
-				                      		p.Journal,
-				                      		p.Journal.Category,
-				                      		p.Journal.JournalType
-				                      	};
-
-				var res = postings.ToList();
-
-				// No transactions take place yet, so nothing to return
-				if (res.Count == 0)
-				{
-					return records;
-				}
-
-				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
-
-				decimal income = 0;
-				decimal expense = 0;
-				decimal balance = 0;
-
-				foreach (var r in res)
-				{
-					balance += r.Posting.Amount;
-
-					switch (r.JournalType)
-					{
-							// Deposit
-						case 1:
-							income = r.Posting.Amount;
-							expense = 0;
-							break;
-
-							// Withdrawal
-						case 2:
-							income = 0;
-							expense = -r.Posting.Amount;
-							break;
-
-							// Transfer
-						case 3:
-							income = r.Posting.Amount > 0 ? r.Posting.Amount : 0;	// positive is "TO this account"
-							expense = r.Posting.Amount < 0 ? -r.Posting.Amount : 0;	// negative is "FROM this account"
-							break;
-					}
-
-					records.Add(new TransactionRecord
-					            	{
-					            		TransactionId = r.Journal.Id,
-					            		Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
-										Category = categoryMapper.Map(r.Category),
-					            		Income = income,
-					            		Expense = expense,
-					            		Balance = balance,
-					            		Comment = r.Journal.Comment
-					            	});
-				}
+				ModelHelper.UpdateTransfer(mc, transactionId, fromAccountId, toAccountId, date, rate, quantity, comment);
 			}
-
-			return records;
-		}
-
-		/// <summary>
-		/// Return filtered list of the not deleted transaction records for specific account.
-		/// </summary>
-		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account Id.</param>
-		/// <returns>List of transaction records.</returns>
-		/// <param name="filter">Specify conditions for filtering transactions.</param>
-		public IList<TransactionRecord> GetTransactions(Guid userId, int accountId, IQueryFilter filter)
-		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			if (filter == null)
-			{
-				throw new ArgumentNullException("filter");
-			}
-
-			var records = new List<TransactionRecord>();
-
-			// Bug: warning security weakness!
-			// Check User.IsDisabled + Account.IsDeleted also
-			using (var mc = new ModelContainer())
-			{
-				var query = from p in mc.Postings
-				            where p.Account.Id == accountId
-				                && !p.Journal.IsDeleted
-				                && p.Journal.JournalType != (byte) JournalType.Canceled
-				            orderby p.Date, p.Journal.Id
-							select new
-							{
-								Posting = p,
-								p.Journal,
-								p.Journal.Category,
-								p.Journal.JournalType
-							};
-
-				if (!string.IsNullOrEmpty(filter.Contains))
-				{
-					query = from t in query
-							where t.Journal.Comment.Contains(filter.Contains)
-							   || t.Category.Name.Contains(filter.Contains)
-							select t;
-				}
-
-				if (filter.NotOlderThen.HasValue)
-				{
-					query = from t in query
-							where t.Posting.Date > filter.NotOlderThen.Value
-							select t;
-				}
-
-				if (filter.Upto.HasValue)
-				{
-					query = from t in query
-							where t.Posting.Date <= filter.Upto.Value
-							select t;
-				}
-
-				// Todo: consider dynamic order specification
-				//query = query.OrderBy(t => t.Posting.Date);
-
-				if (filter.Skip.HasValue)
-				{
-					query = query.Skip(filter.Skip.Value);
-				}
-
-				if (filter.Take.HasValue)
-				{
-					query = query.Take(filter.Take.Value);
-				}
-
-				var res = query.ToList();
-
-				// No transactions take place yet, so nothing to return
-				if (res.Count == 0)
-				{
-					return records;
-				}
-
-				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
-
-				decimal income = 0;
-				decimal expense = 0;
-				decimal balance = 0;
-
-				foreach (var r in res)
-				{
-					balance += r.Posting.Amount;
-
-					switch (r.JournalType)
-					{
-						// Deposit
-						case 1:
-							income = r.Posting.Amount;
-							expense = 0;
-							break;
-
-						// Withdrawal
-						case 2:
-							income = 0;
-							expense = -r.Posting.Amount;
-							break;
-
-						// Transfer
-						case 3:
-							income = r.Posting.Amount > 0 ? r.Posting.Amount : 0;	// positive is "TO this account"
-							expense = r.Posting.Amount < 0 ? -r.Posting.Amount : 0;	// negative is "FROM this account"
-							break;
-					}
-
-					records.Add(new TransactionRecord
-					{
-						TransactionId = r.Journal.Id,
-						Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
-						Category = categoryMapper.Map(r.Category),
-						Income = income,
-						Expense = expense,
-						Balance = balance,
-						Comment = r.Journal.Comment
-					});
-				}
-			}
-
-			return records;
 		}
 
 		#endregion

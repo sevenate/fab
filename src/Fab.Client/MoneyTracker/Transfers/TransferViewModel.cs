@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Data;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
@@ -25,11 +26,6 @@ namespace Fab.Client.MoneyTracker.Transfers
 	public class TransferViewModel : DocumentBase, ITransferViewModel
 	{
 		private int? transactionId;
-
-		/// <summary>
-		/// Transaction owner ID.
-		/// </summary>
-		private readonly Guid userId = new Guid("DC57BFF0-57A6-4BFC-9104-5F323ABBEDAB"); // 7F06BFA6-B675-483C-9BF3-F59B88230382
 
 		private DateTime operationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 
@@ -187,9 +183,8 @@ namespace Fab.Client.MoneyTracker.Transfers
 
 				var request = new UpdateTransferResult(
 									transactionId.Value,
-									userId,
+									UserCredentials.Current.UserId,
 									((AccountDTO)Accounts1.CurrentItem).Id,
-									userId,
 									((AccountDTO)Accounts2.CurrentItem).Id,
 									date.ToUniversalTime(),
 									decimal.Parse(Amount.Trim()),
@@ -208,9 +203,8 @@ namespace Fab.Client.MoneyTracker.Transfers
 				                	: OperationDate.Date + DateTime.Now.TimeOfDay;
 
 				var request = new AddTransferResult(
-									userId,
+									UserCredentials.Current.UserId,
 									((AccountDTO)Accounts1.CurrentItem).Id,
-									userId,
 									((AccountDTO)Accounts2.CurrentItem).Id,
 									date.ToUniversalTime(),
 									decimal.Parse(Amount.Trim()),
@@ -224,19 +218,20 @@ namespace Fab.Client.MoneyTracker.Transfers
 		}
 
 		/// <summary>
-		/// Open specific transfer transaction to edit.
+		/// Open specific transfer to edit.
 		/// </summary>
-		/// <param name="transaction">Transaction to edit.</param>
-		public void Edit(TransactionDTO transaction)
+		/// <param name="transfer">Transfer to edit.</param>
+		/// <param name="fromAccountId">Account ID, the source of the transfer founds.</param>
+		public void Edit(TransferDTO transfer, int fromAccountId)
 		{
-			transactionId = transaction.Id;
+			transactionId = transfer.Id;
 
 			// Todo: refactor this method!
 			var accountsSource1 = accounts1CollectionViewSource.Source as BindableCollection<AccountDTO>;
 
 			if (accountsSource1 != null)
 			{
-				var selectedAccount1 = accountsSource1.Where(a => a.Id == transaction.Postings[1].Account.Id).Single();
+				var selectedAccount1 = accountsSource1.Where(a => a.Id == fromAccountId).Single();
 				Accounts1.MoveCurrentTo(selectedAccount1);
 			}
 
@@ -244,13 +239,13 @@ namespace Fab.Client.MoneyTracker.Transfers
 
 			if (accountsSource2 != null)
 			{
-				var selectedAccount2 = accountsSource2.Where(a => a.Id == transaction.Postings[0].Account.Id).Single();
+				var selectedAccount2 = accountsSource2.Where(a => a.Id == transfer.SecondAccountId).Single();
 				Accounts2.MoveCurrentTo(selectedAccount2);
 			}
 
-			OperationDate = transaction.Postings[0].Date.ToLocalTime();
-			Amount = transaction.Postings[0].Amount.ToString();
-			Comment = transaction.Comment;
+			OperationDate = transfer.Date.ToLocalTime();
+			Amount = transfer.Amount.ToString();
+			Comment = transfer.Comment;
 
 			IsEditMode = true;
 		}

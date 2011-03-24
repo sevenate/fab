@@ -1,20 +1,19 @@
-// <copyright file="ITransactionsViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+// <copyright file="ITransactionsViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-13" />
-// <summary>General transactions view model interface.</summary>
+// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-04-13" />
 
 using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
-using Fab.Client.MoneyServiceReference;
+using Fab.Client.Authentication;
 
 namespace Fab.Client.MoneyTracker.Transactions
 {
 	/// <summary>
 	/// General transactions view model interface.
 	/// </summary>
-	public interface ITransactionsViewModel
+	public interface ITransactionsViewModel : IHandle<LoggedOutMessage>
 	{
 		/// <summary>
 		/// Gets transaction records.

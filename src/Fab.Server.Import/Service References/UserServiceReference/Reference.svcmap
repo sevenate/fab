@@ -20,13 +20,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:33809/UserService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost/StagingFab/UserService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="1285cabc-0d72-4630-9c11-80107cdc2cae" SourceId="1" SourceUrl="http://localhost:33809/UserService.svc?wsdl" />
-    <MetadataFile FileName="UserService.xsd" MetadataType="Schema" ID="1e2a6702-60a7-42eb-be67-3ae5d48998a5" SourceId="1" SourceUrl="http://localhost:33809/UserService.svc?xsd=xsd1" />
-    <MetadataFile FileName="UserService.disco" MetadataType="Disco" ID="114a7c44-e8c0-4357-8bf9-e95ff79cb4cf" SourceId="1" SourceUrl="http://localhost:33809/UserService.svc?disco" />
-    <MetadataFile FileName="UserService1.xsd" MetadataType="Schema" ID="fe1717c0-9726-4b0f-9643-05cffa6ad998" SourceId="1" SourceUrl="http://localhost:33809/UserService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserService1.wsdl" MetadataType="Wsdl" ID="29e4466c-850c-4758-971e-d9e6c3a1d44a" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?wsdl" />
+    <MetadataFile FileName="UserService2.xsd" MetadataType="Schema" ID="ff484b91-f4b2-4159-bb20-4159a851eb80" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserService1.disco" MetadataType="Disco" ID="35a8457a-a843-4cdb-a2c8-52aa0a1ef6c4" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?disco" />
+    <MetadataFile FileName="UserService21.xsd" MetadataType="Schema" ID="265a0a41-fadd-487c-877a-fb84055fd785" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

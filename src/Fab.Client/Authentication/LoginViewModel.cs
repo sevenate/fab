@@ -49,16 +49,27 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		#region Fields
+
+		/// <summary>
+		/// Enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator eventAggregator;
+
+		#endregion
+
 		#region Ctors
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LoginViewModel"/> class.
 		/// </summary>
-		public LoginViewModel()
+		[ImportingConstructor]
+		public LoginViewModel(IEventAggregator eventAggregator)
 		{
+			this.eventAggregator = eventAggregator;
 			ShowCharacters = true;
 			DisplayName = "Login";
-			Username = "import2";
+			Username = "import";
 			Password = "import";
 			Status = AuthorizationInProgress;
 		}
@@ -84,28 +95,6 @@ namespace Fab.Client.Authentication
 			{
 				username = value;
 				NotifyOfPropertyChange(() => Username);
-			}
-		}
-
-		#endregion
-
-		#region Username is focused DP
-
-		/// <summary>
-		/// Specify whether a <see cref="Username"/> field is focused.
-		/// </summary>
-		private bool usernameIsFocused;
-
-		/// <summary>
-		/// Gets or sets a value indicating whether a <see cref="Username"/> field is focused.
-		/// </summary>
-		public bool UsernameIsFocused
-		{
-			get { return usernameIsFocused; }
-			set
-			{
-				usernameIsFocused = value;
-				NotifyOfPropertyChange(() => UsernameIsFocused);
 			}
 		}
 
@@ -222,11 +211,6 @@ namespace Fab.Client.Authentication
 		#endregion
 
 		/// <summary>
-		/// Gets user unique identifier.
-		/// </summary>
-		public Guid UserId { get; private set; }
-
-		/// <summary>
 		/// Authorize the user with specified credentials.
 		/// </summary>
 		/// <returns>Common co-routine results.</returns>
@@ -238,22 +222,39 @@ namespace Fab.Client.Authentication
 			Status = AuthorizationInProgress;
 			ShowStatus = true;
 
-			var authenticator = new AuthenticateResult(Username, Password);
-			yield return authenticator;
+			var authenticateResult = new AuthenticateResult(Username, Password);
+			yield return authenticateResult;
 
-			IsAuthenticated = authenticator.Succeeded;
+			IsAuthenticated = authenticateResult.Succeeded;
 
-			if (!authenticator.Succeeded)
+			if (!authenticateResult.Succeeded)
 			{
 				Status = AuthorizationFailed;
 				UsernameIsFocused = true;
 				//yield return Loader.Show(AuthorizationFailedMessage);
 				yield break;
 			}
-			
+
+			UserCredentials.Current = authenticateResult.Credentials;
 			Status = AuthorizationSuccess;
 
-			Parent.CloseItem(this);
+			eventAggregator.Publish(new LoggedInMessage(UserCredentials.Current));
+
+			//Parent.CloseItem(this);
+		}
+
+		/// <summary>
+		/// Logout user from the system.
+		/// </summary>
+		[SetBusy]
+		public void Logout()
+		{
+			//Username = string.Empty;
+			//Password = string.Empty;
+			ShowStatus = false;
+			IsAuthenticated = false;
+			UserCredentials.Current = null;
+			eventAggregator.Publish(new LoggedOutMessage());
 		}
 
 		/// <summary>
@@ -268,15 +269,26 @@ namespace Fab.Client.Authentication
 			       && Password.Length >= MinimumPasswordLength;
 		}
 
+		#endregion
+
+		#region Username is focused DP
+
 		/// <summary>
-		/// Logout user from the system.
+		/// Specify whether a <see cref="Username"/> field is focused.
 		/// </summary>
-		[SetBusy]
-		public void Logout()
+		private bool usernameIsFocused;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a <see cref="Username"/> field is focused.
+		/// </summary>
+		public bool UsernameIsFocused
 		{
-			Username = string.Empty;
-			Password = string.Empty;
-			UserId = Guid.Empty;
+			get { return usernameIsFocused; }
+			set
+			{
+				usernameIsFocused = value;
+				NotifyOfPropertyChange(() => UsernameIsFocused);
+			}
 		}
 
 		#endregion

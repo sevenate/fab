@@ -14,6 +14,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
@@ -30,11 +31,6 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		#region Fields
 
 		private int? transactionId;
-
-		/// <summary>
-		/// Transaction owner ID.
-		/// </summary>
-		private readonly Guid userId = new Guid("DC57BFF0-57A6-4BFC-9104-5F323ABBEDAB"); // 7F06BFA6-B675-483C-9BF3-F59B88230382
 
 		private string price;
 
@@ -304,7 +300,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 				var request = new EditTransactionResult(
 					transactionId.Value,
-					userId,
+					UserCredentials.Current.UserId,
 					((AccountDTO)Accounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
@@ -328,7 +324,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				                	: OperationDate.Date + DateTime.Now.TimeOfDay;
 
 				var request = new AddTransactionResult(
-					userId,
+					UserCredentials.Current.UserId,
 					((AccountDTO)Accounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
@@ -367,12 +363,11 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				}
 			}
 
-			// Todo: use JournalType enumeration here instead of byte.
-			IsDeposite = transaction.JournalType == 1;
+			IsDeposite = transaction is DepositDTO;
 
-			OperationDate = transaction.Postings.First().Date.ToLocalTime();
-			CurrentCategory = transaction.Category;
-			Price = transaction.Price.ToString();
+			OperationDate = transaction.Date.ToLocalTime();
+			CurrentCategory = Categories.Cast<CategoryDTO>().Where(c => c.Id == transaction.CategoryId).Single();
+			Price = transaction.Rate.ToString();
 			Quantity = transaction.Quantity.ToString();
 			Comment = transaction.Comment;
 

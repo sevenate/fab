@@ -36,16 +36,15 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		{
 			var proxy = new MoneyServiceClient();
 			proxy.UpdateTransactionCompleted += OnUpdateTransactionCompleted;
-			proxy.UpdateTransactionAsync(transactionId,
-											userId,
-											accountId,
-											operationDate,
-											price,
-											quantity,
-											comment,
-											categoryId,
-											isDeposit
-								);
+			proxy.UpdateTransactionAsync(userId,
+										 accountId,
+										 transactionId,
+										 isDeposit,
+										 operationDate,
+										 price,
+										 quantity,
+										 categoryId,
+										 comment);
 		}
 
 		private void OnUpdateTransactionCompleted(object s, AsyncCompletedEventArgs e)

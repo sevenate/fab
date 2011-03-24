@@ -14,9 +14,10 @@ namespace Fab.Client.MoneyTracker.Transfers
 	public interface ITransferViewModel
 	{
 		/// <summary>
-		/// Open specific transfer transaction to edit.
+		/// Open specific transfer to edit.
 		/// </summary>
-		/// <param name="transaction">Transaction to edit.</param>
-		void Edit(TransactionDTO transaction);
+		/// <param name="transfer">Transfer to edit.</param>
+		/// <param name="fromAccountId">Account ID, the source of the transfer founds.</param>
+		void Edit(TransferDTO transfer, int fromAccountId);
 	}
 }

@@ -34,15 +34,33 @@ namespace Fab.Server.Core.DTO
 		public DateTime Created { get; set; }
 
 		/// <summary>
-		/// Gets or sets account asset type DTO.
+		/// Gets or sets account asset type ID.
 		/// </summary>
 		[DataMember]
-		public AssetTypeDTO AssetType { get; set; }
+		public int AssetTypeId { get; set; }
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a account is deleted.
+		/// Gets or sets account balance.
 		/// </summary>
 		[DataMember]
-		public bool IsDeleted { get; set; }
+		public decimal Balance { get; set; }
+
+		/// <summary>
+		/// Gets or sets number of total account postings.
+		/// </summary>
+		[DataMember]
+		public decimal PostingsCount { get; set; }
+
+		/// <summary>
+		/// Gets or sets account first posting date.
+		/// </summary>
+		[DataMember]
+		public DateTime? FirstPostingDate { get; set; }
+
+		/// <summary>
+		/// Gets or sets account first posting date.
+		/// </summary>
+		[DataMember]
+		public DateTime? LastPostingDate { get; set; }
 	}
 }

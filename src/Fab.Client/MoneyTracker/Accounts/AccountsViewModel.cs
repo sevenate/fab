@@ -1,15 +1,7 @@
-// <copyright file="AccountsViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+// <copyright file="AccountsViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2010 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-04-11</date>
-// </author>
-// <editor name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-04-11</date>
-// </editor>
-// <summary>Accounts view model.</summary>
+// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-04-11" />
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +9,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Windows.Data;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 
@@ -30,11 +23,6 @@ namespace Fab.Client.MoneyTracker.Accounts
 	{
 		#region Fields
 
-		/// <summary>
-		/// Accounts owner ID.
-		/// </summary>
-		private readonly Guid userId = new Guid("DC57BFF0-57A6-4BFC-9104-5F323ABBEDAB"); // 7F06BFA6-B675-483C-9BF3-F59B88230382
-
 		private readonly BindableCollection<AccountDTO> accounts = new BindableCollection<AccountDTO>();
 
 		private readonly CollectionViewSource accountsCollectionViewSource = new CollectionViewSource();
@@ -46,9 +34,11 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AccountsViewModel"/> class.
 		/// </summary>
-		public AccountsViewModel()
+		[ImportingConstructor]
+		public AccountsViewModel(IEventAggregator eventAggregator)
 		{
 			accountsCollectionViewSource.Source = accounts;
+			eventAggregator.Subscribe(this);
 		}
 
 		#endregion
@@ -74,7 +64,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 		{
 			yield return Loader.Show("Loading...");
 
-			var request = new AccountsResult(userId);
+			var request = new AccountsResult(UserCredentials.Current.UserId);
 			yield return request;
 			
 			accounts.Clear();
@@ -93,6 +83,19 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// Raised right after accounts were reloaded from server.
 		/// </summary>
 		public event EventHandler<EventArgs> Reloaded;
+
+		#endregion
+
+		#region Implementation of IHandle<in LoggedOutMessage>
+
+		/// <summary>
+		/// Handles the <see cref="LoggedOutMessage"/>.
+		/// </summary>
+		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
+		public void Handle(LoggedOutMessage message)
+		{
+			accounts.Clear();
+		}
 
 		#endregion
 	}

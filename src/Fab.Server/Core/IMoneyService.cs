@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using Fab.Server.Core.DTO;
+using Fab.Server.Core.Enums;
+using Fab.Server.Core.Filters;
 
 namespace Fab.Server.Core
 {
@@ -15,6 +17,15 @@ namespace Fab.Server.Core
 	/// Money service contract.
 	/// </summary>
 	[ServiceContract]
+	[ServiceKnownType(typeof(DepositDTO))]
+	[ServiceKnownType(typeof(WithdrawalDTO))]
+	[ServiceKnownType(typeof(IncomingTransferDTO))]
+	[ServiceKnownType(typeof(OutgoingTransferDTO))]
+	[ServiceKnownType(typeof(TransactionDTO))]
+	[ServiceKnownType(typeof(TransferDTO))]
+	[ServiceKnownType(typeof(QueryFilter))]
+	[ServiceKnownType(typeof(TextSearchFilter))]
+	[ServiceKnownType(typeof(CategoryFilter))]
 	public interface IMoneyService
 	{
 		#region Accounts
@@ -28,6 +39,15 @@ namespace Fab.Server.Core
 		/// <returns>Created account ID.</returns>
 		[OperationContract]
 		int CreateAccount(Guid userId, string name, int assetTypeId);
+
+		/// <summary>
+		/// Retrieve specific accounts by ID.
+		/// </summary>
+		/// <param name="userId">User unique ID.</param>
+		/// <param name="accountId">Account ID to retrieve.</param>
+		/// <returns>Account data transfer object.</returns>
+		[OperationContract]
+		AccountDTO GetAccount(Guid userId, int accountId);
 
 		/// <summary>
 		/// Update account details to new values.
@@ -56,13 +76,14 @@ namespace Fab.Server.Core
 		IList<AccountDTO> GetAllAccounts(Guid userId);
 
 		/// <summary>
-		/// Get current account balance.
+		/// Gets account balance before specific date.
 		/// </summary>
 		/// <param name="userId">Unique user ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <returns>Current account balance.</returns>
+		/// <param name="dateTime">Specific date.</param>
+		/// <returns>Account balance at the specific date.</returns>
 		[OperationContract]
-		decimal GetAccountBalance(Guid userId, int accountId);
+		decimal GetAccountBalance(Guid userId, int accountId, DateTime dateTime);
 
 		#endregion
 
@@ -76,7 +97,16 @@ namespace Fab.Server.Core
 		/// <param name="categoryType">Category type.</param>
 		/// <returns>Created category ID.</returns>
 		[OperationContract]
-		int CreateCategory(Guid userId, string name, byte categoryType);
+		int CreateCategory(Guid userId, string name, CategoryType categoryType);
+
+		/// <summary>
+		/// Retrieve specific category by ID.
+		/// </summary>
+		/// <param name="userId">User unique ID.</param>
+		/// <param name="categoryId">Category ID to retrieve.</param>
+		/// <returns>Category data transfer object.</returns>
+		[OperationContract]
+		CategoryDTO GetCategory(Guid userId, int categoryId);
 
 		/// <summary>
 		/// Update category details to new values.
@@ -86,7 +116,7 @@ namespace Fab.Server.Core
 		/// <param name="name">Category new name.</param>
 		/// <param name="categoryType">Category new type.</param>
 		[OperationContract]
-		void UpdateCategory(Guid userId, int categoryId, string name, byte categoryType);
+		void UpdateCategory(Guid userId, int categoryId, string name, CategoryType categoryType);
 
 		/// <summary>
 		/// Mark category as "deleted".
@@ -106,7 +136,46 @@ namespace Fab.Server.Core
 
 		#endregion
 
-		#region Transactions
+		#region Journals
+
+		/// <summary>
+		/// Delete specific journal record.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="journalId">Journal ID.</param>
+		[OperationContract]
+		void DeleteJournal(Guid userId, int accountId, int journalId);
+
+		/// <summary>
+		/// Return single journal record (either <see cref="TransactionDTO"/> or <see cref="TransferDTO"/>).
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="journalId">Journal ID.</param>
+		/// <returns>Journal record details.</returns>
+		[OperationContract]
+		JournalDTO GetJournal(Guid userId, int accountId, int journalId);
+
+		/// <summary>
+		/// Return filtered journal records count.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="queryFilter">Specify conditions for filtering journal records.</param>
+		/// <returns>Filtered journal records count.</returns>
+		[OperationContract]
+		int GetJournalsCount(Guid userId, int accountId, IQueryFilter queryFilter);
+
+		/// <summary>
+		/// Return filtered list of journal records for specific account.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="accountId">The account ID.</param>
+		/// <param name="queryFilter">Specify conditions for filtering journal records.</param>
+		/// <returns>List of journal records.</returns>
+		[OperationContract]
+		IList<JournalDTO> GetJournals(Guid userId, int accountId, IQueryFilter queryFilter);
 
 		/// <summary>
 		/// Gets all available asset types (i.e. "currency names").
@@ -115,167 +184,101 @@ namespace Fab.Server.Core
 		[OperationContract]
 		IList<AssetTypeDTO> GetAllAssetTypes();
 
+		#endregion
+
+		#region Transactions
+
 		/// <summary>
-		/// Deposit (<paramref name="price"/> * <paramref name="quantity"/>) amount to the
-		/// <paramref name="accountId"/> of the <paramref name="userId"/> with optional <paramref name="comment"/> and
-		/// group it under <paramref name="categoryId"/> if necessary.
+		/// Create new deposit transaction for specific account.
+		/// The total amount of funds will be calculated as <paramref name="rate"/> * <paramref name="quantity"/>
+		/// and will be added to the <paramref name="accountId"/>.
 		/// </summary>
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="price">Price of the item.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
 		/// <param name="quantity">Quantity of the item.</param>
-		/// <param name="comment">Comment notes.</param>
 		/// <param name="categoryId">The category ID.</param>
+		/// <param name="comment">Comment notes.</param>
+		/// <returns>Created deposit transaction ID.</returns>
 		[OperationContract]
-		void Deposit(
-			Guid userId,
-			int accountId,
-			DateTime operationDate,
-			decimal price,
-			decimal quantity,
-			string comment,
-			int? categoryId);
-
+		int Deposit(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment);
+		
 		/// <summary>
-		/// Withdrawal (<paramref name="price"/> * <paramref name="quantity"/>) amount from the
-		/// <paramref name="accountId"/> of the <paramref name="userId"/> with optional <paramref name="comment"/> and
-		/// group it under <paramref name="categoryId"/> if necessary.
+		/// Create new withdrawal transaction for specific account.
+		/// The total amount of funds will be calculated as <paramref name="rate"/> * <paramref name="quantity"/>
+		/// and will be subtracted from the <paramref name="accountId"/>.
 		/// </summary>
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="price">Price of the item.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
 		/// <param name="quantity">Quantity of the item.</param>
-		/// <param name="comment">Comment notes.</param>
 		/// <param name="categoryId">The category ID.</param>
-		[OperationContract]
-		void Withdrawal(
-			Guid userId,
-			int accountId,
-			DateTime operationDate,
-			decimal price,
-			decimal quantity,
-			string comment,
-			int? categoryId);
-
-		/// <summary>
-		/// Transfer from <paramref name="account1Id"/> of <paramref name="user1Id"/> to
-		/// <paramref name="account2Id"/> of <paramref name="user2Id"/> the <paramref name="amount"/> of assets
-		/// with optional <paramref name="comment"/> about operation.
-		/// </summary>
-		/// <param name="user1Id">User 1 unique ID.</param>
-		/// <param name="account1Id">Account 1 ID.</param>
-		/// <param name="user2Id">User 2 unique ID.</param>
-		/// <param name="account2Id">Account 2 ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="amount">Amount of assets.</param>
 		/// <param name="comment">Comment notes.</param>
+		/// <returns>Created withdrawal transaction ID.</returns>
 		[OperationContract]
-		void Transfer(
-			Guid user1Id,
-			int account1Id,
-			Guid user2Id,
-			int account2Id,
-			DateTime operationDate,
-			decimal amount,
-			string comment);
-
-		/// <summary>
-		/// Return full data about single transaction data.
-		/// </summary>
-		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account ID.</param>
-		/// <param name="transactionId">Transaction ID.</param>
-		/// <returns>Single transaction data.</returns>
-		[OperationContract]
-		TransactionDTO GetTransaction(Guid userId, int accountId, int transactionId);
-
-		/// <summary>
-		/// Delete specific transaction.
-		/// </summary>
-		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account ID.</param>
-		/// <param name="transactionId">Transaction ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		[OperationContract]
-		void DeleteTransaction(Guid userId, int accountId, int transactionId, DateTime operationDate);
+		int Withdrawal(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment);
 
 		/// <summary>
 		/// Update specific deposit or withdrawal transaction.
 		/// </summary>
 		/// <remarks>
 		/// Transfer transaction are not updatable with this method.
-		/// To update transfer transaction use <see cref="UpdateTransfer"/> method instead.
+		/// To update transfer transaction use <see cref="UpdateTransfer(System.Guid,int,int,int,System.DateTime,decimal,decimal,string)"/> method instead.
 		/// </remarks>
-		/// <param name="transactionId">Transaction ID.</param>
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="price">Price of the item.</param>
-		/// <param name="quantity">Quantity of the item.</param>
-		/// <param name="comment">Comment notes.</param>
-		/// <param name="categoryId">The category Id.</param>
+		/// <param name="transactionId">Transaction ID.</param>
 		/// <param name="isDeposit">
-		/// <c>true</c> means that transaction is "Deposit";
-		/// <c>false</c> means that transaction is "Withdrawal".
+		/// 	<c>true</c> means that transaction is "Deposit";
+		/// 	<c>false</c> means that transaction is "Withdrawal".
 		/// </param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="categoryId">The category Id.</param>
+		/// <param name="comment">Comment notes.</param>
 		[OperationContract]
-		void UpdateTransaction(
-			int transactionId,
-			Guid userId,
-			int accountId,
-			DateTime operationDate,
-			decimal price,
-			decimal quantity,
-			string comment,
-			int? categoryId,
-			bool isDeposit);
+		void UpdateTransaction(Guid userId, int accountId, int transactionId, bool isDeposit, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment);
+
+		#endregion
+
+		#region Transfers
 
 		/// <summary>
-		/// Update specific transfer transaction.
+		/// Transfer from <paramref name="fromAccountId"/> to <paramref name="toAccountId"/>
+		/// the <paramref name="rate"/> * <paramref name="quantity"/> amount of funds.
+		/// </summary>
+		/// <param name="userId">The user unique ID.</param>
+		/// <param name="fromAccountId">The account from which the funds will be written off.</param>
+		/// <param name="toAccountId">The account for which funds will be been credited.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="comment">Comment notes.</param>
+		/// <returns>Created transfer ID.</returns>
+		/// <remarks> <paramref name="toAccountId"/> could be from another user.</remarks>
+		[OperationContract]
+		int Transfer(Guid userId, int fromAccountId, int toAccountId, DateTime date, decimal rate, decimal quantity, string comment);
+
+		/// <summary>
+		/// Update specific transfer details.
 		/// </summary>
 		/// <remarks>
 		/// Deposit or withdrawal transactions are not updatable with this method.
 		/// To update deposit or withdrawal transaction use <see cref="UpdateTransaction"/> method instead.
 		/// </remarks>
+		/// <param name="userId">The user unique ID.</param>
 		/// <param name="transactionId">Transfer transaction ID.</param>
-		/// <param name="user1Id">User 1 unique ID.</param>
-		/// <param name="account1Id">Account 1 ID.</param>
-		/// <param name="user2Id">User 2 unique ID.</param>
-		/// <param name="account2Id">Account 2 ID.</param>
-		/// <param name="operationDate">Operation date.</param>
-		/// <param name="amount">Amount of assets.</param>
+		/// <param name="fromAccountId">The account from which the funds will be written off.</param>
+		/// <param name="toAccountId">The account for which funds will be been credited.</param>
+		/// <param name="date">Operation date.</param>
+		/// <param name="rate">Rate of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
 		/// <param name="comment">Comment notes.</param>
 		[OperationContract]
-		void UpdateTransfer(
-			int transactionId,
-			Guid user1Id,
-			int account1Id,
-			Guid user2Id,
-			int account2Id,
-			DateTime operationDate,
-			decimal amount,
-			string comment);
-
-		/// <summary>
-		/// Return all not deleted transaction records for specific account.
-		/// </summary>
-		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account ID.</param>
-		/// <returns>List of transaction records.</returns>
-		[OperationContract]
-		IList<TransactionRecord> GetAllTransactions(Guid userId, int accountId);
-
-		/// <summary>
-		/// Return filtered list of the not deleted transaction records for specific account.
-		/// </summary>
-		/// <param name="userId">The user unique ID.</param>
-		/// <param name="accountId">The account ID.</param>
-		/// <param name="filter">Specify conditions for filtering transactions.</param>
-		/// <returns>List of transaction records.</returns>
-		[OperationContract]
-		IList<TransactionRecord> GetTransactions(Guid userId, int accountId, IQueryFilter filter);
+		void UpdateTransfer(Guid userId, int transactionId, int fromAccountId, int toAccountId, DateTime date, decimal rate, decimal quantity, string comment);
 
 		#endregion
 	}

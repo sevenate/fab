@@ -20,15 +20,16 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:33809/MoneyService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost/StagingFab/MoneyService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MoneyService.disco" MetadataType="Disco" ID="5858d661-1437-4c1a-8cab-1ef140b8ee92" SourceId="1" SourceUrl="http://localhost:33809/MoneyService.svc?disco" />
-    <MetadataFile FileName="MoneyService.xsd" MetadataType="Schema" ID="761f6e77-f18e-4555-9c08-d9e9b6be39b6" SourceId="1" SourceUrl="http://localhost:33809/MoneyService.svc?xsd=xsd0" />
-    <MetadataFile FileName="MoneyService1.xsd" MetadataType="Schema" ID="ad1e4a9d-31b3-40b5-aeaf-613500baf2c9" SourceId="1" SourceUrl="http://localhost:33809/MoneyService.svc?xsd=xsd2" />
-    <MetadataFile FileName="MoneyService2.xsd" MetadataType="Schema" ID="a89df0ef-4fb5-414c-9a78-ff0b9d59e4e6" SourceId="1" SourceUrl="http://localhost:33809/MoneyService.svc?xsd=xsd3" />
-    <MetadataFile FileName="MoneyService3.xsd" MetadataType="Schema" ID="a8be1cee-c472-47ba-9440-292abe3f75ab" SourceId="1" SourceUrl="http://localhost:33809/MoneyService.svc?xsd=xsd1" />
-    <MetadataFile FileName="MoneyService.wsdl" MetadataType="Wsdl" ID="83cb7577-2bd1-49c3-b6f4-b842f8a1a684" SourceId="1" SourceUrl="http://localhost:33809/MoneyService.svc?wsdl" />
+    <MetadataFile FileName="MoneyService42.xsd" MetadataType="Schema" ID="57c22acf-d2eb-46e6-a36b-6f550967f109" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MoneyService.xsd" MetadataType="Schema" ID="8b21b9f9-8530-4385-b085-11db64501a28" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MoneyService1.xsd" MetadataType="Schema" ID="8bfd33b9-2656-4bef-a6da-39f591903d44" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MoneyService1.wsdl" MetadataType="Wsdl" ID="41222589-55fd-42bf-b93c-53cc9664d5c8" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?wsdl" />
+    <MetadataFile FileName="MoneyService1.disco" MetadataType="Disco" ID="83d539c8-5817-4c09-8be4-caffc8ac2319" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?disco" />
+    <MetadataFile FileName="MoneyService4.xsd" MetadataType="Schema" ID="69db449c-3742-436b-b2d7-c2625ecbf06f" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MoneyService41.xsd" MetadataType="Schema" ID="17b3c2d7-e9d9-41cb-9bb7-47ca18a4bc4f" SourceId="1" SourceUrl="http://localhost/StagingFab/MoneyService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

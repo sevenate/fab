@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 
@@ -19,23 +20,16 @@ namespace Fab.Client.MoneyTracker.Categories
 	[Export(typeof(ICategoriesViewModel))]
 	public class CategoriesViewModel : Screen, ICategoriesViewModel
 	{
-		#region Fields
-
-		/// <summary>
-		/// Accounts owner ID.
-		/// </summary>
-		private readonly Guid userId = new Guid("DC57BFF0-57A6-4BFC-9104-5F323ABBEDAB"); // 7F06BFA6-B675-483C-9BF3-F59B88230382
-
-		#endregion
-
 		#region Ctors
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CategoriesViewModel"/> class.
 		/// </summary>
-		public CategoriesViewModel()
+		[ImportingConstructor]
+		public CategoriesViewModel(IEventAggregator eventAggregator)
 		{
 			Categories = new BindableCollection<CategoryDTO>();
+			eventAggregator.Subscribe(this);
 		}
 
 		#endregion
@@ -55,7 +49,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		{
 			yield return Loader.Show("Loading...");
 
-			var request = new CategoriesResult(userId);
+			var request = new CategoriesResult(UserCredentials.Current.UserId);
 			yield return request;
 
 			Categories.Clear();
@@ -73,6 +67,19 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// Raised right after categories were reloaded from server.
 		/// </summary>
 		public event EventHandler<EventArgs> Reloaded;
+
+		#endregion
+
+		#region Implementation of IHandle<in LoggedOutMessage>
+
+		/// <summary>
+		/// Handles the <see cref="LoggedOutMessage"/>.
+		/// </summary>
+		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
+		public void Handle(LoggedOutMessage message)
+		{
+			Categories.Clear();
+		}
 
 		#endregion
 	}

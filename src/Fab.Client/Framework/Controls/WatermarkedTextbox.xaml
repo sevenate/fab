@@ -163,7 +163,100 @@
 				 LostFocus="TextEntry_LostFocus"
 				 TextChanged="TextEntry_TextChanged"
 				 VerticalAlignment="Center"
-				 d:LayoutOverrides="Width" Grid.ColumnSpan="2" />
+				 d:LayoutOverrides="Width" Grid.ColumnSpan="2" >
+			<TextBox.Style>
+				<Style TargetType="TextBox">
+					<Setter Property="Foreground"
+							Value="{StaticResource Brush_Foreground}" />
+					<Setter Property="FontFamily"
+							Value="{StaticResource MainFontFamily}" />
+					<Setter Property="FontSize"
+							Value="12" />
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate TargetType="TextBox">
+								<Grid>
+									<VisualStateManager.VisualStateGroups>
+										<VisualStateGroup x:Name="CommonStates">
+											<VisualStateGroup.Transitions>
+												<VisualTransition GeneratedDuration="0:0:0.2" />
+											</VisualStateGroup.Transitions>
+											<VisualState x:Name="MouseOver">
+												<Storyboard>
+													<DoubleAnimation Duration="0"
+																	 To="1"
+																	 Storyboard.TargetProperty="(UIElement.Opacity)"
+																	 Storyboard.TargetName="background_over"
+																	 d:IsOptimized="True" />
+												</Storyboard>
+											</VisualState>
+											<VisualState x:Name="Normal" />
+											<VisualState x:Name="Pressed" />
+											<VisualState x:Name="Disabled">
+												<Storyboard>
+													<DoubleAnimation Duration="0"
+																	 To="0.2"
+																	 Storyboard.TargetProperty="(UIElement.Opacity)"
+																	 Storyboard.TargetName="ContentElement"
+																	 d:IsOptimized="True" />
+												</Storyboard>
+											</VisualState>
+											<VisualState x:Name="ReadOnly" />
+										</VisualStateGroup>
+										<VisualStateGroup x:Name="FocusStates">
+											<VisualStateGroup.Transitions>
+												<VisualTransition GeneratedDuration="0:0:0.2" />
+											</VisualStateGroup.Transitions>
+											<VisualState x:Name="Focused">
+												<Storyboard>
+													<DoubleAnimation Duration="0"
+																	 To="1"
+																	 Storyboard.TargetProperty="(UIElement.Opacity)"
+																	 Storyboard.TargetName="background_focus"
+																	 d:IsOptimized="True" />
+												</Storyboard>
+											</VisualState>
+											<VisualState x:Name="Unfocused" />
+										</VisualStateGroup>
+										<VisualStateGroup x:Name="ValidationStates">
+											<VisualState x:Name="InvalidFocused" />
+											<VisualState x:Name="InvalidUnfocused" />
+											<VisualState x:Name="Valid" />
+										</VisualStateGroup>
+									</VisualStateManager.VisualStateGroups>
+									<Rectangle x:Name="blackframe"
+											   Stroke="{StaticResource Brush_BorderOuter}"
+											   Fill="{StaticResource Brush_BorderInner}" />
+									<Rectangle x:Name="background"
+											   Margin="2"
+											   Fill="{StaticResource Brush_DarkGradInset}" />
+									<Rectangle x:Name="background_over"
+											   Margin="2"
+											   Opacity="0"
+											   Stroke="{StaticResource Brush_BackgroundGrad_Over}" />
+									<Rectangle x:Name="background_focus"
+											   Margin="2"
+											   Opacity="0"
+											   Stroke="{StaticResource Brush_BackgroundGrad_Over}" />
+									<ScrollViewer x:Name="ContentElement"
+												  BorderThickness="0"
+												  IsTabStop="False"
+												  Padding="{TemplateBinding Padding}" />
+								</Grid>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="MinWidth"
+							Value="0" />
+					<Setter Property="Padding"
+							Value="3" />
+					<Setter Property="TextWrapping"
+							Value="Wrap" />
+					<Setter Property="MinHeight"
+							Value="0" />
+				</Style>
+			</TextBox.Style>
+		</TextBox>
 				 <!-- Watermark Foreground="#FF868686" -->
 		<TextBlock x:Name="WatermarkText"
 				   HorizontalAlignment="Left"

@@ -1,12 +1,12 @@
-// <copyright file="ICategoriesViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+// <copyright file="ICategoriesViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-13" />
-// <summary>General categories view model interface.</summary>
+// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-04-13" />
 
 using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Categories
@@ -14,7 +14,7 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// <summary>
 	/// General categories view model interface.
 	/// </summary>
-	public interface ICategoriesViewModel
+	public interface ICategoriesViewModel : IHandle<LoggedOutMessage>
 	{
 		/// <summary>
 		/// Gets categories for specific user.

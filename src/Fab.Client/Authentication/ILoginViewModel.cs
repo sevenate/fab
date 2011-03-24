@@ -4,7 +4,6 @@
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2010-11-17" />
 // <summary>Interface for login view model.</summary>
 
-using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
 
@@ -16,19 +15,34 @@ namespace Fab.Client.Authentication
 	public interface ILoginViewModel: IScreen
 	{
 		/// <summary>
-		/// Gets or sets user name.
-		/// </summary>
-		string Username { get; }
-
-		/// <summary>
 		/// Gets or sets user password.
 		/// </summary>
 		string Password { get; }
 
 		/// <summary>
-		/// Gets or sets user unique identifier.
+		/// Gets or sets user name.
 		/// </summary>
-		Guid UserId { get; }
+		string Username { get; set; }
+
+		/// <summary>
+		/// Gets a value indicating whether a user is authenticated.
+		/// </summary>
+		bool IsAuthenticated { get; }
+
+		/// <summary>
+		/// Gets or sets status message.
+		/// </summary>
+		string Status { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a status message should be visible.
+		/// </summary>
+		bool ShowStatus { get; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a password characters should be visible to user.
+		/// </summary>
+		bool ShowCharacters { get; set; }
 
 		/// <summary>
 		/// Login with specified credentials.
@@ -40,5 +54,11 @@ namespace Fab.Client.Authentication
 		/// Logout from the system.
 		/// </summary>
 		void Logout();
+
+		/// <summary>
+		/// Check if the credentials meets the security requirements.
+		/// </summary>
+		/// <returns><c>true</c> if the username and password meets the security requirements.</returns>
+		bool CanLogin();
 	}
 }

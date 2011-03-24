@@ -190,7 +190,7 @@ namespace Fab.Server.Import
 						}
 
 						UpdateStatus("Creating " + i + " / " + expenseGroups.Count + " expense category...");
-						int categoryId = moneyClient.CreateCategory(userId, expenseGroups[i].Name, 1); // withdrawal category
+						int categoryId = moneyClient.CreateCategory(userId, expenseGroups[i].Name, CategoryType.Withdrawal); // withdrawal category
 						categoryMap.Add(new KeyValuePair<int, bool>(expenseGroups[i].Id, true), categoryId);
 					}
 
@@ -217,7 +217,7 @@ namespace Fab.Server.Import
 						}
 
 						UpdateStatus("Creating " + i + " / " + revenueGroups.Count + " revenue category...");
-						int categoryId = moneyClient.CreateCategory(userId, revenueGroups[i].Name, 2); // deposit category
+						int categoryId = moneyClient.CreateCategory(userId, revenueGroups[i].Name, CategoryType.Deposit); // deposit category
 						categoryMap.Add(new KeyValuePair<int, bool>(revenueGroups[i].Id, false), categoryId);
 					}
 
@@ -351,7 +351,7 @@ namespace Fab.Server.Import
 			RevenueProgressPercentTextBlock.Text = string.Format("{0:0.00}%", 100*RevenueProgressBar.Value/RevenueProgressBar.Maximum);
 			UpdateStatus("Importing revenues...");
 
-			moneyClient.Deposit(userId, accountId, revenue.Date, revenue.Price, revenue.Quantity, revenue.Comment, revenue.CategoryId);
+			moneyClient.Deposit(userId, accountId, revenue.Date, revenue.Price, revenue.Quantity, revenue.CategoryId, revenue.Comment);
 
 			if (revenueIndex < revenuesCount)
 			{
@@ -387,7 +387,7 @@ namespace Fab.Server.Import
 			ExpenseProgressPercentTextBlock.Text = string.Format("{0:0.00}%", 100*ExpenseProgressBar.Value/ExpenseProgressBar.Maximum);
 			UpdateStatus("Importing expenses...");
 
-			moneyClient.Withdrawal(userId, accountId, expense.Date, expense.Price, expense.Quantity, expense.Comment, expense.CategoryId);
+			moneyClient.Withdrawal(userId, accountId, expense.Date, expense.Price, expense.Quantity, expense.CategoryId, expense.Comment);
 
 			if (expenseIndex < expensesCount)
 			{
