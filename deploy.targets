@@ -6,7 +6,7 @@ deploy.targets
 
 This file contains all deployment tasks for FAB project.
 
-Copyright (C) 2009-2010 nReez Software. All rights reserved.
+Copyright (C) 2009-2011 nReez Software. All rights reserved.
 ***********************************************************************************************
 -->
 
@@ -27,9 +27,8 @@ Copyright (C) 2009-2010 nReez Software. All rights reserved.
 
 	<Target Name="Deploy">
 		<CallTarget Targets="Prepare" />
-		<CallTarget Targets="DeploySite" />
-		<CallTarget Targets="DeployServer" />
-		<CallTarget Targets="DeployImport" />
+		<CallTarget Targets="DeployFAB" />
+		<CallTarget Targets="DeployImportTool" />
 	</Target>
 
 	<Target Name="Prepare">
@@ -38,26 +37,26 @@ Copyright (C) 2009-2010 nReez Software. All rights reserved.
 		<MakeDir Directories="$(DeployRoot)" />
 	</Target>
 
-	<Target Name="DeploySite">
+	<Target Name="DeployFAB">
 		<PropertyGroup>
-			<SourceFolder>$(SourceRoot)\Fab.Client.Web</SourceFolder>
-			<DeployFolder>$(DeployRoot)\Fab.Silverlight</DeployFolder>
+			<SourceFolder>$(SourceRoot)\Fab.Server</SourceFolder>
+			<DeployFolder>$(DeployRoot)\Fab</DeployFolder>
 			<SilverSourceFolder>$(SourceRoot)\Fab.Client</SilverSourceFolder>
 		</PropertyGroup>
 
-		<Message Text="Deploying Fab Site" />
+		<Message Text="Deploying FAB..." />
 
 		<RemoveDir Condition="Exists('$(DeployFolder)')"
 				   Directories="$(DeployFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />
 
 		<CreateItem Include="$(SourceFolder)\**\*.*"
-					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config">
+					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\App_Data\*.mdf;$(SourceFolder)\App_Data\*_log.ldf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config">
 			<Output TaskParameter="Include"
-					ItemName="SiteReleaseFiles"/>
+					ItemName="ServerReleaseFiles"/>
 		</CreateItem>
 
-		<Copy SourceFiles="@(SiteReleaseFiles)"
+		<Copy SourceFiles="@(ServerReleaseFiles)"
 			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
 
 		<Unzip ZipFileName="$(DeployFolder)\ClientBin\SilverFAB.xap"
@@ -81,37 +80,14 @@ Copyright (C) 2009-2010 nReez Software. All rights reserved.
 
 	</Target>
 
-	<Target Name="DeployServer">
-		<PropertyGroup>
-			<SourceFolder>$(SourceRoot)\Fab.Server</SourceFolder>
-			<DeployFolder>$(DeployRoot)\Fab</DeployFolder>
-		</PropertyGroup>
-
-		<Message Text="Deploying Fab Server" />
-
-		<RemoveDir Condition="Exists('$(DeployFolder)')"
-				   Directories="$(DeployFolder)" />
-		<MakeDir Directories="$(DeployFolder)" />
-
-		<CreateItem Include="$(SourceFolder)\**\*.*"
-					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\App_Data\*.mdf;$(SourceFolder)\App_Data\*_log.ldf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config">
-			<Output TaskParameter="Include"
-					ItemName="ServerReleaseFiles"/>
-		</CreateItem>
-
-		<Copy SourceFiles="@(ServerReleaseFiles)"
-			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
-
-	</Target>
-
-	<Target Name="DeployImport">
+	<Target Name="DeployImportTool">
 		<PropertyGroup>
 			<BinFolder>$(BinRoot)\Fab.Server.Import</BinFolder>
 			<SourceFolder>$(SourceRoot)\Fab.Server.Import</SourceFolder>
 			<DeployFolder>$(DeployRoot)\ImportTool</DeployFolder>
 		</PropertyGroup>
 
-		<Message Text="Deploying Fab Import Tool" />
+		<Message Text="Deploying FAB Import Tool..." />
 
 		<RemoveDir Condition="Exists('$(DeployFolder)')"
 				   Directories="$(DeployFolder)" />

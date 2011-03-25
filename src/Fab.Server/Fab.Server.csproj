@@ -23,6 +23,7 @@
     <SccProvider>
     </SccProvider>
     <UseIISExpress>false</UseIISExpress>
+    <SilverlightApplicationList>{C75F0C64-CBBF-4B29-9E9E-A362AC3A4760}|..\Fab.Client\Fab.Client.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,14 +71,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminService.svc" />
-    <Content Include="App_Data\StagingFab.mdf" />
-    <Content Include="App_Data\StagingFab_log.ldf">
-      <DependentUpon>StagingFab.mdf</DependentUpon>
-    </Content>
+    <Content Include="ClientBin\SilverFAB.xap" />
     <Content Include="Database\Fill Test Data.sql" />
+    <Content Include="index.html" />
     <Content Include="MoneyService.svc" />
     <None Include="Database\Create.sql" />
     <None Include="Database\Fill.sql" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\Silverlight.js" />
     <Content Include="UserService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -138,6 +139,7 @@
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <Import Project="..\..\msbuild.common.targets" />
