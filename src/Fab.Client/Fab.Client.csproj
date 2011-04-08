@@ -166,9 +166,15 @@
     <Compile Include="Framework\Filters\RescueAttribute.cs" />
     <Compile Include="Framework\Filters\SetBusyAttribute.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsViewModel.cs" />
+    <Compile Include="MoneyTracker\Accounts\CurrentAccountChangedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsRepository.cs" />
     <Compile Include="MoneyTracker\Categories\CategoriesViewModel.cs" />
-    <Compile Include="MoneyTracker\Accounts\IAccountsViewModel.cs" />
-    <Compile Include="MoneyTracker\Categories\ICategoriesViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\ICategoriesRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesRepository.cs" />
+    <Compile Include="Framework\RepositoryBase.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\ITransactionDetailsViewModel.cs" />
     <Compile Include="MoneyTracker\Transactions\GetBalanceResult.cs" />
     <Compile Include="MoneyTracker\Transactions\DateRange.cs" />
@@ -198,9 +204,7 @@
     <Compile Include="MoneyTracker\Transfers\TransferView.xaml.cs">
       <DependentUpon>TransferView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MoneyTracker\Accounts\AccountsResult.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\AddTransactionResult.cs" />
-    <Compile Include="MoneyTracker\Categories\CategoriesResult.cs" />
     <Compile Include="MoneyTracker\Transfers\AddTransferResult.cs" />
     <Compile Include="Framework\IDialogManager.cs" />
     <Compile Include="Framework\IHaveShutdownTask.cs" />

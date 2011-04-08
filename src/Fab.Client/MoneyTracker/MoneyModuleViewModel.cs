@@ -85,8 +85,8 @@ namespace Fab.Client.MoneyTracker
 		/// </summary>
 		[ImportingConstructor]
 		public MoneyModuleViewModel(
-			IAccountsViewModel accountsVM,
-			ICategoriesViewModel categoriesVM,
+			AccountsViewModel accountsVM,
+			CategoriesViewModel categoriesVM,
 			ITransactionsViewModel transactionsVM,
 			ITransactionDetailsViewModel transactionDetailsVM,
 			ITransferViewModel transferViewModel)

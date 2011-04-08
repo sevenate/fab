@@ -76,11 +76,6 @@ namespace Fab.Client.MoneyTracker.Transfers
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets <see cref="IAccountsViewModel"/>.
-		/// </summary>
-		private IAccountsViewModel accountsVM;
-
 		private readonly CollectionViewSource accounts1CollectionViewSource = new CollectionViewSource();
 		private readonly CollectionViewSource accounts2CollectionViewSource = new CollectionViewSource();
 
@@ -101,6 +96,8 @@ namespace Fab.Client.MoneyTracker.Transfers
 		}
 
 		private bool isEditMode;
+		private BindableCollection<AccountDTO> accounts1;
+		private BindableCollection<AccountDTO> accounts2;
 
 		public bool IsEditMode
 		{
@@ -115,47 +112,16 @@ namespace Fab.Client.MoneyTracker.Transfers
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TransferViewModel"/> class.
 		/// </summary>
-		/// <param name="accountsVM">Accounts view model.</param>
 		[ImportingConstructor]
-		public TransferViewModel(IAccountsViewModel accountsVM)
+		public TransferViewModel(IEventAggregator eventAggregator)
 		{
-			this.accountsVM = accountsVM;
+			eventAggregator.Subscribe(this);
 
-			var accounts1 = new BindableCollection<AccountDTO>();
+			accounts1 = new BindableCollection<AccountDTO>();
 			accounts1CollectionViewSource.Source = accounts1;
 
-			this.accountsVM.Reloaded += (sender, args) =>
-			{
-				accounts1.Clear();
-
-				foreach (var account in this.accountsVM.Accounts)
-				{
-					accounts1.Add(account as AccountDTO);
-				}
-
-				if (!accounts1CollectionViewSource.View.IsEmpty)
-				{
-					accounts1CollectionViewSource.View.MoveCurrentToFirst();
-				}
-			};
-
-			var accounts2 = new BindableCollection<AccountDTO>();
+			accounts2 = new BindableCollection<AccountDTO>();
 			accounts2CollectionViewSource.Source = accounts2;
-
-			this.accountsVM.Reloaded += (sender, args) =>
-			{
-				accounts2.Clear();
-
-				foreach (var account in this.accountsVM.Accounts)
-				{
-					accounts2.Add(account as AccountDTO);
-				}
-
-				if (!accounts2CollectionViewSource.View.IsEmpty)
-				{
-					accounts2CollectionViewSource.View.MoveCurrentToFirst();
-				}
-			};
 		}
 
 		public void Clear()
@@ -249,5 +215,40 @@ namespace Fab.Client.MoneyTracker.Transfers
 
 			IsEditMode = true;
 		}
+
+		#region Implementation of IHandle<in AccountsUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountsUpdatedMessage message)
+		{
+			accounts1.Clear();
+
+			foreach (var account in message.Accounts)
+			{
+				accounts1.Add(account);
+			}
+
+			if (!accounts1CollectionViewSource.View.IsEmpty)
+			{
+				accounts1CollectionViewSource.View.MoveCurrentToFirst();
+			}
+
+			accounts2.Clear();
+
+			foreach (var account in message.Accounts)
+			{
+				accounts2.Add(account);
+			}
+
+			if (!accounts2CollectionViewSource.View.IsEmpty)
+			{
+				accounts2CollectionViewSource.View.MoveCurrentToFirst();
+			}
+		}
+
+		#endregion
 	}
 }

@@ -4,14 +4,16 @@
 // <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-06-19" />
 // <summary>General transfer view model interface..</summary>
 
+using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.MoneyTracker.Accounts;
 
 namespace Fab.Client.MoneyTracker.Transfers
 {
 	/// <summary>
 	/// General transfer view model interface..
 	/// </summary>
-	public interface ITransferViewModel
+	public interface ITransferViewModel : IHandle<AccountsUpdatedMessage>
 	{
 		/// <summary>
 		/// Open specific transfer to edit.
