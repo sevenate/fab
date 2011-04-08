@@ -7,13 +7,14 @@ using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
+using Fab.Client.MoneyTracker.Accounts;
 
 namespace Fab.Client.MoneyTracker.Transactions
 {
 	/// <summary>
 	/// General transactions view model interface.
 	/// </summary>
-	public interface ITransactionsViewModel : IHandle<LoggedOutMessage>
+	public interface ITransactionsViewModel : IHandle<LoggedOutMessage>, IHandle<CurrentAccountChangedMessage>
 	{
 		/// <summary>
 		/// Gets transaction records.

@@ -65,6 +65,16 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		<Button x:Name="CreateAccount"
+				Grid.Row="2"
+				Content="Add"
+				MinWidth="75"
+				MinHeight="23"
+				HorizontalAlignment="Left" />
+		<TextBox x:Name="Name"
+				 Grid.Row="2"
+				 HorizontalAlignment="Center"
+				 Width="150" />
 		<Button x:Name="LoadAllAccounts"
 				Grid.Row="2"
 				Content="Refresh"

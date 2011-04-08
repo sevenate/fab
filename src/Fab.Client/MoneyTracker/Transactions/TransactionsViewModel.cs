@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
@@ -28,15 +27,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 	{
 		#region Fields
 
-		/// <summary>
-		/// Gets or sets <see cref="IAccountsViewModel"/>.
-		/// </summary>
-		private IAccountsViewModel accountsVM;
-
-		/// <summary>
-		/// Gets or sets <see cref="ICategoriesViewModel"/>.
-		/// </summary>
-		private ICategoriesViewModel categoriesVM;
+		private ICategoriesRepository categoriesRepository;
 
 		/// <summary>
 		/// Gets or sets <see cref="ITransactionDetailsViewModel"/>.
@@ -79,9 +70,8 @@ namespace Fab.Client.MoneyTracker.Transactions
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TransactionsViewModel"/> class.
 		/// </summary>
-		/// <param name="accountsVM">Accounts view model.</param>
 		[ImportingConstructor]
-		public TransactionsViewModel(IAccountsViewModel accountsVM, ICategoriesViewModel categoriesVM, ITransactionDetailsViewModel transactionDetailsVM, ITransferViewModel transferVM, IEventAggregator eventAggregator)
+		public TransactionsViewModel(IEventAggregator eventAggregator, ICategoriesRepository categoriesRepository, ITransactionDetailsViewModel transactionDetailsVM, ITransferViewModel transferVM)
 		{
 			TransactionRecords = new BindableCollection<TransactionRecord>();
 
@@ -89,19 +79,10 @@ namespace Fab.Client.MoneyTracker.Transactions
 			fromDate = DateTime.Now.Date;
 			selectedDateRange = DateRange.Day;
 			UpdateTillDate(false);
-			
-			this.accountsVM = accountsVM;
-			this.categoriesVM = categoriesVM;
+
+			this.categoriesRepository = categoriesRepository;
 			this.transactionDetailsVM = transactionDetailsVM;
 			this.transferVM = transferVM;
-
-			this.accountsVM.Accounts.CurrentChanged += (o, eventArgs) =>
-			{
-				if (!this.accountsVM.Accounts.IsEmpty)
-				{
-					CurrentAccount = this.accountsVM.Accounts.CurrentItem as AccountDTO;
-				}
-			};
 
 			eventAggregator.Subscribe(this);
 		}
@@ -349,14 +330,14 @@ namespace Fab.Client.MoneyTracker.Transactions
 					income = r.Amount;
 					incomeForPeriod += r.Amount;
 					expense = 0;
-					category = categoriesVM.Categories.Where(c => c.Id == ((DepositDTO) r).CategoryId).SingleOrDefault();
+					category = categoriesRepository.Categories.Where(c => c.Id == ((DepositDTO) r).CategoryId).SingleOrDefault();
 				}
 				else if (r is WithdrawalDTO)
 				{
 					income = 0;
 					expense = -r.Amount;
 					expenseForPeriod += r.Amount;
-					category = categoriesVM.Categories.Where(c => c.Id == ((WithdrawalDTO)r).CategoryId).SingleOrDefault();
+					category = categoriesRepository.Categories.Where(c => c.Id == ((WithdrawalDTO)r).CategoryId).SingleOrDefault();
 				}
 				else if (r is IncomingTransferDTO)
 				{
@@ -450,7 +431,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 
 			if (request.Transaction is TransactionDTO)
 			{
-				transactionDetailsVM.Edit(request.Transaction as TransactionDTO);
+				transactionDetailsVM.Edit(request.Transaction as TransactionDTO, CurrentAccount.Id);
 			}
 			else if (request.Transaction is TransferDTO)
 			{
@@ -483,6 +464,23 @@ namespace Fab.Client.MoneyTracker.Transactions
 			FromDate = DateTime.UtcNow;
 			TillDate = DateTime.UtcNow;
 			SelectedDateRange = DateRange.Day;
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in CurrentAccountChangedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(CurrentAccountChangedMessage message)
+		{
+			//TODO: consider remove condition here.
+			if (message.CurrentAccount != null)
+			{
+				CurrentAccount = message.CurrentAccount;
+			}
 		}
 
 		#endregion

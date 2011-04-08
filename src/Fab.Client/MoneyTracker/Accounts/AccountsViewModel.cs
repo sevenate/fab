@@ -3,14 +3,10 @@
 // </copyright>
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2010-04-11" />
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Windows.Data;
 using Caliburn.Micro;
-using Fab.Client.Authentication;
-using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Accounts
@@ -18,16 +14,30 @@ namespace Fab.Client.MoneyTracker.Accounts
 	/// <summary>
 	/// Accounts view model.
 	/// </summary>
-	[Export(typeof(IAccountsViewModel))]
-	public class AccountsViewModel : Screen, IAccountsViewModel
+	[Export(typeof(AccountsViewModel))]
+	public class AccountsViewModel : Screen, IHandle<AccountsUpdatedMessage>
 	{
 		#region Fields
 
 		private readonly BindableCollection<AccountDTO> accounts = new BindableCollection<AccountDTO>();
 
-		private readonly CollectionViewSource accountsCollectionViewSource = new CollectionViewSource();
+		private readonly CollectionViewSource accountsCollectionView = new CollectionViewSource();
+		private readonly IAccountsRepository accountsRepository;
+
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
 
 		#endregion
+
+		/// <summary>
+		/// Gets accounts for specific user.
+		/// </summary>
+		public ICollectionView Accounts
+		{
+			get { return accountsCollectionView.View; }
+		}
 
 		#region Ctors
 
@@ -35,66 +45,67 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// Initializes a new instance of the <see cref="AccountsViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public AccountsViewModel(IEventAggregator eventAggregator)
+		public AccountsViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
 		{
-			accountsCollectionViewSource.Source = accounts;
-			eventAggregator.Subscribe(this);
+			EventAggregator = eventAggregator;
+			EventAggregator.Subscribe(this);
+
+			this.accountsRepository = accountsRepository;
+			accountsCollectionView.Source = accounts;
+			accountsCollectionView.View.CurrentChanged += (sender, args) => EventAggregator.Publish(new CurrentAccountChangedMessage
+			                                                                                        {
+			                                                                                        	CurrentAccount = accountsCollectionView.View.CurrentItem as AccountDTO
+			                                                                                        });
 		}
 
 		#endregion
 
-		#region Imlementation of IAccountsViewModel
+		#region Create Account
+
+		private string name;
 
 		/// <summary>
-		/// Gets accounts for specific user.
+		/// Gets or sets name for the new account.
 		/// </summary>
-		public ICollectionView Accounts
+		public string Name
 		{
-			get
+			get { return name; }
+			set
 			{
-				return accountsCollectionViewSource.View;
+				name = value;
+				NotifyOfPropertyChange(Name);
 			}
 		}
 
 		/// <summary>
-		/// Download all accounts for specific user.
+		/// Create new account for specific user.
 		/// </summary>
 		/// <returns>Operation result.</returns>
-		public IEnumerable<IResult> LoadAllAccounts()
+		public void CreateAccount()
 		{
-			yield return Loader.Show("Loading...");
-
-			var request = new AccountsResult(UserCredentials.Current.UserId);
-			yield return request;
-			
-			accounts.Clear();
-			accounts.AddRange(request.Accounts);
-			accountsCollectionViewSource.View.MoveCurrentToFirst();
-
-			if (Reloaded != null)
-			{
-				Reloaded(this, EventArgs.Empty);
-			}
-
-			yield return Loader.Hide();
+			accountsRepository.Create(Name.Trim(), 1);
 		}
-
-		/// <summary>
-		/// Raised right after accounts were reloaded from server.
-		/// </summary>
-		public event EventHandler<EventArgs> Reloaded;
 
 		#endregion
 
-		#region Implementation of IHandle<in LoggedOutMessage>
+		#region Implementation of IHandle<in AccountsUpdatedMessage>
 
 		/// <summary>
-		/// Handles the <see cref="LoggedOutMessage"/>.
+		/// Handles the message.
 		/// </summary>
-		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
-		public void Handle(LoggedOutMessage message)
+		/// <param name="message">The message.</param>
+		public void Handle(AccountsUpdatedMessage message)
 		{
-			accounts.Clear();
+			if (message.Error == null)
+			{
+				accounts.Clear();
+				accounts.AddRange(message.Accounts);
+				accountsCollectionView.View.MoveCurrentToFirst();
+			}
+			else
+			{
+				//TODO: show error dialog here
+			}
 		}
 
 		#endregion

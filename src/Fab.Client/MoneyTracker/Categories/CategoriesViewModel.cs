@@ -4,12 +4,10 @@
 // <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-12" />
 // <summary>Categories view model.</summary>
 
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Windows.Data;
 using Caliburn.Micro;
-using Fab.Client.Authentication;
-using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Categories
@@ -17,68 +15,66 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// <summary>
 	/// Categories view model.
 	/// </summary>
-	[Export(typeof(ICategoriesViewModel))]
-	public class CategoriesViewModel : Screen, ICategoriesViewModel
+	[Export(typeof(CategoriesViewModel))]
+	public class CategoriesViewModel : Screen, IHandle<CategoriesUpdatedMessage>
 	{
+		#region Fields
+
+		private readonly BindableCollection<CategoryDTO> categories = new BindableCollection<CategoryDTO>();
+
+		private readonly CollectionViewSource categoriesCollectionView = new CollectionViewSource();
+		private readonly ICategoriesRepository categoriesRepository;
+
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
+
+		#endregion
+
+		/// <summary>
+		/// Gets categories for specific user.
+		/// </summary>
+		public ICollectionView Categories
+		{
+			get { return categoriesCollectionView.View; }
+		}
+
 		#region Ctors
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CategoriesViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public CategoriesViewModel(IEventAggregator eventAggregator)
+		public CategoriesViewModel(IEventAggregator eventAggregator, ICategoriesRepository categoriesRepository)
 		{
-			Categories = new BindableCollection<CategoryDTO>();
-			eventAggregator.Subscribe(this);
+			EventAggregator = eventAggregator;
+			EventAggregator.Subscribe(this);
+
+			this.categoriesRepository = categoriesRepository;
+			categoriesCollectionView.Source = categories;
 		}
 
 		#endregion
 
-		#region Implementation of ICategoriesViewModel
+		#region Implementation of IHandle<in CategoriesUpdatedMessage>
 
 		/// <summary>
-		/// Gets categories for specific user.
+		/// Handles the message.
 		/// </summary>
-		public IObservableCollection<CategoryDTO> Categories { get; private set; }
-
-		/// <summary>
-		/// Download all categories for specific user.
-		/// </summary>
-		/// <returns>Operation result.</returns>
-		public IEnumerable<IResult> LoadAllCategories()
+		/// <param name="message">The message.</param>
+		public void Handle(CategoriesUpdatedMessage message)
 		{
-			yield return Loader.Show("Loading...");
-
-			var request = new CategoriesResult(UserCredentials.Current.UserId);
-			yield return request;
-
-			Categories.Clear();
-			Categories.AddRange(request.Categories);
-
-			if (Reloaded != null)
+			if (message.Error == null)
 			{
-				Reloaded(this, EventArgs.Empty);
+				categories.Clear();
+				categories.AddRange(message.Categories);
+				categoriesCollectionView.View.MoveCurrentToFirst();
 			}
-
-			yield return Loader.Hide();
-		}
-
-		/// <summary>
-		/// Raised right after categories were reloaded from server.
-		/// </summary>
-		public event EventHandler<EventArgs> Reloaded;
-
-		#endregion
-
-		#region Implementation of IHandle<in LoggedOutMessage>
-
-		/// <summary>
-		/// Handles the <see cref="LoggedOutMessage"/>.
-		/// </summary>
-		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
-		public void Handle(LoggedOutMessage message)
-		{
-			Categories.Clear();
+			else
+			{
+				//TODO: show error dialog here
+			}
 		}
 
 		#endregion

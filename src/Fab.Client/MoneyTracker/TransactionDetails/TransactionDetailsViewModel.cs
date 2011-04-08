@@ -44,29 +44,15 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 		#region Properties
 
-		private readonly CollectionViewSource accountsCollectionViewSource = new CollectionViewSource();
-
-		private readonly CollectionViewSource categoriesCollectionViewSource = new CollectionViewSource();
-
-		/// <summary>
-		/// Gets or sets <see cref="IAccountsViewModel"/>.
-		/// </summary>
-		private IAccountsViewModel accountsVM;
-
-		/// <summary>
-		/// Gets or sets <see cref="ICategoriesViewModel"/>.
-		/// </summary>
-		private ICategoriesViewModel categoriesVM;
+		private readonly CollectionViewSource accountsViewSource = new CollectionViewSource();
+		private readonly CollectionViewSource categoriesViewSource = new CollectionViewSource();
 
 		/// <summary>
 		/// Gets accounts for specific user.
 		/// </summary>
 		public ICollectionView Accounts
 		{
-			get
-			{
-				return accountsCollectionViewSource.View;
-			}
+			get { return accountsViewSource.View; }
 		}
 
 		/// <summary>
@@ -74,10 +60,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		/// </summary>
 		public ICollectionView Categories
 		{
-			get
-			{
-				return categoriesCollectionViewSource.View;
-			}
+			get { return categoriesViewSource.View; }
 		}
 
 		private bool isDeposite;
@@ -154,45 +137,10 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TransactionDetailsViewModel"/> class.
 		/// </summary>
-		/// <param name="accountsVM">Accounts view model.</param>
-		/// <param name="categoriesVM">Categories view model.</param>
 		[ImportingConstructor]
-		public TransactionDetailsViewModel(IAccountsViewModel accountsVM, ICategoriesViewModel categoriesVM)
+		public TransactionDetailsViewModel(IEventAggregator eventAggregator)
 		{
-			this.accountsVM = accountsVM;
-			this.categoriesVM = categoriesVM;
-
-			var accounts = new BindableCollection<AccountDTO>();
-			accountsCollectionViewSource.Source = accounts;
-
-			this.accountsVM.Reloaded += (sender, args) =>
-			                       	{
-										accounts.Clear();
-
-										foreach (var account in this.accountsVM.Accounts)
-										{
-											accounts.Add(account as AccountDTO);
-										}
-
-			                       		if (!accountsCollectionViewSource.View.IsEmpty)
-			                       		{
-			                       			accountsCollectionViewSource.View.MoveCurrentToFirst();
-			                       		}
-			                       	};
-
-			var categories = new BindableCollection<CategoryDTO>();
-			categoriesCollectionViewSource.Source = categories;
-
-			this.categoriesVM.Reloaded += (sender, args) =>
-									{
-										categories.Clear();
-										categories.AddRange(this.categoriesVM.Categories);
-										
-										if (!categoriesCollectionViewSource.View.IsEmpty)
-										{
-											categoriesCollectionViewSource.View.MoveCurrentToFirst();
-										}
-									};
+			eventAggregator.Subscribe(this);
 
 			categoryFilter = (search, item) =>
 			                 	{
@@ -229,6 +177,11 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		{
 			get
 			{
+				if (Categories == null)
+				{
+					return null;
+				}
+
 				var currentCategory = (CategoryDTO)Categories.CurrentItem;
 				return currentCategory != null && currentCategory.Id != -1
 						? currentCategory
@@ -346,22 +299,13 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		/// Open specific deposit or withdrawal transaction to edit.
 		/// </summary>
 		/// <param name="transaction">Transaction to edit.</param>
-		public void Edit(TransactionDTO transaction)
+		/// <param name="accountId">Current selected account.</param>
+		public void Edit(TransactionDTO transaction, int accountId)
 		{
 			transactionId = transaction.Id;
 
-			var currentSelectedAccount = accountsVM.Accounts.CurrentItem as AccountDTO;
-			
-			if (currentSelectedAccount != null)
-			{
-				var accouns = accountsCollectionViewSource.Source as BindableCollection<AccountDTO>;
-				
-				if (accouns != null)
-				{
-					var account = accouns.Where(account1 => account1.Id == currentSelectedAccount.Id).Single();
-					Accounts.MoveCurrentTo(account);
-				}
-			}
+			var account = Accounts.Cast<AccountDTO>().Where(a => a.Id == accountId).Single();
+			Accounts.MoveCurrentTo(account);
 
 			IsDeposite = transaction is DepositDTO;
 
@@ -373,5 +317,55 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 			IsEditMode = true;
 		}
+
+		#region Implementation of IHandle<in AccountsUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountsUpdatedMessage message)
+		{
+			if (message.Error == null)
+			{
+				accountsViewSource.Source = message.Accounts;
+
+				if (!accountsViewSource.View.IsEmpty)
+				{
+					accountsViewSource.View.MoveCurrentToFirst();
+				}
+			}
+			else
+			{
+				//TODO: show error dialog here
+			}
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in CategoriesUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(CategoriesUpdatedMessage message)
+		{
+			if (message.Error == null)
+			{
+				categoriesViewSource.Source = message.Categories;
+
+				if (!categoriesViewSource.View.IsEmpty)
+				{
+					categoriesViewSource.View.MoveCurrentToFirst();
+				}
+			}
+			else
+			{
+				//TODO: show error dialog here
+			}
+		}
+
+		#endregion
 	}
 }

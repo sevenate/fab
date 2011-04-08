@@ -7,7 +7,6 @@ using System.ComponentModel.Composition.Primitives;
 using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
-using Fab.Client.Authentication;
 using Fab.Client.Controls;
 using Fab.Client.Framework;
 using Fab.Client.MoneyTracker.Accounts;
@@ -39,11 +38,11 @@ namespace Fab.Client.Shell
 			batch.AddExportedValue<IEventAggregator>(new EventAggregator());
 			batch.AddExportedValue<Func<IMessageBox>>(() => container.GetExportedValue<IMessageBox>());
 			batch.AddExportedValue<Func<IModule>>(() => container.GetExportedValue<IModule>());
-			batch.AddExportedValue<Func<IAccountsViewModel>>(() => container.GetExportedValue<IAccountsViewModel>());
-			batch.AddExportedValue<Func<ICategoriesViewModel>>(() => container.GetExportedValue<ICategoriesViewModel>());
 			batch.AddExportedValue<Func<ITransactionDetailsViewModel>>(() => container.GetExportedValue<ITransactionDetailsViewModel>());
 			batch.AddExportedValue<Func<ITransactionsViewModel>>(() => container.GetExportedValue<ITransactionsViewModel>());
 			batch.AddExportedValue<Func<ITransferViewModel>>(() => container.GetExportedValue<ITransferViewModel>());
+			batch.AddExportedValue<Func<IAccountsRepository>>(() => container.GetExportedValue<IAccountsRepository>());
+			batch.AddExportedValue<Func<ICategoriesRepository>>(() => container.GetExportedValue<ICategoriesRepository>());
 			batch.AddExportedValue(container);
 
 			container.Compose(batch);

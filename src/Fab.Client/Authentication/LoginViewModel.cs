@@ -54,7 +54,7 @@ namespace Fab.Client.Authentication
 		/// <summary>
 		/// Enables loosely-coupled publication of and subscription to events.
 		/// </summary>
-		private IEventAggregator eventAggregator;
+		private readonly IEventAggregator eventAggregator;
 
 		#endregion
 
