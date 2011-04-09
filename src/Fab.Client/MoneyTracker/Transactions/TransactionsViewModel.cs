@@ -22,8 +22,8 @@ namespace Fab.Client.MoneyTracker.Transactions
 	/// <summary>
 	/// Transactions view model.
 	/// </summary>
-	[Export(typeof(ITransactionsViewModel))]
-	public class TransactionsViewModel : Screen, ITransactionsViewModel
+	[Export(typeof(TransactionsViewModel))]
+	public class TransactionsViewModel : Screen, IHandle<LoggedOutMessage>, IHandle<CurrentAccountChangedMessage>
 	{
 		#region Fields
 

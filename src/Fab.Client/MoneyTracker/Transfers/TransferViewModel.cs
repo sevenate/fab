@@ -22,12 +22,14 @@ namespace Fab.Client.MoneyTracker.Transfers
 	/// <summary>
 	/// Transfer view model.
 	/// </summary>
-	[Export(typeof(ITransferViewModel))]
+	[Export(typeof (ITransferViewModel))]
 	public class TransferViewModel : DocumentBase, ITransferViewModel
 	{
-		private int? transactionId;
-
+		private string amount;
+		private string comment;
+		private bool isEditMode;
 		private DateTime operationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+		private int? transactionId;
 
 		[DataType(DataType.DateTime)]
 		public DateTime OperationDate
@@ -40,8 +42,6 @@ namespace Fab.Client.MoneyTracker.Transfers
 			}
 		}
 
-		private string comment;
-
 		public string Comment
 		{
 			get { return comment; }
@@ -52,8 +52,6 @@ namespace Fab.Client.MoneyTracker.Transfers
 			}
 		}
 
-		private string amount;
-
 		[Required]
 		[DataType(DataType.Currency)]
 		public string Amount
@@ -63,7 +61,7 @@ namespace Fab.Client.MoneyTracker.Transfers
 			{
 				amount = value;
 				NotifyOfPropertyChange(() => Amount);
-				NotifyOfPropertyChange(() => CanSave);
+				NotifyOfPropertyChange<bool>(() => CanSave);
 			}
 		}
 
@@ -76,29 +74,6 @@ namespace Fab.Client.MoneyTracker.Transfers
 			}
 		}
 
-		private readonly CollectionViewSource accounts1CollectionViewSource = new CollectionViewSource();
-		private readonly CollectionViewSource accounts2CollectionViewSource = new CollectionViewSource();
-
-		public ICollectionView Accounts1
-		{
-			get
-			{
-				return accounts1CollectionViewSource.View;
-			}
-		}
-
-		public ICollectionView Accounts2
-		{
-			get
-			{
-				return accounts2CollectionViewSource.View;
-			}
-		}
-
-		private bool isEditMode;
-		private BindableCollection<AccountDTO> accounts1;
-		private BindableCollection<AccountDTO> accounts2;
-
 		public bool IsEditMode
 		{
 			get { return isEditMode; }
@@ -109,20 +84,105 @@ namespace Fab.Client.MoneyTracker.Transfers
 			}
 		}
 
+		#region Ctors
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TransferViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public TransferViewModel(IEventAggregator eventAggregator)
+		public TransferViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
 		{
-			eventAggregator.Subscribe(this);
-
-			accounts1 = new BindableCollection<AccountDTO>();
+			this.accountsRepository = accountsRepository;
 			accounts1CollectionViewSource.Source = accounts1;
-
-			accounts2 = new BindableCollection<AccountDTO>();
 			accounts2CollectionViewSource.Source = accounts2;
+			eventAggregator.Subscribe(this);
 		}
+
+		#endregion
+
+		#region Accounts
+
+		private IAccountsRepository accountsRepository;
+		private readonly BindableCollection<AccountDTO> accounts1 = new BindableCollection<AccountDTO>();
+		private readonly CollectionViewSource accounts1CollectionViewSource = new CollectionViewSource();
+		private readonly BindableCollection<AccountDTO> accounts2 = new BindableCollection<AccountDTO>();
+		private readonly CollectionViewSource accounts2CollectionViewSource = new CollectionViewSource();
+
+		public ICollectionView Accounts1
+		{
+			get { return accounts1CollectionViewSource.View; }
+		}
+
+		public ICollectionView Accounts2
+		{
+			get { return accounts2CollectionViewSource.View; }
+		}
+
+		#endregion
+
+		#region ITransferViewModel Members
+
+		/// <summary>
+		/// Open specific transfer to edit.
+		/// </summary>
+		/// <param name="transfer">Transfer to edit.</param>
+		/// <param name="fromAccountId">Account ID, the source of the transfer founds.</param>
+		public void Edit(TransferDTO transfer, int fromAccountId)
+		{
+			transactionId = transfer.Id;
+
+			// Todo: refactor this method - here should be always only "one" first account
+			var selectedAccount1 = accountsRepository.ByKey(fromAccountId);
+			Accounts1.MoveCurrentTo(selectedAccount1);
+
+			if (transfer.SecondAccountId.HasValue)
+			{
+				var selectedAccount2 = accountsRepository.ByKey(transfer.SecondAccountId.Value);
+				Accounts2.MoveCurrentTo(selectedAccount2);
+			}
+
+			OperationDate = transfer.Date.ToLocalTime();
+			Amount = transfer.Amount.ToString();
+			Comment = transfer.Comment;
+
+			IsEditMode = true;
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in AccountsUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountsUpdatedMessage message)
+		{
+			if (message.Error == null)
+			{
+				accounts1.Clear();
+				accounts1.AddRange(message.Accounts);
+
+				if (!accounts1CollectionViewSource.View.IsEmpty)
+				{
+					accounts1CollectionViewSource.View.MoveCurrentToFirst();
+				}
+
+				accounts2.Clear();
+				accounts2.AddRange(message.Accounts);
+
+				if (!accounts2CollectionViewSource.View.IsEmpty)
+				{
+					accounts2CollectionViewSource.View.MoveCurrentToFirst();
+				}
+			}
+			else
+			{
+				//TODO: show error dialog here
+			}
+		}
+
+		#endregion
 
 		public void Clear()
 		{
@@ -143,19 +203,19 @@ namespace Fab.Client.MoneyTracker.Transfers
 			{
 				// To not update date if it was not changed;
 				// Add time of day to updated date only.
-				DateTime date = OperationDate.Kind == DateTimeKind.Unspecified
-										? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
-										: OperationDate;
+				var date = OperationDate.Kind == DateTimeKind.Unspecified
+				           	? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
+				           	: OperationDate;
 
 				var request = new UpdateTransferResult(
-									transactionId.Value,
-									UserCredentials.Current.UserId,
-									((AccountDTO)Accounts1.CurrentItem).Id,
-									((AccountDTO)Accounts2.CurrentItem).Id,
-									date.ToUniversalTime(),
-									decimal.Parse(Amount.Trim()),
-									Comment != null ? Comment.Trim() : null
-								);
+					transactionId.Value,
+					UserCredentials.Current.UserId,
+					((AccountDTO) Accounts1.CurrentItem).Id,
+					((AccountDTO) Accounts2.CurrentItem).Id,
+					date.ToUniversalTime(),
+					decimal.Parse(Amount.Trim()),
+					Comment != null ? Comment.Trim() : null
+					);
 
 				Clear();
 
@@ -164,91 +224,23 @@ namespace Fab.Client.MoneyTracker.Transfers
 			else
 			{
 				// Add time of day to date.
-				DateTime date = OperationDate.Kind == DateTimeKind.Unspecified
-				                	? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
-				                	: OperationDate.Date + DateTime.Now.TimeOfDay;
+				var date = OperationDate.Kind == DateTimeKind.Unspecified
+				           	? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
+				           	: OperationDate.Date + DateTime.Now.TimeOfDay;
 
 				var request = new AddTransferResult(
-									UserCredentials.Current.UserId,
-									((AccountDTO)Accounts1.CurrentItem).Id,
-									((AccountDTO)Accounts2.CurrentItem).Id,
-									date.ToUniversalTime(),
-									decimal.Parse(Amount.Trim()),
-									Comment != null ? Comment.Trim() : null
-								);
+					UserCredentials.Current.UserId,
+					((AccountDTO) Accounts1.CurrentItem).Id,
+					((AccountDTO) Accounts2.CurrentItem).Id,
+					date.ToUniversalTime(),
+					decimal.Parse(Amount.Trim()),
+					Comment != null ? Comment.Trim() : null
+					);
 
 				yield return request;
 			}
 
 			yield return Loader.Hide();
 		}
-
-		/// <summary>
-		/// Open specific transfer to edit.
-		/// </summary>
-		/// <param name="transfer">Transfer to edit.</param>
-		/// <param name="fromAccountId">Account ID, the source of the transfer founds.</param>
-		public void Edit(TransferDTO transfer, int fromAccountId)
-		{
-			transactionId = transfer.Id;
-
-			// Todo: refactor this method!
-			var accountsSource1 = accounts1CollectionViewSource.Source as BindableCollection<AccountDTO>;
-
-			if (accountsSource1 != null)
-			{
-				var selectedAccount1 = accountsSource1.Where(a => a.Id == fromAccountId).Single();
-				Accounts1.MoveCurrentTo(selectedAccount1);
-			}
-
-			var accountsSource2 = accounts2CollectionViewSource.Source as BindableCollection<AccountDTO>;
-
-			if (accountsSource2 != null)
-			{
-				var selectedAccount2 = accountsSource2.Where(a => a.Id == transfer.SecondAccountId).Single();
-				Accounts2.MoveCurrentTo(selectedAccount2);
-			}
-
-			OperationDate = transfer.Date.ToLocalTime();
-			Amount = transfer.Amount.ToString();
-			Comment = transfer.Comment;
-
-			IsEditMode = true;
-		}
-
-		#region Implementation of IHandle<in AccountsUpdatedMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(AccountsUpdatedMessage message)
-		{
-			accounts1.Clear();
-
-			foreach (var account in message.Accounts)
-			{
-				accounts1.Add(account);
-			}
-
-			if (!accounts1CollectionViewSource.View.IsEmpty)
-			{
-				accounts1CollectionViewSource.View.MoveCurrentToFirst();
-			}
-
-			accounts2.Clear();
-
-			foreach (var account in message.Accounts)
-			{
-				accounts2.Add(account);
-			}
-
-			if (!accounts2CollectionViewSource.View.IsEmpty)
-			{
-				accounts2CollectionViewSource.View.MoveCurrentToFirst();
-			}
-		}
-
-		#endregion
 	}
 }

@@ -39,7 +39,6 @@ namespace Fab.Client.Shell
 			batch.AddExportedValue<Func<IMessageBox>>(() => container.GetExportedValue<IMessageBox>());
 			batch.AddExportedValue<Func<IModule>>(() => container.GetExportedValue<IModule>());
 			batch.AddExportedValue<Func<ITransactionDetailsViewModel>>(() => container.GetExportedValue<ITransactionDetailsViewModel>());
-			batch.AddExportedValue<Func<ITransactionsViewModel>>(() => container.GetExportedValue<ITransactionsViewModel>());
 			batch.AddExportedValue<Func<ITransferViewModel>>(() => container.GetExportedValue<ITransferViewModel>());
 			batch.AddExportedValue<Func<IAccountsRepository>>(() => container.GetExportedValue<IAccountsRepository>());
 			batch.AddExportedValue<Func<ICategoriesRepository>>(() => container.GetExportedValue<ICategoriesRepository>());

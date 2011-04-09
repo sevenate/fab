@@ -3,17 +3,14 @@
 // </copyright>
 // <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-13" />
 
-using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
-using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Categories;
 
 namespace Fab.Client.MoneyTracker.TransactionDetails
 {
 	/// <summary>
 	/// General transaction detail view model interface.
 	/// </summary>
-	public interface ITransactionDetailsViewModel : IHandle<AccountsUpdatedMessage>, IHandle<CategoriesUpdatedMessage>
+	public interface ITransactionDetailsViewModel
 	{
 		/// <summary>
 		/// Open specific deposit or withdrawal transaction to edit.

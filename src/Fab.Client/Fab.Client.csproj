@@ -167,6 +167,7 @@
     <Compile Include="Framework\Filters\RescueAttribute.cs" />
     <Compile Include="Framework\Filters\SetBusyAttribute.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsViewModel.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsExtensions.cs" />
     <Compile Include="MoneyTracker\Accounts\CurrentAccountChangedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsRepository.cs" />
@@ -180,7 +181,6 @@
     <Compile Include="MoneyTracker\TransactionDetails\ITransactionDetailsViewModel.cs" />
     <Compile Include="MoneyTracker\Transactions\GetBalanceResult.cs" />
     <Compile Include="MoneyTracker\Transactions\DateRange.cs" />
-    <Compile Include="MoneyTracker\Transactions\ITransactionsViewModel.cs" />
     <Compile Include="MoneyTracker\Transactions\TransactionRecord.cs" />
     <Compile Include="MoneyTracker\Transfers\ITransferViewModel.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsViewModel.cs" />
