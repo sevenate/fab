@@ -21,8 +21,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		#region Fields
 
 		private readonly BindableCollection<CategoryDTO> categories = new BindableCollection<CategoryDTO>();
-
-		private readonly CollectionViewSource categoriesCollectionView = new CollectionViewSource();
+		private readonly CollectionViewSource categoriesViewSource = new CollectionViewSource();
 		private readonly ICategoriesRepository categoriesRepository;
 
 		/// <summary>
@@ -37,7 +36,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// </summary>
 		public ICollectionView Categories
 		{
-			get { return categoriesCollectionView.View; }
+			get { return categoriesViewSource.View; }
 		}
 
 		#region Ctors
@@ -52,7 +51,7 @@ namespace Fab.Client.MoneyTracker.Categories
 			EventAggregator.Subscribe(this);
 
 			this.categoriesRepository = categoriesRepository;
-			categoriesCollectionView.Source = categories;
+			categoriesViewSource.Source = categories;
 		}
 
 		#endregion
@@ -69,7 +68,11 @@ namespace Fab.Client.MoneyTracker.Categories
 			{
 				categories.Clear();
 				categories.AddRange(message.Categories);
-				categoriesCollectionView.View.MoveCurrentToFirst();
+
+				if (!categoriesViewSource.View.IsEmpty)
+				{
+					categoriesViewSource.View.MoveCurrentToFirst();
+				}
 			}
 			else
 			{

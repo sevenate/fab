@@ -13,16 +13,16 @@ namespace Fab.Client.MoneyTracker.Categories
 	public static class CategoriesExtensions
 	{
 		/// <summary>
-		/// Look up in <paramref name="repository"/> for the <see cref="CategoryDTO"/> with <paramref name="categoryId"/> key.
+		/// Look up in <paramref name="repository"/> for the <see cref="CategoryDTO"/> by the <paramref name="id"/> key.
 		/// If nothing found, null will be returned.
 		/// </summary>
-		/// <param name="categoryId">Category unique ID.</param>
+		/// <param name="id">Category unique ID.</param>
 		/// <param name="repository">Repository to lookup in.</param>
 		/// <returns>Found category instance or null otherwise.</returns>
-		public static CategoryDTO LookupIn(this int? categoryId, ICategoriesRepository repository)
+		public static CategoryDTO LookupIn(this int? id, ICategoriesRepository repository)
 		{
-			return categoryId.HasValue
-			       	? repository.ByKey(categoryId.Value)
+			return id.HasValue
+			       	? repository.ByKey(id.Value)
 			       	: null;
 		}
 	}

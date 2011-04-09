@@ -60,6 +60,32 @@ namespace Fab.Client.MoneyTracker.Accounts
 
 		#endregion
 
+		#region Implementation of IHandle<in AccountsUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountsUpdatedMessage message)
+		{
+			if (message.Error == null)
+			{
+				accounts.Clear();
+				accounts.AddRange(message.Accounts);
+
+				if (!accountsCollectionView.View.IsEmpty)
+				{
+					accountsCollectionView.View.MoveCurrentToFirst();
+				}
+			}
+			else
+			{
+				//TODO: show error dialog here
+			}
+		}
+
+		#endregion
+
 		#region Create Account
 
 		private string name;
@@ -84,28 +110,6 @@ namespace Fab.Client.MoneyTracker.Accounts
 		public void CreateAccount()
 		{
 			accountsRepository.Create(Name.Trim(), 1);
-		}
-
-		#endregion
-
-		#region Implementation of IHandle<in AccountsUpdatedMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(AccountsUpdatedMessage message)
-		{
-			if (message.Error == null)
-			{
-				accounts.Clear();
-				accounts.AddRange(message.Accounts);
-				accountsCollectionView.View.MoveCurrentToFirst();
-			}
-			else
-			{
-				//TODO: show error dialog here
-			}
 		}
 
 		#endregion

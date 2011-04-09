@@ -26,7 +26,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 	/// Single transaction details view model.
 	/// </summary>
 	[Export(typeof(ITransactionDetailsViewModel))]
-	public class TransactionDetailsViewModel : DocumentBase, ITransactionDetailsViewModel
+	public class TransactionDetailsViewModel : DocumentBase, IHandle<AccountsUpdatedMessage>, IHandle<CategoriesUpdatedMessage>, ITransactionDetailsViewModel
 	{
 		#region Fields
 
@@ -45,6 +45,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		#region Properties
 
 		private readonly CollectionViewSource accountsViewSource = new CollectionViewSource();
+		private readonly BindableCollection<CategoryDTO> categories = new BindableCollection<CategoryDTO>();
 		private readonly CollectionViewSource categoriesViewSource = new CollectionViewSource();
 
 		/// <summary>
@@ -334,6 +335,8 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				{
 					accountsViewSource.View.MoveCurrentToFirst();
 				}
+
+				NotifyOfPropertyChange(() => Accounts);
 			}
 			else
 			{
@@ -359,6 +362,8 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				{
 					categoriesViewSource.View.MoveCurrentToFirst();
 				}
+
+				NotifyOfPropertyChange(() => Categories);
 			}
 			else
 			{

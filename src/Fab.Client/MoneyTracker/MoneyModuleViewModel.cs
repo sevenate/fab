@@ -87,7 +87,7 @@ namespace Fab.Client.MoneyTracker
 		public MoneyModuleViewModel(
 			AccountsViewModel accountsVM,
 			CategoriesViewModel categoriesVM,
-			ITransactionsViewModel transactionsVM,
+			TransactionsViewModel transactionsVM,
 			ITransactionDetailsViewModel transactionDetailsVM,
 			ITransferViewModel transferViewModel)
 		{
