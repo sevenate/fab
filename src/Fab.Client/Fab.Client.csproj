@@ -158,6 +158,7 @@
     <Compile Include="Framework\Filters\ExecutionWrapperBase.cs" />
     <Compile Include="Framework\FilterFramework.cs" />
     <Compile Include="Framework\FilterManager.cs" />
+    <Compile Include="Framework\IRepository.cs" />
     <Compile Include="Framework\ICanBeBusy.cs" />
     <Compile Include="Framework\IDocumentWorkspace.cs" />
     <Compile Include="Framework\Filters\IFilter.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="MoneyTracker\Accounts\CurrentAccountChangedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsRepository.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesExtensions.cs" />
     <Compile Include="MoneyTracker\Categories\CategoriesViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\ICategoriesRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsUpdatedMessage.cs" />

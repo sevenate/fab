@@ -4,8 +4,8 @@
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-26" />
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
@@ -17,25 +17,8 @@ namespace Fab.Client.MoneyTracker.Accounts
 	/// Provide access to all user accounts.
 	/// </summary>
 	[Export(typeof (IAccountsRepository))]
-	public class AccountsRepository : RepositoryBase, IAccountsRepository
+	public class AccountsRepository : RepositoryBase<AccountDTO>, IAccountsRepository
 	{
-		#region Entities Collections
-
-		/// <summary>
-		/// List of all user accounts.
-		/// </summary>
-		private readonly List<AccountDTO> accounts = new List<AccountDTO>();
-
-		/// <summary>
-		/// Gets all user accounts.
-		/// </summary>
-		public IEnumerable<AccountDTO> Accounts
-		{
-			get { return accounts; }
-		}
-
-		#endregion
-
 		#region Ctors
 
 		/// <summary>
@@ -50,20 +33,6 @@ namespace Fab.Client.MoneyTracker.Accounts
 
 		#endregion
 
-		#region Implementation of IHandle<in LoggedInMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public override void Handle(LoggedInMessage message)
-		{
-			base.Handle(message);
-			DownloadAll();
-		}
-
-		#endregion
-
 		#region Implementation of IHandle<in LoggedOutMessage>
 
 		/// <summary>
@@ -73,21 +42,30 @@ namespace Fab.Client.MoneyTracker.Accounts
 		public override void Handle(LoggedOutMessage message)
 		{
 			base.Handle(message);
-			accounts.Clear();
 			EventAggregator.Publish(new AccountsUpdatedMessage
 			                        {
-			                        	Accounts = Accounts
+			                        	Accounts = Entities
 			                        });
 		}
 
 		#endregion
 
-		#region Implementation of IAccountsRepository
+		#region Overrides of RepositoryBase<AccountDTO>
+
+		/// <summary>
+		/// Retrieve account by unique key.
+		/// </summary>
+		/// <param name="key">Account key.</param>
+		/// <returns>Corresponding account or null if not found.</returns>
+		public override AccountDTO ByKey(int key)
+		{
+			return Entities.Where(a => a.Id == key).SingleOrDefault();
+		}
 
 		/// <summary>
 		/// Download all <see cref="AccountDTO"/> entities from server.
 		/// </summary>
-		public void DownloadAll()
+		public override void Download()
 		{
 			var proxy = new MoneyServiceClient();
 
@@ -95,11 +73,11 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                 {
 			                                 	if (e.Error == null)
 			                                 	{
-			                                 		accounts.Clear();
-			                                 		accounts.AddRange(e.Result);
+			                                 		Entities.Clear();
+			                                 		Entities.AddRange(e.Result);
 			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
 			                                 		                                                 {
-			                                 		                                                 	Accounts = Accounts
+			                                 		                                                 	Accounts = Entities
 			                                 		                                                 }));
 			                                 	}
 			                                 	else
@@ -113,6 +91,68 @@ namespace Fab.Client.MoneyTracker.Accounts
 
 			proxy.GetAllAccountsAsync(UserId);
 		}
+
+		/// <summary>
+		/// Create new account.
+		/// </summary>
+		/// <param name="entity">New account data to create from.</param>
+		/// <returns>Created account with filled server-side updated properties.</returns>
+		public override AccountDTO Create(AccountDTO entity)
+		{
+			if (entity == null)
+			{
+				throw new ArgumentNullException("entity");
+			}
+
+			var proxy = new MoneyServiceClient();
+
+			proxy.CreateAccountCompleted += (s, e) =>
+			                                {
+			                                	if (e.Error == null)
+			                                	{
+			                                		entity.Id = e.Result;
+			                                		Entities.Add(entity);
+			                                		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
+			                                		                                                 {
+			                                		                                                 	Accounts = Entities
+			                                		                                                 }));
+			                                	}
+			                                	else
+			                                	{
+			                                		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
+			                                		                                                 {
+			                                		                                                 	Error = e.Error
+			                                		                                                 }));
+			                                	}
+			                                };
+
+			proxy.CreateAccountAsync(UserId, entity.Name, entity.AssetTypeId);
+
+			return entity;
+		}
+
+		/// <summary>
+		/// Update existing entity.
+		/// </summary>
+		/// <param name="entity">Updated entity data.</param>
+		/// <returns>Updated entity with filled server-side updatable properties.</returns>
+		public override AccountDTO Update(AccountDTO entity)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Update existing entity.
+		/// </summary>
+		/// <param name="entity">Entity to delete.</param>
+		public override void Delete(AccountDTO entity)
+		{
+			throw new NotImplementedException();
+		}
+
+		#endregion
+
+		#region Implementation of IAccountsRepository
 
 		/// <summary>
 		/// Create new account for specific user.
@@ -134,31 +174,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 			              	PostingsCount = 0
 			              };
 
-			var proxy = new MoneyServiceClient();
-
-			proxy.CreateAccountCompleted += (s, e) =>
-			                                {
-			                                	if (e.Error == null)
-			                                	{
-			                                		account.Id = e.Result;
-			                                		accounts.Add(account);
-			                                		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
-			                                		                                                 {
-			                                		                                                 	Accounts = Accounts
-			                                		                                                 }));
-			                                	}
-			                                	else
-			                                	{
-			                                		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
-			                                		                                                 {
-			                                		                                                 	Error = e.Error
-			                                		                                                 }));
-			                                	}
-			                                };
-
-			proxy.CreateAccountAsync(UserId, name, assetTypeId);
-
-			return account;
+			return Create(account);
 		}
 
 		#endregion
