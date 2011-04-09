@@ -330,14 +330,14 @@ namespace Fab.Client.MoneyTracker.Transactions
 					income = r.Amount;
 					incomeForPeriod += r.Amount;
 					expense = 0;
-					category = categoriesRepository.Categories.Where(c => c.Id == ((DepositDTO) r).CategoryId).SingleOrDefault();
+					category = (r as DepositDTO).CategoryId.LookupIn(categoriesRepository);
 				}
 				else if (r is WithdrawalDTO)
 				{
 					income = 0;
 					expense = -r.Amount;
 					expenseForPeriod += r.Amount;
-					category = categoriesRepository.Categories.Where(c => c.Id == ((WithdrawalDTO)r).CategoryId).SingleOrDefault();
+					category = (r as WithdrawalDTO).CategoryId.LookupIn(categoriesRepository);
 				}
 				else if (r is IncomingTransferDTO)
 				{
