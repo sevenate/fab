@@ -6,9 +6,9 @@
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-			 xmlns:Contrib="clr-namespace:SilverlightContrib.Controls;assembly=SilverlightContrib.Controls"
-			 d:DesignHeight="419"
-			 d:DesignWidth="908"
+			 xmlns:Controls1="clr-namespace:SilverlightContrib.Controls;assembly=SilverlightContrib.Controls"
+			 d:DesignHeight="400"
+			 d:DesignWidth="800"
 			 mc:Ignorable="d">
 	<UserControl.Resources>
 		<Style x:Key="NumbersStyle"
@@ -32,94 +32,91 @@
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Contrib:GroupBox Grid.Row="0"
-						  Header="Filter">
-			<Controls:DockPanel>
-				<Button x:Name="DownloadAllTransactions"
-						Controls:DockPanel.Dock="Right"
-						Content="Apply"
-						MinWidth="75"
-						MinHeight="23"
-						VerticalAlignment="Center" />
-				<ListBox Controls:DockPanel.Dock="Right"
-						 ItemsSource="{Binding Path=Intervals}"
-						 SelectedValue="{Binding Path=SelectedDateRange, Mode=TwoWay}"
-						 SelectedValuePath="Value" />
-				<sdk:Calendar x:Name="FromDateCalendar"
-							  Controls:DockPanel.Dock="Right"
-							  SelectedDate="{Binding Path=FromDate, Mode=TwoWay}"
-							  SelectionMode="SingleDate"
-							  VerticalAlignment="Center" />
-				<StackPanel Orientation="Horizontal">
-					<StackPanel Orientation="Vertical">
-						<TextBlock Text="Income:"
-								   Foreground="White" />
-						<TextBlock Text="Expense:"
-								   Foreground="White" />
-					</StackPanel>
-					<StackPanel Orientation="Vertical">
-						<TextBlock Grid.Row="3"
-								   Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColorConverter}}"
-								   Text="{Binding Path=TotalIncome, StringFormat=C}"
-								   Margin="0,0,155,0"
-								   HorizontalAlignment="Right" />
-						<TextBlock Grid.Row="3"
-								   Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColorConverter}}"
-								   Text="{Binding Path=TotalExpense, StringFormat=C}"
-								   Margin="0,0,155,0"
-								   HorizontalAlignment="Right" />
-					</StackPanel>
-					<StackPanel Orientation="Vertical">
-						<TextBlock Text="Start balance:"
-								   Foreground="White" />
-						<TextBlock Text="Difference:"
-								   Foreground="White" />
-						<TextBlock Text="End balance:"
-								   Foreground="White" />
-					</StackPanel>
-					<StackPanel Orientation="Vertical">
-						<TextBlock Foreground="{Binding Path=StartBalance, Converter={StaticResource balanceToColorConverter}}"
-								   Text="{Binding Path=StartBalance, StringFormat=C}"
-								   Margin="0,0,155,0"
-								   HorizontalAlignment="Right" />
-						<TextBlock Grid.Row="3"
-								   Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColorConverter}}"
-								   Text="{Binding Path=BalanceDiff, StringFormat=C}"
-								   Margin="0,0,155,0"
-								   HorizontalAlignment="Right" />
-						<TextBlock Foreground="{Binding Path=EndBalance, Converter={StaticResource balanceToColorConverter}}"
-								   Text="{Binding Path=EndBalance, StringFormat=C}"
-								   Margin="0,0,155,0"
-								   HorizontalAlignment="Right" />
-					</StackPanel>
-				</StackPanel>
-<!--
-				<cc:WatermarkedTextbox x:Name="SearchText"
-									   Watermark="Search..."
-									   Text="{Binding Path=SearchText, Mode=TwoWay}" />
--->
-			</Controls:DockPanel>
-		</Contrib:GroupBox>
-		<StackPanel Grid.Row="1"
-					Orientation="Vertical">
-			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Right">
-				<TextBlock Text="{Binding Path=TransactionRecords.Count}"
-						   Margin="10,0"
-						   Foreground="#FFE5E500" />
-				<TextBlock Text="transaction(s) for the period" />
+		<Controls1:GroupBox Margin="5">
+			<Controls1:GroupBox.Header>
 				<TextBlock Text="{Binding Path=Period}"
-						   FontWeight="Bold"
-						   Margin="10,0"
-						   Foreground="#FFE5E500" />
-			</StackPanel>
-		</StackPanel>
+				           FontWeight="Bold"
+				           TextWrapping="Wrap"
+				           Foreground="#FFE5E500"
+				           HorizontalAlignment="Right" />
+			</Controls1:GroupBox.Header>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<TextBlock Text="Income:"
+				           Grid.Column="1"
+				           Grid.Row="0"
+				           Foreground="White" />
+				<TextBlock Text="Expense:"
+				           Grid.Column="1"
+				           Grid.Row="1"
+				           Foreground="White" />
+				<TextBlock Text="Postings:"
+				           Grid.Column="1"
+				           Grid.Row="2"
+				           Foreground="White" />
+				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColorConverter}}"
+				           Grid.Column="2"
+				           Grid.Row="0"
+				           Text="{Binding Path=TotalIncome, StringFormat=C}"
+				           HorizontalAlignment="Right" />
+				<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColorConverter}}"
+				           Grid.Column="2"
+				           Grid.Row="1"
+				           Text="{Binding Path=TotalExpense, StringFormat=C}"
+				           HorizontalAlignment="Right" />
+				<TextBlock Text="{Binding Path=TransactionRecords.Count}"
+				           Grid.Column="2"
+				           Grid.Row="2"
+				           Foreground="#FFE5E500"
+				           HorizontalAlignment="Right" />
+				<TextBlock Text="Start balance:"
+				           Grid.Column="4"
+				           Grid.Row="0"
+				           Foreground="White" />
+				<TextBlock Text="Difference:"
+				           Grid.Column="4"
+				           Grid.Row="1"
+				           Foreground="White" />
+				<TextBlock Text="End balance:"
+				           Grid.Column="4"
+				           Grid.Row="2"
+				           Foreground="White" />
+				<TextBlock Foreground="{Binding Path=StartBalance, Converter={StaticResource balanceToColorConverter}}"
+				           Grid.Column="5"
+				           Grid.Row="0"
+				           Text="{Binding Path=StartBalance, StringFormat=C}"
+				           HorizontalAlignment="Right" />
+				<TextBlock Grid.Column="5"
+				           Grid.Row="1"
+				           Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColorConverter}}"
+				           Text="{Binding Path=BalanceDiff, StringFormat=C}"
+				           HorizontalAlignment="Right" />
+				<TextBlock Foreground="{Binding Path=EndBalance, Converter={StaticResource balanceToColorConverter}}"
+				           Grid.Column="5"
+				           Grid.Row="2"
+				           Text="{Binding Path=EndBalance, StringFormat=C}"
+				           HorizontalAlignment="Right" />
+			</Grid>
+		</Controls1:GroupBox>
 		<sdk:DataGrid x:Name="TransactionsGrid"
-					  Grid.Row="2"
+					  Grid.Row="1"
 					  AutoGenerateColumns="False"
 					  ItemsSource="{Binding Path=TransactionRecords}">
 			<sdk:DataGrid.Columns>
@@ -245,6 +242,7 @@
 						<DataTemplate>
 							<TextBlock VerticalAlignment="Center"
 									   Text="{Binding Path=Comment}"
+									   Margin="3,0"
 									   TextTrimming="WordEllipsis" />
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
@@ -276,5 +274,27 @@
 				</sdk:DataGridTemplateColumn>
 			</sdk:DataGrid.Columns>
 		</sdk:DataGrid>
+		<ContentControl x:Name="Dialogs"
+						Grid.Row="2"
+						VerticalContentAlignment="Stretch"
+						HorizontalContentAlignment="Stretch" />
+		<StackPanel Orientation="Horizontal"
+					Grid.Row="3">
+			<Button x:Name="NewTransaction"
+					Content="Add"
+					MinWidth="75"
+					MinHeight="23"
+					Foreground="#FF00FF00" />
+			<Button x:Name="NewTransfer"
+					Content="Transfer"
+					MinWidth="75"
+					MinHeight="23"
+					Foreground="Yellow" />
+			<Button x:Name="DownloadAllTransactions"
+					Controls:DockPanel.Dock="Right"
+					Content="Update"
+					MinWidth="75"
+					MinHeight="23" />
+		</StackPanel>
 	</Grid>
 </UserControl>

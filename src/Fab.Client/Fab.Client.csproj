@@ -126,15 +126,17 @@
     <Compile Include="Authentication\LoggedInMessage.cs" />
     <Compile Include="Authentication\LoggedOutMessage.cs" />
     <Compile Include="Authentication\UserCredentials.cs" />
+    <Compile Include="Framework\ServiceErrorMessage.cs" />
+    <Compile Include="Framework\Converters\NullToQuestionMarkConverter.cs" />
+    <Compile Include="Framework\OpenConfirmationResult.cs" />
+    <Compile Include="Framework\Behaviors\CalendarLimitedSelectedRangeBehavior.cs" />
     <Compile Include="Framework\Behaviors\DefaultButtonBehavior.cs" />
     <Compile Include="Framework\Behaviors\FocusBehavior.cs" />
     <Compile Include="Authentication\PasswordBindBehavior.cs" />
     <Compile Include="Framework\EnumWrapper.cs" />
     <Compile Include="Framework\EnumWrapperList.cs" />
-    <Compile Include="Framework\Converters\AddUpdateStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToOpacityConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToVisibilityInvertConverter.cs" />
-    <Compile Include="Framework\Converters\CancelClearStringConverter.cs" />
     <Compile Include="Framework\Converters\ZeroToVisibilityConverter.cs" />
     <Compile Include="Framework\Converters\BalanceToColorConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToNotBooleanConverter.cs" />
@@ -168,21 +170,31 @@
     <Compile Include="Framework\Filters\SetBusyAttribute.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsViewModel.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsExtensions.cs" />
-    <Compile Include="MoneyTracker\Accounts\CurrentAccountChangedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\Single\AccountUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\Single\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTracker\Accounts\Single\AccountViewModel.cs" />
+    <Compile Include="MoneyTracker\Accounts\Single\CurrentAccountChangedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsRepository.cs" />
     <Compile Include="MoneyTracker\Categories\CategoriesExtensions.cs" />
     <Compile Include="MoneyTracker\Categories\CategoriesViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoryUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Categories\ICategoriesRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Categories\CategoriesUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Categories\CategoriesRepository.cs" />
     <Compile Include="Framework\RepositoryBase.cs" />
-    <Compile Include="MoneyTracker\TransactionDetails\ITransactionDetailsViewModel.cs" />
+    <Compile Include="MoneyTracker\Filters\PostingsFilterUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Filters\PostingsFilterViewModel.cs" />
+    <Compile Include="MoneyTracker\Filters\PostingsFilterView.xaml.cs">
+      <DependentUpon>PostingsFilterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MoneyTracker\Transactions\GetBalanceResult.cs" />
     <Compile Include="MoneyTracker\Transactions\DateRange.cs" />
+    <Compile Include="Shell\OpenDialogMessage.cs" />
     <Compile Include="MoneyTracker\Transactions\TransactionRecord.cs" />
-    <Compile Include="MoneyTracker\Transfers\ITransferViewModel.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsViewModel.cs" />
     <Compile Include="Framework\DocumentBase.cs" />
     <Compile Include="MoneyTracker\Transactions\TransactionsViewModel.cs" />
@@ -196,8 +208,8 @@
     <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsView.xaml.cs">
       <DependentUpon>TransactionDetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MoneyTracker\MoneyModuleView.xaml.cs">
-      <DependentUpon>MoneyModuleView.xaml</DependentUpon>
+    <Compile Include="MoneyTracker\AccountsDashboard.xaml.cs">
+      <DependentUpon>AccountsDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="MoneyTracker\Transactions\TransactionsView.xaml.cs">
       <DependentUpon>TransactionsView.xaml</DependentUpon>
@@ -218,7 +230,7 @@
     <Compile Include="MoneyTracker\Transactions\LoadTransactionResult.cs" />
     <Compile Include="Framework\IShell.cs" />
     <Compile Include="Framework\IModule.cs" />
-    <Compile Include="MoneyTracker\MoneyModuleViewModel.cs" />
+    <Compile Include="MoneyTracker\AccountsDashboardModel.cs" />
     <Compile Include="MoneyTracker\Transactions\GetTransactionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\MoneyServiceReference\Reference.cs">
@@ -240,6 +252,7 @@
     </Compile>
     <Compile Include="Shell\DialogConductorViewModel.cs" />
     <Compile Include="Shell\MessageBoxViewModel.cs" />
+    <Compile Include="Shell\OpenMessageBoxMessage.cs" />
     <Compile Include="Shell\ScreensBootstrapper.cs" />
     <Compile Include="Authentication\AuthenticateResult.cs" />
     <Compile Include="Authentication\ILoginViewModel.cs" />
@@ -267,7 +280,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MoneyTracker\Accounts\Single\AccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MoneyTracker\Categories\CategoriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\Filters\PostingsFilterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,7 +296,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MoneyTracker\MoneyModuleView.xaml">
+    <Page Include="MoneyTracker\AccountsDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

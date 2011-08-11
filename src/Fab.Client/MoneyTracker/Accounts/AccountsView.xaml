@@ -3,83 +3,40 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:Accounts="clr-namespace:Fab.Client.MoneyTracker.Accounts"
 			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-			 mc:Ignorable="d"
+			 xmlns:Single="clr-namespace:Fab.Client.MoneyTracker.Accounts.Single"
+			 xmlns:cal="http://www.caliburnproject.org"
+			 xmlns:Accounts="clr-namespace:Fab.Client.MoneyTracker.Accounts"
+             mc:Ignorable="d"
 			 d:DesignHeight="300"
 			 d:DesignWidth="400"
 			 d:DataContext="{d:DesignInstance Type=Accounts:AccountsViewModel}">
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<TextBlock Text="Accounts" />
-		<ListBox x:Name="Accounts"
-				 Grid.Row="1"
+		<ListBox x:Name="Items"
+				 Grid.Row="0"
 				 HorizontalContentAlignment="Stretch">
 			<ListBox.ItemTemplate>
+<!--				TODO: find out why data template required here instead of on-the-fly ViewResolutionStrategy working-->
 				<DataTemplate>
-					<StackPanel Orientation="Vertical">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition />
-								<ColumnDefinition />
-							</Grid.ColumnDefinitions>
-							<TextBlock Grid.Column="0"
-									   Text="{Binding Path=Name}"
-									   HorizontalAlignment="Left" />
-							<TextBlock Grid.Column="1"
-									   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColorConverter}}"
-									   Text="{Binding Path=Balance, StringFormat=C}"
-									   HorizontalAlignment="Right" />
-						</Grid>
-						<Controls:DockPanel Margin="0,3,0,0">
-							<TextBlock Text="{Binding Path=PostingsCount}"
-									   ToolTipService.ToolTip="Postings count"
-									   FontSize="10"
-									   Foreground="Gray"
-									   FontStyle="Italic" />
-							<TextBlock Controls:DockPanel.Dock="Right"
-									   HorizontalAlignment="Right"
-									   FontSize="10"
-									   Foreground="Gray"
-									   FontStyle="Italic"
-									   Text="{Binding Path=LastPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat=d}"
-									   ToolTipService.ToolTip="{Binding Path=LastPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat='Last posting on {0:F}'}" />
-							<TextBlock Controls:DockPanel.Dock="Right"
-									   FontSize="10"
-									   Foreground="Gray"
-									   FontStyle="Italic"
-									   Text=" - " />
-							<TextBlock Controls:DockPanel.Dock="Right"
-									   HorizontalAlignment="Right"
-									   FontSize="10"
-									   Foreground="Gray"
-									   FontStyle="Italic"
-									   Text="{Binding Path=FirstPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat=d}"
-									   ToolTipService.ToolTip="{Binding Path=FirstPostingDate, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat='First posting on {0:F}'}" />
-						</Controls:DockPanel>
-					</StackPanel>
+					<Single:AccountView />
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<Button x:Name="CreateAccount"
-				Grid.Row="2"
-				Content="Add"
-				MinWidth="75"
-				MinHeight="23"
-				HorizontalAlignment="Left" />
-		<TextBox x:Name="Name"
-				 Grid.Row="2"
-				 HorizontalAlignment="Center"
-				 Width="150" />
-		<Button x:Name="LoadAllAccounts"
-				Grid.Row="2"
-				Content="Refresh"
-				MinWidth="75"
-				MinHeight="23"
-				HorizontalAlignment="Right" />
+		<Controls:DockPanel Grid.Row="1">
+			<ContentControl x:Name="ActiveItem"
+							VerticalContentAlignment="Stretch"
+							HorizontalContentAlignment="Stretch" />
+			<Button x:Name="CreateAccount"
+					Controls:DockPanel.Dock="Right"
+					Content="Add"
+					MinWidth="75"
+					MinHeight="23" />
+			<TextBox x:Name="AccountName"
+					 MinWidth="75" />
+		</Controls:DockPanel>
 	</Grid>
 </UserControl>

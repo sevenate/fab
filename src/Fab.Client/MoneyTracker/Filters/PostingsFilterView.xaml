@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Fab.Client.MoneyTracker.Filters.PostingsFilterView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+			 xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 mc:Ignorable="d">
+	<Grid x:Name="LayoutRoot">
+		<!--	SelectedDate="{Binding Path=FromDate, Mode=TwoWay}"	-->
+		<sdk:Calendar x:Name="FromDateCalendar"
+					  SelectionMode="SingleRange"
+					  Height="{Binding ElementName=FromDateCalendar, Path=ActualWidth}">
+			<Interactivity:Interaction.Behaviors>
+				<Behaviors:CalendarLimitedSelectedRangeBehavior MaxSingleRangeLength="-1"
+																StartDate="{Binding Path=FromDate, Mode=TwoWay}"
+																EndDate="{Binding Path=TillDate, Mode=TwoWay}" />
+			</Interactivity:Interaction.Behaviors>
+		</sdk:Calendar>
+	</Grid>
+</UserControl>

@@ -4,112 +4,77 @@ using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 
-namespace Fab.Client.Shell
-{
-	[Export(typeof (IDialogManager))]
-	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class DialogConductorViewModel : PropertyChangedBase, IDialogManager, IConductor
-	{
-		private readonly Func<IMessageBox> createMessageBox;
+namespace Fab.Client.Shell {
 
-		[ImportingConstructor]
-		public DialogConductorViewModel(Func<IMessageBox> messageBoxFactory)
-		{
-			createMessageBox = messageBoxFactory;
-		}
+    [Export(typeof(IDialogManager)), PartCreationPolicy(CreationPolicy.NonShared)]
+    public class DialogConductorViewModel : PropertyChangedBase, IDialogManager, IConductActiveItem {
+        readonly Func<IMessageBox> createMessageBox;
 
-		public IScreen ActiveItem { get; private set; }
+        [ImportingConstructor]
+        public DialogConductorViewModel(Func<IMessageBox> messageBoxFactory) {
+            createMessageBox = messageBoxFactory;
+        }
 
-		#region IConductor Members
+        public IScreen ActiveItem { get; private set; }
 
-		public IEnumerable GetConductedItems()
-		{
-			return ActiveItem != null
-						? new[] {ActiveItem}
-						: new object[0];
-		}
+        public IEnumerable GetChildren() {
+            return ActiveItem != null ? new[] { ActiveItem } : new object[0];
+        }
 
-		public void ActivateItem(object item)
-		{
-			ActiveItem = item as IScreen;
+        public void ActivateItem(object item) {
+            ActiveItem = item as IScreen;
 
-			var child = ActiveItem as IChild<IConductor>;
-			
-			if (child != null)
-			{
-				child.Parent = this;
-			}
+            var child = ActiveItem as IChild;
+            if(child != null)
+                child.Parent = this;
 
-			if (ActiveItem != null)
-			{
-				ActiveItem.Activate();
-			}
+            if(ActiveItem != null)
+                ActiveItem.Activate();
 
-			NotifyOfPropertyChange(() => ActiveItem);
-			ActivationProcessed(this, new ActivationProcessedEventArgs {Item = ActiveItem, Success = true});
-		}
+            NotifyOfPropertyChange(() => ActiveItem);
+            ActivationProcessed(this, new ActivationProcessedEventArgs { Item = ActiveItem, Success = true });
+        }
 
-		public void CloseItem(object item)
-		{
-			var guard = item as IGuardClose;
-			
-			if (guard != null)
-			{
-				guard.CanClose(result =>
-				               	{
-				               		if (result)
-				               		{
-				               			CloseActiveItemCore();
-				               		}
-				               	});
-			}
-			else
-			{
-				CloseActiveItemCore();
-			}
-		}
+        public void DeactivateItem(object item, bool close) {
+            var guard = item as IGuardClose;
+            if(guard != null) {
+                guard.CanClose(result => {
+                    if(result)
+                        CloseActiveItemCore();
+                });
+            }
+            else CloseActiveItemCore();
+        }
 
-		object IConductor.ActiveItem
-		{
-			get { return ActiveItem; }
-			set { ActivateItem(value); }
-		}
+        object IHaveActiveItem.ActiveItem
+        {
+            get { return ActiveItem; }
+            set { ActivateItem(value); }
+        }
 
-		public event EventHandler<ActivationProcessedEventArgs> ActivationProcessed = delegate { };
+        public event EventHandler<ActivationProcessedEventArgs> ActivationProcessed = delegate { };
 
-		#endregion
+        public void ShowDialog(IScreen dialogModel) {
+            ActivateItem(dialogModel);
+        }
 
-		#region IDialogManager Members
+        public void ShowMessageBox(string message, string title = "Hello Screens", MessageBoxOptions options = MessageBoxOptions.Ok, Action<IMessageBox> callback = null) {
+            var box = createMessageBox();
 
-		public void ShowDialog(IScreen dialogModel)
-		{
-			ActivateItem(dialogModel);
-		}
+            box.DisplayName = title;
+            box.Options = options;
+            box.Message = message;
 
-		public void ShowMessageBox(string message, string title = null, MessageBoxOptions options = MessageBoxOptions.Ok,
-		                           Action<IMessageBox> callback = null)
-		{
-			var box = createMessageBox();
+            if(callback != null)
+                box.Deactivated += delegate { callback(box); };
 
-			box.DisplayName = title ?? "Hello Screens";
-			box.Options = options;
-			box.Message = message;
+            ActivateItem(box);
+        }
 
-			if (callback != null)
-			{
-				box.Deactivated += delegate { callback(box); };
-			}
-
-			ActivateItem(box);
-		}
-
-		#endregion
-
-		private void CloseActiveItemCore()
-		{
-			var oldItem = ActiveItem;
-			ActivateItem(null);
-			oldItem.Deactivate(true);
-		}
-	}
+        void CloseActiveItemCore() {
+            var oldItem = ActiveItem;
+            ActivateItem(null);
+            oldItem.Deactivate(true);
+        }
+    }
 }

@@ -81,7 +81,7 @@ namespace Fab.Client.MoneyTracker.Categories
 			                                   	}
 			                                   	else
 			                                   	{
-			                                   		Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
+													Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
 			                                   		                                                 {
 			                                   		                                                 	Error = e.Error
 			                                   		                                                 }));
@@ -89,6 +89,44 @@ namespace Fab.Client.MoneyTracker.Categories
 			                                   };
 
 			proxy.GetAllCategoriesAsync(UserId);
+		}
+
+		/// <summary>
+		/// Download one entity from server.
+		/// </summary>
+		/// <param name="key">Entity key.</param>
+		public override void Download(int key)
+		{
+			var proxy = new MoneyServiceClient();
+
+			proxy.GetCategoryCompleted += (s, e) =>
+			{
+				if (e.Error == null)
+				{
+					var category = ByKey(key);
+					var index = Entities.IndexOf(category);
+
+					// TODO: find a way to use Automapper for SL4 here
+					Entities[index].CategoryType = e.Result.CategoryType;
+					Entities[index].Id = e.Result.Id;
+					Entities[index].Name = e.Result.Name;
+					Entities[index].Popularity = e.Result.Popularity;
+
+					Execute.OnUIThread(() => EventAggregator.Publish(new CategoryUpdatedMessage
+					{
+						Category = e.Result
+					}));
+				}
+				else
+				{
+					Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+					{
+						Error = e.Error
+					}));
+				}
+			};
+
+			proxy.GetCategoryAsync(UserId, key);
 		}
 
 		/// <summary>
@@ -118,7 +156,7 @@ namespace Fab.Client.MoneyTracker.Categories
 			                                 	}
 			                                 	else
 			                                 	{
-			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
+													Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
 			                                 		                                                 {
 			                                 		                                                 	Error = e.Error
 			                                 		                                                 }));

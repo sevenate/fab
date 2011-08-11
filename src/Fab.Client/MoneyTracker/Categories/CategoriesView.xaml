@@ -7,13 +7,11 @@
 			 d:DesignWidth="400">
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<TextBlock Text="Categories" />
 		<ListBox x:Name="Categories"
-				 Grid.Row="1">
+				 Grid.Row="0">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Controls:DockPanel>
@@ -25,11 +23,14 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<Button x:Name="LoadAllCategories"
-				Grid.Row="2"
-				Content="Refresh"
-				MinWidth="75"
-				MinHeight="23"
-				HorizontalAlignment="Right" />
+		<Controls:DockPanel Grid.Row="1">
+			<Button x:Name="CreateCategory"
+					Controls:DockPanel.Dock="Right"
+					Content="Add"
+					MinWidth="75"
+					MinHeight="23" />
+			<TextBox x:Name="CategoryName"
+					 MinWidth="75" />
+		</Controls:DockPanel>
 	</Grid>
 </UserControl>

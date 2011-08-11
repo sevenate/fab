@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Windows;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
@@ -9,7 +10,7 @@ using Fab.Client.Framework;
 namespace Fab.Client.Shell
 {
 	[Export(typeof(IShell))]
-	public class ShellViewModel : Conductor<IModule>.Collection.OneActive, IShell
+	public class ShellViewModel : Conductor<IModule>.Collection.OneActive, IShell, IHandle<OpenDialogMessage>, IHandle<OpenMessageBoxMessage>, IHandle<ServiceErrorMessage>
 	{
 		#region Constants
 
@@ -19,6 +20,9 @@ namespace Fab.Client.Shell
 
 		#region Fields
 
+		/// <summary>
+		/// Login view model.
+		/// </summary>
 		private readonly ILoginViewModel loginViewModel;
 
 		#endregion
@@ -29,7 +33,7 @@ namespace Fab.Client.Shell
 		public ShellViewModel(IDialogManager dialogs, [ImportMany]IEnumerable<IModule> modules, ILoginViewModel loginViewModel, IEventAggregator eventAggregator)
 		{
 			Dialogs = dialogs;
-			Items.AddRange(modules);
+			Items.AddRange(modules.OrderBy(module => module.Name));
 			this.loginViewModel = loginViewModel;
 			CloseStrategy = new ApplicationCloseStrategy();
 			eventAggregator.Subscribe(this);
@@ -45,6 +49,14 @@ namespace Fab.Client.Shell
 		public string Version
 		{
 			get { return AssemblyExtensions.AppVersion; }
+		}
+
+		/// <summary>
+		/// Gets application main window size.
+		/// </summary>
+		public string WindowSize
+		{
+			get { return Application.Current.MainWindow.Width + " x " + Application.Current.MainWindow.Height; }
 		}
 
 		/// <summary>
@@ -72,11 +84,6 @@ namespace Fab.Client.Shell
 		/// </summary>
 		protected override void OnInitialize()
 		{
-//			loginViewModel.Deactivated += (sender, args) =>
-//			                              {
-//				                              ActivateItem(Items.First());
-//											  NotifyOfPropertyChange(() => PersonalCorner);
-//			                              };
 			Dialogs.ShowDialog(loginViewModel);
 		}
 
@@ -111,10 +118,49 @@ namespace Fab.Client.Shell
 		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
 		public void Handle(LoggedOutMessage message)
 		{
-			//TODO: clear all collection with accounts, categories etc.
 			ActivateItem(null);
 			NotifyOfPropertyChange(() => PersonalCorner);
 			Dialogs.ShowDialog(loginViewModel);
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in OpenDialogMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(OpenDialogMessage message)
+		{
+			Dialogs.ShowDialog(message.Dialog);
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in OpenMessageBoxMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(OpenMessageBoxMessage message)
+		{
+			Dialogs.ShowMessageBox(message.Message, message.Title, message.Options, message.Callback);
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in ServiceErrorMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(ServiceErrorMessage message)
+		{
+			//TODO: show desktop "toast" notification here (if possible)
+			Dialogs.ShowMessageBox(message.Error.ToString(), "Service Error");
 		}
 
 		#endregion

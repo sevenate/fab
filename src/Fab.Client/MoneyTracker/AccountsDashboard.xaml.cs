@@ -1,8 +1,8 @@
 ﻿namespace Fab.Client.MoneyTracker
 {
-	public partial class MoneyModuleView
+	public partial class AccountsDashboard
 	{
-        public MoneyModuleView()
+        public AccountsDashboard()
         {
             InitializeComponent();
         }
