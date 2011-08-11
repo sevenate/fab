@@ -3,7 +3,6 @@
 // </copyright>
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-04-05" />
 
-using System.Collections.Generic;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 
@@ -19,7 +18,7 @@ namespace Fab.Client.Framework
 		/// <summary>
 		/// Gets all entities for user.
 		/// </summary>
-		IEnumerable<T> All { get; }
+		IObservableCollection<T> Entities { get; }
 
 		/// <summary>
 		/// Retrieve specific entity by unique key.
@@ -32,6 +31,12 @@ namespace Fab.Client.Framework
 		/// Download all entities from server.
 		/// </summary>
 		void Download();
+
+		/// <summary>
+		/// Download one entity from server.
+		/// </summary>
+		/// <param name="key">Entity key.</param>
+		void Download(K key);
 
 		/// <summary>
 		/// Create new entity.

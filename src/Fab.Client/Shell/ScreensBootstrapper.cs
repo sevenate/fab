@@ -10,9 +10,10 @@ using Caliburn.Micro;
 using Fab.Client.Controls;
 using Fab.Client.Framework;
 using Fab.Client.MoneyTracker.Accounts;
+using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Categories;
+using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.TransactionDetails;
-using Fab.Client.MoneyTracker.Transactions;
 using Fab.Client.MoneyTracker.Transfers;
 
 namespace Fab.Client.Shell
@@ -38,10 +39,12 @@ namespace Fab.Client.Shell
 			batch.AddExportedValue<IEventAggregator>(new EventAggregator());
 			batch.AddExportedValue<Func<IMessageBox>>(() => container.GetExportedValue<IMessageBox>());
 			batch.AddExportedValue<Func<IModule>>(() => container.GetExportedValue<IModule>());
-			batch.AddExportedValue<Func<ITransactionDetailsViewModel>>(() => container.GetExportedValue<ITransactionDetailsViewModel>());
-			batch.AddExportedValue<Func<ITransferViewModel>>(() => container.GetExportedValue<ITransferViewModel>());
+			batch.AddExportedValue<Func<TransactionDetailsViewModel>>(() => container.GetExportedValue<TransactionDetailsViewModel>());
+			batch.AddExportedValue<Func<TransferViewModel>>(() => container.GetExportedValue<TransferViewModel>());
 			batch.AddExportedValue<Func<IAccountsRepository>>(() => container.GetExportedValue<IAccountsRepository>());
 			batch.AddExportedValue<Func<ICategoriesRepository>>(() => container.GetExportedValue<ICategoriesRepository>());
+			batch.AddExportedValue<Func<PostingsFilterViewModel>>(() => container.GetExportedValue<PostingsFilterViewModel>());
+			batch.AddExportedValue<Func<AccountViewModel>>(() => container.GetExportedValue<AccountViewModel>());
 			batch.AddExportedValue(container);
 
 			container.Compose(batch);
@@ -78,10 +81,15 @@ namespace Fab.Client.Shell
 			container.SatisfyImportsOnce(instance);
 		}
 
-		protected override void DisplayRootView()
+		#region Overrides of Bootstrapper<IShell>
+
+		/// <summary>
+		/// Override this to add custom behavior to execute after the application starts.
+		/// </summary>
+		/// <param name="sender">The sender.</param><param name="e">The args.</param>
+		protected override void OnStartup(object sender, StartupEventArgs e)
 		{
-			base.DisplayRootView();
-			
+			base.OnStartup(sender, e);
 			if (Application.IsRunningOutOfBrowser)
 			{
 				mainWindow = Application.MainWindow;
@@ -93,6 +101,8 @@ namespace Fab.Client.Shell
 				System.Windows.Browser.HtmlPage.Plugin.Focus();
 			}
 		}
+
+		#endregion
 
 		private void OnMainWindowClosing(object sender, ClosingEventArgs e)
 		{

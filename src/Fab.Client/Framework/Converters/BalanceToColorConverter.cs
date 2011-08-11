@@ -39,7 +39,7 @@ namespace Fab.Client.Framework.Converters
 												  : new SolidColorBrush(new Color { A = 0xFF, R = 0, G = 0xFF, B = 0});
 			}
 
-			return value;
+			return new SolidColorBrush(Colors.Yellow);
 		}
 
 		/// <summary>

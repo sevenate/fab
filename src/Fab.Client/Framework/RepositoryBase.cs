@@ -4,7 +4,6 @@
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-26" />
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
@@ -14,15 +13,17 @@ namespace Fab.Client.Framework
 	/// <summary>
 	/// Base class for all entity repositories that handle logged-in and logged-out global messages.
 	/// </summary>
+	/// TODO: convert <see cref="Create"/> and other related into <see cref="Entities"/> own "add()" operations.
 	/// <typeparam name="T">Entity type.</typeparam>
 	public abstract class RepositoryBase<T> : IRepository<T, int>
 	{
 		#region Properties
 
 		/// <summary>
-		/// Gets list of all entities of the specific type.
+		/// Gets all entities for user.
+		/// TODO: change to "read-only".
 		/// </summary>
-		protected List<T> Entities { get; private set; }
+		public IObservableCollection<T> Entities { get; private set; }
 
 		/// <summary>
 		/// Gets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
@@ -45,7 +46,7 @@ namespace Fab.Client.Framework
 		[ImportingConstructor]
 		protected RepositoryBase(IEventAggregator eventAggregator)
 		{
-			Entities = new List<T>();
+			Entities = new BindableCollection<T>();
 			EventAggregator = eventAggregator;
 			EventAggregator.Subscribe(this);
 		}
@@ -83,14 +84,6 @@ namespace Fab.Client.Framework
 		#region Implementation of IRepository<T,int>
 
 		/// <summary>
-		/// Gets all entities for user.
-		/// </summary>
-		public IEnumerable<T> All
-		{
-			get { return Entities; }
-		}
-
-		/// <summary>
 		/// Retrieve specific entity by unique key.
 		/// </summary>
 		/// <param name="key">Entity key.</param>
@@ -101,6 +94,12 @@ namespace Fab.Client.Framework
 		/// Download all entities from server.
 		/// </summary>
 		public abstract void Download();
+
+		/// <summary>
+		/// Download one entity from server.
+		/// </summary>
+		/// <param name="key">Entity key.</param>
+		public abstract void Download(int key);
 
 		/// <summary>
 		/// Create new entity.

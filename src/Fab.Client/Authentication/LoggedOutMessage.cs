@@ -9,7 +9,6 @@ namespace Fab.Client.Authentication
 	/// Send by <see cref="ILoginViewModel"/> after user has been logged out.
 	/// </summary>
 	public class LoggedOutMessage
-	{
-		
+	{	
 	}
 }

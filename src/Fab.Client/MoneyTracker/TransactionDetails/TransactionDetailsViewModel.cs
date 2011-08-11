@@ -18,6 +18,7 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
+using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Categories;
 
 namespace Fab.Client.MoneyTracker.TransactionDetails
@@ -25,36 +26,30 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 	/// <summary>
 	/// Single transaction details view model.
 	/// </summary>
-	[Export(typeof(ITransactionDetailsViewModel))]
-	public class TransactionDetailsViewModel : DocumentBase, IHandle<AccountsUpdatedMessage>, IHandle<CategoriesUpdatedMessage>, ITransactionDetailsViewModel
+	[Export(typeof(TransactionDetailsViewModel))]
+	public class TransactionDetailsViewModel : DocumentBase, IHandle<CategoriesUpdatedMessage>
 	{
 		#region Fields
 
+		private IAccountsRepository accountsRepository;
+		private readonly CollectionViewSource categoriesViewSource = new CollectionViewSource();
+		private AutoCompleteFilterPredicate<object> categoryFilter;
 		private int? transactionId;
 
-		private string price;
-
+		private bool isDeposite;
 		private DateTime operationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+		private string price;
 
 		private string quantity = "1";
 
 		private string comment;
+		private bool isEditMode;
 
 		#endregion
 
 		#region Properties
 
-		private readonly CollectionViewSource accountsViewSource = new CollectionViewSource();
-		private readonly BindableCollection<CategoryDTO> categories = new BindableCollection<CategoryDTO>();
-		private readonly CollectionViewSource categoriesViewSource = new CollectionViewSource();
-
-		/// <summary>
-		/// Gets accounts for specific user.
-		/// </summary>
-		public ICollectionView Accounts
-		{
-			get { return accountsViewSource.View; }
-		}
+		private AccountViewModel Account { get; set; }
 
 		/// <summary>
 		/// Gets accounts for specific user.
@@ -64,7 +59,56 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 			get { return categoriesViewSource.View; }
 		}
 
-		private bool isDeposite;
+		public AutoCompleteFilterPredicate<object> CategoryFilter
+		{
+			get { return categoryFilter; }
+			set
+			{
+				categoryFilter = value;
+				NotifyOfPropertyChange(() => CategoryFilter);
+			}
+		}
+
+		public CategoryDTO CurrentCategory
+		{
+			get
+			{
+				if (Categories == null)
+				{
+					return null;
+				}
+
+				var currentCategory = (CategoryDTO)Categories.CurrentItem;
+				return currentCategory != null && currentCategory.Id != -1
+				       	? currentCategory
+				       	: null;
+			}
+			set
+			{
+				if (value == null)
+				{
+					Categories.MoveCurrentTo(null);
+					NotifyOfPropertyChange(() => CurrentCategory);
+					return;
+				}
+
+				foreach (var category in Categories)
+				{
+					if (((CategoryDTO)category).Id == value.Id)
+					{
+						if (Categories.MoveCurrentTo(category))
+						{
+							NotifyOfPropertyChange(() => CurrentCategory);
+						}
+
+						return;
+					}
+				}
+
+				Categories.MoveCurrentTo(null);
+				NotifyOfPropertyChange(() => CurrentCategory);
+			}
+		}
 
 		public bool IsDeposite
 		{
@@ -95,7 +139,9 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 			set
 			{
 				price = value;
+				IsDeposite = CanSave && decimal.Parse(price) >= 0;
 				NotifyOfPropertyChange(() => Price);
+				NotifyOfPropertyChange(() => Amount);
 				NotifyOfPropertyChange(() => CanSave);
 			}
 		}
@@ -108,7 +154,27 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 			{
 				quantity = value;
 				NotifyOfPropertyChange(() => Quantity);
+				NotifyOfPropertyChange(() => Amount);
 				NotifyOfPropertyChange(() => CanSave);
+			}
+		}
+
+		/// <summary>
+		/// Gets transaction amount value.
+		/// </summary>
+		public decimal? Amount
+		{
+			get
+			{
+				decimal p;
+				decimal q;
+
+				if (decimal.TryParse(Price.Trim(), out p) && decimal.TryParse(Quantity.Trim(), out q))
+				{
+					return p * q;
+				}
+
+				return null;
 			}
 		}
 
@@ -122,13 +188,19 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 			}
 		}
 
+		public bool IsEditMode
+		{
+			get { return isEditMode; }
+			set
+			{
+				isEditMode = value;
+				NotifyOfPropertyChange(() => IsEditMode);
+			}
+		}
+
 		public bool CanSave
 		{
-			get
-			{
-				//TODO: add "CanSave" guard.
-				return true;
-			}
+			get { return Amount != null; }
 		}
 
 		#endregion
@@ -139,8 +211,10 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		/// Initializes a new instance of the <see cref="TransactionDetailsViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public TransactionDetailsViewModel(IEventAggregator eventAggregator)
+		public TransactionDetailsViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
 		{
+			DisplayName = "Transactions Details";
+			this.accountsRepository = accountsRepository;
 			eventAggregator.Subscribe(this);
 
 			categoryFilter = (search, item) =>
@@ -162,82 +236,43 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 		#endregion
 
-		private AutoCompleteFilterPredicate<object> categoryFilter;
+		#region Methods
 
-		public AutoCompleteFilterPredicate<object> CategoryFilter
+		public void Create(AccountViewModel account)
 		{
-			get { return categoryFilter; }
-			set
-			{
-				categoryFilter = value;
-				NotifyOfPropertyChange(() => CategoryFilter);
-			}
-		}
+			IsDeposite = true;
+			DisplayName = "New Transaction";
 
-		public CategoryDTO CurrentCategory
-		{
-			get
-			{
-				if (Categories == null)
-				{
-					return null;
-				}
-
-				var currentCategory = (CategoryDTO)Categories.CurrentItem;
-				return currentCategory != null && currentCategory.Id != -1
-						? currentCategory
-						: null;
-			}
-			set
-			{
-				if (value == null)
-				{
-					Categories.MoveCurrentTo(null);
-					NotifyOfPropertyChange(() => CurrentCategory);
-					return;
-				}
-
-				foreach (var category in Categories)
-				{
-					if (((CategoryDTO)category).Id == value.Id)
-					{
-						if (Categories.MoveCurrentTo(category))
-						{
-							NotifyOfPropertyChange(() => CurrentCategory);
-						}
-
-						return;
-					}
-				}
-
-				Categories.MoveCurrentTo(null);
-				NotifyOfPropertyChange(() => CurrentCategory);
-			}
-		}
-
-		private bool isEditMode;
-
-		public bool IsEditMode
-		{
-			get { return isEditMode; }
-			set
-			{
-				isEditMode = value;
-				NotifyOfPropertyChange(() => IsEditMode);
-			}
-		}
-
-		public void Clear()
-		{
 			transactionId = null;
-			IsEditMode = false;
-			IsDeposite = false;
-			Accounts.MoveCurrentToFirst();
+			Account = account;
 			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 			CurrentCategory = null;
 			Price = string.Empty;
 			Quantity = "1";
 			Comment = string.Empty;
+
+			IsEditMode = false;
+		}
+
+		/// <summary>
+		/// Open specific deposit or withdrawal transaction to edit.
+		/// </summary>
+		/// <param name="transaction">Transaction to edit.</param>
+		/// <param name="account">Current selected account.</param>
+		public void Edit(TransactionDTO transaction, AccountViewModel account)
+		{
+			IsDeposite = transaction is DepositDTO;
+			DisplayName = "Edit Transaction";
+
+			transactionId = transaction.Id;
+			Account = account;
+			OperationDate = transaction.Date.ToLocalTime();
+			CurrentCategory = Categories.Cast<CategoryDTO>().Where(c => c.Id == transaction.CategoryId).SingleOrDefault();
+			Price = transaction.Rate.ToString();
+			Quantity = transaction.Quantity.ToString();
+			Comment = transaction.Comment;
+
+			IsEditMode = true;
 		}
 
 		public IEnumerable<IResult> Save()
@@ -249,13 +284,13 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				// To not update date if it was not changed;
 				// Add time of day to updated date only.
 				DateTime date = OperationDate.Kind == DateTimeKind.Unspecified
-						? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
-						: OperationDate;
+				                	? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
+				                	: OperationDate;
 
 				var request = new EditTransactionResult(
 					transactionId.Value,
 					UserCredentials.Current.UserId,
-					((AccountDTO)Accounts.CurrentItem).Id,
+					Account.Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
 					decimal.Parse(Quantity.Trim()),
@@ -266,7 +301,6 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 					IsDeposite
 					);
 
-				Clear();
 
 				yield return request;
 			}
@@ -279,7 +313,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 				var request = new AddTransactionResult(
 					UserCredentials.Current.UserId,
-					((AccountDTO)Accounts.CurrentItem).Id,
+					Account.Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
 					decimal.Parse(Quantity.Trim()),
@@ -293,55 +327,16 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				yield return request;
 			}
 
+			accountsRepository.Download(Account.Id);
+
 			yield return Loader.Hide();
+
+			TryClose();
 		}
 
-		/// <summary>
-		/// Open specific deposit or withdrawal transaction to edit.
-		/// </summary>
-		/// <param name="transaction">Transaction to edit.</param>
-		/// <param name="accountId">Current selected account.</param>
-		public void Edit(TransactionDTO transaction, int accountId)
+		public void Cancel()
 		{
-			transactionId = transaction.Id;
-
-			var account = Accounts.Cast<AccountDTO>().Where(a => a.Id == accountId).Single();
-			Accounts.MoveCurrentTo(account);
-
-			IsDeposite = transaction is DepositDTO;
-
-			OperationDate = transaction.Date.ToLocalTime();
-			CurrentCategory = Categories.Cast<CategoryDTO>().Where(c => c.Id == transaction.CategoryId).Single();
-			Price = transaction.Rate.ToString();
-			Quantity = transaction.Quantity.ToString();
-			Comment = transaction.Comment;
-
-			IsEditMode = true;
-		}
-
-		#region Implementation of IHandle<in AccountsUpdatedMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(AccountsUpdatedMessage message)
-		{
-			if (message.Error == null)
-			{
-				accountsViewSource.Source = message.Accounts;
-
-				if (!accountsViewSource.View.IsEmpty)
-				{
-					accountsViewSource.View.MoveCurrentToFirst();
-				}
-
-				NotifyOfPropertyChange(() => Accounts);
-			}
-			else
-			{
-				//TODO: show error dialog here
-			}
+			TryClose();
 		}
 
 		#endregion
@@ -354,21 +349,14 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		/// <param name="message">The message.</param>
 		public void Handle(CategoriesUpdatedMessage message)
 		{
-			if (message.Error == null)
-			{
-				categoriesViewSource.Source = message.Categories;
+			categoriesViewSource.Source = message.Categories;
 
-				if (!categoriesViewSource.View.IsEmpty)
-				{
-					categoriesViewSource.View.MoveCurrentToFirst();
-				}
-
-				NotifyOfPropertyChange(() => Categories);
-			}
-			else
+			if (!categoriesViewSource.View.IsEmpty)
 			{
-				//TODO: show error dialog here
+				categoriesViewSource.View.MoveCurrentToFirst();
 			}
+
+			NotifyOfPropertyChange(() => Categories);
 		}
 
 		#endregion

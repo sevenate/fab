@@ -10,56 +10,68 @@
 			 d:DesignWidth="400"
 			 mc:Ignorable="d"
 			 Language="{Binding Language, Source={StaticResource cultureSettings}}">
-	<Grid x:Name="LayoutRoot"
-		  Background="{StaticResource Brush_WindowBackground}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<Controls:DockPanel>
-			<ContentControl x:Name="PersonalCorner"
-							Controls:DockPanel.Dock="Right"
+	<Controls:BusyIndicator>
+		<Grid x:Name="LayoutRoot"
+			  Background="{StaticResource Brush_WindowBackground}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<Controls:DockPanel>
+				<ContentControl x:Name="PersonalCorner"
+								Controls:DockPanel.Dock="Right"
+								VerticalContentAlignment="Stretch"
+								HorizontalContentAlignment="Stretch" />
+				<ItemsControl x:Name="Items">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Button cal:Action.Target="{Binding}"
+									cal:Message.Attach="Show"
+									ToolTipService.ToolTip="{Binding Name}"
+									MinWidth="75"
+									MinHeight="23"
+									Content="{Binding Name}" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Controls:DockPanel>
+			<ContentControl x:Name="ActiveItem"
+							Grid.Row="1"
 							VerticalContentAlignment="Stretch"
 							HorizontalContentAlignment="Stretch" />
-			<ItemsControl x:Name="Items">
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Button cal:Action.Target="{Binding}"
-								cal:Message.Attach="Show"
-								ToolTipService.ToolTip="{Binding Name}"
-								MinWidth="75"
-								MinHeight="23"
-								Content="{Binding Name}" />
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</Controls:DockPanel>
-		<ContentControl x:Name="ActiveItem"
-						Grid.Row="1"
-						VerticalContentAlignment="Stretch"
-						HorizontalContentAlignment="Stretch" />
-		<TextBlock x:Name="Version"
-				   ToolTipService.ToolTip="Client Version"
-				   TextWrapping="Wrap"
-				   Grid.Row="2"
-				   HorizontalAlignment="Right"
-				   VerticalAlignment="Center"
-				   Foreground="#FF868686" />
-		<TextBlock x:Name="Copyright"
-				   TextWrapping="Wrap"
-				   Grid.Row="2"
-				   HorizontalAlignment="Center"
-				   VerticalAlignment="Center"
-				   Foreground="#FF868686" />
-		<ContentControl x:Name="Dialogs"
-						Grid.RowSpan="3"
-						VerticalContentAlignment="Stretch"
-						HorizontalContentAlignment="Stretch" />
-	</Grid>
+			<StackPanel Grid.Row="2"
+						Orientation="Horizontal"
+						HorizontalAlignment="Right">
+				<TextBlock x:Name="WindowSize"
+						   ToolTipService.ToolTip="Window size"
+						   TextWrapping="Wrap"
+						   HorizontalAlignment="Right"
+						   VerticalAlignment="Center"
+						   Foreground="#FF868686" />
+				<TextBlock x:Name="Version"
+						   ToolTipService.ToolTip="Client version"
+						   Margin="5,0,0,0"
+						   TextWrapping="Wrap"
+						   HorizontalAlignment="Right"
+						   VerticalAlignment="Center"
+						   Foreground="#FF868686" />
+			</StackPanel>
+			<TextBlock x:Name="Copyright"
+					   TextWrapping="Wrap"
+					   Grid.Row="2"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Foreground="#FF868686" />
+			<ContentControl x:Name="Dialogs"
+							Grid.RowSpan="3"
+							VerticalContentAlignment="Stretch"
+							HorizontalContentAlignment="Stretch" />
+		</Grid>
+	</Controls:BusyIndicator>
 </UserControl>

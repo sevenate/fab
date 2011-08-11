@@ -9,8 +9,8 @@
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
 			 mc:Ignorable="d"
-			 d:DesignHeight="320"
-			 d:DesignWidth="200">
+			 d:DesignHeight="28"
+			 d:DesignWidth="740">
 	<UserControl.Resources>
 		<!--		<Style x:Key="ComboToggleButton"-->
 		<!--			   TargetType="ToggleButton">-->
@@ -182,124 +182,118 @@
 		<!--			</Setter>-->
 		<!--		</Style>-->
 		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
-		<local:AddUpdateStringConverter x:Key="AddUpdateStringConverter" />
-		<local:CancelClearStringConverter x:Key="CancelClearStringConverter" />
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot">
-		<StackPanel>
-			<TextBlock Text="Add or Edit Transaction" />
-			<StackPanel Orientation="Horizontal">
-				<RadioButton Content="Expense"
-							 IsChecked="{Binding Path=IsDeposite, Mode=TwoWay, Converter={StaticResource boolToNotBool}}" />
-				<RadioButton x:Name="IsDeposite"
-							 Content="Income" />
-			</StackPanel>
-			<TextBlock TextWrapping="Wrap"
-					   Text="Account" />
-			<ComboBox x:Name="Accounts">
-				<ComboBox.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding Path=Name}" />
-					</DataTemplate>
-				</ComboBox.ItemTemplate>
-			</ComboBox>
-			<TextBlock TextWrapping="Wrap"
-					   Text="Date" />
-			<sdk:DatePicker x:Name="OperationDate"
-							IsTodayHighlighted="True"
-							SelectedDateFormat="Long"
-							SelectedDate="{Binding Path=OperationDate,
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+		<sdk:DatePicker Grid.Column="0"
+						x:Name="OperationDate"
+						ToolTipService.ToolTip="Operation Date"
+		                IsTodayHighlighted="True"
+		                SelectedDateFormat="Long"
+		                SelectedDate="{Binding Path=OperationDate,
 												   Mode=TwoWay,
 												   Converter={StaticResource DateTimeUtcToLocalConverter}}" />
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<StackPanel>
-					<TextBlock TextWrapping="Wrap"
-							   Text="Price" />
-					<TextBox x:Name="Price"
-							 MaxLength="50"
-							 common:BindingHelper.UpdateSourceOnChange="True"
-							 Text="{Binding Path=Price,
-							Mode=TwoWay,
-							UpdateSourceTrigger=Explicit,
-							ValidatesOnDataErrors=True,
-							ValidatesOnExceptions=True,
-							ValidatesOnNotifyDataErrors=True,
-							NotifyOnValidationError=True}" />
-				</StackPanel>
-				<TextBlock Grid.Column="1"
-						   Text="X"
-						   Margin="5,0"
-						   VerticalAlignment="Bottom" />
-				<StackPanel Grid.Column="2">
-					<TextBlock TextWrapping="Wrap"
-							   Text="Quantity" />
-					<TextBox x:Name="Quantity"
-							 MaxLength="50"
-							 common:BindingHelper.UpdateSourceOnChange="True"
-							 Text="{Binding Path=Quantity,
+		<!--			<sdk:AutoCompleteBox ItemsSource="{Binding Categories}"-->
+		<!--								 ValueMemberBinding="{Binding Name}"-->
+		<!--								 MinimumPrefixLength="0"-->
+		<!--								 IsTextCompletionEnabled="True"-->
+		<!--								 FilterMode="Custom"-->
+		<!--								 ItemFilter="{Binding CategoryFilter}"-->
+		<!--								 SelectedItem="{Binding CurrentCategory, Mode=TwoWay}"-->
+		<!--								 Style="{StaticResource EditableComboStyle}">-->
+		<!--				<sdk:AutoCompleteBox.ItemTemplate>-->
+		<!--					<DataTemplate>-->
+		<!--						<TextBlock Text="{Binding Name}" />-->
+		<!--					</DataTemplate>-->
+		<!--				</sdk:AutoCompleteBox.ItemTemplate>-->
+		<!--			</sdk:AutoCompleteBox>-->
+		<controls:AutoCompleteComboBox Grid.Column="1"
+									   ItemsSource="{Binding Path=Categories}"
+									   ToolTipService.ToolTip="Category"
+									   ValueMemberBinding="{Binding Path=Name}"
+									   MinimumPrefixLength="0"
+									   IsTextCompletionEnabled="True"
+									   FilterMode="Custom"
+									   ItemFilter="{Binding Path=CategoryFilter}"
+									   SelectedItemBinding="{Binding Path=CurrentCategory, Mode=TwoWay}">
+			<controls:AutoCompleteComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Path=Name}" />
+				</DataTemplate>
+			</controls:AutoCompleteComboBox.ItemTemplate>
+		</controls:AutoCompleteComboBox>
+		<TextBox x:Name="Comment"
+				 Grid.Column="2"
+				 ToolTipService.ToolTip="Comment"
+				 TextWrapping="Wrap"
+				 MaxLength="255"
+				 MinHeight="100"
+				 Text="{Binding Path=Comment, Mode=TwoWay}" />
+		<Grid Grid.Column="3">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<TextBox x:Name="Price"
+					 MaxLength="50"
+					 ToolTipService.ToolTip="Price"
+					 common:BindingHelper.UpdateSourceOnChange="True"
+					 Text="{Binding Path=Price,
+					 Mode=TwoWay,
+					 UpdateSourceTrigger=Explicit,
+					 ValidatesOnDataErrors=True,
+					 ValidatesOnExceptions=True,
+					 ValidatesOnNotifyDataErrors=True,
+					 NotifyOnValidationError=True}" />
+			<TextBlock Grid.Column="1"
+					   Text="X"
+					   Margin="5,0"
+					   VerticalAlignment="Center" />
+			<TextBox x:Name="Quantity"
+					 Grid.Column="2"
+					 ToolTipService.ToolTip="Quantity"
+					 MaxLength="50"
+					 common:BindingHelper.UpdateSourceOnChange="True"
+					 Text="{Binding Path=Quantity,
 								Mode=TwoWay,
 								UpdateSourceTrigger=Explicit,
 								ValidatesOnDataErrors=True,
 								ValidatesOnExceptions=True,
 								ValidatesOnNotifyDataErrors =True,
 								NotifyOnValidationError=True}" />
-				</StackPanel>
-			</Grid>
-			<TextBlock TextWrapping="Wrap"
-					   Text="Category" />
-			<!--			<sdk:AutoCompleteBox ItemsSource="{Binding Categories}"-->
-			<!--								 ValueMemberBinding="{Binding Name}"-->
-			<!--								 MinimumPrefixLength="0"-->
-			<!--								 IsTextCompletionEnabled="True"-->
-			<!--								 FilterMode="Custom"-->
-			<!--								 ItemFilter="{Binding CategoryFilter}"-->
-			<!--								 SelectedItem="{Binding CurrentCategory, Mode=TwoWay}"-->
-			<!--								 Style="{StaticResource EditableComboStyle}">-->
-			<!--				<sdk:AutoCompleteBox.ItemTemplate>-->
-			<!--					<DataTemplate>-->
-			<!--						<TextBlock Text="{Binding Name}" />-->
-			<!--					</DataTemplate>-->
-			<!--				</sdk:AutoCompleteBox.ItemTemplate>-->
-			<!--			</sdk:AutoCompleteBox>-->
-			<controls:AutoCompleteComboBox ItemsSource="{Binding Path=Categories}"
-										   ValueMemberBinding="{Binding Path=Name}"
-										   MinimumPrefixLength="0"
-										   IsTextCompletionEnabled="True"
-										   FilterMode="Custom"
-										   ItemFilter="{Binding Path=CategoryFilter}"
-										   SelectedItemBinding="{Binding Path=CurrentCategory, Mode=TwoWay}">
-				<controls:AutoCompleteComboBox.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding Path=Name}" />
-					</DataTemplate>
-				</controls:AutoCompleteComboBox.ItemTemplate>
-			</controls:AutoCompleteComboBox>
-			<TextBlock TextWrapping="Wrap"
-					   Text="Comment" />
-			<TextBox x:Name="Comment"
-					 MaxLength="255"
-					 TextWrapping="Wrap"
-					 Height="100"
-					 Text="{Binding Path=Comment, Mode=TwoWay}" />
-			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Right">
-				<Button x:Name="Save"
-						Content="{Binding Path=IsEditMode, Converter={StaticResource AddUpdateStringConverter}}"
-						MinWidth="75"
-						MinHeight="23"
-						HorizontalAlignment="Right" />
-				<Button x:Name="Clear"
-						Content="{Binding Path=IsEditMode, Converter={StaticResource CancelClearStringConverter}}"
-						MinWidth="75"
-						MinHeight="23"
-						Margin="5,0,0,0"
-						HorizontalAlignment="Right" />
-			</StackPanel>
-		</StackPanel>
+			<TextBlock Grid.Column="3"
+					   Text="="
+					   Margin="5,0"
+					   VerticalAlignment="Center" />
+			<TextBlock Grid.Column="4"
+					   Foreground="{Binding Path=Amount, Converter={StaticResource balanceToColorConverter}}"
+					   Text="{Binding Path=Amount, Converter={StaticResource nullToQuestion}}"
+					   ToolTipService.ToolTip="Amount" />
+		</Grid>
+		<Button x:Name="Save"
+				Grid.Column="5"
+				Content="Save"
+				MinWidth="75"
+				MinHeight="23"
+				HorizontalAlignment="Right" />
+		<Button x:Name="Cancel"
+				Grid.Column="6"
+			    Content="Cancel"
+			    MinWidth="75"
+			    MinHeight="23"
+			    Margin="5,0,0,0"
+			    HorizontalAlignment="Right" />
 	</Grid>
 </UserControl>

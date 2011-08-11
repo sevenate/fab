@@ -1226,13 +1226,13 @@
 										</ControlTemplate>
 									</Grid.Resources>
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="Auto" />
-										<ColumnDefinition Width="Auto" />
-										<ColumnDefinition Width="Auto" />
+										<ColumnDefinition />
+										<ColumnDefinition />
+										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
 									<Grid.RowDefinitions>
 										<RowDefinition Height="Auto" />
-										<RowDefinition Height="*" />
+										<RowDefinition />
 									</Grid.RowDefinitions>
 									<Button x:Name="PreviousButton"
 											HorizontalAlignment="Left"
@@ -1268,22 +1268,22 @@
 										  Grid.Row="1"
 										  Visibility="Collapsed">
 										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
 										</Grid.ColumnDefinitions>
 										<Grid.RowDefinitions>
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
 										</Grid.RowDefinitions>
 									</Grid>
 									<Grid x:Name="YearView"
@@ -1292,15 +1292,15 @@
 										  Grid.Row="1"
 										  Visibility="Collapsed">
 										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
-											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
 										</Grid.ColumnDefinitions>
 										<Grid.RowDefinitions>
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
-											<RowDefinition Height="Auto" />
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
 										</Grid.RowDefinitions>
 									</Grid>
 								</Grid>
@@ -1341,13 +1341,19 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="sdk:Calendar">
-					<StackPanel x:Name="Root"
-								HorizontalAlignment="Center">
+					<Grid x:Name="Root">
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="ValidationStates">
+								<VisualState x:Name="InvalidFocused"/>
+								<VisualState x:Name="InvalidUnfocused"/>
+								<VisualState x:Name="Valid"/>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
 						<System_Windows_Controls_Primitives:CalendarItem x:Name="CalendarItem"
-																		 BorderBrush="{TemplateBinding BorderBrush}"
-																		 BorderThickness="{TemplateBinding BorderThickness}"
-																		 Background="{TemplateBinding Background}" />
-					</StackPanel>
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Background="{TemplateBinding Background}" d:LayoutOverrides="Width, Height" />
+					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
@@ -1568,10 +1574,10 @@
 								<VisualState x:Name="Active">
 									<Storyboard>
 										<DoubleAnimation Duration="0"
-														 To="1"
-														 Storyboard.TargetProperty="(UIElement.Opacity)"
-														 Storyboard.TargetName="Content"
-														 d:IsOptimized="True" />
+											To="1"
+											Storyboard.TargetProperty="(UIElement.Opacity)"
+											Storyboard.TargetName="Content"
+											d:IsOptimized="True" />
 									</Storyboard>
 								</VisualState>
 								<VisualState x:Name="Inactive" />

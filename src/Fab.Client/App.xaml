@@ -26,11 +26,11 @@
 			<converters:BooleanToVisibilityInvertConverter x:Key="boolToVisibilityInvert" />
 			<converters:BooleanToOpacityConverter x:Key="boolToOpacity" />
 			<converters:NullToCollapsedConverter x:Key="nullToCollapsed" />
+			<converters:NullToQuestionMarkConverter x:Key="nullToQuestion" />
 			<converters:ZeroToVisibilityConverter x:Key="zeroToVisibility" />
 			<converters:BalanceToColorConverter x:Key="balanceToColorConverter" />
 			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocalConverter" />
 			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyStringConverter" />
-			<Transactions:DateRange x:Key="dateRange" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

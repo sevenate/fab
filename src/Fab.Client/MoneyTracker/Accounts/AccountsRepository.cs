@@ -10,6 +10,7 @@ using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.MoneyTracker.Accounts.Single;
 
 namespace Fab.Client.MoneyTracker.Accounts
 {
@@ -74,7 +75,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                 	if (e.Error == null)
 			                                 	{
 			                                 		Entities.Clear();
-			                                 		Entities.AddRange(e.Result);
+													Entities.AddRange(e.Result);
 			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
 			                                 		                                                 {
 			                                 		                                                 	Accounts = Entities
@@ -82,7 +83,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                 	}
 			                                 	else
 			                                 	{
-			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
+			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
 			                                 		                                                 {
 			                                 		                                                 	Error = e.Error
 			                                 		                                                 }));
@@ -90,6 +91,40 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                 };
 
 			proxy.GetAllAccountsAsync(UserId);
+		}
+
+		/// <summary>
+		/// Download one entity from server.
+		/// </summary>
+		/// <param name="key">Entity key.</param>
+		public override void Download(int key)
+		{
+			var proxy = new MoneyServiceClient();
+
+			proxy.GetAccountCompleted += (s, e) =>
+			{
+				if (e.Error == null)
+				{
+					var account = ByKey(key);
+					var index = Entities.IndexOf(account);
+					
+					Entities[index] = e.Result;
+
+					Execute.OnUIThread(() => EventAggregator.Publish(new AccountUpdatedMessage
+					{
+						Account = Entities[index]
+					}));
+				}
+				else
+				{
+					Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+					{
+						Error = e.Error
+					}));
+				}
+			};
+
+			proxy.GetAccountAsync(UserId, key);
 		}
 
 		/// <summary>
@@ -119,7 +154,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                	}
 			                                	else
 			                                	{
-			                                		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
+													Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
 			                                		                                                 {
 			                                		                                                 	Error = e.Error
 			                                		                                                 }));
@@ -162,19 +197,18 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// <returns>Created account.</returns>
 		public AccountDTO Create(string name, int assetTypeId)
 		{
-			var account = new AccountDTO
-			              {
-			              	Id = 0,
-			              	Name = name,
-			              	AssetTypeId = assetTypeId,
-			              	Created = DateTime.UtcNow,
-			              	Balance = 0,
-			              	FirstPostingDate = null,
-			              	LastPostingDate = null,
-			              	PostingsCount = 0
-			              };
+			var accountDTO = IoC.Get<AccountDTO>();
 
-			return Create(account);
+			accountDTO.AssetTypeId = assetTypeId;
+			accountDTO.Balance = 0;
+			accountDTO.Created = DateTime.UtcNow;
+			accountDTO.FirstPostingDate = null;
+			accountDTO.Id = 0;
+			accountDTO.LastPostingDate = null;
+			accountDTO.Name = name;
+			accountDTO.PostingsCount = 0;
+
+			return Create(accountDTO);
 		}
 
 		#endregion

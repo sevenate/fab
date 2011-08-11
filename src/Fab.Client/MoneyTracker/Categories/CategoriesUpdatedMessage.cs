@@ -3,22 +3,16 @@
 // </copyright>
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-26" />
 
-using System;
 using System.Collections.Generic;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Categories
 {
 	/// <summary>
-	/// Send by <see cref="CategoriesRepository.Categories"/> after <see cref="CategoriesRepository"/> has been updated.
+	/// Send by <see cref="CategoriesRepository.Entities"/> after <see cref="CategoriesRepository"/> has been updated.
 	/// </summary>
 	public class CategoriesUpdatedMessage
 	{
-		/// <summary>
-		/// Gets or sets the error if one occurred.
-		/// </summary>
-		public Exception Error { get; set; }
-
 		/// <summary>
 		/// Gets or sets all current user categories.
 		/// </summary>

@@ -7,9 +7,9 @@ namespace Fab.Client.Framework
 	public class ApplicationCloseCheck : IResult
 	{
 		private readonly Action<IDialogManager, Action<bool>> closeCheck;
-		private readonly IChild<IConductor> screen;
+		private readonly IChild screen;
 
-		public ApplicationCloseCheck(IChild<IConductor> screen, Action<IDialogManager, Action<bool>> closeCheck)
+		public ApplicationCloseCheck(IChild screen, Action<IDialogManager, Action<bool>> closeCheck)
 		{
 			this.screen = screen;
 			this.closeCheck = closeCheck;
@@ -18,22 +18,20 @@ namespace Fab.Client.Framework
 		[Import]
 		public IShell Shell { get; set; }
 
-		#region IResult Members
-
 		public void Execute(ActionExecutionContext context)
 		{
 			var documentWorkspace = screen.Parent as IDocumentWorkspace;
-			
 			if (documentWorkspace != null)
 			{
 				documentWorkspace.Edit(screen);
 			}
 
-			closeCheck(Shell.Dialogs, result => Completed(this, new ResultCompletionEventArgs {WasCancelled = !result}));
+			closeCheck(Shell.Dialogs, result => Completed(this, new ResultCompletionEventArgs
+			                                                    {
+			                                                    	WasCancelled = !result
+			                                                    }));
 		}
 
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
-
-		#endregion
 	}
 }

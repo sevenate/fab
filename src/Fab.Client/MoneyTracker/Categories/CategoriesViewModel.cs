@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Windows.Data;
 using Caliburn.Micro;
+using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Categories
@@ -15,13 +16,12 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// <summary>
 	/// Categories view model.
 	/// </summary>
-	[Export(typeof(CategoriesViewModel))]
-	public class CategoriesViewModel : Screen, IHandle<CategoriesUpdatedMessage>
+	[Export(typeof(IModule))]
+	public class CategoriesViewModel : Screen, IModule, IHandle<CategoriesUpdatedMessage>
 	{
 		#region Fields
 
-		private readonly BindableCollection<CategoryDTO> categories = new BindableCollection<CategoryDTO>();
-		private readonly CollectionViewSource categoriesViewSource = new CollectionViewSource();
+		private readonly CollectionViewSource categoriesCollectionView = new CollectionViewSource();
 		private readonly ICategoriesRepository categoriesRepository;
 
 		/// <summary>
@@ -36,7 +36,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// </summary>
 		public ICollectionView Categories
 		{
-			get { return categoriesViewSource.View; }
+			get { return categoriesCollectionView.View; }
 		}
 
 		#region Ctors
@@ -51,7 +51,7 @@ namespace Fab.Client.MoneyTracker.Categories
 			EventAggregator.Subscribe(this);
 
 			this.categoriesRepository = categoriesRepository;
-			categoriesViewSource.Source = categories;
+			categoriesCollectionView.Source = categoriesRepository.Entities;
 		}
 
 		#endregion
@@ -64,20 +64,62 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <param name="message">The message.</param>
 		public void Handle(CategoriesUpdatedMessage message)
 		{
-			if (message.Error == null)
+			if (!categoriesCollectionView.View.IsEmpty)
 			{
-				categories.Clear();
-				categories.AddRange(message.Categories);
+				categoriesCollectionView.View.MoveCurrentToFirst();
+			}
 
-				if (!categoriesViewSource.View.IsEmpty)
-				{
-					categoriesViewSource.View.MoveCurrentToFirst();
-				}
+			NotifyOfPropertyChange(() => Categories);
+		}
+
+		#endregion
+
+		#region Implementation of IModule
+
+		public string Name
+		{
+			get { return "Categories"; }
+		}
+
+		public void Show()
+		{
+			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
+			{
+				DisplayName = Name;
 			}
 			else
 			{
-				//TODO: show error dialog here
+				((IConductor)Parent).ActivateItem(this);
 			}
+		}
+
+		#endregion
+
+		#region Create Category
+
+		private string categoryName;
+
+		/// <summary>
+		/// Gets or sets name for the new category.
+		/// </summary>
+		public string CategoryName
+		{
+			get { return categoryName; }
+			set
+			{
+				categoryName = value;
+				NotifyOfPropertyChange(CategoryName);
+			}
+		}
+
+		/// <summary>
+		/// Create new account for specific user.
+		/// </summary>
+		/// <returns>Operation result.</returns>
+		public void CreateCategory()
+		{
+			//TODO: customize category type here
+			categoriesRepository.Create(CategoryName.Trim(), CategoryType.Common);
 		}
 
 		#endregion

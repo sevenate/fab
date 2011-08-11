@@ -2792,7 +2792,15 @@
 														 d:IsOptimized="True" />
 									</Storyboard>
 								</VisualState>
-								<VisualState x:Name="SelectedUnfocused" />
+								<VisualState x:Name="SelectedUnfocused">
+									<Storyboard>
+										<DoubleAnimation Duration="0"
+														 To="1"
+														 Storyboard.TargetProperty="(UIElement.Opacity)"
+														 Storyboard.TargetName="fillColor"
+														 d:IsOptimized="True" />
+									</Storyboard>
+								</VisualState>
 							</VisualStateGroup>
 							<VisualStateGroup x:Name="FocusStates">
 								<VisualState x:Name="Unfocused" />

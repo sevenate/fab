@@ -48,5 +48,10 @@ namespace Fab.Client.MoneyTracker.Transactions
 		/// Gets or sets transaction optional comment.
 		/// </summary>
 		public string Comment { get; set; }
+
+		/// <summary>
+		/// Gets or sets original transaction data.
+		/// </summary>
+		public JournalDTO Journal { get; set; }
 	}
 }

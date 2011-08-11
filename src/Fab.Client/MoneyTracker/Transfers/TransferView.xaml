@@ -6,91 +6,110 @@
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:local="clr-namespace:Fab.Client.Common"
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
+			 xmlns:Controls="clr-namespace:Fab.Client.Controls"
 			 mc:Ignorable="d"
-			 d:DesignWidth="200"
-			 d:DesignHeight="320">
+			 d:DesignHeight="261"
+			 d:DesignWidth="300">
 	<UserControl.Resources>
 		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
-		<local:AddUpdateStringConverter x:Key="AddUpdateStringConverter" />
-		<local:CancelClearStringConverter x:Key="CancelClearStringConverter" />
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot">
-		<StackPanel>
-			<TextBlock Text="Add Transfer" />
-			<TextBlock TextWrapping="Wrap"
-					   Text="Date" />
-			<sdk:DatePicker x:Name="OperationDate"
-							IsTodayHighlighted="True"
-							SelectedDateFormat="Long"
-							SelectedDate="{Binding Path=OperationDate,
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<TextBlock Grid.Column="0"
+		           Grid.Row="0"
+		           Text="To account"
+				   VerticalAlignment="Center"
+				   HorizontalAlignment="Right" />
+		<ComboBox x:Name="TargetAccounts"
+		          Grid.Column="1"
+		          Grid.Row="0">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Path=Name}" />
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<TextBlock Grid.Column="0"
+		           Grid.Row="1"
+		           Text="Date"
+				   VerticalAlignment="Center"
+				   HorizontalAlignment="Right" />
+		<sdk:DatePicker x:Name="OperationDate"
+		                Grid.Column="1"
+		                Grid.Row="1"
+		                IsTodayHighlighted="True"
+		                SelectedDateFormat="Long"
+		                SelectedDate="{Binding Path=OperationDate,
 												   Mode=TwoWay,
 												   Converter={StaticResource DateTimeUtcToLocalConverter}}" />
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<StackPanel>
-					<TextBlock TextWrapping="Wrap"
-							   Text="Account 1" />
-					<ComboBox x:Name="Accounts1">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding Path=Name}" />
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-				<TextBlock Grid.Column="1"
-						   Text="-->"
-						   Margin="5,0"
-						   VerticalAlignment="Bottom" />
-				<StackPanel Grid.Column="2">
-					<TextBlock TextWrapping="Wrap"
-							   Text="Account 2" />
-					<ComboBox x:Name="Accounts2">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding Path=Name}" />
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-			</Grid>
-			<TextBlock TextWrapping="Wrap"
-					   Text="Amount" />
-			<TextBox x:Name="Amount"
-					 MaxLength="50"
-					 common:BindingHelper.UpdateSourceOnChange="True"
-					 Text="{Binding Path=Amount,
-						Mode=TwoWay,
-						UpdateSourceTrigger=Explicit,
-						ValidatesOnDataErrors=True,
-						ValidatesOnExceptions=True,
-						ValidatesOnNotifyDataErrors=True,
-						NotifyOnValidationError=True}" />
-			<TextBlock TextWrapping="Wrap"
-					   Text="Comment" />
-			<TextBox x:Name="Comment"
-					 MaxLength="255"
-					 TextWrapping="Wrap"
-					 Height="100"
-					 Text="{Binding Path=Comment, Mode=TwoWay}" />
-			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Right">
-				<Button x:Name="Save"
-						Content="{Binding Path=IsEditMode, Converter={StaticResource AddUpdateStringConverter}}"
-						MinWidth="75"
-						MinHeight="23"
-						HorizontalAlignment="Right" />
-				<Button x:Name="Clear"
-						Content="{Binding Path=IsEditMode, Converter={StaticResource CancelClearStringConverter}}"
-						MinWidth="75"
-						MinHeight="23"
-						Margin="5,0,0,0"
-						HorizontalAlignment="Right" />
-			</StackPanel>
+		<TextBlock Grid.Column="0"
+		           Grid.Row="2"
+		           Text="Amount"
+				   VerticalAlignment="Center"
+				   HorizontalAlignment="Right" />
+		<TextBox x:Name="Amount"
+		         Grid.Column="1"
+		         Grid.Row="2"
+		         MaxLength="50"
+		         common:BindingHelper.UpdateSourceOnChange="True"
+		         Text="{Binding Path=Amount,
+							Mode=TwoWay,
+							UpdateSourceTrigger=Explicit,
+							ValidatesOnDataErrors=True,
+							ValidatesOnExceptions=True,
+							ValidatesOnNotifyDataErrors=True,
+							NotifyOnValidationError=True}" />
+		<Controls:WatermarkedTextbox x:Name="Comment"
+		                              Grid.ColumnSpan="2"
+		                              Grid.Row="3"
+		                              Watermark="Comment"
+		                              Text="{Binding Path=Comment, Mode=TwoWay}">
+			<Controls:WatermarkedTextbox.TextBoxStyle>
+				<Style TargetType="TextBox">
+					<Setter Property="MaxLength"
+					        Value="255" />
+					<Setter Property="TextWrapping"
+					        Value="Wrap" />
+					<Setter Property="MinHeight"
+							Value="100" />
+					<Setter Property="AcceptsReturn"
+							Value="True" />
+				</Style>
+			</Controls:WatermarkedTextbox.TextBoxStyle>
+		</Controls:WatermarkedTextbox>
+		<StackPanel Grid.ColumnSpan="2"
+		            Grid.Row="4"
+		            Orientation="Horizontal"
+		            HorizontalAlignment="Right">
+			<Button x:Name="Save"
+			        Content="Save"
+			        MinWidth="75"
+			        MinHeight="23"
+			        HorizontalAlignment="Right" />
+			<Button x:Name="SaveAndContinue"
+					Content="Save and continue"
+					MinWidth="75"
+					MinHeight="23"
+					Margin="5,0,0,0"
+					Visibility="{Binding Path=IsEditMode, Converter={StaticResource boolToVisibilityInvert}}"
+					HorizontalAlignment="Right" />
+			<Button x:Name="Cancel"
+			        Content="Cancel"
+			        MinWidth="75"
+			        MinHeight="23"
+			        Margin="5,0,0,0"
+			        HorizontalAlignment="Right" />
 		</StackPanel>
+
 	</Grid>
 </UserControl>
