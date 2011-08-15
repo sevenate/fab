@@ -171,9 +171,6 @@
     <Compile Include="MoneyTracker\Accounts\AccountsViewModel.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsExtensions.cs" />
     <Compile Include="MoneyTracker\Accounts\Single\AccountUpdatedMessage.cs" />
-    <Compile Include="MoneyTracker\Accounts\Single\AccountView.xaml.cs">
-      <DependentUpon>AccountView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MoneyTracker\Accounts\Single\AccountViewModel.cs" />
     <Compile Include="MoneyTracker\Accounts\Single\CurrentAccountChangedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
@@ -188,9 +185,6 @@
     <Compile Include="Framework\RepositoryBase.cs" />
     <Compile Include="MoneyTracker\Filters\PostingsFilterUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Filters\PostingsFilterViewModel.cs" />
-    <Compile Include="MoneyTracker\Filters\PostingsFilterView.xaml.cs">
-      <DependentUpon>PostingsFilterView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MoneyTracker\Transactions\GetBalanceResult.cs" />
     <Compile Include="MoneyTracker\Transactions\DateRange.cs" />
     <Compile Include="Shell\OpenDialogMessage.cs" />
@@ -199,25 +193,7 @@
     <Compile Include="Framework\DocumentBase.cs" />
     <Compile Include="MoneyTracker\Transactions\TransactionsViewModel.cs" />
     <Compile Include="MoneyTracker\Transfers\TransferViewModel.cs" />
-    <Compile Include="MoneyTracker\Accounts\AccountsView.xaml.cs">
-      <DependentUpon>AccountsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTracker\Categories\CategoriesView.xaml.cs">
-      <DependentUpon>CategoriesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsView.xaml.cs">
-      <DependentUpon>TransactionDetailsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTracker\AccountsDashboard.xaml.cs">
-      <DependentUpon>AccountsDashboard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTracker\Transactions\TransactionsView.xaml.cs">
-      <DependentUpon>TransactionsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Framework\BindingHelper.cs" />
-    <Compile Include="MoneyTracker\Transfers\TransferView.xaml.cs">
-      <DependentUpon>TransferView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MoneyTracker\TransactionDetails\AddTransactionResult.cs" />
     <Compile Include="MoneyTracker\Transfers\AddTransferResult.cs" />
     <Compile Include="Framework\IDialogManager.cs" />
@@ -258,12 +234,6 @@
     <Compile Include="Authentication\ILoginViewModel.cs" />
     <Compile Include="Authentication\LoginViewModel.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
-    <Compile Include="Authentication\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\ShellView.xaml.cs">
-      <DependentUpon>ShellView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
