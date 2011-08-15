@@ -1,1 +1,148 @@
-﻿ 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="d0dba2c7-fb90-4cd9-a0b7-d7ecb6651da6" name="View Models" linkedPackageId="5c5dd091-7b4a-4816-9a03-93489d3f7000" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="18a6cb48-2ec0-4f5b-b095-9e43b719d827" name="AccountsDashboard" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9c48c7d7-02b1-44af-b502-a421f07149d1" />
+        <targetEnds>
+          <association Id="ac1b0d8c-3b78-4881-ab96-740992b12bbc" isDerived="false" sourceEndRoleName="Items" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="130d6bb4-397d-4a43-bd6e-d1cf98668d21" LastKnownName="AccountViewModel" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0d6858a5-9ab2-4b72-aaf5-eb420141e6bb" name="Items" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="6aee161d-3b0f-417f-9fcc-d822d3866be7" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="afb289f4-2163-4e7c-9e06-5e339d4a753d" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                  <lowerValueInternal>
+                    <literalString Id="5b8cb6d8-924e-460c-958a-9361eb8631c3" name="Lower" value="*">
+                      <elementDefinition Id="691a8e35-d4c7-483b-b440-28156e252b5b" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="6bbdb3c7-7a3e-4149-a445-723dd17ed44d" name="Upper" value="*">
+                      <elementDefinition Id="5703f0ca-ef38-46a4-b4ec-81edc1a9af9b" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="a76676c2-fc2b-40ea-935c-0b38c3e32e42" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="32b772e1-91f5-492c-8e90-ef219f06a612" />
+          </association>
+          <association Id="cd9eb271-48cc-44a7-8985-5844296bf707" isDerived="false" sourceEndRoleName="PostingsFilter" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="cb097c87-8d35-48a1-822f-44e1e7047b4c" LastKnownName="PostingsFilterViewModel" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f7e0877f-31cc-413e-8874-8ba30358553c" name="PostingsFilter" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="ef89f10c-df97-4575-bab8-daf15bc30523" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="71c2e06d-4712-4151-a0b8-94972be43ea8" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                  <elementDefinition Id="e4f421f4-e309-4f7a-af42-fd6138ed04f9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="dc1e2701-5ecb-4918-a9ea-8f355b7c0071" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="130d6bb4-397d-4a43-bd6e-d1cf98668d21" name="AccountViewModel" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="ae13d141-7e76-44be-b824-8b14c96dd5c9" />
+        <targetEnds>
+          <association Id="a9ff98b9-cc1c-4cd3-9b98-c63d7aca4edd" isDerived="false" sourceEndRoleName="PostingsVM" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="ce496b0d-069b-4a20-8148-1f1ce6c21c99" LastKnownName="TransactionsViewModel" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="278c992e-a9cb-4af0-931d-6fa38184e8e8" name="PostingsVM" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="4fdac85a-9f47-4138-9db6-acc3868120a7" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="5fb33c7e-c621-47e5-91a4-a1806f92838c" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                  <elementDefinition Id="828986bb-2ba6-4501-b8b7-0068065ebb83" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="305db6a7-79fa-4982-8cdf-57efd5ce028b" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="ce496b0d-069b-4a20-8148-1f1ce6c21c99" name="TransactionsViewModel" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="56c713cb-0b14-4c3c-99be-106365474c4e" />
+        <targetEnds>
+          <association Id="bd1428c4-dc1c-4ec9-a9a3-b8c33c7cea7a" isDerived="false" sourceEndRoleName="TransactionDetails" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="6bd664f9-9784-4404-93d7-34b73c4585b1" LastKnownName="TransactionDetailsViewModel" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="12e175e4-9f5d-48de-8186-84aad92ce0d6" name="TransactionDetails" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f7e90e21-96e1-49c9-9078-bd70cf38eed0" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="618fe47b-057d-492c-9a39-bb01496f04e9" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                  <elementDefinition Id="1a4b0843-bbe4-46ac-8f00-0136b2c992aa" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="066a3fa0-032c-4bc2-9b3d-86e9625e02f5" />
+          </association>
+          <association Id="9054ac52-07a0-46a6-953c-7b92afb6c860" isDerived="false" sourceEndRoleName="TransferDetails" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="93cdde8d-928a-4a74-9327-ccc916eafb7f" LastKnownName="TransferViewModel" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="319f0cf1-fa8d-4d43-8869-843e522705ac" name="TransferDetails" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="6d3b4466-fc4a-4fc4-a285-adfa23f78c4f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f2f45e61-e4a4-4568-b723-441932ce3abe" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                  <elementDefinition Id="06ab24da-7ddd-4880-9437-84c9ed72ee39" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="09275adc-6f6c-4982-a323-ca837d38d6a8" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="6bd664f9-9784-4404-93d7-34b73c4585b1" name="TransactionDetailsViewModel" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a7f3f4b4-1758-49a2-9c1d-1ac2a597a545" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="93cdde8d-928a-4a74-9327-ccc916eafb7f" name="TransferViewModel" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="0a0fef18-a7ba-4533-8453-f0d71d824235" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="cb097c87-8d35-48a1-822f-44e1e7047b4c" name="PostingsFilterViewModel" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="61844d39-3912-4d0f-96f2-9c10810e6e1b" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="5c5dd091-7b4a-4816-9a03-93489d3f7000" name="Fab.Modeling">
+    <elementDefinition Id="90d83ab9-5ff5-47c5-a983-ffdd48228cb9" />
+    <profileInstances>
+      <packageHasProfileInstances Id="6bb96c82-4453-410d-a62a-82ec7426c34e">
+        <profileInstance Id="26925179-edd4-41ec-bd11-9b192ea201ec" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="c3f98379-0be4-4d19-958f-17b601bab803">
+        <profileInstance Id="9ef1dc59-fd51-48ae-aead-b667aabe5a38" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>
