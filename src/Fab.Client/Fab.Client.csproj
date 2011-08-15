@@ -168,11 +168,9 @@
     <Compile Include="Framework\Filters\PreviewAttribute.cs" />
     <Compile Include="Framework\Filters\RescueAttribute.cs" />
     <Compile Include="Framework\Filters\SetBusyAttribute.cs" />
-    <Compile Include="MoneyTracker\Accounts\AccountsViewModel.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsExtensions.cs" />
     <Compile Include="MoneyTracker\Accounts\Single\AccountUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\Single\AccountViewModel.cs" />
-    <Compile Include="MoneyTracker\Accounts\Single\CurrentAccountChangedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsRepository.cs" />
     <Compile Include="MoneyTracker\Categories\CategoriesExtensions.cs" />
@@ -245,10 +243,6 @@
     <Page Include="Framework\Controls\WatermarkedTextbox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MoneyTracker\Accounts\AccountsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MoneyTracker\Accounts\Single\AccountView.xaml">
       <SubType>Designer</SubType>
