@@ -12,7 +12,7 @@ namespace Fab.Client.MoneyTracker.Postings
 	/// <summary>
 	/// Simple "income / expense / balance" data object.
 	/// </summary>
-	public class TransactionRecord
+	public class PostingRecord
 	{
 		/// <summary>
 		/// Gets or sets unique (for account) transaction ID.

@@ -13,13 +13,13 @@ namespace Fab.Client.MoneyTracker.Postings
 	/// <summary>
 	/// Load specific transaction async result.
 	/// </summary>
-	public class LoadTransactionResult : IResult
+	public class GetPostingResult : IResult
 	{
 		private readonly int accountId;
 		private readonly int transactionId;
 		private readonly Guid userId;
 
-		public LoadTransactionResult(Guid userId, int accountId, int transactionId)
+		public GetPostingResult(Guid userId, int accountId, int transactionId)
 		{
 			this.userId = userId;
 			this.accountId = accountId;

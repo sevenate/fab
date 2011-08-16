@@ -4,9 +4,9 @@ using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
-	public class GetTransactionsResult : IResult
+	public class GetPostingsResult : IResult
 	{
-		public GetTransactionsResult(Guid userId, int accountId, QueryFilter queryFilter)
+		public GetPostingsResult(Guid userId, int accountId, QueryFilter queryFilter)
 		{
 			UserId = userId;
 			AccountId = accountId;

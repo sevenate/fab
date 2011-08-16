@@ -16,9 +16,8 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Postings;
 
-namespace Fab.Client.MoneyTracker.Transfers
+namespace Fab.Client.MoneyTracker.Postings.Transfers
 {
 	/// <summary>
 	/// Transfer view model.
