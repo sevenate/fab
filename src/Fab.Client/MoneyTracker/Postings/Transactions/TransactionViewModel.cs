@@ -18,16 +18,15 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Postings;
 
-namespace Fab.Client.MoneyTracker.TransactionDetails
+namespace Fab.Client.MoneyTracker.Postings.Transactions
 {
 	/// <summary>
 	/// Single transaction details view model.
 	/// </summary>
-	[Export(typeof(TransactionDetailsViewModel))]
+	[Export(typeof(TransactionViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class TransactionDetailsViewModel : DocumentBase, IPostingPanel
+	public class TransactionViewModel : DocumentBase, IPostingPanel
 	{
 		#region Fields
 
@@ -223,10 +222,10 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		#region Ctors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TransactionDetailsViewModel"/> class.
+		/// Initializes a new instance of the <see cref="TransactionViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public TransactionDetailsViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
+		public TransactionViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
 		{
 			this.accountsRepository = accountsRepository;
 			eventAggregator.Subscribe(this);

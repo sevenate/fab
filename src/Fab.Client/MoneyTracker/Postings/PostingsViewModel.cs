@@ -14,8 +14,9 @@ using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Categories;
-using Fab.Client.MoneyTracker.TransactionDetails;
-using Fab.Client.MoneyTracker.Transfers;
+using Fab.Client.MoneyTracker.Postings.Actions;
+using Fab.Client.MoneyTracker.Postings.Transactions;
+using Fab.Client.MoneyTracker.Postings.Transfers;
 using Fab.Client.Shell;
 
 namespace Fab.Client.MoneyTracker.Postings
@@ -105,7 +106,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// <summary>
 		/// Gets transaction records.
 		/// </summary>
-		public IObservableCollection<TransactionRecord> TransactionRecords { get; private set; }
+		public IObservableCollection<PostingRecord> TransactionRecords { get; private set; }
 
 		/// <summary>
 		/// Gets or sets account balance at the <see cref="FromDate"/> moment.
@@ -189,13 +190,13 @@ namespace Fab.Client.MoneyTracker.Postings
 		public IDialogManager Dialogs { get; set; }
 
 		[Import]
-		public TransactionDetailsViewModel TransactionDetails { get; set; }
+		public TransactionViewModel TransactionDetails { get; set; }
 
 		[Import]
 		public TransferViewModel TransferDetails { get; set; }
 
 		[Import]
-		public PostingsActionViewModel PostingsActions { get; set; }
+		public PostingActionsViewModel PostingsActions { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether postings are outdated for current filter period.
@@ -223,7 +224,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		[ImportingConstructor]
 		public PostingsViewModel()
 		{
-			TransactionRecords = new BindableCollection<TransactionRecord>();
+			TransactionRecords = new BindableCollection<PostingRecord>();
 
 			fromDate = DateTime.Now.Date;
 			tillDate = DateTime.Now.Date;
@@ -276,7 +277,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			ActivateItem(TransferDetails);
 		}
 
-		public void EditTransaction(TransactionRecord transactionRecord)
+		public void EditTransaction(PostingRecord transactionRecord)
 		{
 			if (transactionRecord.Journal is TransactionDTO)
 			{
@@ -301,7 +302,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			}
 		}
 
-		public IEnumerable<IResult> DeleteTransaction(TransactionRecord transactionRecord)
+		public IEnumerable<IResult> DeleteTransaction(PostingRecord transactionRecord)
 		{
 			var openConfirmationResult = new OpenConfirmationResult(eventAggregator)
 			                             {
@@ -317,7 +318,7 @@ namespace Fab.Client.MoneyTracker.Postings
 				yield return Loader.Show("Deleting...");
 
 				// Load transaction from server (used below to determine if the deleted posting was transfer)
-				var request = new LoadTransactionResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId);
+				var request = new GetPostingResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId);
 				yield return request;
 
 				// Remove transaction on server
@@ -429,7 +430,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			                     	NotOlderThen = fromDate.ToUniversalTime(),
 			                     	Upto = tillDate.AddDays(1) /*.AddMilliseconds(1)*/.ToUniversalTime(),
 			                     };
-			var transactionsResult = new GetTransactionsResult(UserCredentials.Current.UserId, AccountId, queryFilterDTO);
+			var transactionsResult = new GetPostingsResult(UserCredentials.Current.UserId, AccountId, queryFilterDTO);
 			yield return transactionsResult;
 
 			TransactionRecords.Clear();
@@ -472,7 +473,7 @@ namespace Fab.Client.MoneyTracker.Postings
 					expenseForPeriod += r.Amount;
 				}
 
-				TransactionRecords.Add(new TransactionRecord
+				TransactionRecords.Add(new PostingRecord
 				                       {
 				                       	TransactionId = r.Id,
 				                       	Date = DateTime.SpecifyKind(r.Date, DateTimeKind.Utc),

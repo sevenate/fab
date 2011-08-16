@@ -3,7 +3,7 @@ using System.ComponentModel;
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
 
-namespace Fab.Client.MoneyTracker.TransactionDetails
+namespace Fab.Client.MoneyTracker.Postings.Transactions
 {
 	public class EditTransactionResult : IResult
 	{

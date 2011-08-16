@@ -7,14 +7,14 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 
-namespace Fab.Client.MoneyTracker.Postings
+namespace Fab.Client.MoneyTracker.Postings.Actions
 {
 	/// <summary>
-	/// View model for <see cref="PostingsActionView"/>.
+	/// View model for <see cref="PostingActionsView"/>.
 	/// </summary>
-	[Export(typeof(PostingsActionViewModel))]
+	[Export(typeof(PostingActionsViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class PostingsActionViewModel : Screen, IPostingPanel
+	public class PostingActionsViewModel : Screen, IPostingPanel
 	{
 		/// <summary>
 		/// Open dialog for creating new transaction.
