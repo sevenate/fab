@@ -16,7 +16,7 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Accounts.Single;
+using Fab.Client.MoneyTracker.Transactions;
 
 namespace Fab.Client.MoneyTracker.Transfers
 {
@@ -24,7 +24,8 @@ namespace Fab.Client.MoneyTracker.Transfers
 	/// Transfer view model.
 	/// </summary>
 	[Export(typeof (TransferViewModel))]
-	public class TransferViewModel : DocumentBase
+	[PartCreationPolicy(CreationPolicy.NonShared)]
+	public class TransferViewModel : DocumentBase, IPostingPanel
 	{
 		#region Fields
 
@@ -119,8 +120,6 @@ namespace Fab.Client.MoneyTracker.Transfers
 		[ImportingConstructor]
 		public TransferViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
 		{
-			DisplayName = "Transfer Details";
-
 			this.accountsRepository = accountsRepository;
 			targetAccountsViewSource.Source = TargetAccountsSource;
 			this.accountsRepository.Entities.CollectionChanged += (sender, args) =>
@@ -148,14 +147,26 @@ namespace Fab.Client.MoneyTracker.Transfers
 
 		#endregion
 
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Gets the Display Name
+		/// </summary>
+		public override string DisplayName
+		{
+			get { return "Transfer Details"; }
+		}
+
+		#endregion
+
 		#region Methods
 
-		public void Create(AccountViewModel account)
+		public void Create(int accountId)
 		{
 			DisplayName = "New Transfer";
 
 			transactionId = null;
-			SourceAccount = accountsRepository.ByKey(account.Id);
+			SourceAccount = accountsRepository.ByKey(accountId);
 			TargetAccounts.MoveCurrentToFirst();
 			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 			Amount = string.Empty;
@@ -168,13 +179,13 @@ namespace Fab.Client.MoneyTracker.Transfers
 		/// Open specific transfer to edit.
 		/// </summary>
 		/// <param name="transfer">Transfer to edit.</param>
-		/// <param name="fromAccount">Account, the source of the transfer founds.</param>
-		public void Edit(TransferDTO transfer, AccountViewModel fromAccount)
+		/// <param name="fromAccountId">Account, the source of the transfer founds.</param>
+		public void Edit(TransferDTO transfer, int fromAccountId)
 		{
 			DisplayName = "Edit Transfer";
 
 			transactionId = transfer.Id;
-			SourceAccount = accountsRepository.ByKey(fromAccount.Id);
+			SourceAccount = accountsRepository.ByKey(fromAccountId);
 
 			if (transfer.SecondAccountId.HasValue)
 			{

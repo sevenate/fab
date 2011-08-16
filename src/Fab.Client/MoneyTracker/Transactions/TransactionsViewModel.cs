@@ -13,9 +13,7 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Categories;
-using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.TransactionDetails;
 using Fab.Client.MoneyTracker.Transfers;
 using Fab.Client.Shell;
@@ -26,7 +24,8 @@ namespace Fab.Client.MoneyTracker.Transactions
 	/// Transactions view model.
 	/// </summary>
 	[Export(typeof(TransactionsViewModel))]
-	public class TransactionsViewModel : Conductor<TransactionDetailsViewModel>.Collection.OneActive, IHandle<LoggedOutMessage>, IHandle<CurrentAccountChangedMessage>, IHandle<PostingsFilterUpdatedMessage>
+	[PartCreationPolicy(CreationPolicy.NonShared)]
+	public class TransactionsViewModel : Conductor<IPostingPanel>.Collection.OneActive
 	{
 		#region Fields
 
@@ -39,9 +38,9 @@ namespace Fab.Client.MoneyTracker.Transactions
 		private readonly ICategoriesRepository categoriesRepository = IoC.Get<ICategoriesRepository>();
 
 		/// <summary>
-		/// Corresponding account of transactions.
+		/// Account ID of transactions.
 		/// </summary>
-		private AccountViewModel currentAccount;
+		private int accountId;
 
 		/// <summary>
 		/// Account balance at the <see cref="fromDate"/> moment.
@@ -78,42 +77,27 @@ namespace Fab.Client.MoneyTracker.Transactions
 		/// </summary>
 		private DateTime tillDate;
 
-		#endregion
-
-		#region Ctors
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TransactionsViewModel"/> class.
+		/// Indicate whether postings are outdated for current filter period and need to be downloaded from server.
 		/// </summary>
-		[ImportingConstructor]
-		public TransactionsViewModel()
-		{
-			TransactionRecords = new BindableCollection<TransactionRecord>();
-
-			fromDate = DateTime.Now.Date;
-			tillDate = DateTime.Now.Date;
-
-			eventAggregator.Subscribe(this);
-		}
+		private bool isOutdated = true;
 
 		#endregion
 
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets corresponding account of transactions.
+		/// Gets or sets account ID of transactions.
 		/// </summary>
-		public AccountViewModel CurrentAccount
+		public int AccountId
 		{
-			get { return currentAccount; }
+			get { return accountId; }
 			set
 			{
-				if (currentAccount != value)
+				if (accountId != value)
 				{
-					currentAccount = value;
-					NotifyOfPropertyChange(() => CurrentAccount);
-
-					Coroutine.BeginExecute(DownloadAllTransactions().GetEnumerator());
+					accountId = value;
+					IsOutdated = true;
 				}
 			}
 		}
@@ -196,8 +180,8 @@ namespace Fab.Client.MoneyTracker.Transactions
 			get
 			{
 				return fromDate.Date == tillDate.Date
-						? fromDate.Date.ToLongDateString()
-						: fromDate.Date.ToLongDateString() + " - " + tillDate.Date.ToLongDateString();
+				       	? fromDate.Date.ToLongDateString()
+				       	: fromDate.Date.ToLongDateString() + " - " + tillDate.Date.ToLongDateString();
 			}
 		}
 
@@ -207,48 +191,108 @@ namespace Fab.Client.MoneyTracker.Transactions
 		[Import]
 		public TransactionDetailsViewModel TransactionDetails { get; set; }
 
+		[Import]
+		public TransferViewModel TransferDetails { get; set; }
+
+		[Import]
+		public PostingsActionViewModel PostingsActions { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether postings are outdated for current filter period.
+		/// </summary>
+		public bool IsOutdated
+		{
+			get { return isOutdated; }
+			set
+			{
+				if (isOutdated != value)
+				{
+					isOutdated = value;
+					NotifyOfPropertyChange(() => IsOutdated);
+				}
+			}
+		}
+
+		#endregion
+
+		#region Ctors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TransactionsViewModel"/> class.
+		/// </summary>
+		[ImportingConstructor]
+		public TransactionsViewModel()
+		{
+			TransactionRecords = new BindableCollection<TransactionRecord>();
+
+			fromDate = DateTime.Now.Date;
+			tillDate = DateTime.Now.Date;
+
+			eventAggregator.Subscribe(this);
+		}
+
+		#endregion
+
+		#region Overrides of ViewAware
+
+		/// <summary>
+		/// Called when an attached view's Loaded event fires.
+		/// </summary>
+		/// <param name="view"/>
+		protected override void OnViewLoaded(object view)
+		{
+			base.OnViewLoaded(view);
+
+			if (ActiveItem == null)
+			{
+				ActivateItem(PostingsActions);
+			}
+		}
+
 		#endregion
 
 		#region Methods
 
+		/// <summary>
+		/// Open dialog for creating new transaction.
+		/// </summary>
 		public void NewTransaction()
 		{
-			TransactionDetails.Create(CurrentAccount);
+			TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>().Entities;
+			TransactionDetails.Create(AccountId);
 			TransactionDetails.Parent = this;
+			TransactionDetails.Deactivated += (sender, args) => ActivateItem(PostingsActions);
 			ActivateItem(TransactionDetails);
-			//Dialogs.ShowDialog(TransactionDetails);
 		}
 
+		/// <summary>
+		/// Open dialog for creating new transfer.
+		/// </summary>
 		public void NewTransfer()
 		{
-			var transferVM = IoC.Get<TransferViewModel>();
-			transferVM.Create(CurrentAccount);
-			/*eventAggregator.Publish(new OpenDialogMessage
-			                        {
-			                        	Dialog = transferVM
-			                        });*/
-
-			Dialogs.ShowDialog(transferVM);
+			TransferDetails.Create(AccountId);
+			TransferDetails.Parent = this;
+			TransferDetails.Deactivated += (sender, args) => ActivateItem(PostingsActions);
+			ActivateItem(TransferDetails);
 		}
 
 		public void EditTransaction(TransactionRecord transactionRecord)
 		{
 			if (transactionRecord.Journal is TransactionDTO)
 			{
-				var transactionDetailsVM = IoC.Get<TransactionDetailsViewModel>();
-				transactionDetailsVM.Edit(transactionRecord.Journal as TransactionDTO, CurrentAccount);
+				TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>().Entities;
+				TransactionDetails.Edit(transactionRecord.Journal as TransactionDTO, AccountId);
 				eventAggregator.Publish(new OpenDialogMessage
 				{
-					Dialog = transactionDetailsVM
+					Dialog = TransactionDetails
 				});
 			}
 			else if (transactionRecord.Journal is TransferDTO)
 			{
-				var transferVM = IoC.Get<TransferViewModel>();
-				transferVM.Edit(transactionRecord.Journal as TransferDTO, CurrentAccount);
+				TransferDetails.Edit(transactionRecord.Journal as TransferDTO, AccountId);
 				eventAggregator.Publish(new OpenDialogMessage
 				{
-					Dialog = transferVM
+					Dialog = TransferDetails
 				});
 			}
 			else
@@ -273,15 +317,15 @@ namespace Fab.Client.MoneyTracker.Transactions
 				yield return Loader.Show("Deleting...");
 
 				// Load transaction from server (used below to determine if the deleted posting was transfer)
-				var request = new LoadTransactionResult(UserCredentials.Current.UserId, CurrentAccount.Id, transactionRecord.TransactionId);
+				var request = new LoadTransactionResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId);
 				yield return request;
 
 				// Remove transaction on server
-				var request2 = new DeleteTransactionResult(UserCredentials.Current.UserId, CurrentAccount.Id, transactionRecord.TransactionId);
+				var request2 = new DeleteTransactionResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId);
 				yield return request2;
 
 				// Update accounts balance
-				accountsRepository.Download(CurrentAccount.Id);
+				accountsRepository.Download(AccountId);
 
 				// For transfer the 2-nd account should also be updated
 				if (request.Transaction is TransferDTO)
@@ -339,6 +383,25 @@ namespace Fab.Client.MoneyTracker.Transactions
 //			}
 //		}
 
+		public void SetFilterPeriod(DateTime startDate, DateTime endDate)
+		{
+			fromDate = startDate;
+			tillDate = endDate;
+			IsOutdated = true;
+			NotifyOfPropertyChange(() => Period);
+		}
+
+		/// <summary>
+		/// Download postings if they are outdated for current filter period.
+		/// </summary>
+		public void Update()
+		{
+			if (isOutdated)
+			{
+				Coroutine.BeginExecute(DownloadAllTransactions().GetEnumerator());
+			}
+		}
+
 		/// <summary>
 		/// Download all transactions for specific account of the specific user.
 		/// </summary>
@@ -348,7 +411,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 			yield return Loader.Show("Loading...");
 
 			// Determine previous account balance
-			var balanceResult = new GetBalanceResult(UserCredentials.Current.UserId, CurrentAccount.Id, fromDate.ToUniversalTime());
+			var balanceResult = new GetBalanceResult(UserCredentials.Current.UserId, AccountId, fromDate.ToUniversalTime());
 			yield return balanceResult;
 
 			StartBalance = balanceResult.Balance;
@@ -366,7 +429,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 			                     	NotOlderThen = fromDate.ToUniversalTime(),
 			                     	Upto = tillDate.AddDays(1) /*.AddMilliseconds(1)*/.ToUniversalTime(),
 			                     };
-			var transactionsResult = new GetTransactionsResult(UserCredentials.Current.UserId, CurrentAccount.Id, queryFilterDTO);
+			var transactionsResult = new GetTransactionsResult(UserCredentials.Current.UserId, AccountId, queryFilterDTO);
 			yield return transactionsResult;
 
 			TransactionRecords.Clear();
@@ -426,58 +489,10 @@ namespace Fab.Client.MoneyTracker.Transactions
 			TotalIncome = incomeForPeriod;
 			TotalExpense = expenseForPeriod;
 			BalanceDiff = incomeForPeriod + expenseForPeriod;
+			
+			IsOutdated = false;
 
 			yield return Loader.Hide();
-		}
-
-		#endregion
-
-		#region Implementation of IHandle<in LoggedOutMessage>
-
-		/// <summary>
-		/// Handles the <see cref="LoggedOutMessage"/>.
-		/// </summary>
-		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
-		public void Handle(LoggedOutMessage message)
-		{
-			TransactionRecords.Clear();
-			CurrentAccount = null;
-			StartBalance = 0;
-			EndBalance = 0;
-			TotalIncome = 0;
-			TotalExpense = 0;
-			BalanceDiff = 0;
-			fromDate = DateTime.UtcNow;
-			tillDate = DateTime.UtcNow;
-		}
-
-		#endregion
-
-		#region Implementation of IHandle<in CurrentAccountChangedMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(CurrentAccountChangedMessage message)
-		{
-			CurrentAccount = message.CurrentAccount;
-		}
-
-		#endregion
-
-		#region Implementation of IHandle<in PostingsFilterUpdatedMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(PostingsFilterUpdatedMessage message)
-		{
-			fromDate = message.Start;
-			tillDate = message.End;
-			NotifyOfPropertyChange(() => Period);
-			Coroutine.BeginExecute(DownloadAllTransactions().GetEnumerator());
 		}
 
 		#endregion

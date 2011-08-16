@@ -12,7 +12,6 @@ using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Filters;
-using Fab.Client.MoneyTracker.Transactions;
 
 namespace Fab.Client.MoneyTracker
 {
@@ -55,14 +54,9 @@ namespace Fab.Client.MoneyTracker
 		#region Properties
 
 		/// <summary>
-		/// Gets <see cref="TransactionsViewModel"/>.
-		/// </summary>
-		public object Transactions { get; private set; }
-
-		/// <summary>
 		/// Gets <see cref="PostingsFilterViewModel"/>.
 		/// </summary>
-		public object PostingsFilter { get; private set; }
+		public PostingsFilterViewModel PostingsFilter { get; private set; }
 
 		#endregion
 
@@ -72,13 +66,11 @@ namespace Fab.Client.MoneyTracker
 		/// Initializes a new instance of the <see cref="AccountsDashboardModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public AccountsDashboardModel(TransactionsViewModel transactionsVM, PostingsFilterViewModel postingsFilterVM)
+		public AccountsDashboardModel(PostingsFilterViewModel postingsFilterVM)
 		{
+			PostingsFilter = postingsFilterVM;
 			Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
 			repository.Entities.CollectionChanged += OnEntitiesCollectionChanged;
-
-			Transactions = transactionsVM;
-			PostingsFilter = postingsFilterVM;
 		}
 
 		#endregion
@@ -102,8 +94,6 @@ namespace Fab.Client.MoneyTracker
 						Items.Insert(i++, ((AccountDTO)newItem).Map());
 					}
 
-					ActivateFirstItem();
-
 					break;
 
 				case NotifyCollectionChangedAction.Remove:
@@ -117,11 +107,13 @@ namespace Fab.Client.MoneyTracker
 					break;
 
 				case NotifyCollectionChangedAction.Replace:
+					Items.Clear();
 					Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
 					ActivateFirstItem();
 					break;
 
 				case NotifyCollectionChangedAction.Reset:
+					Items.Clear();
 					Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
 					ActivateFirstItem();
 					break;
@@ -133,7 +125,7 @@ namespace Fab.Client.MoneyTracker
 		#endregion
 
 		/// <summary>
-		/// Try to activate first item if there are any.
+		/// Try to activate first account if there are any.
 		/// </summary>
 		private void ActivateFirstItem()
 		{

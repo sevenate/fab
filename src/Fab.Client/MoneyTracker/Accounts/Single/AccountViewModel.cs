@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.Transactions;
 
 namespace Fab.Client.MoneyTracker.Accounts.Single
@@ -15,7 +16,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 	/// </summary>
 	[Export(typeof(AccountViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class AccountViewModel : Screen
+	public class AccountViewModel : Screen, IHandle<PostingsFilterUpdatedMessage>
 	{
 		#region Fields
 
@@ -74,6 +75,10 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 				if (id != value)
 				{
 					id = value;
+
+					// pass account id to the posting view model
+					PostingsVM.AccountId = id;
+					
 					NotifyOfPropertyChange(() => Id);
 				}
 			}
@@ -196,26 +201,24 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		/// <summary>
-		/// Corresponding view model of account postings.
-		/// </summary>
+		#region Child VM
+
 		private TransactionsViewModel postingsVM;
 
 		/// <summary>
 		/// Gets or sets corresponding view model of account postings.
 		/// </summary>
-		private TransactionsViewModel PostingsVM
+		public TransactionsViewModel PostingsVM
 		{
 			get { return postingsVM; }
-			set
+			private set
 			{
-				if (postingsVM != value)
-				{
-					postingsVM = value;
-					NotifyOfPropertyChange(() => PostingsVM);
-				}
+				postingsVM = value;
+				NotifyOfPropertyChange(() => PostingsVM);
 			}
 		}
+
+		#endregion
 
 		#endregion
 
@@ -228,13 +231,22 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		[ImportingConstructor]
 		public AccountViewModel(IEventAggregator eventAggregator, TransactionsViewModel postingsViewModel)
 		{
+			if (eventAggregator == null)
+			{
+				throw new ArgumentNullException("eventAggregator");
+			}
+
+			if (postingsViewModel == null)
+			{
+				throw new ArgumentNullException("postingsViewModel");
+			}
+
 			EventAggregator = eventAggregator;
 			PostingsVM = postingsViewModel;
-			PostingsVM.CurrentAccount = this;
 
 			//TODO: Subscription required to listen on any new/updated/deleted postings so that account could update in balance locally.
 			//TODO: This should be implemented later.
-			//EventAggregator.Subscribe(this);
+			EventAggregator.Subscribe(this);
 		}
 
 		#endregion
@@ -247,10 +259,26 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		protected override void OnActivate()
 		{
 			base.OnActivate();
-			EventAggregator.Publish(new CurrentAccountChangedMessage
+			PostingsVM.Update();
+		}
+
+		#endregion
+
+
+		#region Implementation of IHandle<in PostingsFilterUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(PostingsFilterUpdatedMessage message)
+		{
+			PostingsVM.SetFilterPeriod(message.Start, message.End);
+
+			if (IsActive)
 			{
-				CurrentAccount = this
-			});
+				PostingsVM.Update();
+			}
 		}
 
 		#endregion

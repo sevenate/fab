@@ -185,6 +185,8 @@
     <Compile Include="MoneyTracker\Filters\PostingsFilterViewModel.cs" />
     <Compile Include="MoneyTracker\Transactions\GetBalanceResult.cs" />
     <Compile Include="MoneyTracker\Transactions\DateRange.cs" />
+    <Compile Include="MoneyTracker\Transactions\IPostingPanel.cs" />
+    <Compile Include="MoneyTracker\Transactions\PostingsActionViewModel.cs" />
     <Compile Include="Shell\OpenDialogMessage.cs" />
     <Compile Include="MoneyTracker\Transactions\TransactionRecord.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsViewModel.cs" />
@@ -263,6 +265,10 @@
     <Page Include="MoneyTracker\AccountsDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MoneyTracker\Transactions\PostingsActionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MoneyTracker\Transactions\TransactionsView.xaml">
       <SubType>Designer</SubType>
