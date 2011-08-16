@@ -8,7 +8,7 @@ using System;
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
 
-namespace Fab.Client.MoneyTracker.Transactions
+namespace Fab.Client.MoneyTracker.Postings
 {
 	/// <summary>
 	/// Load specific transaction async result.

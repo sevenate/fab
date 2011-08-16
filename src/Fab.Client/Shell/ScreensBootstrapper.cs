@@ -10,12 +10,7 @@ using Caliburn.Micro;
 using Fab.Client.Controls;
 using Fab.Client.Framework;
 using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Categories;
-using Fab.Client.MoneyTracker.Filters;
-using Fab.Client.MoneyTracker.TransactionDetails;
-using Fab.Client.MoneyTracker.Transactions;
-using Fab.Client.MoneyTracker.Transfers;
 
 namespace Fab.Client.Shell
 {

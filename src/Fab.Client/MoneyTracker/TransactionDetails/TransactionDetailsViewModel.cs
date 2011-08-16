@@ -18,7 +18,7 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Transactions;
+using Fab.Client.MoneyTracker.Postings;
 
 namespace Fab.Client.MoneyTracker.TransactionDetails
 {

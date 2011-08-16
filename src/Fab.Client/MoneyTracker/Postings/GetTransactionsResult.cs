@@ -2,7 +2,7 @@
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
 
-namespace Fab.Client.MoneyTracker.Transactions
+namespace Fab.Client.MoneyTracker.Postings
 {
 	public class GetTransactionsResult : IResult
 	{

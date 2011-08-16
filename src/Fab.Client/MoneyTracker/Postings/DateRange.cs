@@ -7,7 +7,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Fab.Client.MoneyTracker.Transactions
+namespace Fab.Client.MoneyTracker.Postings
 {
 	/// <summary>
 	/// Common date ranges.

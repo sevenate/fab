@@ -183,15 +183,15 @@
     <Compile Include="Framework\RepositoryBase.cs" />
     <Compile Include="MoneyTracker\Filters\PostingsFilterUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Filters\PostingsFilterViewModel.cs" />
-    <Compile Include="MoneyTracker\Transactions\GetBalanceResult.cs" />
-    <Compile Include="MoneyTracker\Transactions\DateRange.cs" />
-    <Compile Include="MoneyTracker\Transactions\IPostingPanel.cs" />
-    <Compile Include="MoneyTracker\Transactions\PostingsActionViewModel.cs" />
+    <Compile Include="MoneyTracker\Postings\GetBalanceResult.cs" />
+    <Compile Include="MoneyTracker\Postings\DateRange.cs" />
+    <Compile Include="MoneyTracker\Postings\IPostingPanel.cs" />
+    <Compile Include="MoneyTracker\Postings\PostingsActionViewModel.cs" />
     <Compile Include="Shell\OpenDialogMessage.cs" />
-    <Compile Include="MoneyTracker\Transactions\TransactionRecord.cs" />
+    <Compile Include="MoneyTracker\Postings\TransactionRecord.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\TransactionDetailsViewModel.cs" />
     <Compile Include="Framework\DocumentBase.cs" />
-    <Compile Include="MoneyTracker\Transactions\TransactionsViewModel.cs" />
+    <Compile Include="MoneyTracker\Postings\PostingsViewModel.cs" />
     <Compile Include="MoneyTracker\Transfers\TransferViewModel.cs" />
     <Compile Include="Framework\BindingHelper.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\AddTransactionResult.cs" />
@@ -202,12 +202,12 @@
     <Compile Include="Framework\MessageBoxOptions.cs" />
     <Compile Include="MoneyTracker\Transfers\UpdateTransferResult.cs" />
     <Compile Include="MoneyTracker\TransactionDetails\EditTransactionResult.cs" />
-    <Compile Include="MoneyTracker\Transactions\DeleteTransactionResult.cs" />
-    <Compile Include="MoneyTracker\Transactions\LoadTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Postings\DeleteTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Postings\LoadTransactionResult.cs" />
     <Compile Include="Framework\IShell.cs" />
     <Compile Include="Framework\IModule.cs" />
     <Compile Include="MoneyTracker\AccountsDashboardModel.cs" />
-    <Compile Include="MoneyTracker\Transactions\GetTransactionsResult.cs" />
+    <Compile Include="MoneyTracker\Postings\GetTransactionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\MoneyServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -266,11 +266,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MoneyTracker\Transactions\PostingsActionView.xaml">
+    <Page Include="MoneyTracker\Postings\PostingsActionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MoneyTracker\Transactions\TransactionsView.xaml">
+    <Page Include="MoneyTracker\Postings\PostingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

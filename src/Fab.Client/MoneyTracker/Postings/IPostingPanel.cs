@@ -1,7 +1,7 @@
 using Fab.Client.MoneyTracker.TransactionDetails;
 using Fab.Client.MoneyTracker.Transfers;
 
-namespace Fab.Client.MoneyTracker.Transactions
+namespace Fab.Client.MoneyTracker.Postings
 {
 	/// <summary>
 	/// Represent view model for posting edition

@@ -7,7 +7,6 @@
 			 xmlns:shell="clr-namespace:Fab.Client.Shell"
 			 xmlns:framework="clr-namespace:Fab.Client.Framework"
 			 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
-			 xmlns:Transactions="clr-namespace:Fab.Client.MoneyTracker.Transactions"
 			 xmlns:Common="clr-namespace:Fab.Client.Common"
 			 mc:Ignorable="d">
 	<Application.Resources>
