@@ -18,14 +18,14 @@ using Fab.Client.MoneyTracker.TransactionDetails;
 using Fab.Client.MoneyTracker.Transfers;
 using Fab.Client.Shell;
 
-namespace Fab.Client.MoneyTracker.Transactions
+namespace Fab.Client.MoneyTracker.Postings
 {
 	/// <summary>
-	/// Transactions view model.
+	/// Postings view model.
 	/// </summary>
-	[Export(typeof(TransactionsViewModel))]
+	[Export(typeof(PostingsViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class TransactionsViewModel : Conductor<IPostingPanel>.Collection.OneActive
+	public class PostingsViewModel : Conductor<IPostingPanel>.Collection.OneActive
 	{
 		#region Fields
 
@@ -218,10 +218,10 @@ namespace Fab.Client.MoneyTracker.Transactions
 		#region Ctors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TransactionsViewModel"/> class.
+		/// Initializes a new instance of the <see cref="PostingsViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public TransactionsViewModel()
+		public PostingsViewModel()
 		{
 			TransactionRecords = new BindableCollection<TransactionRecord>();
 

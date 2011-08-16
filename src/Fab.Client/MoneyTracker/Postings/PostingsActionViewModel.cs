@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 
-namespace Fab.Client.MoneyTracker.Transactions
+namespace Fab.Client.MoneyTracker.Postings
 {
 	/// <summary>
 	/// View model for <see cref="PostingsActionView"/>.
@@ -21,7 +21,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 		/// </summary>
 		public void NewTransaction()
 		{
-			((TransactionsViewModel)Parent).NewTransaction();
+			((PostingsViewModel)Parent).NewTransaction();
 		}
 
 		/// <summary>
@@ -29,7 +29,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 		/// </summary>
 		public void NewTransfer()
 		{
-			((TransactionsViewModel)Parent).NewTransfer();
+			((PostingsViewModel)Parent).NewTransfer();
 		}
 
 		/// <summary>
@@ -38,7 +38,7 @@ namespace Fab.Client.MoneyTracker.Transactions
 		/// <returns>Operation result.</returns>
 		public IEnumerable<IResult> DownloadAllTransactions()
 		{
-			return ((TransactionsViewModel)Parent).DownloadAllTransactions();
+			return ((PostingsViewModel)Parent).DownloadAllTransactions();
 		}
 	}
 }

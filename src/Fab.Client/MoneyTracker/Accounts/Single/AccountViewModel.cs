@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.MoneyTracker.Filters;
-using Fab.Client.MoneyTracker.Transactions;
+using Fab.Client.MoneyTracker.Postings;
 
 namespace Fab.Client.MoneyTracker.Accounts.Single
 {
@@ -203,12 +203,12 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 		#region Child VM
 
-		private TransactionsViewModel postingsVM;
+		private PostingsViewModel postingsVM;
 
 		/// <summary>
 		/// Gets or sets corresponding view model of account postings.
 		/// </summary>
-		public TransactionsViewModel PostingsVM
+		public PostingsViewModel PostingsVM
 		{
 			get { return postingsVM; }
 			private set
@@ -229,7 +229,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// <param name="eventAggregator">The event aggregator to listen for the specific notifications.</param>
 		/// </summary>
 		[ImportingConstructor]
-		public AccountViewModel(IEventAggregator eventAggregator, TransactionsViewModel postingsViewModel)
+		public AccountViewModel(IEventAggregator eventAggregator, PostingsViewModel postingsViewModel)
 		{
 			if (eventAggregator == null)
 			{

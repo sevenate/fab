@@ -7,7 +7,7 @@
 using System;
 using Fab.Client.MoneyServiceReference;
 
-namespace Fab.Client.MoneyTracker.Transactions
+namespace Fab.Client.MoneyTracker.Postings
 {
 	/// <summary>
 	/// Simple "income / expense / balance" data object.
