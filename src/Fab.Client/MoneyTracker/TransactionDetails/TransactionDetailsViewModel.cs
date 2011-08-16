@@ -18,8 +18,7 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
-using Fab.Client.MoneyTracker.Accounts.Single;
-using Fab.Client.MoneyTracker.Categories;
+using Fab.Client.MoneyTracker.Transactions;
 
 namespace Fab.Client.MoneyTracker.TransactionDetails
 {
@@ -27,7 +26,8 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 	/// Single transaction details view model.
 	/// </summary>
 	[Export(typeof(TransactionDetailsViewModel))]
-	public class TransactionDetailsViewModel : DocumentBase, IHandle<CategoriesUpdatedMessage>
+	[PartCreationPolicy(CreationPolicy.NonShared)]
+	public class TransactionDetailsViewModel : DocumentBase, IPostingPanel
 	{
 		#region Fields
 
@@ -49,7 +49,22 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 		#region Properties
 
-		private AccountViewModel Account { get; set; }
+		private int AccountId { get; set; }
+
+		public IObservableCollection<CategoryDTO> CategoriesSource
+		{
+			set
+			{
+				categoriesViewSource.Source = value;
+
+				if (!categoriesViewSource.View.IsEmpty)
+				{
+					categoriesViewSource.View.MoveCurrentToFirst();
+				}
+
+				NotifyOfPropertyChange(() => Categories);
+			}
+		}
 
 		/// <summary>
 		/// Gets accounts for specific user.
@@ -85,7 +100,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 			}
 			set
 			{
-				if (value == null)
+				if (value == null/* && !Categories.IsEmpty*/)
 				{
 					Categories.MoveCurrentTo(null);
 					NotifyOfPropertyChange(() => CurrentCategory);
@@ -213,7 +228,6 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		[ImportingConstructor]
 		public TransactionDetailsViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
 		{
-			DisplayName = "Transactions Details";
 			this.accountsRepository = accountsRepository;
 			eventAggregator.Subscribe(this);
 
@@ -236,15 +250,27 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 		#endregion
 
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Gets the Display Name
+		/// </summary>
+		public override string DisplayName
+		{
+			get { return "Posting Details"; }
+		}
+
+		#endregion
+
 		#region Methods
 
-		public void Create(AccountViewModel account)
+		public void Create(int accountId)
 		{
 			IsDeposite = true;
 			DisplayName = "New Transaction";
 
 			transactionId = null;
-			Account = account;
+			AccountId = accountId;
 			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 			CurrentCategory = null;
 			Price = string.Empty;
@@ -258,14 +284,14 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		/// Open specific deposit or withdrawal transaction to edit.
 		/// </summary>
 		/// <param name="transaction">Transaction to edit.</param>
-		/// <param name="account">Current selected account.</param>
-		public void Edit(TransactionDTO transaction, AccountViewModel account)
+		/// <param name="accountId">Current selected accountId.</param>
+		public void Edit(TransactionDTO transaction, int accountId)
 		{
 			IsDeposite = transaction is DepositDTO;
 			DisplayName = "Edit Transaction";
 
 			transactionId = transaction.Id;
-			Account = account;
+			AccountId = accountId;
 			OperationDate = transaction.Date.ToLocalTime();
 			CurrentCategory = Categories.Cast<CategoryDTO>().Where(c => c.Id == transaction.CategoryId).SingleOrDefault();
 			Price = transaction.Rate.ToString();
@@ -290,7 +316,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				var request = new EditTransactionResult(
 					transactionId.Value,
 					UserCredentials.Current.UserId,
-					Account.Id,
+					AccountId,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
 					decimal.Parse(Quantity.Trim()),
@@ -313,7 +339,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 
 				var request = new AddTransactionResult(
 					UserCredentials.Current.UserId,
-					Account.Id,
+					AccountId,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
 					decimal.Parse(Quantity.Trim()),
@@ -327,7 +353,7 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 				yield return request;
 			}
 
-			accountsRepository.Download(Account.Id);
+			accountsRepository.Download(AccountId);
 
 			yield return Loader.Hide();
 
@@ -337,26 +363,6 @@ namespace Fab.Client.MoneyTracker.TransactionDetails
 		public void Cancel()
 		{
 			TryClose();
-		}
-
-		#endregion
-
-		#region Implementation of IHandle<in CategoriesUpdatedMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(CategoriesUpdatedMessage message)
-		{
-			categoriesViewSource.Source = message.Categories;
-
-			if (!categoriesViewSource.View.IsEmpty)
-			{
-				categoriesViewSource.View.MoveCurrentToFirst();
-			}
-
-			NotifyOfPropertyChange(() => Categories);
 		}
 
 		#endregion

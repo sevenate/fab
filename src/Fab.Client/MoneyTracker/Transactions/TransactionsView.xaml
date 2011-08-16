@@ -5,8 +5,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-			 xmlns:Controls1="clr-namespace:SilverlightContrib.Controls;assembly=SilverlightContrib.Controls"
+			 xmlns:Controls="clr-namespace:SilverlightContrib.Controls;assembly=SilverlightContrib.Controls"
 			 d:DesignHeight="400"
 			 d:DesignWidth="800"
 			 mc:Ignorable="d">
@@ -29,21 +28,20 @@
 					Value="#FF00FF00" />
 		</Style>
 	</UserControl.Resources>
-	<Grid x:Name="LayoutRoot">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Controls1:GroupBox Margin="5">
-			<Controls1:GroupBox.Header>
+		<Controls:GroupBox Margin="5">
+			<Controls:GroupBox.Header>
 				<TextBlock Text="{Binding Path=Period}"
 				           FontWeight="Bold"
 				           TextWrapping="Wrap"
 				           Foreground="#FFE5E500"
 				           HorizontalAlignment="Right" />
-			</Controls1:GroupBox.Header>
+			</Controls:GroupBox.Header>
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
@@ -114,7 +112,7 @@
 				           Text="{Binding Path=EndBalance, StringFormat=C}"
 				           HorizontalAlignment="Right" />
 			</Grid>
-		</Controls1:GroupBox>
+		</Controls:GroupBox>
 		<sdk:DataGrid x:Name="TransactionsGrid"
 					  Grid.Row="1"
 					  AutoGenerateColumns="False"
@@ -225,7 +223,7 @@
 									Background="White"
 									HorizontalAlignment="Left"
 									VerticalAlignment="Center"
-									Padding="3,2">
+									Padding="4,3">
 								<TextBlock VerticalAlignment="Center"
 										   Foreground="Black"
 										   Text="{Binding Path=Category.Name}"
@@ -274,27 +272,13 @@
 				</sdk:DataGridTemplateColumn>
 			</sdk:DataGrid.Columns>
 		</sdk:DataGrid>
-		<ContentControl x:Name="Dialogs"
+		<ContentControl x:Name="ActiveItem"
 						Grid.Row="2"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
-		<StackPanel Orientation="Horizontal"
-					Grid.Row="3">
-			<Button x:Name="NewTransaction"
-					Content="Add"
-					MinWidth="75"
-					MinHeight="23"
-					Foreground="#FF00FF00" />
-			<Button x:Name="NewTransfer"
-					Content="Transfer"
-					MinWidth="75"
-					MinHeight="23"
-					Foreground="Yellow" />
-			<Button x:Name="DownloadAllTransactions"
-					Controls:DockPanel.Dock="Right"
-					Content="Update"
-					MinWidth="75"
-					MinHeight="23" />
-		</StackPanel>
+		<ContentControl x:Name="Dialogs"
+						Grid.RowSpan="3"
+						VerticalContentAlignment="Stretch"
+						HorizontalContentAlignment="Stretch" />
 	</Grid>
 </UserControl>

@@ -14,6 +14,7 @@ using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Categories;
 using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.TransactionDetails;
+using Fab.Client.MoneyTracker.Transactions;
 using Fab.Client.MoneyTracker.Transfers;
 
 namespace Fab.Client.Shell
@@ -39,12 +40,8 @@ namespace Fab.Client.Shell
 			batch.AddExportedValue<IEventAggregator>(new EventAggregator());
 			batch.AddExportedValue<Func<IMessageBox>>(() => container.GetExportedValue<IMessageBox>());
 			batch.AddExportedValue<Func<IModule>>(() => container.GetExportedValue<IModule>());
-			batch.AddExportedValue<Func<TransactionDetailsViewModel>>(() => container.GetExportedValue<TransactionDetailsViewModel>());
-			batch.AddExportedValue<Func<TransferViewModel>>(() => container.GetExportedValue<TransferViewModel>());
 			batch.AddExportedValue<Func<IAccountsRepository>>(() => container.GetExportedValue<IAccountsRepository>());
 			batch.AddExportedValue<Func<ICategoriesRepository>>(() => container.GetExportedValue<ICategoriesRepository>());
-			batch.AddExportedValue<Func<PostingsFilterViewModel>>(() => container.GetExportedValue<PostingsFilterViewModel>());
-			batch.AddExportedValue<Func<AccountViewModel>>(() => container.GetExportedValue<AccountViewModel>());
 			batch.AddExportedValue(container);
 
 			container.Compose(batch);

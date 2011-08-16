@@ -200,7 +200,8 @@
 		                SelectedDateFormat="Long"
 		                SelectedDate="{Binding Path=OperationDate,
 												   Mode=TwoWay,
-												   Converter={StaticResource DateTimeUtcToLocalConverter}}" />
+												   Converter={StaticResource DateTimeUtcToLocalConverter}}"
+						VerticalAlignment="Center" />
 		<!--			<sdk:AutoCompleteBox ItemsSource="{Binding Categories}"-->
 		<!--								 ValueMemberBinding="{Binding Name}"-->
 		<!--								 MinimumPrefixLength="0"-->
@@ -223,7 +224,9 @@
 									   IsTextCompletionEnabled="True"
 									   FilterMode="Custom"
 									   ItemFilter="{Binding Path=CategoryFilter}"
-									   SelectedItemBinding="{Binding Path=CurrentCategory, Mode=TwoWay}">
+									   SelectedItemBinding="{Binding Path=CurrentCategory, Mode=TwoWay}"
+									   MinWidth="100"
+									   VerticalAlignment="Center">
 			<controls:AutoCompleteComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=Name}" />
@@ -235,8 +238,11 @@
 				 ToolTipService.ToolTip="Comment"
 				 TextWrapping="Wrap"
 				 MaxLength="255"
-				 MinHeight="100"
-				 Text="{Binding Path=Comment, Mode=TwoWay}" />
+				 Text="{Binding Path=Comment, Mode=TwoWay}"
+				 AcceptsReturn="True"
+				 VerticalScrollBarVisibility="Auto"
+				 MaxHeight="100"
+				 VerticalAlignment="Center" />
 		<Grid Grid.Column="3">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
@@ -256,7 +262,9 @@
 					 ValidatesOnDataErrors=True,
 					 ValidatesOnExceptions=True,
 					 ValidatesOnNotifyDataErrors=True,
-					 NotifyOnValidationError=True}" />
+					 NotifyOnValidationError=True}"
+					 MinWidth="50"
+					 VerticalAlignment="Center" />
 			<TextBlock Grid.Column="1"
 					   Text="X"
 					   Margin="5,0"
@@ -272,7 +280,9 @@
 								ValidatesOnDataErrors=True,
 								ValidatesOnExceptions=True,
 								ValidatesOnNotifyDataErrors =True,
-								NotifyOnValidationError=True}" />
+								NotifyOnValidationError=True}"
+					 MinWidth="50"
+					 VerticalAlignment="Center" />
 			<TextBlock Grid.Column="3"
 					   Text="="
 					   Margin="5,0"
@@ -280,20 +290,23 @@
 			<TextBlock Grid.Column="4"
 					   Foreground="{Binding Path=Amount, Converter={StaticResource balanceToColorConverter}}"
 					   Text="{Binding Path=Amount, Converter={StaticResource nullToQuestion}}"
-					   ToolTipService.ToolTip="Amount" />
+					   ToolTipService.ToolTip="Amount"
+					   VerticalAlignment="Center" />
 		</Grid>
 		<Button x:Name="Save"
 				Grid.Column="5"
 				Content="Save"
 				MinWidth="75"
 				MinHeight="23"
-				HorizontalAlignment="Right" />
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center" />
 		<Button x:Name="Cancel"
 				Grid.Column="6"
 			    Content="Cancel"
 			    MinWidth="75"
 			    MinHeight="23"
 			    Margin="5,0,0,0"
-			    HorizontalAlignment="Right" />
+			    HorizontalAlignment="Right"
+				VerticalAlignment="Center" />
 	</Grid>
 </UserControl>
