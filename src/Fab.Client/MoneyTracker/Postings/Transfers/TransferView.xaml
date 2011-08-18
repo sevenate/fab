@@ -8,59 +8,43 @@
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
 			 xmlns:Controls="clr-namespace:Fab.Client.Controls"
 			 mc:Ignorable="d"
-			 d:DesignHeight="261"
-			 d:DesignWidth="300">
+			 d:DesignWidth="750">
 	<UserControl.Resources>
 		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition />
+			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<TextBlock Grid.Column="0"
-		           Grid.Row="0"
-		           Text="To account"
-				   VerticalAlignment="Center"
-				   HorizontalAlignment="Right" />
+		<sdk:DatePicker x:Name="OperationDate"
+		                Grid.Column="0"
+						ToolTipService.ToolTip="Operation date"
+		                IsTodayHighlighted="True"
+		                SelectedDateFormat="Long"
+		                SelectedDate="{Binding Path=OperationDate,
+												   Mode=TwoWay,
+												   Converter={StaticResource DateTimeUtcToLocalConverter}}"
+						VerticalAlignment="Center" />
 		<ComboBox x:Name="TargetAccounts"
-		          Grid.Column="1"
-		          Grid.Row="0">
+				  Grid.Column="1"
+				  MinWidth="150"
+				  ToolTipService.ToolTip="To Account"
+				  VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=Name}" />
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<TextBlock Grid.Column="0"
-		           Grid.Row="1"
-		           Text="Date"
-				   VerticalAlignment="Center"
-				   HorizontalAlignment="Right" />
-		<sdk:DatePicker x:Name="OperationDate"
-		                Grid.Column="1"
-		                Grid.Row="1"
-		                IsTodayHighlighted="True"
-		                SelectedDateFormat="Long"
-		                SelectedDate="{Binding Path=OperationDate,
-												   Mode=TwoWay,
-												   Converter={StaticResource DateTimeUtcToLocalConverter}}" />
-		<TextBlock Grid.Column="0"
-		           Grid.Row="2"
-		           Text="Amount"
-				   VerticalAlignment="Center"
-				   HorizontalAlignment="Right" />
 		<TextBox x:Name="Amount"
-		         Grid.Column="1"
-		         Grid.Row="2"
+		         Grid.Column="2"
+				 ToolTipService.ToolTip="Amount"
 		         MaxLength="50"
+				 MinWidth="50"
 		         common:BindingHelper.UpdateSourceOnChange="True"
 		         Text="{Binding Path=Amount,
 							Mode=TwoWay,
@@ -68,47 +52,42 @@
 							ValidatesOnDataErrors=True,
 							ValidatesOnExceptions=True,
 							ValidatesOnNotifyDataErrors=True,
-							NotifyOnValidationError=True}" />
+							NotifyOnValidationError=True}"
+				 VerticalAlignment="Center" />
 		<Controls:WatermarkedTextbox x:Name="Comment"
-		                              Grid.ColumnSpan="2"
-		                              Grid.Row="3"
-		                              Watermark="Comment"
-		                              Text="{Binding Path=Comment, Mode=TwoWay}">
+		                             Grid.Column="3"
+		                             Watermark="Comment"
+		                             Text="{Binding Path=Comment, Mode=TwoWay}"
+									 VerticalAlignment="Center">
 			<Controls:WatermarkedTextbox.TextBoxStyle>
 				<Style TargetType="TextBox">
 					<Setter Property="MaxLength"
 					        Value="255" />
 					<Setter Property="TextWrapping"
 					        Value="Wrap" />
-					<Setter Property="MinHeight"
+					<Setter Property="MaxHeight"
 							Value="100" />
 					<Setter Property="AcceptsReturn"
 							Value="True" />
 				</Style>
 			</Controls:WatermarkedTextbox.TextBoxStyle>
 		</Controls:WatermarkedTextbox>
-		<StackPanel Grid.ColumnSpan="2"
-		            Grid.Row="4"
+		<StackPanel Grid.Column="4"
 		            Orientation="Horizontal"
 		            HorizontalAlignment="Right">
 			<Button x:Name="Save"
 			        Content="Save"
 			        MinWidth="75"
 			        MinHeight="23"
-			        HorizontalAlignment="Right" />
-			<Button x:Name="SaveAndContinue"
-					Content="Save and continue"
-					MinWidth="75"
-					MinHeight="23"
-					Margin="5,0,0,0"
-					Visibility="{Binding Path=IsEditMode, Converter={StaticResource boolToVisibilityInvert}}"
-					HorizontalAlignment="Right" />
+			        HorizontalAlignment="Right"
+					VerticalAlignment="Center" />
 			<Button x:Name="Cancel"
 			        Content="Cancel"
 			        MinWidth="75"
 			        MinHeight="23"
 			        Margin="5,0,0,0"
-			        HorizontalAlignment="Right" />
+			        HorizontalAlignment="Right"
+					VerticalAlignment="Center" />
 		</StackPanel>
 
 	</Grid>

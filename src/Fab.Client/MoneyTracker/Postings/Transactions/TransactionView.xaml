@@ -9,8 +9,7 @@
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
 			 mc:Ignorable="d"
-			 d:DesignHeight="28"
-			 d:DesignWidth="740">
+			 d:DesignWidth="700">
 	<UserControl.Resources>
 		<!--		<Style x:Key="ComboToggleButton"-->
 		<!--			   TargetType="ToggleButton">-->

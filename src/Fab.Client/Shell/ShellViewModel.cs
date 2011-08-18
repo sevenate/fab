@@ -18,25 +18,57 @@ namespace Fab.Client.Shell
 
 		#endregion
 
-		#region Fields
-
 		/// <summary>
-		/// Login view model.
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
-		private readonly ILoginViewModel loginViewModel;
-
-		#endregion
+		private IEventAggregator EventAggregator { get; set; }
 
 		#region Ctors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ShellViewModel"/> class.
+		/// </summary>
+		/// <param name="eventAggregator">Events exchange entry point.</param>
 		[ImportingConstructor]
-		public ShellViewModel(IDialogManager dialogs, [ImportMany]IEnumerable<IModule> modules, ILoginViewModel loginViewModel, IEventAggregator eventAggregator)
+		public ShellViewModel(
+			IEventAggregator eventAggregator,
+			IDialogManager dialogs,
+			[ImportMany]IEnumerable<IModule> modules,
+			PersonalCornerViewModel corner)
 		{
+			if (eventAggregator == null)
+			{
+				throw new ArgumentNullException("eventAggregator");
+			}
+
+			if (dialogs == null)
+			{
+				throw new ArgumentNullException("dialogs");
+			}
+
+			if (modules == null)
+			{
+				throw new ArgumentNullException("modules");
+			}
+
+			if (corner == null)
+			{
+				throw new ArgumentNullException("corner");
+			}
+
+			EventAggregator = eventAggregator;
+			EventAggregator.Subscribe(this);
+
 			Dialogs = dialogs;
-			Items.AddRange(modules.OrderBy(module => module.Name));
-			this.loginViewModel = loginViewModel;
+
+			// find login module
+			LoginScreen = modules.OfType<ILoginViewModel>().Single();
+
+			// exclude login module from other modules
+			Items.AddRange(modules.OrderBy(module => module.Name)
+								  .Except(Enumerable.Repeat<IModule>(LoginScreen, 1)));
+			PersonalCorner = corner;
 			CloseStrategy = new ApplicationCloseStrategy();
-			eventAggregator.Subscribe(this);
 		}
 
 		#endregion
@@ -68,11 +100,34 @@ namespace Fab.Client.Shell
 		}
 
 		/// <summary>
+		/// Gets start login screen for not authenticate users.
+		/// </summary>
+		public ILoginViewModel LoginScreen { get; private set; }
+
+		/// <summary>
 		/// Gets personal corner view that allow user to logout.
 		/// </summary>
-		public ILoginViewModel PersonalCorner
+		public PersonalCornerViewModel PersonalCorner { get; private set; }
+
+		/// <summary>
+		/// Indicating whether user has been authenticated in the system.
+		/// </summary>
+		private bool isAuthenticated;
+
+		/// <summary>
+		/// Gets a value indicating whether user has been authenticated in the system.
+		/// </summary>
+		public bool IsAuthenticated
 		{
-			get { return loginViewModel.IsAuthenticated ? loginViewModel : null; }
+			get { return isAuthenticated; }
+			private set
+			{
+				if (isAuthenticated != value)
+				{
+					isAuthenticated = value;
+					NotifyOfPropertyChange(() => IsAuthenticated);
+				}
+			}
 		}
 
 		#endregion
@@ -84,7 +139,7 @@ namespace Fab.Client.Shell
 		/// </summary>
 		protected override void OnInitialize()
 		{
-			Dialogs.ShowDialog(loginViewModel);
+			ActivateItem(LoginScreen);
 		}
 
 		#endregion
@@ -103,9 +158,9 @@ namespace Fab.Client.Shell
 		/// <param name="message">The <see cref="LoggedInMessage"/>.</param>
 		public void Handle(LoggedInMessage message)
 		{
-			Dialogs.ShowDialog(null);
-			NotifyOfPropertyChange(() => PersonalCorner);
+			DeactivateItem(LoginScreen, true);
 			ActivateItem(Items.First());
+			IsAuthenticated = true;
 		}
 
 		#endregion
@@ -118,9 +173,9 @@ namespace Fab.Client.Shell
 		/// <param name="message">The <see cref="LoggedOutMessage"/>.</param>
 		public void Handle(LoggedOutMessage message)
 		{
-			ActivateItem(null);
-			NotifyOfPropertyChange(() => PersonalCorner);
-			Dialogs.ShowDialog(loginViewModel);
+			IsAuthenticated = false;
+			ActivateItem(LoginScreen);
+			Dialogs.ShowDialog(null);
 		}
 
 		#endregion

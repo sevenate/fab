@@ -4,7 +4,6 @@
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2010-11-17" />
 // <summary>View-model for <see cref="Login"/> dialog.</summary>
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
@@ -16,9 +15,9 @@ namespace Fab.Client.Authentication
 	/// <summary>
 	/// View-model for <see cref="LoginView"/> dialog.
 	/// </summary>
-	[Export(typeof (ILoginViewModel))]
-	[PartCreationPolicy(CreationPolicy.Shared)]
-	public class LoginViewModel : Screen, ILoginViewModel, ICanBeBusy
+	[Export(typeof (IModule))]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
+	public class LoginViewModel : Screen, ILoginViewModel, ICanBeBusy, IHandle<LoggedOutMessage>
 	{
 		#region Constants
 
@@ -35,43 +34,55 @@ namespace Fab.Client.Authentication
 		/// <summary>
 		/// Authorization in progress message.
 		/// </summary>
-		private const string AuthorizationInProgress = "Authorizing...";
+		private const string AuthenticationInProgress = "Authenticating...";
 
 		/// <summary>
 		/// Authorization success message.
 		/// </summary>
-		private const string AuthorizationSuccess = "Success!";
+		private const string AuthenticationSuccess = "Success!";
 
 		/// <summary>
 		/// Authorization failed message.
 		/// </summary>
-		private const string AuthorizationFailed = "The username or password provided is incorrect.";
+		private const string AuthenticationFailed = "The username or password provided is incorrect.";
 
 		#endregion
-
-		#region Fields
 
 		/// <summary>
-		/// Enables loosely-coupled publication of and subscription to events.
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
-		private readonly IEventAggregator eventAggregator;
-
-		#endregion
+		private IEventAggregator EventAggregator { get; set; }
 
 		#region Ctors
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LoginViewModel"/> class.
 		/// </summary>
+		/// <param name="eventAggregator">Events exchange entry point.</param>
 		[ImportingConstructor]
 		public LoginViewModel(IEventAggregator eventAggregator)
 		{
-			this.eventAggregator = eventAggregator;
+			EventAggregator = eventAggregator;
+			EventAggregator.Subscribe(this);
+#if DEBUG
 			ShowCharacters = true;
-			DisplayName = "Login";
 			Username = "import";
 			Password = "import";
-			Status = AuthorizationInProgress;
+#endif
+
+			Status = AuthenticationInProgress;
+		}
+
+		#endregion
+
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Gets the Display Name
+		/// </summary>
+		public override string DisplayName
+		{
+			get { return "Login"; }
 		}
 
 		#endregion
@@ -152,7 +163,7 @@ namespace Fab.Client.Authentication
 		private bool showStatus;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a status message should be visible.
+		/// Gets a value indicating whether a status message should be visible.
 		/// </summary>
 		public bool ShowStatus
 		{
@@ -183,6 +194,28 @@ namespace Fab.Client.Authentication
 			{
 				showCharacters = value;
 				NotifyOfPropertyChange(() => ShowCharacters);
+			}
+		}
+
+		#endregion
+
+		#region Show characters DP
+
+		/// <summary>
+		/// Specify if user credentials will be stored in the local storage after successful login.
+		/// </summary>
+		private bool rememberMe;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether user credentials should be stored in the local storage.
+		/// </summary>
+		public bool RememberMe
+		{
+			get { return rememberMe; }
+			set
+			{
+				rememberMe = value;
+				NotifyOfPropertyChange(() => RememberMe);
 			}
 		}
 
@@ -219,7 +252,7 @@ namespace Fab.Client.Authentication
 		[Dependencies("Username", "Password")]
 		public IEnumerable<IResult> Login()
 		{
-			Status = AuthorizationInProgress;
+			Status = AuthenticationInProgress;
 			ShowStatus = true;
 
 			var authenticateResult = new AuthenticateResult(Username, Password);
@@ -229,32 +262,15 @@ namespace Fab.Client.Authentication
 
 			if (!authenticateResult.Succeeded)
 			{
-				Status = AuthorizationFailed;
+				Status = AuthenticationFailed;
 				UsernameIsFocused = true;
-				//yield return Loader.Show(AuthorizationFailedMessage);
 				yield break;
 			}
 
 			UserCredentials.Current = authenticateResult.Credentials;
-			Status = AuthorizationSuccess;
+			Status = AuthenticationSuccess;
 
-			eventAggregator.Publish(new LoggedInMessage(UserCredentials.Current));
-
-			//Parent.CloseItem(this);
-		}
-
-		/// <summary>
-		/// Logout user from the system.
-		/// </summary>
-		[SetBusy]
-		public void Logout()
-		{
-			//Username = string.Empty;
-			//Password = string.Empty;
-			ShowStatus = false;
-			IsAuthenticated = false;
-			UserCredentials.Current = null;
-			eventAggregator.Publish(new LoggedOutMessage());
+			EventAggregator.Publish(new LoggedInMessage(UserCredentials.Current));
 		}
 
 		/// <summary>
@@ -310,6 +326,41 @@ namespace Fab.Client.Authentication
 			{
 				isBusy = value;
 				NotifyOfPropertyChange(() => IsBusy);
+			}
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in LoggedOutMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(LoggedOutMessage message)
+		{
+			ShowStatus = false;
+			IsAuthenticated = false;
+		}
+
+		#endregion
+
+		#region Implementation of IModule
+
+		public string Name
+		{
+			get { return "Login"; }
+		}
+
+		public void Show()
+		{
+			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
+			{
+				DisplayName = Name;
+			}
+			else
+			{
+				((IConductor)Parent).ActivateItem(this);
 			}
 		}
 

@@ -28,6 +28,7 @@
 			<converters:NullToQuestionMarkConverter x:Key="nullToQuestion" />
 			<converters:ZeroToVisibilityConverter x:Key="zeroToVisibility" />
 			<converters:BalanceToColorConverter x:Key="balanceToColorConverter" />
+			<converters:DebugConverter x:Key="debugConverter" />
 			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocalConverter" />
 			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyStringConverter" />
 		</ResourceDictionary>

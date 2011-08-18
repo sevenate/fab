@@ -39,6 +39,7 @@ namespace Fab.Client.MoneyTracker
 
 		public void Show()
 		{
+			//TODO: make this method common for all IModels
 			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
 			{
 				DisplayName = Name;

@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 
 namespace Fab.Client.MoneyTracker.Filters
 {
@@ -13,7 +14,7 @@ namespace Fab.Client.MoneyTracker.Filters
 	/// Filter for postings.
 	/// </summary>
 	[Export(typeof(PostingsFilterViewModel))]
-	public class PostingsFilterViewModel : Screen
+	public class PostingsFilterViewModel : Screen, IHandle<LoggedInMessage>, IHandle<LoggedOutMessage>
 	{
 		#region Fields
 
@@ -92,9 +93,60 @@ namespace Fab.Client.MoneyTracker.Filters
 		public PostingsFilterViewModel(IEventAggregator eventAggregator)
 		{
 			this.eventAggregator = eventAggregator;
-			DisplayName = "Postings Filter";
+			ResetToCurrentDate();
+		}
+
+		#endregion
+
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Gets or Sets the Display Name
+		/// </summary>
+		public override string DisplayName
+		{
+			get { return "Postings Filter"; }
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in LoggedInMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(LoggedInMessage message)
+		{
+			ResetToCurrentDate();
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in LoggedOutMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(LoggedOutMessage message)
+		{
+			ResetToCurrentDate();
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Set <see cref="FromDate"/> and <see cref="TillDate"/> to current date.
+		/// </summary>
+		private void ResetToCurrentDate()
+		{
 			fromDate = DateTime.Now.Date;
 			tillDate = DateTime.Now.Date;
+			NotifyOfPropertyChange(() => FromDate);
+			NotifyOfPropertyChange(() => TillDate);
 		}
 
 		#endregion

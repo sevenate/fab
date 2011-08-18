@@ -18,7 +18,7 @@
 				<RowDefinition Height="*" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
-			<Controls:DockPanel>
+			<Controls:DockPanel Visibility="{Binding Path=IsAuthenticated, Converter={StaticResource boolToVisibility}}">
 				<ContentControl x:Name="PersonalCorner"
 								Controls:DockPanel.Dock="Right"
 								VerticalContentAlignment="Stretch"
