@@ -125,7 +125,9 @@
     </Compile>
     <Compile Include="Authentication\LoggedInMessage.cs" />
     <Compile Include="Authentication\LoggedOutMessage.cs" />
+    <Compile Include="Authentication\PersonalCornerViewModel.cs" />
     <Compile Include="Authentication\UserCredentials.cs" />
+    <Compile Include="Framework\Converters\DebugConverter.cs" />
     <Compile Include="Framework\ServiceErrorMessage.cs" />
     <Compile Include="Framework\Converters\NullToQuestionMarkConverter.cs" />
     <Compile Include="Framework\OpenConfirmationResult.cs" />
@@ -242,6 +244,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Authentication\PersonalCornerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <DesignData Include="Authentication\SampleData\PersonalCorner.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="Authentication\SampleData\LoginScreen.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="Framework\Controls\WatermarkedTextbox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

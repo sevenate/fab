@@ -2,7 +2,6 @@
 // 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-17" />
-// <summary>Represent user name, password and user ID.</summary>
 
 using System;
 
@@ -22,9 +21,11 @@ namespace Fab.Client.Authentication
 		/// Initializes a new instance of the <see cref="UserCredentials"/> class.
 		/// </summary>
 		/// <param name="userId">Unique user ID.</param>
-		public UserCredentials(Guid userId)
+		/// <param name="userName">User name.</param>
+		public UserCredentials(Guid userId, string userName)
 		{
 			UserId = userId;
+			UserName = userName;
 		}
 
 		/// <summary>
@@ -58,5 +59,10 @@ namespace Fab.Client.Authentication
 		/// TODO: update to use session key instead.
 		/// </summary>
 		public Guid UserId { get; private set; }
+
+		/// <summary>
+		/// Gets current user name.
+		/// </summary>
+		public string UserName { get; private set; }
 	}
 }

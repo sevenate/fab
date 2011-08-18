@@ -36,7 +36,7 @@ namespace Fab.Client.Authentication
 												}
 												else
 												{
-													Credentials = new UserCredentials(args.Result);
+													Credentials = new UserCredentials(args.Result, Username);
 													Succeeded = true;
 													Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 												}
