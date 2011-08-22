@@ -277,24 +277,18 @@ namespace Fab.Client.MoneyTracker.Postings
 			ActivateItem(TransferDetails);
 		}
 
-		public void EditTransaction(PostingRecord transactionRecord)
+		public void EditPosting(PostingRecord transactionRecord)
 		{
 			if (transactionRecord.Journal is TransactionDTO)
 			{
 				TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>().Entities;
 				TransactionDetails.Edit(transactionRecord.Journal as TransactionDTO, AccountId);
-				eventAggregator.Publish(new OpenDialogMessage
-				{
-					Dialog = TransactionDetails
-				});
+				ActivateItem(TransactionDetails);
 			}
 			else if (transactionRecord.Journal is TransferDTO)
 			{
 				TransferDetails.Edit(transactionRecord.Journal as TransferDTO, AccountId);
-				eventAggregator.Publish(new OpenDialogMessage
-				{
-					Dialog = TransferDetails
-				});
+				ActivateItem(TransferDetails);
 			}
 			else
 			{
