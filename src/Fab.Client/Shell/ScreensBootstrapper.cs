@@ -122,7 +122,9 @@ namespace Fab.Client.Shell
 			                   		               			}
 															else
 															{
-																//TODO: display "close application" dialog here.
+																shell.Dialogs.ShowMessageBox(
+																	"You have to close application window manually, since the application does not have the Elevated Permissions (required to close its main window by himself).",
+																	"Notification");
 																e.Cancel = false;
 															}
 			                   		               		}

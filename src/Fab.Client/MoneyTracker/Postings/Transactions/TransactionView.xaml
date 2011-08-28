@@ -287,7 +287,7 @@
 					   Margin="5,0"
 					   VerticalAlignment="Center" />
 			<TextBlock Grid.Column="4"
-					   Foreground="{Binding Path=Amount, Converter={StaticResource balanceToColorConverter}}"
+					   Foreground="{Binding Path=Amount, Converter={StaticResource balanceToColor}}"
 					   Text="{Binding Path=Amount, Converter={StaticResource nullToQuestion}}"
 					   ToolTipService.ToolTip="Amount"
 					   VerticalAlignment="Center" />

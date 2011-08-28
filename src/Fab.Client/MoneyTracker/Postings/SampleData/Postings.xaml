@@ -1,0 +1,9 @@
+﻿<local:PostingsViewModel xmlns:local="clr-namespace:Fab.Client.MoneyTracker.Postings"
+						 StartBalance="40000"
+						 EndBalance="50000"
+						 AccountId="1"
+						 TotalIncome="10100"
+						 TotalExpense="100"
+						 BalanceDiff="10000"
+						 IsOutdated="False">
+</local:PostingsViewModel>

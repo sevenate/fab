@@ -17,14 +17,13 @@ using Fab.Client.MoneyTracker.Categories;
 using Fab.Client.MoneyTracker.Postings.Actions;
 using Fab.Client.MoneyTracker.Postings.Transactions;
 using Fab.Client.MoneyTracker.Postings.Transfers;
-using Fab.Client.Shell;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
 	/// <summary>
 	/// Postings view model.
 	/// </summary>
-	[Export(typeof(PostingsViewModel))]
+	[Export(typeof (PostingsViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public class PostingsViewModel : Conductor<IPostingPanel>.Collection.OneActive
 	{
@@ -109,7 +108,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		public IObservableCollection<PostingRecord> TransactionRecords { get; private set; }
 
 		/// <summary>
-		/// Gets or sets account balance at the <see cref="FromDate"/> moment.
+		/// Gets or sets account balance at the <see cref="fromDate"/> moment.
 		/// </summary>
 		public decimal StartBalance
 		{
@@ -122,7 +121,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		}
 
 		/// <summary>
-		/// Gets or sets account balance at the <see cref="TillDate"/> moment.
+		/// Gets or sets account balance at the <see cref="tillDate"/> moment.
 		/// </summary>
 		public decimal EndBalance
 		{
@@ -186,16 +185,10 @@ namespace Fab.Client.MoneyTracker.Postings
 			}
 		}
 
-		[Import]
-		public IDialogManager Dialogs { get; set; }
-
-		[Import]
 		public TransactionViewModel TransactionDetails { get; set; }
 
-		[Import]
 		public TransferViewModel TransferDetails { get; set; }
 
-		[Import]
 		public PostingActionsViewModel PostingsActions { get; set; }
 
 		/// <summary>
@@ -222,14 +215,50 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// Initializes a new instance of the <see cref="PostingsViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public PostingsViewModel()
+		public PostingsViewModel(PostingActionsViewModel postingsActions, TransactionViewModel transactionDetails,
+		                         TransferViewModel transferDetails)
 		{
 			TransactionRecords = new BindableCollection<PostingRecord>();
+
+			PostingsActions = postingsActions;
+			TransactionDetails = transactionDetails;
+			TransferDetails = transferDetails;
+
+			ActivationProcessed += (sender, args) => { IsDirty = (args.Item != PostingsActions); };
 
 			fromDate = DateTime.Now.Date;
 			tillDate = DateTime.Now.Date;
 
 			eventAggregator.Subscribe(this);
+		}
+
+		#endregion
+
+		#region DocumentBase
+
+		private bool isDirty;
+
+		public bool IsDirty
+		{
+			get { return isDirty; }
+			set
+			{
+				isDirty = value;
+				NotifyOfPropertyChange(() => IsDirty);
+			}
+		}
+
+		[Import]
+		public IDialogManager Dialogs { get; set; }
+
+		public override void CanClose(Action<bool> callback)
+		{
+			callback(IsDirty);
+		}
+
+		public void CancelEdit()
+		{
+			ActivateItem(PostingsActions);
 		}
 
 		#endregion
@@ -252,6 +281,19 @@ namespace Fab.Client.MoneyTracker.Postings
 
 		#endregion
 
+		#region Overrides of OneActive
+
+		/// <summary>
+		/// Called when activating.
+		/// </summary>
+		protected override void OnActivate()
+		{
+			base.OnActivate();
+			Update();
+		}
+
+		#endregion
+
 		#region Methods
 
 		/// <summary>
@@ -261,8 +303,6 @@ namespace Fab.Client.MoneyTracker.Postings
 		{
 			TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>().Entities;
 			TransactionDetails.Create(AccountId);
-			TransactionDetails.Parent = this;
-			TransactionDetails.Deactivated += (sender, args) => ActivateItem(PostingsActions);
 			ActivateItem(TransactionDetails);
 		}
 
@@ -272,8 +312,6 @@ namespace Fab.Client.MoneyTracker.Postings
 		public void NewTransfer()
 		{
 			TransferDetails.Create(AccountId);
-			TransferDetails.Parent = this;
-			TransferDetails.Deactivated += (sender, args) => ActivateItem(PostingsActions);
 			ActivateItem(TransferDetails);
 		}
 
@@ -300,7 +338,9 @@ namespace Fab.Client.MoneyTracker.Postings
 		{
 			var openConfirmationResult = new OpenConfirmationResult(eventAggregator)
 			                             {
-			                             	Message = "Do you really want to delete the selected posting #" + transactionRecord.TransactionId + " ?",
+			                             	Message =
+			                             		"Do you really want to delete the selected posting #" +
+			                             		transactionRecord.TransactionId + " ?",
 			                             	Title = "Confirmation",
 			                             	Options = MessageBoxOptions.Yes | MessageBoxOptions.Cancel,
 			                             };
@@ -316,7 +356,8 @@ namespace Fab.Client.MoneyTracker.Postings
 				yield return request;
 
 				// Remove transaction on server
-				var request2 = new DeleteTransactionResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId);
+				var request2 = new DeleteTransactionResult(UserCredentials.Current.UserId, AccountId,
+				                                           transactionRecord.TransactionId);
 				yield return request2;
 
 				// Update accounts balance
@@ -330,7 +371,8 @@ namespace Fab.Client.MoneyTracker.Postings
 				}
 
 				// Remove transaction locally
-				var transactionToDelete = TransactionRecords.Where(record => record.TransactionId == transactionRecord.TransactionId).Single();
+				var transactionToDelete =
+					TransactionRecords.Where(record => record.TransactionId == transactionRecord.TransactionId).Single();
 				var index = TransactionRecords.IndexOf(transactionToDelete);
 				TransactionRecords.Remove(transactionToDelete);
 
@@ -456,14 +498,14 @@ namespace Fab.Client.MoneyTracker.Postings
 				}
 				else if (r is IncomingTransferDTO)
 				{
-					income = r.Amount;		// positive is "TO this account"
+					income = r.Amount; // positive is "TO this account"
 					incomeForPeriod += r.Amount;
 					expense = 0;
 				}
 				else if (r is OutgoingTransferDTO)
 				{
 					income = 0;
-					expense = -r.Amount;	// negative is "FROM this account"
+					expense = -r.Amount; // negative is "FROM this account"
 					expenseForPeriod += r.Amount;
 				}
 
@@ -476,7 +518,7 @@ namespace Fab.Client.MoneyTracker.Postings
 				                       	Expense = expense,
 				                       	Balance = balance,
 				                       	Comment = r.Comment,
-										Journal = r
+				                       	Journal = r
 				                       });
 			}
 
@@ -484,7 +526,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			TotalIncome = incomeForPeriod;
 			TotalExpense = expenseForPeriod;
 			BalanceDiff = incomeForPeriod + expenseForPeriod;
-			
+
 			IsOutdated = false;
 
 			yield return Loader.Hide();

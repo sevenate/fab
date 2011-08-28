@@ -44,7 +44,8 @@
 			<ContentControl x:Name="ActiveItem"
 							Grid.Row="1"
 							VerticalContentAlignment="Stretch"
-							HorizontalContentAlignment="Stretch" />
+							HorizontalContentAlignment="Stretch"
+							Template="{StaticResource TransitioningFrame}" />
 			<StackPanel Grid.Row="2"
 						Orientation="Horizontal"
 						HorizontalAlignment="Right">

@@ -158,7 +158,7 @@ namespace Fab.Client.Shell
 		/// <param name="message">The <see cref="LoggedInMessage"/>.</param>
 		public void Handle(LoggedInMessage message)
 		{
-			DeactivateItem(LoginScreen, true);
+			this.CloseItem(LoginScreen);
 			ActivateItem(Items.First());
 			IsAuthenticated = true;
 		}
@@ -175,7 +175,6 @@ namespace Fab.Client.Shell
 		{
 			IsAuthenticated = false;
 			ActivateItem(LoginScreen);
-			Dialogs.ShowDialog(null);
 		}
 
 		#endregion
@@ -219,5 +218,11 @@ namespace Fab.Client.Shell
 		}
 
 		#endregion
+
+//		public override void CanClose(Action<bool> callback)
+//		{
+//			base.CanClose(callback);
+//			ActiveItem.CanClose(callback);
+//		}
 	}
 }

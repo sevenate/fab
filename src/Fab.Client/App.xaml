@@ -13,6 +13,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Themes/AutoCompleteComboBox.xaml" />
+				<ResourceDictionary Source="Themes/TransitioningFrame.xaml" />
 				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Basic.xaml" />
 				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Advanced.xaml" />
 				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Brushes.xaml" />
@@ -27,10 +28,11 @@
 			<converters:NullToCollapsedConverter x:Key="nullToCollapsed" />
 			<converters:NullToQuestionMarkConverter x:Key="nullToQuestion" />
 			<converters:ZeroToVisibilityConverter x:Key="zeroToVisibility" />
-			<converters:BalanceToColorConverter x:Key="balanceToColorConverter" />
+			<converters:BalanceToColorConverter x:Key="balanceToColor" />
 			<converters:DebugConverter x:Key="debugConverter" />
-			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocalConverter" />
-			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyStringConverter" />
+			<converters:BooleanToColorConverter x:Key="boolToColor" />
+			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
+			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>
