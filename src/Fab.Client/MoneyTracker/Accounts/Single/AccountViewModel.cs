@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using Fab.Client.Framework;
 using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.Postings;
 
@@ -16,7 +17,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 	/// </summary>
 	[Export(typeof(AccountViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class AccountViewModel : Screen, IHandle<PostingsFilterUpdatedMessage>
+	public class AccountViewModel : Screen, IHandle<PostingsFilterUpdatedMessage>, IHaveShutdownTask
 	{
 		#region Fields
 
@@ -243,6 +244,8 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 			EventAggregator = eventAggregator;
 			PostingsVM = postingsViewModel;
+			PostingsVM.ConductWith(this);
+			PostingsVM.Parent = this;
 
 			//TODO: Subscription required to listen on any new/updated/deleted postings so that account could update in balance locally.
 			//TODO: This should be implemented later.
@@ -259,11 +262,16 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		protected override void OnActivate()
 		{
 			base.OnActivate();
-			PostingsVM.Update();
+			//ScreenExtensions.TryActivate(PostingsVM);
+			//PostingsVM.Update();
+		}
+
+		public override void CanClose(Action<bool> callback)
+		{
+			PostingsVM.CanClose(callback);
 		}
 
 		#endregion
-
 
 		#region Implementation of IHandle<in PostingsFilterUpdatedMessage>
 
@@ -282,5 +290,45 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		}
 
 		#endregion
+
+		#region DocumentBase
+
+		#region Implementation of IHaveShutdownTask
+
+		public IResult GetShutdownTask()
+		{
+			return PostingsVM.IsDirty ? new ApplicationCloseCheck(this, DoCloseCheck) : null;
+		}
+
+		#endregion
+
+		protected virtual void DoCloseCheck(IDialogManager dialogs, Action<bool> callback)
+		{
+			if (!IsActive && Parent is IConductor)
+			{
+				(Parent as IConductor).ActivateItem(this);
+			}
+
+			dialogs.ShowMessageBox(
+				"You have unsaved changes in the \"" + Name + "\" account. Are you sure you want to lose them?",
+				"Warning",
+				MessageBoxOptions.YesNo,
+				box =>
+				{
+					var result = box.WasSelected(MessageBoxOptions.Yes);
+
+					if (result)
+					{
+						//Rollback all pending changes
+						PostingsVM.CancelEdit();
+					}
+
+					callback(result);
+				}
+				);
+		}
+
+		#endregion
+
 	}
 }

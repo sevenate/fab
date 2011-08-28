@@ -6,5 +6,10 @@
   <OutOfBrowserSettings.SecuritySettings>
     <SecuritySettings ElevatedPermissions="NotRequired" />
   </OutOfBrowserSettings.SecuritySettings>
-  <OutOfBrowserSettings.Icons />
+  <OutOfBrowserSettings.Icons>
+    <Icon Size="16,16">Resources/AppIcon_16x16.png</Icon>
+    <Icon Size="32,32">Resources/AppIcon_32x32.png</Icon>
+    <Icon Size="48,48">Resources/AppIcon_48x48.png</Icon>
+    <Icon Size="128,128">Resources/AppIcon_128x128.png</Icon>
+  </OutOfBrowserSettings.Icons>
 </OutOfBrowserSettings>

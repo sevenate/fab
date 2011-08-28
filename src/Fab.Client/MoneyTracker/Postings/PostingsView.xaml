@@ -6,6 +6,7 @@
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:Controls="clr-namespace:SilverlightContrib.Controls;assembly=SilverlightContrib.Controls"
+			 d:DataContext="{d:DesignData Source=./SampleData/Postings.xaml}"
 			 d:DesignHeight="400"
 			 d:DesignWidth="800"
 			 mc:Ignorable="d">
@@ -69,12 +70,12 @@
 				           Grid.Column="1"
 				           Grid.Row="2"
 				           Foreground="White" />
-				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColorConverter}}"
+				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
 				           Grid.Column="2"
 				           Grid.Row="0"
 				           Text="{Binding Path=TotalIncome, StringFormat=C}"
 				           HorizontalAlignment="Right" />
-				<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColorConverter}}"
+				<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColor}}"
 				           Grid.Column="2"
 				           Grid.Row="1"
 				           Text="{Binding Path=TotalExpense, StringFormat=C}"
@@ -96,17 +97,17 @@
 				           Grid.Column="4"
 				           Grid.Row="2"
 				           Foreground="White" />
-				<TextBlock Foreground="{Binding Path=StartBalance, Converter={StaticResource balanceToColorConverter}}"
+				<TextBlock Foreground="{Binding Path=StartBalance, Converter={StaticResource balanceToColor}}"
 				           Grid.Column="5"
 				           Grid.Row="0"
 				           Text="{Binding Path=StartBalance, StringFormat=C}"
 				           HorizontalAlignment="Right" />
 				<TextBlock Grid.Column="5"
 				           Grid.Row="1"
-				           Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColorConverter}}"
+				           Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColor}}"
 				           Text="{Binding Path=BalanceDiff, StringFormat=C}"
 				           HorizontalAlignment="Right" />
-				<TextBlock Foreground="{Binding Path=EndBalance, Converter={StaticResource balanceToColorConverter}}"
+				<TextBlock Foreground="{Binding Path=EndBalance, Converter={StaticResource balanceToColor}}"
 				           Grid.Column="5"
 				           Grid.Row="2"
 				           Text="{Binding Path=EndBalance, StringFormat=C}"
@@ -199,8 +200,8 @@
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock VerticalAlignment="Center"
-									   Text="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat=d}"
-									   ToolTipService.ToolTip="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocalConverter}, StringFormat=F}" />
+									   Text="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+									   ToolTipService.ToolTip="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
 					<sdk:DataGridTemplateColumn.CellEditingTemplate>
@@ -208,7 +209,7 @@
 							<sdk:DatePicker VerticalAlignment="Center"
 											IsTodayHighlighted="True"
 											SelectedDateFormat="Long"
-											SelectedDate="{Binding Path=Date, Mode=TwoWay, Converter={StaticResource dateTimeUtcToLocalConverter}}" />
+											SelectedDate="{Binding Path=Date, Mode=TwoWay, Converter={StaticResource dateTimeUtcToLocal}}" />
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellEditingTemplate>
 				</sdk:DataGridTemplateColumn>
@@ -250,13 +251,13 @@
 										IsReadOnly="True"
 										CanUserSort="False"
 										ElementStyle="{StaticResource ExpenceStyle}"
-										Binding="{Binding Path=Expense, Converter={StaticResource zeroToEmptyStringConverter}, StringFormat=n}" />
+										Binding="{Binding Path=Expense, Converter={StaticResource zeroToEmptyString}, StringFormat=n}" />
 				<sdk:DataGridTextColumn Header="Income"
 										MinWidth="75"
 										IsReadOnly="True"
 										CanUserSort="False"
 										ElementStyle="{StaticResource IncomeStyle}"
-										Binding="{Binding Path=Income, Converter={StaticResource zeroToEmptyStringConverter}, StringFormat=n}" />
+										Binding="{Binding Path=Income, Converter={StaticResource zeroToEmptyString}, StringFormat=n}" />
 				<sdk:DataGridTemplateColumn Header="Balance"
 											MinWidth="75"
 											IsReadOnly="True"
@@ -265,7 +266,7 @@
 						<DataTemplate>
 							<TextBlock Style="{StaticResource NumbersStyle}"
 									   VerticalAlignment="Center"
-									   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColorConverter}}"
+									   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
 									   Text="{Binding Path=Balance, StringFormat=C}" />
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>

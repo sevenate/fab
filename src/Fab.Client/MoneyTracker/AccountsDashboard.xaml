@@ -46,7 +46,7 @@
 						Grid.RowSpan="2"
 						cal:View.Model="{Binding Path=ActiveItem.PostingsVM}"
 						VerticalContentAlignment="Stretch"
-						HorizontalContentAlignment="Stretch">
-		</ContentControl> 
+						HorizontalContentAlignment="Stretch"
+						Template="{StaticResource TransitioningFrame}" />
 	</Grid>
 </UserControl>

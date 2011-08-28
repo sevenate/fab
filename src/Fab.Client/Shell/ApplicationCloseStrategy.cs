@@ -33,6 +33,7 @@ namespace Fab.Client.Shell
 			{
 				var current = enumerator.Current;
 				var conductor = current as IConductor;
+
 				if (conductor != null)
 				{
 					var tasks = conductor.GetChildren()

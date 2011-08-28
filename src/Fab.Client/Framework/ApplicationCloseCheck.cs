@@ -20,10 +20,11 @@ namespace Fab.Client.Framework
 
 		public void Execute(ActionExecutionContext context)
 		{
-			var documentWorkspace = screen.Parent as IDocumentWorkspace;
+			var documentWorkspace = screen.Parent as IModule;
+			
 			if (documentWorkspace != null)
 			{
-				documentWorkspace.Edit(screen);
+				documentWorkspace.Show();
 			}
 
 			closeCheck(Shell.Dialogs, result => Completed(this, new ResultCompletionEventArgs

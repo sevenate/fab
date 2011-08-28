@@ -26,7 +26,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 	/// </summary>
 	[Export(typeof(TransactionViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class TransactionViewModel : DocumentBase, IPostingPanel
+	public class TransactionViewModel : Screen, IPostingPanel
 	{
 		#region Fields
 
@@ -356,12 +356,15 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 			yield return Loader.Hide();
 
-			TryClose();
+			Cancel();
 		}
 
+		/// <summary>
+		/// Cancel transaction edition and ask parent view to close this dialog.
+		/// </summary>
 		public void Cancel()
 		{
-			TryClose();
+			(Parent as IConductor).CloseItem(this);
 		}
 
 		#endregion

@@ -24,7 +24,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 	/// </summary>
 	[Export(typeof (TransferViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class TransferViewModel : DocumentBase, IPostingPanel
+	public class TransferViewModel : Screen, IPostingPanel
 	{
 		#region Fields
 
@@ -247,12 +247,15 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 			yield return Loader.Hide();
 
-			TryClose();
+			Cancel();
 		}
 
+		/// <summary>
+		/// Cancel transfer edition and ask parent view to close this dialog.
+		/// </summary>
 		public void Cancel()
 		{
-			TryClose();
+			(Parent as IConductor).CloseItem(this);
 		}
 
 		#endregion
