@@ -8,13 +8,13 @@ Server side is based on **.NET 4** (**WCF** services with **MS SQL Server 2008**
 Download
 --------
 
-><span style="color: red;">**TBA**</span>
+>**TBA**
 
 
 Installation
 ------------
 
-><span style="color: red;">**TBA**</span>
+>**TBA**
 
 
 Documentation
