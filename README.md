@@ -1,30 +1,17 @@
 Introduction
 ------------
 
-Client server application for tracking and planning family assets.  
-Server side is based on **.NET 4** (**WCF** services with **MS SQL Server 2008**) and client side is a **Silverlight 4** application.
+FAB is a client server application for tracking and planning family assets.
 
-Download
+* Front end is a **Silverlight 4** application.
+* Back end is a bunch of **WCF** services, based on **.NET 4**.
+* Data storage powered by **MS SQL Server 2008**.
+
+Links
 --------
 
->**TBA**
-
-Installation
-------------
-
->**TBA**
-
-Documentation
--------------
-
-See [Documentation](https://bitbucket.org/sevenate/fab/wiki/Documentation)
-
-Roadmap
--------
-
-See [Roadmap](https://bitbucket.org/sevenate/fab/wiki/Roadmap)
-
-Changelog
----------
-
-See [Changelog](https://bitbucket.org/sevenate/fab/wiki/Changelog)
+* [Download](https://bitbucket.org/sevenate/fab/downloads) (**TBA**)
+* [Installation](https://bitbucket.org/sevenate/fab/wiki/Installation)
+* [Changelog](https://bitbucket.org/sevenate/fab/wiki/Changelog)
+* [Roadmap](https://bitbucket.org/sevenate/fab/wiki/Roadmap)
+* [Documentation](https://bitbucket.org/sevenate/fab/wiki/Documentation)
