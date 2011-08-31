@@ -1,16 +1,23 @@
 ﻿using System;
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
 	public class GetBalanceResult : IResult
 	{
-		public GetBalanceResult(Guid userId, int accountId, DateTime date)
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
+
+		public GetBalanceResult(Guid userId, int accountId, DateTime date, IEventAggregator eventAggregator)
 		{
 			UserId = userId;
 			AccountId = accountId;
 			Date = date;
+			EventAggregator = eventAggregator;
 		}
 
 		public Guid UserId { get; private set; }
@@ -39,9 +46,12 @@ namespace Fab.Client.MoneyTracker.Postings
 					Balance = e.Result;
 					Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 				}
+
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
 			proxy.GetAccountBalanceAsync(UserId, AccountId, Date);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Get account #" + AccountId + " balance" });
 		}
 	}
 }

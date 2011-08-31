@@ -23,6 +23,11 @@
 								Controls:DockPanel.Dock="Right"
 								VerticalContentAlignment="Stretch"
 								HorizontalContentAlignment="Stretch" />
+				<ContentControl x:Name="AsyncProgressIndicator"
+								Controls:DockPanel.Dock="Right"
+								Margin="0,0,10,0"
+								VerticalContentAlignment="Stretch"
+								HorizontalContentAlignment="Stretch" />
 				<ItemsControl x:Name="Items">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>

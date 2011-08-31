@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Fab.Client.Framework
+namespace Fab.Client.Shell
 {
 	/// <summary>
 	/// Send any time when some service call was ended with error.
