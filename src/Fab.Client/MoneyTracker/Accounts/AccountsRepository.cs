@@ -197,7 +197,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// <returns>Created account.</returns>
 		public AccountDTO Create(string name, int assetTypeId)
 		{
-			var accountDTO = IoC.Get<AccountDTO>();
+			var accountDTO = new AccountDTO();
 
 			accountDTO.AssetTypeId = assetTypeId;
 			accountDTO.Balance = 0;
