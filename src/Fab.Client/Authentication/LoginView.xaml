@@ -74,7 +74,7 @@
 					   Text="{Binding Status}"
 					   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" />
 			<Button x:Name="Login"
-					Content="Login"
+					Content="Sign in"
 					MinWidth="75"
 					Margin="0, 10"
 					HorizontalAlignment="Center"

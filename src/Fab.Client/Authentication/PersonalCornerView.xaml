@@ -16,7 +16,7 @@
 					Margin="5,0"
 					FontWeight="Bold" />
 		<Button x:Name="Logout"
-				Content="Sign Out"
+				Content="Sign out"
 				MinWidth="75"
 				TabIndex="0" />
 	</StackPanel>
