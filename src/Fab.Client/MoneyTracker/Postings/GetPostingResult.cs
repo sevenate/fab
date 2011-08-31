@@ -7,6 +7,7 @@
 using System;
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
@@ -19,11 +20,17 @@ namespace Fab.Client.MoneyTracker.Postings
 		private readonly int transactionId;
 		private readonly Guid userId;
 
-		public GetPostingResult(Guid userId, int accountId, int transactionId)
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
+
+		public GetPostingResult(Guid userId, int accountId, int transactionId, IEventAggregator eventAggregator)
 		{
 			this.userId = userId;
 			this.accountId = accountId;
 			this.transactionId = transactionId;
+			EventAggregator = eventAggregator;
 		}
 
 		public JournalDTO Transaction { get; set; }
@@ -52,10 +59,13 @@ namespace Fab.Client.MoneyTracker.Postings
 			                             		Caliburn.Micro.Execute.OnUIThread(
 			                             			() => Completed(this, new ResultCompletionEventArgs()));
 			                             	}
+
+											EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			                             };
 			proxy.GetJournalAsync(userId,
 			                      accountId,
 			                      transactionId);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading posting #" + transactionId });
 		}
 
 		#endregion

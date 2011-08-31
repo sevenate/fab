@@ -130,7 +130,7 @@
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
     <Compile Include="Framework\Converters\DebugConverter.cs" />
     <Compile Include="Framework\Extensions\ColorFromString.cs" />
-    <Compile Include="Framework\ServiceErrorMessage.cs" />
+    <Compile Include="Shell\ServiceErrorMessage.cs" />
     <Compile Include="Framework\Converters\NullToQuestionMarkConverter.cs" />
     <Compile Include="Framework\OpenConfirmationResult.cs" />
     <Compile Include="Framework\Behaviors\CalendarLimitedSelectedRangeBehavior.cs" />
@@ -190,6 +190,9 @@
     <Compile Include="MoneyTracker\Postings\DateRange.cs" />
     <Compile Include="MoneyTracker\Postings\IPostingPanel.cs" />
     <Compile Include="MoneyTracker\Postings\Actions\PostingActionsViewModel.cs" />
+    <Compile Include="Shell\Async\AsyncOperationStartedMessage.cs" />
+    <Compile Include="Shell\Async\AsyncProgressIndicatorViewModel.cs" />
+    <Compile Include="Shell\Async\AsyncOperationCompleteMessage.cs" />
     <Compile Include="Shell\OpenDialogMessage.cs" />
     <Compile Include="MoneyTracker\Postings\PostingRecord.cs" />
     <Compile Include="MoneyTracker\Postings\Transactions\TransactionViewModel.cs" />
@@ -301,6 +304,13 @@
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
+    <Page Include="Shell\Async\AsyncProgressIndicatorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <DesignData Include="Shell\Async\SampleData\AsyncData.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="Themes\BS_ResourceDictionary_Advanced.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -11,6 +11,8 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts.Single;
+using Fab.Client.Shell;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Accounts
 {
@@ -88,9 +90,12 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                 		                                                 	Error = e.Error
 			                                 		                                                 }));
 			                                 	}
-			                                 };
+
+												EventAggregator.Publish(new AsyncOperationCompleteMessage());
+											 };
 
 			proxy.GetAllAccountsAsync(UserId);
+			EventAggregator.Publish(new AsyncOperationStartedMessage{OperationName = "Downloading accounts list"});
 		}
 
 		/// <summary>
@@ -122,9 +127,12 @@ namespace Fab.Client.MoneyTracker.Accounts
 						Error = e.Error
 					}));
 				}
+
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
 			proxy.GetAccountAsync(UserId, key);
+			EventAggregator.Publish(new AsyncOperationStartedMessage{OperationName = "Downloading account #" + key});
 		}
 
 		/// <summary>
@@ -159,9 +167,12 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                		                                                 	Error = e.Error
 			                                		                                                 }));
 			                                	}
-			                                };
+
+												EventAggregator.Publish(new AsyncOperationCompleteMessage());
+											};
 
 			proxy.CreateAccountAsync(UserId, entity.Name, entity.AssetTypeId);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Creating new account" });
 
 			return entity;
 		}
@@ -197,16 +208,17 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// <returns>Created account.</returns>
 		public AccountDTO Create(string name, int assetTypeId)
 		{
-			var accountDTO = new AccountDTO();
-
-			accountDTO.AssetTypeId = assetTypeId;
-			accountDTO.Balance = 0;
-			accountDTO.Created = DateTime.UtcNow;
-			accountDTO.FirstPostingDate = null;
-			accountDTO.Id = 0;
-			accountDTO.LastPostingDate = null;
-			accountDTO.Name = name;
-			accountDTO.PostingsCount = 0;
+			var accountDTO = new AccountDTO
+			                 {
+			                 	AssetTypeId = assetTypeId,
+			                 	Balance = 0,
+			                 	Created = DateTime.UtcNow,
+			                 	FirstPostingDate = null,
+			                 	Id = 0,
+			                 	LastPostingDate = null,
+			                 	Name = name,
+			                 	PostingsCount = 0
+			                 };
 
 			return Create(accountDTO);
 		}

@@ -6,6 +6,7 @@ using System.Windows;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.Shell
 {
@@ -34,7 +35,8 @@ namespace Fab.Client.Shell
 			IEventAggregator eventAggregator,
 			IDialogManager dialogs,
 			[ImportMany]IEnumerable<IModule> modules,
-			PersonalCornerViewModel corner)
+			PersonalCornerViewModel corner,
+			AsyncProgressIndicatorViewModel asyncProgressIndicator)
 		{
 			if (eventAggregator == null)
 			{
@@ -56,6 +58,11 @@ namespace Fab.Client.Shell
 				throw new ArgumentNullException("corner");
 			}
 
+			if (asyncProgressIndicator == null)
+			{
+				throw new ArgumentNullException("asyncProgressIndicator");
+			}
+
 			EventAggregator = eventAggregator;
 			EventAggregator.Subscribe(this);
 
@@ -68,6 +75,7 @@ namespace Fab.Client.Shell
 			Items.AddRange(modules.OrderBy(module => module.Name)
 								  .Except(Enumerable.Repeat<IModule>(LoginScreen, 1)));
 			PersonalCorner = corner;
+			AsyncProgressIndicator = asyncProgressIndicator;
 			CloseStrategy = new ApplicationCloseStrategy();
 		}
 
@@ -100,14 +108,19 @@ namespace Fab.Client.Shell
 		}
 
 		/// <summary>
-		/// Gets start login screen for not authenticate users.
+		/// Gets start login screen model for not authenticate users.
 		/// </summary>
 		public ILoginViewModel LoginScreen { get; private set; }
 
 		/// <summary>
-		/// Gets personal corner view that allow user to logout.
+		/// Gets personal corner view model that allow user to logout.
 		/// </summary>
 		public PersonalCornerViewModel PersonalCorner { get; private set; }
+
+		/// <summary>
+		/// Gets async progress indicator view model.
+		/// </summary>
+		public AsyncProgressIndicatorViewModel AsyncProgressIndicator { get; private set; }
 
 		/// <summary>
 		/// Indicating whether user has been authenticated in the system.
@@ -219,10 +232,10 @@ namespace Fab.Client.Shell
 
 		#endregion
 
-//		public override void CanClose(Action<bool> callback)
-//		{
-//			base.CanClose(callback);
-//			ActiveItem.CanClose(callback);
-//		}
+		//		public override void CanClose(Action<bool> callback)
+		//		{
+		//			base.CanClose(callback);
+		//			ActiveItem.CanClose(callback);
+		//		}
 	}
 }

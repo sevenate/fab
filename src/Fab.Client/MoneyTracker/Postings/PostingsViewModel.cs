@@ -352,7 +352,7 @@ namespace Fab.Client.MoneyTracker.Postings
 				yield return Loader.Show("Deleting...");
 
 				// Load transaction from server (used below to determine if the deleted posting was transfer)
-				var request = new GetPostingResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId);
+				var request = new GetPostingResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId, eventAggregator);
 				yield return request;
 
 				// Remove transaction on server
@@ -448,7 +448,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			yield return Loader.Show("Loading...");
 
 			// Determine previous account balance
-			var balanceResult = new GetBalanceResult(UserCredentials.Current.UserId, AccountId, fromDate.ToUniversalTime());
+			var balanceResult = new GetBalanceResult(UserCredentials.Current.UserId, AccountId, fromDate.ToUniversalTime(), eventAggregator);
 			yield return balanceResult;
 
 			StartBalance = balanceResult.Balance;
@@ -466,7 +466,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			                     	NotOlderThen = fromDate.ToUniversalTime(),
 			                     	Upto = tillDate.AddDays(1) /*.AddMilliseconds(1)*/.ToUniversalTime(),
 			                     };
-			var transactionsResult = new GetPostingsResult(UserCredentials.Current.UserId, AccountId, queryFilterDTO);
+			var transactionsResult = new GetPostingsResult(UserCredentials.Current.UserId, AccountId, queryFilterDTO, eventAggregator);
 			yield return transactionsResult;
 
 			TransactionRecords.Clear();

@@ -8,16 +8,22 @@
 	<StackPanel Orientation="Horizontal"
 				Background="{StaticResource Brush_WindowBackground}"
 				HorizontalAlignment="Right">
-		<TextBlock Text="Logged in as"
-					VerticalAlignment="Center" />
-		<TextBlock Text="{Binding Username}"
-					VerticalAlignment="Center"
-					Foreground="Cyan"
-					Margin="5,0"
-					FontWeight="Bold" />
 		<Button x:Name="Logout"
-				Content="Sign out"
 				MinWidth="75"
-				TabIndex="0" />
+				TabIndex="0">
+			<Button.Content>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="Sign out ("
+							   VerticalAlignment="Center" />
+					<TextBlock Text="{Binding Username}"
+							   VerticalAlignment="Center"
+							   Foreground="Cyan"
+							   Margin="5,0"
+							   FontWeight="Bold" />
+					<TextBlock Text=")"
+							   VerticalAlignment="Center" />
+				</StackPanel>
+			</Button.Content>
+		</Button>
 	</StackPanel>
 </UserControl>

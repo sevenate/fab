@@ -1,16 +1,23 @@
 ﻿using System;
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
 	public class GetPostingsResult : IResult
 	{
-		public GetPostingsResult(Guid userId, int accountId, QueryFilter queryFilter)
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
+
+		public GetPostingsResult(Guid userId, int accountId, QueryFilter queryFilter, IEventAggregator eventAggregator)
 		{
 			UserId = userId;
 			AccountId = accountId;
 			QueryFilter = queryFilter;
+			EventAggregator = eventAggregator;
 		}
 
 		public Guid UserId { get; private set; }
@@ -39,9 +46,12 @@ namespace Fab.Client.MoneyTracker.Postings
 					TransactionRecords = e.Result;
 					Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 				}
+				
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
 			proxy.GetJournalsAsync(UserId, AccountId, QueryFilter);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading postings for account #" + AccountId});
 		}
 	}
 }
