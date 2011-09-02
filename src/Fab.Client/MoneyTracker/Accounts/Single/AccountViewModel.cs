@@ -4,6 +4,7 @@
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-05-24" />
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
@@ -201,6 +202,8 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
+		
+		private IAccountsRepository AccountsRepository { get; set; }
 
 		#region Child VM
 
@@ -230,11 +233,16 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// <param name="eventAggregator">The event aggregator to listen for the specific notifications.</param>
 		/// </summary>
 		[ImportingConstructor]
-		public AccountViewModel(IEventAggregator eventAggregator, PostingsViewModel postingsViewModel)
+		public AccountViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository, PostingsViewModel postingsViewModel)
 		{
 			if (eventAggregator == null)
 			{
 				throw new ArgumentNullException("eventAggregator");
+			}
+
+			if (accountsRepository == null)
+			{
+				throw new ArgumentNullException("accountsRepository");
 			}
 
 			if (postingsViewModel == null)
@@ -243,6 +251,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			}
 
 			EventAggregator = eventAggregator;
+			AccountsRepository = accountsRepository;
 			PostingsVM = postingsViewModel;
 			PostingsVM.ConductWith(this);
 			PostingsVM.Parent = this;
@@ -330,5 +339,27 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 		#endregion
 
+		/// <summary>
+		/// Delete current account with confirmation.
+		/// </summary>
+		/// <returns>Result of async operation.</returns>
+		public IEnumerable<IResult> Delete()
+		{
+			var openConfirmationResult = new OpenConfirmationResult(EventAggregator)
+			{
+				Message =
+					"Do you really want to delete the account #" +
+					Id + " ?",
+				Title = "Confirmation",
+				Options = MessageBoxOptions.Yes | MessageBoxOptions.Cancel,
+			};
+
+			yield return openConfirmationResult;
+
+			if (openConfirmationResult.Selected == MessageBoxOptions.Yes)
+			{
+				AccountsRepository.Delete(Id);
+			}
+		}
 	}
 }

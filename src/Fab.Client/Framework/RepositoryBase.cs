@@ -116,10 +116,10 @@ namespace Fab.Client.Framework
 		public abstract T Update(T entity);
 
 		/// <summary>
-		/// Update existing entity.
+		/// Delete existing entity.
 		/// </summary>
-		/// <param name="entity">Entity to delete.</param>
-		public abstract void Delete(T entity);
+		/// <param name="key">Key if the entity to delete.</param>
+		public abstract void Delete(int key);
 
 		#endregion
 	}
