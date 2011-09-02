@@ -190,10 +190,34 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// <summary>
 		/// Update existing entity.
 		/// </summary>
-		/// <param name="entity">Entity to delete.</param>
-		public override void Delete(AccountDTO entity)
+		/// <param name="key">Key if the entity to delete.</param>
+		public override void Delete(int key)
 		{
-			throw new NotImplementedException();
+			var proxy = new MoneyServiceClient();
+
+			proxy.DeleteAccountCompleted += (s, e) =>
+			{
+				if (e.Error == null)
+				{
+					Entities.Remove(ByKey(key));
+					Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
+					{
+						Accounts = Entities
+					}));
+				}
+				else
+				{
+					Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+					{
+						Error = e.Error
+					}));
+				}
+
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
+			};
+
+			proxy.DeleteAccountAsync(UserId, key);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Deleting account #" + key});
 		}
 
 		#endregion

@@ -182,8 +182,8 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <summary>
 		/// Update existing entity.
 		/// </summary>
-		/// <param name="entity">Entity to delete.</param>
-		public override void Delete(CategoryDTO entity)
+		/// <param name="key">Key if the entity to delete.</param>
+		public override void Delete(int key)
 		{
 			throw new NotImplementedException();
 		}
