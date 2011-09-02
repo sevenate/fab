@@ -136,35 +136,14 @@ namespace Fab.Client.MoneyTracker
 			}
 		}
 
-		#region Create Account
-
 		/// <summary>
-		/// Name for new account.
-		/// </summary>
-		private string accountName;
-
-		/// <summary>
-		/// Gets or sets name for the new account.
-		/// </summary>
-		public string AccountName
-		{
-			get { return accountName; }
-			set
-			{
-				accountName = value;
-				NotifyOfPropertyChange(AccountName);
-			}
-		}
-
-		/// <summary>
-		/// Create new account for specific user.
+		/// Open new account dialog.
 		/// </summary>
 		public void CreateAccount()
 		{
-			//TODO: customize account asset type here
-			repository.Create(AccountName.Trim(), 1);
+			var shell = IoC.Get<IShell>();
+			var newAccountViewModel = IoC.Get<NewAccountViewModel>();
+			shell.Dialogs.ShowDialog(newAccountViewModel);
 		}
-
-		#endregion
 	}
 }

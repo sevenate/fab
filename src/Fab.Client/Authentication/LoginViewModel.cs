@@ -248,7 +248,7 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		/// <returns>Common co-routine results.</returns>
 		[SetBusy]
-		[Async]
+		//[Async]
 		[Dependencies("Username", "Password")]
 		public IEnumerable<IResult> Login()
 		{
