@@ -26,7 +26,7 @@
 		<ComboBox x:Name="Assets"
 		          Grid.Row="1"
 		          MinWidth="150"
-		          ToolTipService.ToolTip="Asset types"
+		          ToolTipService.ToolTip="Asset type"
 		          Margin="5"
 				  TabIndex="1">
 			<ComboBox.ItemTemplate>
