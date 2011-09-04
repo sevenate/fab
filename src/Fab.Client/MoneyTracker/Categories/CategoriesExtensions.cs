@@ -3,7 +3,10 @@
 // </copyright>
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-04-09" />
 
+using Caliburn.Micro;
+using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.MoneyTracker.Categories.Single;
 
 namespace Fab.Client.MoneyTracker.Categories
 {
@@ -24,6 +27,26 @@ namespace Fab.Client.MoneyTracker.Categories
 			return id.HasValue
 			       	? repository.ByKey(id.Value)
 			       	: null;
+		}
+
+		/// <summary>
+		/// Convert <see cref="CategoryDTO" /> into <see cref="CategoryViewModel" />.
+		/// </summary>
+		/// <param name="categoryDTO">Source object with data.</param>
+		/// <returns>Destination object with mapped data.</returns>
+		/// <remarks>
+		/// TODO: find a way to use "auto mapper" for SL4 instead of this method
+		/// </remarks>
+		public static CategoryViewModel Map(this CategoryDTO categoryDTO)
+		{
+			var accountViewModel = IoC.Get<CategoryViewModel>();
+
+			accountViewModel.Id = categoryDTO.Id;
+			accountViewModel.Name = categoryDTO.Name;
+			accountViewModel.Popularity = categoryDTO.Popularity;
+			accountViewModel.CategoryTypeWrapper = new EnumWrapper<CategoryType>(categoryDTO.CategoryType);
+
+			return accountViewModel;
 		}
 	}
 }

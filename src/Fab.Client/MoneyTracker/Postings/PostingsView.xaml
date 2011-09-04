@@ -6,6 +6,7 @@
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:Controls="clr-namespace:SilverlightContrib.Controls;assembly=SilverlightContrib.Controls"
+			 xmlns:Resources="clr-namespace:Fab.Client.Resources.Actions"
 			 d:DataContext="{d:DesignData Source=./SampleData/Postings.xaml}"
 			 d:DesignHeight="400"
 			 d:DesignWidth="800"
@@ -38,10 +39,10 @@
 		<Controls:GroupBox Margin="5">
 			<Controls:GroupBox.Header>
 				<TextBlock Text="{Binding Path=Period}"
-				           FontWeight="Bold"
-				           TextWrapping="Wrap"
-				           Foreground="#FFE5E500"
-				           HorizontalAlignment="Right" />
+						   FontWeight="Bold"
+						   TextWrapping="Wrap"
+						   Foreground="#FFE5E500"
+						   HorizontalAlignment="Right" />
 			</Controls:GroupBox.Header>
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -59,59 +60,59 @@
 					<RowDefinition />
 				</Grid.RowDefinitions>
 				<TextBlock Text="Income:"
-				           Grid.Column="1"
-				           Grid.Row="0"
-				           Foreground="White" />
+						   Grid.Column="1"
+						   Grid.Row="0"
+						   Foreground="White" />
 				<TextBlock Text="Expense:"
-				           Grid.Column="1"
-				           Grid.Row="1"
-				           Foreground="White" />
+						   Grid.Column="1"
+						   Grid.Row="1"
+						   Foreground="White" />
 				<TextBlock Text="Postings:"
-				           Grid.Column="1"
-				           Grid.Row="2"
-				           Foreground="White" />
+						   Grid.Column="1"
+						   Grid.Row="2"
+						   Foreground="White" />
 				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
-				           Grid.Column="2"
-				           Grid.Row="0"
-				           Text="{Binding Path=TotalIncome, StringFormat=C}"
-				           HorizontalAlignment="Right" />
+						   Grid.Column="2"
+						   Grid.Row="0"
+						   Text="{Binding Path=TotalIncome, StringFormat=C}"
+						   HorizontalAlignment="Right" />
 				<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColor}}"
-				           Grid.Column="2"
-				           Grid.Row="1"
-				           Text="{Binding Path=TotalExpense, StringFormat=C}"
-				           HorizontalAlignment="Right" />
+						   Grid.Column="2"
+						   Grid.Row="1"
+						   Text="{Binding Path=TotalExpense, StringFormat=C}"
+						   HorizontalAlignment="Right" />
 				<TextBlock Text="{Binding Path=TransactionRecords.Count}"
-				           Grid.Column="2"
-				           Grid.Row="2"
-				           Foreground="#FFE5E500"
-				           HorizontalAlignment="Right" />
+						   Grid.Column="2"
+						   Grid.Row="2"
+						   Foreground="#FFE5E500"
+						   HorizontalAlignment="Right" />
 				<TextBlock Text="Start balance:"
-				           Grid.Column="4"
-				           Grid.Row="0"
-				           Foreground="White" />
+						   Grid.Column="4"
+						   Grid.Row="0"
+						   Foreground="White" />
 				<TextBlock Text="Difference:"
-				           Grid.Column="4"
-				           Grid.Row="1"
-				           Foreground="White" />
+						   Grid.Column="4"
+						   Grid.Row="1"
+						   Foreground="White" />
 				<TextBlock Text="End balance:"
-				           Grid.Column="4"
-				           Grid.Row="2"
-				           Foreground="White" />
+						   Grid.Column="4"
+						   Grid.Row="2"
+						   Foreground="White" />
 				<TextBlock Foreground="{Binding Path=StartBalance, Converter={StaticResource balanceToColor}}"
-				           Grid.Column="5"
-				           Grid.Row="0"
-				           Text="{Binding Path=StartBalance, StringFormat=C}"
-				           HorizontalAlignment="Right" />
+						   Grid.Column="5"
+						   Grid.Row="0"
+						   Text="{Binding Path=StartBalance, StringFormat=C}"
+						   HorizontalAlignment="Right" />
 				<TextBlock Grid.Column="5"
-				           Grid.Row="1"
-				           Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColor}}"
-				           Text="{Binding Path=BalanceDiff, StringFormat=C}"
-				           HorizontalAlignment="Right" />
+						   Grid.Row="1"
+						   Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColor}}"
+						   Text="{Binding Path=BalanceDiff, StringFormat=C}"
+						   HorizontalAlignment="Right" />
 				<TextBlock Foreground="{Binding Path=EndBalance, Converter={StaticResource balanceToColor}}"
-				           Grid.Column="5"
-				           Grid.Row="2"
-				           Text="{Binding Path=EndBalance, StringFormat=C}"
-				           HorizontalAlignment="Right" />
+						   Grid.Column="5"
+						   Grid.Row="2"
+						   Text="{Binding Path=EndBalance, StringFormat=C}"
+						   HorizontalAlignment="Right" />
 			</Grid>
 		</Controls:GroupBox>
 		<sdk:DataGrid x:Name="TransactionsGrid"
@@ -129,24 +130,7 @@
 									ToolTipService.ToolTip="Edit"
 									cal:Message.Attach="EditPosting($dataContext)">
 								<Button.Content>
-									<Path Stretch="Uniform"
-										  Data="M 21.8494,2.97598C 21.8494,1.33334 20.4707,0 18.7733,0L 4.00009,0C 2.30142,0 0.924072,1.33334 0.924072,2.97598L 0.924072,7.50137L 21.8494,7.50137L 21.8494,2.97598 Z M 0,8.98145L 22.7721,8.98145L 22.7721,7.87207L 0,7.87207L 0,8.98145 Z M 11.3867,43.8281C 11.5294,43.6467 13.8427,40.7108 16.2454,37.6615L 6.5267,37.6615C 8.93066,40.7108 11.244,43.6467 11.3867,43.8281 Z M 7.69336,30.3961L 7.69336,9.35214L 1.08536,9.35214C 1.08536,9.7081 1.08536,29.6041 1.08536,30.3988C 2.99072,28.8748 5.7894,28.8721 7.69336,30.3961 Z M 14.6907,30.3975L 14.6907,9.35214L 8.08267,9.35214L 8.08267,30.3975C 9.00806,29.6548 10.164,29.2494 11.3867,29.2494C 12.6094,29.2494 13.7654,29.6548 14.6907,30.3975 Z M 15.08,30.8948L 14.9173,31.0947L 14.748,30.9454C 13.8494,30.0894 12.6547,29.6187 11.3867,29.6187C 10.1187,29.6187 8.92398,30.0894 8.02539,30.9454L 7.896,31.0868L 7.69336,30.8948C 5.87735,29.2201 2.99332,29.2001 1.15073,30.8361C 1.65601,31.4761 3.94669,34.3854 6.23599,37.2908L 16.5374,37.2908C 18.8267,34.3854 21.1173,31.4761 21.6227,30.8361C 20.74,30.0508 19.596,29.6187 18.384,29.6187C 17.14,29.6187 15.9707,30.0721 15.08,30.8948 Z M 15.08,30.3961C 16.004,29.6534 17.1614,29.2494 18.384,29.2494C 19.6054,29.2494 20.7627,29.6548 21.688,30.3975L 21.688,9.35214L 15.08,9.35214L 15.08,30.3961 Z ">
-										<Path.Fill>
-											<LinearGradientBrush StartPoint="0.50003,-0.0759915"
-																 EndPoint="0.50003,0.988774">
-												<LinearGradientBrush.GradientStops>
-													<GradientStop Color="#FFFFFFFF"
-																  Offset="0" />
-													<GradientStop Color="#FFE1E2E3"
-																  Offset="0.494382" />
-													<GradientStop Color="#FFD3D4D6"
-																  Offset="0.5" />
-													<GradientStop Color="#FFC9CBCD"
-																  Offset="1" />
-												</LinearGradientBrush.GradientStops>
-											</LinearGradientBrush>
-										</Path.Fill>
-									</Path>
+									<Resources:EditIcon />
 								</Button.Content>
 							</Button>
 						</DataTemplate>
@@ -162,24 +146,7 @@
 									ToolTipService.ToolTip="Delete"
 									cal:Message.Attach="DeleteTransaction($dataContext)">
 								<Button.Content>
-									<Path Stretch="Uniform"
-										  Data="M 17.864,-3.05176e-005L 10.7547,7.10925L 14.4001,10.7546L 21.5094,3.64532L 17.864,-3.05176e-005 Z M 0,17.8641L 3.64536,21.5094L 10.7546,14.4L 7.10938,10.7547L 0,17.8641 Z M 17.864,21.5094L 21.5094,17.8641L 14.4,10.7547L 10.7546,14.4L 17.864,21.5094 Z M 3.64536,6.10352e-005L 0,3.64539L 7.10938,10.7547L 10.7546,7.10934L 3.64536,6.10352e-005 Z M 7.10938,10.7547L 10.7546,14.4L 14.4,10.7547L 10.7546,7.10934L 7.10938,10.7547 Z ">
-										<Path.Fill>
-											<LinearGradientBrush StartPoint="0.749987,-0.119758"
-																 EndPoint="0.749987,1.12001">
-												<LinearGradientBrush.GradientStops>
-													<GradientStop Color="#FFFFFFFF"
-																  Offset="0" />
-													<GradientStop Color="#FFE1E2E3"
-																  Offset="0.494382" />
-													<GradientStop Color="#FFD3D4D6"
-																  Offset="0.5" />
-													<GradientStop Color="#FFC9CBCD"
-																  Offset="1" />
-												</LinearGradientBrush.GradientStops>
-											</LinearGradientBrush>
-										</Path.Fill>
-									</Path>
+									<Resources:DeleteIcon />
 								</Button.Content>
 							</Button>
 						</DataTemplate>
@@ -234,9 +201,9 @@
 					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
 				<sdk:DataGridTemplateColumn Header="Comment"
-										Width="*"
-										IsReadOnly="True"
-										CanUserSort="False">
+											Width="*"
+											IsReadOnly="True"
+											CanUserSort="False">
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock VerticalAlignment="Center"

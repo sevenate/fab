@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Framework.Results;
 using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.Postings;
 
@@ -230,8 +231,8 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 		/// <summary>
 		/// Creates an instance of the <see cref="AccountViewModel"/> class.
-		/// <param name="eventAggregator">The event aggregator to listen for the specific notifications.</param>
 		/// </summary>
+		/// <param name="eventAggregator">The event aggregator to listen for the specific notifications.</param>
 		[ImportingConstructor]
 		public AccountViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository, PostingsViewModel postingsViewModel)
 		{
@@ -340,11 +341,14 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		#endregion
 
 		/// <summary>
-		/// Delete current account with confirmation.
+		/// Delete account after confirmation.
 		/// </summary>
 		/// <returns>Result of async operation.</returns>
 		public IEnumerable<IResult> Delete()
 		{
+			yield return Animation.Stop("ShowActionsPanel");
+			yield return Animation.Stop("HideActionsPanel");
+
 			var openConfirmationResult = new OpenConfirmationResult(EventAggregator)
 			{
 				Message =
@@ -360,6 +364,37 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			{
 				AccountsRepository.Delete(Id);
 			}
+		}
+
+		/// <summary>
+		/// Edit account.
+		/// </summary>
+		/// <returns>Result of async operation.</returns>
+		public IEnumerable<IResult> Edit()
+		{
+			yield return Animation.Stop("ShowActionsPanel");
+			yield return Animation.Stop("HideActionsPanel");
+
+			var dialog = new OpenConfirmationResult(EventAggregator)
+			{
+				Message = "Account edit is not implemented yet",
+				Title = "Sorry",
+				Options = MessageBoxOptions.Ok,
+			};
+
+			yield return dialog;
+		}
+
+		public IEnumerable<IResult> ShowActions()
+		{
+			yield return Animation.Stop("HideActionsPanel");
+			yield return Animation.Begin("ShowActionsPanel");
+		}
+
+		public IEnumerable<IResult> HideActions()
+		{
+			yield return Animation.Stop("ShowActionsPanel");
+			yield return Animation.Begin("HideActionsPanel");
 		}
 	}
 }

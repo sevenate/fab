@@ -1,8 +1,12 @@
-﻿// <copyright file="EnumWrapper.cs" company="HD">
+﻿// <copyright file="EnumWrapper.cs" company="nReez">
 // 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-02-10" />
-// <summary>Enumeration wrapper for binding.</summary>
+// <author name="Andrey Levshov" email="78@nreez.com" date="2011-02-10" />
+
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace Fab.Client.Framework
 {
@@ -71,6 +75,56 @@ namespace Fab.Client.Framework
 		{
 			return IntegerValue.GetHashCode();
 		}
+
+		#endregion
+	}
+
+	/// <summary>
+	/// The enumeration value for binding.
+	/// </summary>
+	/// <typeparam name="T">Enumeration type.</typeparam>
+	public class EnumWrapper<T> : EnumWrapper where T : struct
+	{
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="EnumWrapper{T}"/> class.
+		/// </summary>
+		/// <param name="initValue">Initial strong typed value.</param>
+		public EnumWrapper(T initValue)
+		{
+			var type = typeof(T);
+
+			if (!type.IsEnum)
+			{
+				throw new ArgumentException("This class only supports enumeration types.");
+			}
+
+			var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
+
+			var field = fields.Where(f => f.Name == initValue.ToString()).Single();
+
+			EnumValue = initValue;
+			Value = field.GetValue(null);
+			IntegerValue = (int)field.GetValue(null);
+
+			var att = field.GetCustomAttributes(typeof(DescriptionAttribute), false)
+							   .OfType<DescriptionAttribute>()
+							   .FirstOrDefault();
+
+			Description = att != null
+			              	? att.Description
+			              	: field.Name;
+		}
+
+		#endregion
+
+		#region Bindable Property
+
+		/// <summary>
+		/// Gets original strong typed value.
+		/// </summary>
+		public T EnumValue { get; private set; }
 
 		#endregion
 	}

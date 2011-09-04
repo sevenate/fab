@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Fab.Client.Resources.Actions.DeleteIcon"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d"
+			 d:DesignHeight="100"
+			 d:DesignWidth="100">
+	<Path Stretch="Uniform"
+		  Data="M 17.864,-3.05176e-005L 10.7547,7.10925L 14.4001,10.7546L 21.5094,3.64532L 17.864,-3.05176e-005 Z M 0,17.8641L 3.64536,21.5094L 10.7546,14.4L 7.10938,10.7547L 0,17.8641 Z M 17.864,21.5094L 21.5094,17.8641L 14.4,10.7547L 10.7546,14.4L 17.864,21.5094 Z M 3.64536,6.10352e-005L 0,3.64539L 7.10938,10.7547L 10.7546,7.10934L 3.64536,6.10352e-005 Z M 7.10938,10.7547L 10.7546,14.4L 14.4,10.7547L 10.7546,7.10934L 7.10938,10.7547 Z ">
+		<Path.Fill>
+			<LinearGradientBrush StartPoint="0.749987,-0.119758"
+								 EndPoint="0.749987,1.12001">
+				<LinearGradientBrush.GradientStops>
+					<GradientStop Color="#FFFFFFFF"
+								  Offset="0" />
+					<GradientStop Color="#FFE1E2E3"
+								  Offset="0.494382" />
+					<GradientStop Color="#FFD3D4D6"
+								  Offset="0.5" />
+					<GradientStop Color="#FFC9CBCD"
+								  Offset="1" />
+				</LinearGradientBrush.GradientStops>
+			</LinearGradientBrush>
+		</Path.Fill>
+	</Path>
+</UserControl>

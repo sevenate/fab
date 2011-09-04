@@ -1,0 +1,4 @@
+﻿<Single:CategoryViewModel xmlns:Single="clr-namespace:Fab.Client.MoneyTracker.Categories.Single"
+						  Id="0"
+						  Name="Deposit category"
+						  Popularity="836" />

@@ -8,7 +8,7 @@ namespace Fab.Server.Core.Enums
 	/// <summary>
 	/// Specify journal records types.
 	/// </summary>
-	public enum JournalType : byte
+	public enum JournalType
 	{
 		/// <summary>
 		/// Deposit journal record (id = 0).

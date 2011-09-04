@@ -1,15 +1,15 @@
-// <copyright file="CategoriesViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+// <copyright file="CategoriesViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-12" />
-// <summary>Categories view model.</summary>
+// <author name="Andrey Levshov" email="78@nreez.com" date="2010-04-12" />
 
-using System.ComponentModel;
+using System.Collections.Specialized;
 using System.ComponentModel.Composition;
-using System.Windows.Data;
+using System.Linq;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.MoneyTracker.Categories.Single;
 
 namespace Fab.Client.MoneyTracker.Categories
 {
@@ -17,27 +17,16 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// Categories view model.
 	/// </summary>
 	[Export(typeof(IModule))]
-	public class CategoriesViewModel : Screen, IModule, IHandle<CategoriesUpdatedMessage>
+	public class CategoriesViewModel : Conductor<CategoryViewModel>.Collection.AllActive, IModule
 	{
 		#region Fields
 
-		private readonly CollectionViewSource categoriesCollectionView = new CollectionViewSource();
-		private readonly ICategoriesRepository categoriesRepository;
-
 		/// <summary>
-		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// Category repository.
 		/// </summary>
-		private IEventAggregator EventAggregator { get; set; }
+		private readonly ICategoriesRepository repository = IoC.Get<ICategoriesRepository>();
 
 		#endregion
-
-		/// <summary>
-		/// Gets categories for specific user.
-		/// </summary>
-		public ICollectionView Categories
-		{
-			get { return categoriesCollectionView.View; }
-		}
 
 		#region Ctors
 
@@ -45,31 +34,11 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// Initializes a new instance of the <see cref="CategoriesViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public CategoriesViewModel(IEventAggregator eventAggregator, ICategoriesRepository categoriesRepository)
+		public CategoriesViewModel()
 		{
-			EventAggregator = eventAggregator;
-			EventAggregator.Subscribe(this);
-
-			this.categoriesRepository = categoriesRepository;
-			categoriesCollectionView.Source = categoriesRepository.Entities;
-		}
-
-		#endregion
-
-		#region Implementation of IHandle<in CategoriesUpdatedMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(CategoriesUpdatedMessage message)
-		{
-			if (!categoriesCollectionView.View.IsEmpty)
-			{
-				categoriesCollectionView.View.MoveCurrentToFirst();
-			}
-
-			NotifyOfPropertyChange(() => Categories);
+			Items.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name); 
+			Items.AddRange(repository.Entities.Select(CategoriesExtensions.Map));
+			repository.Entities.CollectionChanged += OnEntitiesCollectionChanged;
 		}
 
 		#endregion
@@ -78,11 +47,12 @@ namespace Fab.Client.MoneyTracker.Categories
 
 		public string Name
 		{
-			get { return "Categories"; }
+			get { return "Categories (" + Items.Count + ")"; }
 		}
 
 		public void Show()
 		{
+			//TODO: make this method common for all IModels
 			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
 			{
 				DisplayName = Name;
@@ -95,31 +65,60 @@ namespace Fab.Client.MoneyTracker.Categories
 
 		#endregion
 
-		#region Create Category
-
-		private string categoryName;
+		#region Event Handlers
 
 		/// <summary>
-		/// Gets or sets name for the new category.
+		/// Occurs when the items list of the collection has changed, or the collection is reset.
 		/// </summary>
-		public string CategoryName
+		/// <param name="o">Collection that was changed.</param>
+		/// <param name="eventArgs">Change event data.</param>
+		private void OnEntitiesCollectionChanged(object o, NotifyCollectionChangedEventArgs eventArgs)
 		{
-			get { return categoryName; }
-			set
+			switch (eventArgs.Action)
 			{
-				categoryName = value;
-				NotifyOfPropertyChange(CategoryName);
+				case NotifyCollectionChangedAction.Add:
+					int i = eventArgs.NewStartingIndex;
+
+					foreach (var newItem in eventArgs.NewItems)
+					{
+						Items.Insert(i++, ((CategoryDTO)newItem).Map());
+					}
+
+					break;
+
+				case NotifyCollectionChangedAction.Remove:
+					foreach (var oldItem in eventArgs.OldItems)
+					{
+						var accountDTO = (CategoryDTO)oldItem;
+						var accountViewModel = Items.Where(a => a.Id == accountDTO.Id).Single();
+						Items.Remove(accountViewModel);
+					}
+
+					break;
+
+				case NotifyCollectionChangedAction.Replace:
+				case NotifyCollectionChangedAction.Reset:
+					Items.Clear();
+					Items.AddRange(repository.Entities.Select(CategoriesExtensions.Map));
+					break;
 			}
+
+			NotifyOfPropertyChange(() => Items);
 		}
 
+		#endregion
+
+		#region Create Category
+
 		/// <summary>
-		/// Create new account for specific user.
+		/// Open "new category" dialog.
 		/// </summary>
 		/// <returns>Operation result.</returns>
 		public void CreateCategory()
 		{
-			//TODO: customize category type here
-			categoriesRepository.Create(CategoryName.Trim(), CategoryType.Common);
+			var shell = IoC.Get<IShell>();
+			var newAccountViewModel = IoC.Get<NewCategoryViewModel>();
+			shell.Dialogs.ShowDialog(newAccountViewModel);
 		}
 
 		#endregion

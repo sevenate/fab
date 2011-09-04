@@ -8,7 +8,7 @@ namespace Fab.Server.Core.Enums
 	/// <summary>
 	/// Specify category types.
 	/// </summary>
-	public enum CategoryType : byte
+	public enum CategoryType
 	{
 		/// <summary>
 		/// Category for withdrawal and deposits (id = 0).

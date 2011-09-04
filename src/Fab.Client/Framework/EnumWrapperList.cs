@@ -26,14 +26,14 @@ namespace Fab.Client.Framework
 		/// </summary>
 		public EnumWrapperList()
 		{
-			var type = typeof (T);
+			var type = typeof(T);
 
 			if (!type.IsEnum)
 			{
 				throw new ArgumentException("This class only supports enumeration types.");
 			}
 
-			var fields = typeof(T).GetFields(BindingFlags.Static | BindingFlags.Public);
+			var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
 
 			foreach (var field in fields)
 			{
