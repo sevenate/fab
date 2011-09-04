@@ -340,6 +340,8 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 		#endregion
 
+		#region Methods
+
 		/// <summary>
 		/// Delete account after confirmation.
 		/// </summary>
@@ -351,9 +353,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 			var openConfirmationResult = new OpenConfirmationResult(EventAggregator)
 			{
-				Message =
-					"Do you really want to delete the account #" +
-					Id + " ?",
+				Message = "Do you really want to delete '" + Name + "' account?",
 				Title = "Confirmation",
 				Options = MessageBoxOptions.Yes | MessageBoxOptions.Cancel,
 			};
@@ -396,5 +396,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			yield return Animation.Stop("ShowActionsPanel");
 			yield return Animation.Begin("HideActionsPanel");
 		}
+
+		#endregion
 	}
 }
