@@ -11,6 +11,7 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.Shell;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Categories
 {
@@ -185,7 +186,31 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <param name="key">Key if the entity to delete.</param>
 		public override void Delete(int key)
 		{
-			throw new NotImplementedException();
+			var proxy = new MoneyServiceClient();
+
+			proxy.DeleteCategoryCompleted += (s, e) =>
+			{
+				if (e.Error == null)
+				{
+					Entities.Remove(ByKey(key));
+					Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
+					{
+						Categories = Entities
+					}));
+				}
+				else
+				{
+					Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+					{
+						Error = e.Error
+					}));
+				}
+
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
+			};
+
+			proxy.DeleteCategoryAsync(UserId, key);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Deleting category #" + key });
 		}
 
 		#endregion

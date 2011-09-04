@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Fab.Client.MoneyTracker.Categories.Single.CategoryView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+			 xmlns:ToolTips="clr-namespace:Silverlight.Controls.ToolTips;assembly=Silverlight.Controls.ToolTips"
+			 xmlns:Resources="clr-namespace:Fab.Client.Resources.Actions"
+			 mc:Ignorable="d"
+			 d:DataContext="{d:DesignData Source=./SampleData/Category.xaml}"
+			 d:DesignWidth="200">
+	<toolkit:DockPanel VerticalAlignment="Center">
+		<Button x:Name="Delete"
+				toolkit:DockPanel.Dock="Right"
+				MaxWidth="20"
+				Margin="10,0,0,0"
+				VerticalAlignment="Center"
+				ToolTipService.ToolTip="Delete">
+			<Button.Content>
+				<Resources:DeleteIcon />
+			</Button.Content>
+		</Button>
+		<TextBlock toolkit:DockPanel.Dock="Right"
+				   VerticalAlignment="Center"
+				   Text="{Binding Path=Popularity}" />
+		<TextBlock Text="{Binding Path=Name}"
+				   VerticalAlignment="Center"
+				   Foreground="{Binding Path=CategoryTypeWrapper.EnumValue, Converter={StaticResource categoryTypeToColor}}">
+			<ToolTipService.ToolTip>
+				<ToolTips:ToolTip DisplayTime="00:00:03"
+								  InitialDelay="00:00:03"
+								  x:Name="idTootltip">
+					<ToolTips:ToolTip.CloseAnimation>
+						<Storyboard Duration="00:00:01">
+							<DoubleAnimation From="1"
+											 To="0"
+											 Storyboard.TargetName="idTootltip"
+											 Storyboard.TargetProperty="Opacity" />
+						</Storyboard>
+					</ToolTips:ToolTip.CloseAnimation>
+					<ToolTips:ToolTip.OpenAnimation>
+						<Storyboard Duration="00:00:01">
+							<DoubleAnimation From="0"
+											 To="1"
+											 Storyboard.TargetName="idTootltip"
+											 Storyboard.TargetProperty="Opacity" />
+						</Storyboard>
+					</ToolTips:ToolTip.OpenAnimation>
+					<ToolTips:ToolTip.Content>
+						<TextBlock Text="{Binding Path=Id}" />
+					</ToolTips:ToolTip.Content>
+				</ToolTips:ToolTip>
+			</ToolTipService.ToolTip>
+		</TextBlock>
+	</toolkit:DockPanel>
+</UserControl>

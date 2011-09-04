@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="Fab.Client.MoneyTracker.Categories.NewCategoryView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:Controls="clr-namespace:Fab.Client.Controls"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 mc:Ignorable="d"
+			 Width="200">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<TextBlock Text="New category name:"
+				   Grid.Row="0"
+				   Margin="5,5,5,0" />
+		<Controls:WatermarkedTextbox Grid.Row="1"
+									 TabIndex="0"
+									 Text="{Binding Path=Name, Mode=TwoWay}"
+									 Watermark=""
+									 MinWidth="75"
+									 Margin="5">
+			<i:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Create}" />
+				<Behaviors:FocusBehavior HasInitialFocus="True" />
+			</i:Interaction.Behaviors>
+		</Controls:WatermarkedTextbox>
+		<TextBlock Text="Category type:"
+				   Grid.Row="2"
+				   Margin="5,0" />
+		<ComboBox Grid.Row="3"
+				  MinWidth="150"
+				  Margin="5"
+				  TabIndex="1"
+				  ItemsSource="{Binding Path=CategoryTypes}"
+				  SelectedValue="{Binding Path=SelectedCategoryType, Mode=TwoWay}"
+				  SelectedValuePath="Value">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Path=Description}" />
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<StackPanel Grid.Row="4"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<Button x:Name="Create"
+					Content="Create"
+					MinWidth="75"
+					MinHeight="25"
+					Margin="5,5,0,5"
+					TabIndex="2" />
+			<Button x:Name="Cancel"
+					Grid.Row="2"
+					Content="Cancel"
+					MinWidth="75"
+					MinHeight="25"
+					Margin="5"
+					TabIndex="3" />
+		</StackPanel>
+	</Grid>
+</UserControl>

@@ -30,28 +30,6 @@ namespace Fab.Client.MoneyTracker
 
 		#endregion
 
-		#region Implementation of IModule
-
-		public string Name
-		{
-			get { return "Accounts"; }
-		}
-
-		public void Show()
-		{
-			//TODO: make this method common for all IModels
-			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
-			{
-				DisplayName = Name;
-			}
-			else
-			{
-				((IConductor)Parent).ActivateItem(this);
-			}
-		}
-
-		#endregion
-
 		#region Properties
 
 		/// <summary>
@@ -70,8 +48,31 @@ namespace Fab.Client.MoneyTracker
 		public AccountsDashboardModel(PostingsFilterViewModel postingsFilterVM)
 		{
 			PostingsFilter = postingsFilterVM;
+			Items.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
 			Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
 			repository.Entities.CollectionChanged += OnEntitiesCollectionChanged;
+		}
+
+		#endregion
+
+		#region Implementation of IModule
+
+		public string Name
+		{
+			get { return "Accounts (" + Items.Count + ")"; }
+		}
+
+		public void Show()
+		{
+			//TODO: make this method common for all IModels
+			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
+			{
+				DisplayName = Name;
+			}
+			else
+			{
+				((IConductor)Parent).ActivateItem(this);
+			}
 		}
 
 		#endregion
@@ -137,7 +138,7 @@ namespace Fab.Client.MoneyTracker
 		}
 
 		/// <summary>
-		/// Open new account dialog.
+		/// Open "new account" dialog.
 		/// </summary>
 		public void CreateAccount()
 		{

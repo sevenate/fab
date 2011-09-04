@@ -81,8 +81,6 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 		#region Overrides of Screen
 
-		#region Overrides of Screen
-
 		/// <summary>
 		/// Gets the dialog title.
 		/// </summary>
@@ -90,8 +88,6 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		{
 			get { return "Create new account"; }
 		}
-
-		#endregion
 
 		/// <summary>
 		/// Called when initializing.

@@ -1,0 +1,14 @@
+﻿<local:CategoriesViewModel xmlns:local="clr-namespace:Fab.Client.MoneyTracker.Categories"
+                           xmlns:MoneyServiceReference="clr-namespace:Fab.Client.MoneyServiceReference">
+	<local:CategoriesViewModel.Categories>
+		<MoneyServiceReference:CategoryDTO Id="0"
+										   CategoryType="Deposit"
+										   Name="Deposit category" />
+		<MoneyServiceReference:CategoryDTO Id="1"
+										   CategoryType="Common"
+										   Name="Common category" />
+		<MoneyServiceReference:CategoryDTO Id="2"
+										   CategoryType="Withdrawal"
+										   Name="Withdrawal category" />
+	</local:CategoriesViewModel.Categories>
+</local:CategoriesViewModel>

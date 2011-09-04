@@ -7,8 +7,8 @@
 			 xmlns:shell="clr-namespace:Fab.Client.Shell"
 			 xmlns:framework="clr-namespace:Fab.Client.Framework"
 			 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
-			 xmlns:Common="clr-namespace:Fab.Client.Common"
-			 mc:Ignorable="d">
+			 xmlns:Common="clr-namespace:Fab.Client.Common" xmlns:Categories="clr-namespace:Fab.Client.MoneyTracker.Categories"
+             mc:Ignorable="d">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -33,6 +33,7 @@
 			<converters:BooleanToColorConverter x:Key="boolToColor" />
 			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
 			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
+			<Categories:CategoryTypeToColorConverter x:Key="categoryTypeToColor" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

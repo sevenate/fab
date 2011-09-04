@@ -3,12 +3,9 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:MoneyTracker="clr-namespace:Fab.Client.MoneyTracker"
-			 xmlns:cal="http://www.caliburnproject.org"
-			 mc:Ignorable="d"
+			 xmlns:cal="http://www.caliburnproject.org" mc:Ignorable="d"
 			 d:DesignHeight="300"
-			 d:DesignWidth="400"
-			 d:DataContext="{d:DesignInstance Type=MoneyTracker:AccountsDashboardModel}">
+			 d:DesignWidth="400">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"
@@ -33,7 +30,6 @@
 			<Button x:Name="CreateAccount"
 					Grid.Row="1"
 					Content="Create New"
-					HorizontalAlignment="Stretch"
 					MinHeight="23" />
 		</Grid>
 		<ContentControl Grid.Column="1"
