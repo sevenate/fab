@@ -7,21 +7,25 @@
 			 xmlns:Resources="clr-namespace:Fab.Client.Resources.Actions"
 			 xmlns:cal="http://www.caliburnproject.org"
 			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignData Source=./SampleData/Account.xaml}"
-			 cal:Message.Attach="[Event MouseEnter] = [Action ShowActions()]; [Event MouseLeave] = [Action HideActions()]">
+			 cal:Message.Attach="[Event MouseEnter] = [Action ShowActions()]; [Event MouseLeave] = [Action HideActions()]"
+			 d:DataContext="{d:DesignData Source=./SampleData/Account.xaml}">
 	<UserControl.Resources>
 		<Storyboard x:Name="ShowActionsPanel">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
 										   Storyboard.TargetName="actionsPanel">
-				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
-				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="0"
+									  Value="0" />
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5"
+									  Value="1" />
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 		<Storyboard x:Name="HideActionsPanel">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-				Storyboard.TargetName="actionsPanel">
-				<SplineDoubleKeyFrame KeyTime="0" Value="1"/>
-				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+										   Storyboard.TargetName="actionsPanel">
+				<SplineDoubleKeyFrame KeyTime="0"
+									  Value="1" />
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5"
+									  Value="0" />
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</UserControl.Resources>
@@ -32,8 +36,8 @@
 			<StackPanel Orientation="Vertical">
 				<Grid>
 					<Grid.RowDefinitions>
-						<RowDefinition/>
-						<RowDefinition/>
+						<RowDefinition />
+						<RowDefinition />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -51,47 +55,58 @@
 							   Text="{Binding Path=Balance, StringFormat=C}"
 							   HorizontalAlignment="Right"
 							   VerticalAlignment="Center" />
-					<StackPanel x:Name="actionsPanel" Grid.Column="2" Opacity="0"
-					Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical" Grid.RowSpan="2" d:LayoutOverrides="Height">
+					<StackPanel x:Name="actionsPanel"
+								Grid.Column="2"
+								Grid.RowSpan="2"
+								Opacity="0"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Center"
+								Orientation="Vertical">
 						<Button x:Name="Delete"
-							ToolTipService.ToolTip="Delete"
-							Width="16"
-							Height="16">
+								ToolTipService.ToolTip="Delete"
+								Width="16"
+								Height="16">
 							<Resources:DeleteIcon />
 						</Button>
 						<Button x:Name="Edit"
-							ToolTipService.ToolTip="Edit"
-							Width="16"
-							Height="16">
+								ToolTipService.ToolTip="Edit"
+								Width="16"
+								Height="16">
 							<Resources:EditIcon />
 						</Button>
 					</StackPanel>
-					<Controls:DockPanel Grid.Row="1" Grid.ColumnSpan="2">
+					<Controls:DockPanel Grid.Row="1"
+										Grid.ColumnSpan="2">
 						<TextBlock Text="{Binding PostingsCount, Converter={StaticResource zeroToEmptyString}}"
-							ToolTipService.ToolTip="Postings count"
-							FontSize="10"
-							Foreground="Gray"
-							FontStyle="Italic"
-							Margin="2,0,10,0" VerticalAlignment="Center" />
+								   ToolTipService.ToolTip="Postings count"
+								   FontSize="10"
+								   Foreground="Gray"
+								   FontStyle="Italic"
+								   Margin="2,0,10,0"
+								   VerticalAlignment="Center" />
 						<TextBlock Controls:DockPanel.Dock="Right"
-							HorizontalAlignment="Right"
-							FontSize="10"
-							Foreground="Gray"
-							FontStyle="Italic"
-							Text="{Binding LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
-							ToolTipService.ToolTip="{Binding LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=Last posting on \{0:F\}}" VerticalAlignment="Center" Height="11.5" />
+								   HorizontalAlignment="Right"
+								   FontSize="10"
+								   Foreground="Gray"
+								   FontStyle="Italic"
+								   Text="{Binding LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+								   ToolTipService.ToolTip="{Binding LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=Last posting on \{0:F\}}"
+								   VerticalAlignment="Center"
+								   Height="11.5" />
 						<TextBlock Controls:DockPanel.Dock="Right"
-							FontSize="10"
-							Foreground="Gray"
-							FontStyle="Italic"
-							Text=" - " VerticalAlignment="Center" />
+								   FontSize="10"
+								   Foreground="Gray"
+								   FontStyle="Italic"
+								   Text=" - "
+								   VerticalAlignment="Center" />
 						<TextBlock Controls:DockPanel.Dock="Right"
-							HorizontalAlignment="Right"
-							FontSize="10"
-							Foreground="Gray"
-							FontStyle="Italic"
-							Text="{Binding FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
-							ToolTipService.ToolTip="{Binding FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=First posting on \{0:F\}}" VerticalAlignment="Center" />
+								   HorizontalAlignment="Right"
+								   FontSize="10"
+								   Foreground="Gray"
+								   FontStyle="Italic"
+								   Text="{Binding FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+								   ToolTipService.ToolTip="{Binding FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=First posting on \{0:F\}}"
+								   VerticalAlignment="Center" />
 					</Controls:DockPanel>
 				</Grid>
 			</StackPanel>

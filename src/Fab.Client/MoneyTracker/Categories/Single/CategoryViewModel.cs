@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Framework.Results;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Categories.Single
@@ -180,8 +181,7 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 			var openConfirmationResult = new OpenConfirmationResult(EventAggregator)
 			{
 				Message =
-					"Do you really want to delete the category #" +
-					Id + " ?",
+					"Do you really want to delete '" + Name + "' category?",
 				Title = "Confirmation",
 				Options = MessageBoxOptions.Yes | MessageBoxOptions.Cancel,
 			};
@@ -192,6 +192,37 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 			{
 				Repository.Delete(Id);
 			}
+		}
+
+		/// <summary>
+		/// Edit category.
+		/// </summary>
+		/// <returns>Result of async operation.</returns>
+		public IEnumerable<IResult> Edit()
+		{
+			yield return Animation.Stop("ShowActionsPanel");
+			yield return Animation.Stop("HideActionsPanel");
+
+			var dialog = new OpenConfirmationResult(EventAggregator)
+			{
+				Message = "Category edit is not implemented yet",
+				Title = "Sorry",
+				Options = MessageBoxOptions.Ok,
+			};
+
+			yield return dialog;
+		}
+
+		public IEnumerable<IResult> ShowActions()
+		{
+			yield return Animation.Stop("HideActionsPanel");
+			yield return Animation.Begin("ShowActionsPanel");
+		}
+
+		public IEnumerable<IResult> HideActions()
+		{
+			yield return Animation.Stop("ShowActionsPanel");
+			yield return Animation.Begin("HideActionsPanel");
 		}
 
 		#endregion
