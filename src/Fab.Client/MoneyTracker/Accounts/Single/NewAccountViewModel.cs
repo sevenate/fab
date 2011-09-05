@@ -106,7 +106,6 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			AssetsSource.Clear();
 			AssetsSource.AddRange(getAssetTypesResult.Assets);
 			Assets.MoveCurrentToFirst();
-			//NotifyOfPropertyChange(() => Assets);
 		}
 
 		/// <summary>

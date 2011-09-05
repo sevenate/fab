@@ -31,6 +31,7 @@
 			<converters:BalanceToColorConverter x:Key="balanceToColor" />
 			<converters:DebugConverter x:Key="debugConverter" />
 			<converters:BooleanToColorConverter x:Key="boolToColor" />
+			<converters:AssetTypeIdToStringConverter x:Key="assetTypeIdToString" />
 			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
 			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
 			<Categories:CategoryTypeToColorConverter x:Key="categoryTypeToColor" />

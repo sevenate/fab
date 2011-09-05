@@ -43,6 +43,7 @@
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition />
 						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0"
 							   Text="{Binding Path=Name}"
@@ -52,11 +53,17 @@
 							   VerticalAlignment="Center" />
 					<TextBlock Grid.Column="1"
 							   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
-							   Text="{Binding Path=Balance, StringFormat=C}"
+							   Text="{Binding Path=Balance, StringFormat=N}"
 							   HorizontalAlignment="Right"
 							   VerticalAlignment="Center" />
+					<TextBlock Grid.Column="2"
+							   Margin="5,0,2,0"
+							   MinWidth="20"
+							   Text="{Binding Path=AssetTypeId, Converter={StaticResource assetTypeIdToString}}"
+							   FontWeight="Bold"
+							   VerticalAlignment="Center" HorizontalAlignment="Left" />
 					<StackPanel x:Name="actionsPanel"
-								Grid.Column="2"
+								Grid.Column="3"
 								Grid.RowSpan="2"
 								Opacity="0"
 								HorizontalAlignment="Right"
@@ -76,13 +83,14 @@
 						</Button>
 					</StackPanel>
 					<Controls:DockPanel Grid.Row="1"
-										Grid.ColumnSpan="2">
+										Grid.ColumnSpan="3"
+										Margin="2,0">
 						<TextBlock Text="{Binding PostingsCount, Converter={StaticResource zeroToEmptyString}}"
 								   ToolTipService.ToolTip="Postings count"
 								   FontSize="10"
 								   Foreground="Gray"
 								   FontStyle="Italic"
-								   Margin="2,0,10,0"
+								   Margin="0,0,10,0"
 								   VerticalAlignment="Center" />
 						<TextBlock Controls:DockPanel.Dock="Right"
 								   HorizontalAlignment="Right"
