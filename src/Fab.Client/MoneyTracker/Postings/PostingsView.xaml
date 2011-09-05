@@ -120,38 +120,6 @@
 					  AutoGenerateColumns="False"
 					  ItemsSource="{Binding Path=TransactionRecords}">
 			<sdk:DataGrid.Columns>
-				<sdk:DataGridTemplateColumn CanUserResize="False"
-											CanUserReorder="False"
-											CanUserSort="False"
-											IsReadOnly="True">
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Button MaxHeight="24"
-									ToolTipService.ToolTip="Edit"
-									cal:Message.Attach="EditPosting($dataContext)">
-								<Button.Content>
-									<Resources:EditIcon />
-								</Button.Content>
-							</Button>
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
-				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn CanUserResize="False"
-											CanUserReorder="False"
-											CanUserSort="False"
-											IsReadOnly="True">
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Button MaxHeight="24"
-									ToolTipService.ToolTip="Delete"
-									cal:Message.Attach="DeleteTransaction($dataContext)">
-								<Button.Content>
-									<Resources:DeleteIcon />
-								</Button.Content>
-							</Button>
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
-				</sdk:DataGridTemplateColumn>
 				<sdk:DataGridTextColumn Header="ID"
 										IsReadOnly="True"
 										CanUserSort="False"
@@ -235,6 +203,38 @@
 									   VerticalAlignment="Center"
 									   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
 									   Text="{Binding Path=Balance, StringFormat=C}" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn CanUserResize="False"
+											CanUserReorder="False"
+											CanUserSort="False"
+											IsReadOnly="True">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button MaxHeight="24"
+									ToolTipService.ToolTip="Edit"
+									cal:Message.Attach="EditPosting($dataContext)">
+								<Button.Content>
+									<Resources:EditIcon />
+								</Button.Content>
+							</Button>
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn CanUserResize="False"
+											CanUserReorder="False"
+											CanUserSort="False"
+											IsReadOnly="True">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button MaxHeight="24"
+									ToolTipService.ToolTip="Delete"
+									cal:Message.Attach="DeleteTransaction($dataContext)">
+								<Button.Content>
+									<Resources:DeleteIcon />
+								</Button.Content>
+							</Button>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
