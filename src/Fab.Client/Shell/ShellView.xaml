@@ -16,9 +16,16 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
-				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 			<Controls:DockPanel Visibility="{Binding Path=IsAuthenticated, Converter={StaticResource boolToVisibility}}">
+				<TextBlock x:Name="Version"
+						   Controls:DockPanel.Dock="Right"
+						   ToolTipService.ToolTip="Client version"
+						   Margin="5"
+						   TextWrapping="Wrap"
+						   HorizontalAlignment="Right"
+						   VerticalAlignment="Top"
+						   Foreground="#FF868686" />
 				<ContentControl x:Name="PersonalCorner"
 								Controls:DockPanel.Dock="Right"
 								VerticalContentAlignment="Stretch"
@@ -51,31 +58,8 @@
 							VerticalContentAlignment="Stretch"
 							HorizontalContentAlignment="Stretch"
 							Template="{StaticResource TransitioningFrame}" />
-			<StackPanel Grid.Row="2"
-						Orientation="Horizontal"
-						HorizontalAlignment="Right">
-				<TextBlock x:Name="WindowSize"
-						   ToolTipService.ToolTip="Window size"
-						   TextWrapping="Wrap"
-						   HorizontalAlignment="Right"
-						   VerticalAlignment="Center"
-						   Foreground="#FF868686" />
-				<TextBlock x:Name="Version"
-						   ToolTipService.ToolTip="Client version"
-						   Margin="5,0,0,0"
-						   TextWrapping="Wrap"
-						   HorizontalAlignment="Right"
-						   VerticalAlignment="Center"
-						   Foreground="#FF868686" />
-			</StackPanel>
-			<TextBlock x:Name="Copyright"
-					   TextWrapping="Wrap"
-					   Grid.Row="2"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   Foreground="#FF868686" />
 			<ContentControl x:Name="Dialogs"
-							Grid.RowSpan="3"
+							Grid.RowSpan="2"
 							VerticalContentAlignment="Stretch"
 							HorizontalContentAlignment="Stretch" />
 		</Grid>

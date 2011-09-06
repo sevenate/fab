@@ -1,8 +1,12 @@
-﻿using System;
+﻿// <copyright file="ShellViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// </copyright>
+// <author name="Andrey Levshov" email="78@nreez.com" date="2010-11-17" />
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Windows;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
@@ -13,12 +17,6 @@ namespace Fab.Client.Shell
 	[Export(typeof(IShell))]
 	public class ShellViewModel : Conductor<IModule>.Collection.OneActive, IShell, IHandle<OpenDialogMessage>, IHandle<OpenMessageBoxMessage>, IHandle<ServiceErrorMessage>
 	{
-		#region Constants
-
-		private const string CopyrightTemplate = "Copyright © 2009-{0} nReez Software. All rights reserved.";
-
-		#endregion
-
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
@@ -89,22 +87,6 @@ namespace Fab.Client.Shell
 		public string Version
 		{
 			get { return AssemblyExtensions.AppVersion; }
-		}
-
-		/// <summary>
-		/// Gets application main window size.
-		/// </summary>
-		public string WindowSize
-		{
-			get { return Application.Current.MainWindow.Width + " x " + Application.Current.MainWindow.Height; }
-		}
-
-		/// <summary>
-		/// Gets copyright information.
-		/// </summary>
-		public string Copyright
-		{
-			get { return string.Format(CopyrightTemplate, DateTime.Now.Year); }
 		}
 
 		/// <summary>

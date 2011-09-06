@@ -1,9 +1,9 @@
-// <copyright file="LoginViewModel.cs" company="HD">
-// 	Copyright (c) 2009-2010 nReez. All rights reserved.
+// <copyright file="LoginViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-11-17" />
-// <summary>View-model for <see cref="Login"/> dialog.</summary>
+// <author name="Andrey Levshov" email="78@nreez.com" date="2010-11-17" />
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
@@ -46,6 +46,16 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		private const string AuthenticationFailed = "The username or password provided is incorrect.";
 
+		/// <summary>
+		/// "Long" copyright message.
+		/// </summary>
+		private const string LongCopyrightTemplate = "Copyright © 2009-{0} nReez Software. All rights reserved.";
+
+		/// <summary>
+		/// "Short" copyright message.
+		/// </summary>
+		private const string ShortCopyrightTemplate = "© {0} nReez.com";
+
 		#endregion
 
 		/// <summary>
@@ -74,6 +84,19 @@ namespace Fab.Client.Authentication
 		}
 
 		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets copyright information.
+		/// </summary>
+		public string Copyright
+		{
+			get { return string.Format(ShortCopyrightTemplate, DateTime.Now.Year); }
+		}
+
+		#endregion
+
 
 		#region Overrides of Screen
 
