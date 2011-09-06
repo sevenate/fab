@@ -109,9 +109,19 @@ namespace Fab.Client.MoneyTracker
 					break;
 
 				case NotifyCollectionChangedAction.Replace:
-					Items.Clear();
-					Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
-					ActivateFirstItem();
+					for (int j = 0; j < eventArgs.OldItems.Count; j++)
+					{
+						var oldAccountId = ((AccountDTO)eventArgs.OldItems[j]).Id;
+						var newAccount = ((AccountDTO)eventArgs.NewItems[j]).Map();
+						var oldAccount = Items.Where(model => model.Id == oldAccountId).Single();
+						oldAccount.Name = newAccount.Name;
+						oldAccount.AssetTypeId = newAccount.AssetTypeId;
+						oldAccount.Created = newAccount.Created;
+						oldAccount.Balance = newAccount.Balance;
+						oldAccount.FirstPostingDate = newAccount.FirstPostingDate;
+						oldAccount.LastPostingDate = newAccount.LastPostingDate;
+						oldAccount.PostingsCount = newAccount.PostingsCount;
+					}
 					break;
 
 				case NotifyCollectionChangedAction.Reset:
