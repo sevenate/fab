@@ -16,8 +16,9 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// <summary>
 	/// Categories view model.
 	/// </summary>
-	[Export(typeof(IModule))]
-	public class CategoriesViewModel : Conductor<CategoryViewModel>.Collection.AllActive, IModule
+	[Export(typeof(CategoriesViewModel))]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
+	public class CategoriesViewModel : Conductor<CategoryViewModel>.Collection.AllActive
 	{
 		#region Fields
 
@@ -25,6 +26,32 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// Category repository.
 		/// </summary>
 		private readonly ICategoriesRepository repository = IoC.Get<ICategoriesRepository>();
+
+		#endregion
+
+		#region Type
+
+		/// <summary>
+		/// Category type.
+		/// </summary>
+		private CategoryType categoryType;
+
+		/// <summary>
+		/// Gets or sets category type.
+		/// </summary>
+		public CategoryType CategoryType
+		{
+			get { return categoryType; }
+			set
+			{
+				if (categoryType != value)
+				{
+					categoryType = value;
+					ResetCategories();
+					NotifyOfPropertyChange(() => CategoryType);
+				}
+			}
+		}
 
 		#endregion
 
@@ -36,74 +63,20 @@ namespace Fab.Client.MoneyTracker.Categories
 		[ImportingConstructor]
 		public CategoriesViewModel()
 		{
-			Items.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name); 
-			Items.AddRange(repository.Entities.Select(CategoriesExtensions.Map));
+			//Items.AddRange(repository.Entities.Select(CategoriesExtensions.Map));
 			repository.Entities.CollectionChanged += OnEntitiesCollectionChanged;
 		}
 
 		#endregion
 
-		#region Implementation of IModule
-
-		public string Name
-		{
-			get { return "Categories (" + Items.Count + ")"; }
-		}
-
-		public void Show()
-		{
-			//TODO: make this method common for all IModels
-			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
-			{
-				DisplayName = Name;
-			}
-			else
-			{
-				((IConductor)Parent).ActivateItem(this);
-			}
-		}
-
-		#endregion
-
-		#region Event Handlers
+		#region Overrides of Screen
 
 		/// <summary>
-		/// Occurs when the items list of the collection has changed, or the collection is reset.
+		/// Gets or Sets the Display Name
 		/// </summary>
-		/// <param name="o">Collection that was changed.</param>
-		/// <param name="eventArgs">Change event data.</param>
-		private void OnEntitiesCollectionChanged(object o, NotifyCollectionChangedEventArgs eventArgs)
+		public override string DisplayName
 		{
-			switch (eventArgs.Action)
-			{
-				case NotifyCollectionChangedAction.Add:
-					int i = eventArgs.NewStartingIndex;
-
-					foreach (var newItem in eventArgs.NewItems)
-					{
-						Items.Insert(i++, ((CategoryDTO)newItem).Map());
-					}
-
-					break;
-
-				case NotifyCollectionChangedAction.Remove:
-					foreach (var oldItem in eventArgs.OldItems)
-					{
-						var accountDTO = (CategoryDTO)oldItem;
-						var accountViewModel = Items.Where(a => a.Id == accountDTO.Id).Single();
-						Items.Remove(accountViewModel);
-					}
-
-					break;
-
-				case NotifyCollectionChangedAction.Replace:
-				case NotifyCollectionChangedAction.Reset:
-					Items.Clear();
-					Items.AddRange(repository.Entities.Select(CategoriesExtensions.Map));
-					break;
-			}
-
-			NotifyOfPropertyChange(() => Items);
+			get { return CategoryType + " categories (" + Items.Count + ")"; }
 		}
 
 		#endregion
@@ -118,7 +91,64 @@ namespace Fab.Client.MoneyTracker.Categories
 		{
 			var shell = IoC.Get<IShell>();
 			var newAccountViewModel = IoC.Get<NewCategoryViewModel>();
+			newAccountViewModel.SelectedCategoryType = CategoryType;
 			shell.Dialogs.ShowDialog(newAccountViewModel);
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		private void ResetCategories()
+		{
+			Items.Clear();
+			Items.AddRange(repository.Entities.Where(dto => dto.CategoryType == CategoryType).Select(CategoriesExtensions.Map));
+		}
+
+		/// <summary>
+		/// Occurs when the items list of the collection has changed, or the collection is reset.
+		/// </summary>
+		/// <param name="o">Collection that was changed.</param>
+		/// <param name="eventArgs">Change event data.</param>
+		private void OnEntitiesCollectionChanged(object o, NotifyCollectionChangedEventArgs eventArgs)
+		{
+			switch (eventArgs.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					foreach (var newItem in eventArgs.NewItems)
+					{
+						var category = (CategoryDTO) newItem;
+						
+						if (category.CategoryType == CategoryType)
+						{
+							Items.Insert(Items.Count, category.Map());
+						}
+					}
+
+					break;
+
+				case NotifyCollectionChangedAction.Remove:
+					foreach (var oldItem in eventArgs.OldItems)
+					{
+						var category = (CategoryDTO) oldItem;
+
+						if (category.CategoryType == CategoryType)
+						{
+							var categoryViewModel = Items.Where(a => a.Id == category.Id).Single();
+							Items.Remove(categoryViewModel);
+						}
+					}
+
+					break;
+
+				case NotifyCollectionChangedAction.Replace:
+				case NotifyCollectionChangedAction.Reset:
+					ResetCategories();
+					break;
+			}
+
+			NotifyOfPropertyChange(() => Items);
+			NotifyOfPropertyChange(() => DisplayName);
 		}
 
 		#endregion

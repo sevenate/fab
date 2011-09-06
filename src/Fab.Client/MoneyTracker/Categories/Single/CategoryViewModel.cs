@@ -74,27 +74,6 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 
 		#region Type
 
-//		/// <summary>
-//		/// Category type.
-//		/// </summary>
-//		private CategoryType categoryType;
-//
-//		/// <summary>
-//		/// Gets or sets category type.
-//		/// </summary>
-//		public CategoryType CategoryType
-//		{
-//			get { return categoryType; }
-//			set
-//			{
-//				if (categoryType != value)
-//				{
-//					categoryType = value;
-//					NotifyOfPropertyChange(() => CategoryType);
-//				}
-//			}
-//		}
-
 		/// <summary>
 		/// Category type.
 		/// </summary>
