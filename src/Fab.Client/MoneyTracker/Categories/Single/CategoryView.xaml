@@ -8,6 +8,7 @@
 			 xmlns:Resources="clr-namespace:Fab.Client.Resources.Actions"
 			 xmlns:cal="http://www.caliburnproject.org"
 			 mc:Ignorable="d"
+			 d:DesignWidth="160"
 			 cal:Message.Attach="[Event MouseEnter] = [Action ShowActions()]; [Event MouseLeave] = [Action HideActions()]"
 			 d:DataContext="{d:DesignData Source=./SampleData/Category.xaml}">
 	<UserControl.Resources>
@@ -30,12 +31,12 @@
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</UserControl.Resources>
-	<toolkit:DockPanel VerticalAlignment="Center">
+	<toolkit:DockPanel VerticalAlignment="Center" Background="{StaticResource Brush_WindowBackground}">
 		<StackPanel x:Name="actionsPanel"
 					toolkit:DockPanel.Dock="Right"
 					Opacity="0"
 					HorizontalAlignment="Right"
-					VerticalAlignment="Center"
+					VerticalAlignment="Top"
 					Orientation="Horizontal">
 			<Button x:Name="Edit"
 					ToolTipService.ToolTip="Edit"
@@ -51,11 +52,11 @@
 			</Button>
 		</StackPanel>
 		<TextBlock toolkit:DockPanel.Dock="Right"
-				   VerticalAlignment="Center"
+				   VerticalAlignment="Top"
 				   Text="{Binding Path=Popularity}" Margin="5,0" />
 		<TextBlock Text="{Binding Path=Name}"
-				   VerticalAlignment="Center"
-				   Foreground="{Binding Path=CategoryTypeWrapper.EnumValue, Converter={StaticResource categoryTypeToColor}}">
+				   VerticalAlignment="Top"
+				   Foreground="{Binding Path=CategoryTypeWrapper.EnumValue, Converter={StaticResource categoryTypeToColor}}" TextWrapping="Wrap">
 			<ToolTipService.ToolTip>
 				<ToolTips:ToolTip DisplayTime="00:00:03"
 								  InitialDelay="00:00:03"
@@ -77,7 +78,8 @@
 						</Storyboard>
 					</ToolTips:ToolTip.OpenAnimation>
 					<ToolTips:ToolTip.Content>
-						<TextBlock Text="{Binding Path=Id}" />
+						<TextBlock Text="{Binding Path=Id, StringFormat=#\{0\}}"
+								   Foreground="Black" />
 					</ToolTips:ToolTip.Content>
 				</ToolTips:ToolTip>
 			</ToolTipService.ToolTip>

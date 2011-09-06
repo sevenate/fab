@@ -1,8 +1,7 @@
-﻿// <copyright file="BalanceToColorConverter.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+﻿// <copyright file="AssetTypeIdToStringConverter.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" />
-// <summary>Convert negative <see cref="decimal"/> value to <see cref="Colors.Red"/>.</summary>
+// <author name="Andrey Levshov" email="78@nreez.com" />
 
 using System;
 using System.Globalization;
