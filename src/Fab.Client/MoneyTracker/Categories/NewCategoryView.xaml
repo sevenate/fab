@@ -6,7 +6,7 @@
 			 xmlns:Controls="clr-namespace:Fab.Client.Controls"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
-			 mc:Ignorable="d"
+             xmlns:Controls1="clr-namespace:Fab.Client.Framework.Controls" mc:Ignorable="d"
 			 Width="200">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -19,7 +19,7 @@
 		<TextBlock Text="New category name:"
 				   Grid.Row="0"
 				   Margin="5,5,5,0" />
-		<Controls:WatermarkedTextbox Grid.Row="1"
+		<Controls1:WatermarkedTextbox Grid.Row="1"
 									 TabIndex="0"
 									 Text="{Binding Path=Name, Mode=TwoWay}"
 									 Watermark=""
@@ -29,7 +29,7 @@
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Create}" />
 				<Behaviors:FocusBehavior HasInitialFocus="True" />
 			</i:Interaction.Behaviors>
-		</Controls:WatermarkedTextbox>
+		</Controls1:WatermarkedTextbox>
 		<TextBlock Text="Category type:"
 				   Grid.Row="2"
 				   Margin="5,0" />

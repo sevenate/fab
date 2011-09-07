@@ -3,11 +3,12 @@
 // you keep this copyright notice. And it would be nice if you left a comment on my
 // blog if you find it useful. http://silverscrath.blogspot.com/
 // </copyright>
+
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Fab.Client.Controls
+namespace Fab.Client.Framework.Controls
 {
 	/// <summary>
 	/// A user control to provide a filter for a list view
