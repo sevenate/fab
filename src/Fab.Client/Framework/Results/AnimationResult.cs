@@ -49,11 +49,11 @@ namespace Fab.Client.Framework.Results
 		{
 			FrameworkElement element = null;
 
-			if (context.Source != null)
-				element = context.Source;
-
 			if (context.View != null)
 				element = context.View as FrameworkElement;
+
+			if (element == null && context.Message != null)
+				element = context.Source;
 
 //			if (context.HandlingNode != null)
 //				element = context.HandlingNode.UIElement as FrameworkElement;

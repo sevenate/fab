@@ -5,7 +5,8 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:Controls="clr-namespace:Fab.Client.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors" mc:Ignorable="d"
+             xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+             xmlns:Controls1="clr-namespace:Fab.Client.Framework.Controls" mc:Ignorable="d"
 			 Width="200">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -13,7 +14,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Controls:WatermarkedTextbox TabIndex="0"
+		<Controls1:WatermarkedTextbox TabIndex="0"
 									 Text="{Binding Path=Name, Mode=TwoWay}"
 									 Watermark="New account name"
 									 MinWidth="75"
@@ -22,7 +23,7 @@
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Create}" />
 				<Behaviors:FocusBehavior HasInitialFocus="True" />
 			</i:Interaction.Behaviors>
-		</Controls:WatermarkedTextbox>
+		</Controls1:WatermarkedTextbox>
 		<ComboBox x:Name="Assets"
 		          Grid.Row="1"
 		          MinWidth="150"

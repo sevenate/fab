@@ -6,8 +6,8 @@
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:local="clr-namespace:Fab.Client.Common"
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
-			 xmlns:Controls="clr-namespace:Fab.Client.Controls"
-			 mc:Ignorable="d"
+			 xmlns:Controls="clr-namespace:Fab.Client.Controls" xmlns:Controls1="clr-namespace:Fab.Client.Framework.Controls"
+             mc:Ignorable="d"
 			 d:DesignWidth="750">
 	<UserControl.Resources>
 		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
@@ -54,12 +54,12 @@
 							ValidatesOnNotifyDataErrors=True,
 							NotifyOnValidationError=True}"
 				 VerticalAlignment="Center" />
-		<Controls:WatermarkedTextbox x:Name="Comment"
+		<Controls1:WatermarkedTextbox x:Name="Comment"
 		                             Grid.Column="3"
 		                             Watermark="Comment"
 		                             Text="{Binding Path=Comment, Mode=TwoWay}"
 									 VerticalAlignment="Center">
-			<Controls:WatermarkedTextbox.TextBoxStyle>
+			<Controls1:WatermarkedTextbox.TextBoxStyle>
 				<Style TargetType="TextBox">
 					<Setter Property="MaxLength"
 					        Value="255" />
@@ -70,8 +70,8 @@
 					<Setter Property="AcceptsReturn"
 							Value="True" />
 				</Style>
-			</Controls:WatermarkedTextbox.TextBoxStyle>
-		</Controls:WatermarkedTextbox>
+			</Controls1:WatermarkedTextbox.TextBoxStyle>
+		</Controls1:WatermarkedTextbox>
 		<StackPanel Grid.Column="4"
 		            Orientation="Horizontal"
 		            HorizontalAlignment="Right">
