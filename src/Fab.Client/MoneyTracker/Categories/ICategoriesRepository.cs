@@ -20,5 +20,14 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <param name="categoryType">New category type.</param>
 		/// <returns>Created category.</returns>
 		CategoryDTO Create(string name, CategoryType categoryType);
+
+		/// <summary>
+		/// Update category for specific user.
+		/// </summary>
+		/// <param name="id">Existing category id.</param>
+		/// <param name="name">New category name.</param>
+		/// <param name="categoryType">New category type.</param>
+		/// <returns>Updated category.</returns>
+		CategoryDTO Update(int id, string name, CategoryType categoryType);
 	}
 }

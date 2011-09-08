@@ -25,7 +25,7 @@ namespace Fab.Client.MoneyTracker.Postings
 	/// </summary>
 	[Export(typeof (PostingsViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class PostingsViewModel : Conductor<IPostingPanel>.Collection.OneActive
+	public class PostingsViewModel : Conductor<IPostingPanel>.Collection.OneActive, IHandle<CategoryDeletedMessage>
 	{
 		#region Fields
 
@@ -363,6 +363,12 @@ namespace Fab.Client.MoneyTracker.Postings
 				// Update accounts balance
 				accountsRepository.Download(AccountId);
 
+				// Update category usage
+				if (transactionRecord.Category != null)
+				{
+					categoriesRepository.Download(transactionRecord.Category.Id);
+				}
+
 				// For transfer the 2-nd account should also be updated
 				if (request.Transaction is TransferDTO)
 				{
@@ -530,6 +536,25 @@ namespace Fab.Client.MoneyTracker.Postings
 			IsOutdated = false;
 
 			yield return Loader.Hide();
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<CategoryDeletedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(CategoryDeletedMessage message)
+		{
+			foreach (var transactionRecord in TransactionRecords)
+			{
+				if(transactionRecord.Category != null && transactionRecord.Category.Id == message.Category.Id)
+				{
+					transactionRecord.Category = null;
+				}
+			}
 		}
 
 		#endregion

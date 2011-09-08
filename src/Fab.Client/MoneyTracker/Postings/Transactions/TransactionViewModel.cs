@@ -18,6 +18,7 @@ using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
+using Fab.Client.MoneyTracker.Categories;
 
 namespace Fab.Client.MoneyTracker.Postings.Transactions
 {
@@ -30,7 +31,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 	{
 		#region Fields
 
-		private IAccountsRepository accountsRepository;
+		#region Dependencies
+
+		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
+		private readonly ICategoriesRepository categoryRepository = IoC.Get<ICategoriesRepository>();
+
+		#endregion
+
 		private readonly CollectionViewSource categoriesViewSource = new CollectionViewSource();
 		private AutoCompleteFilterPredicate<object> categoryFilter;
 		private int? transactionId;
@@ -225,9 +232,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		/// Initializes a new instance of the <see cref="TransactionViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public TransactionViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
+		public TransactionViewModel(IEventAggregator eventAggregator)
 		{
-			this.accountsRepository = accountsRepository;
 			eventAggregator.Subscribe(this);
 
 			categoryFilter = (search, item) =>
@@ -353,6 +359,11 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			}
 
 			accountsRepository.Download(AccountId);
+			
+			if (CurrentCategory != null)
+			{
+				categoryRepository.Download(CurrentCategory.Id);
+			}
 
 			yield return Loader.Hide();
 

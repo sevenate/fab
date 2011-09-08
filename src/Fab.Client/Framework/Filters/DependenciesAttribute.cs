@@ -22,7 +22,7 @@ namespace Fab.Client.Framework.Filters
 
 		public DependenciesAttribute(params string[] propertyNames)
 		{
-			PropertyNames = propertyNames ?? new string[] {};
+			PropertyNames = propertyNames ?? new string[] { };
 		}
 
 		public string[] PropertyNames { get; private set; }
@@ -52,7 +52,7 @@ namespace Fab.Client.Framework.Filters
 		private void TargetPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (string.IsNullOrEmpty(e.PropertyName) || PropertyNames.Contains(e.PropertyName))
-				Execute.OnUIThread(() => { context.Message.UpdateAvailability(); });
+				Execute.OnUIThread(() => context.Message.UpdateAvailability());
 		}
 	}
 }

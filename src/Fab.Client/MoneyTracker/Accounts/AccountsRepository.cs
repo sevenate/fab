@@ -172,7 +172,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 											};
 
 			proxy.CreateAccountAsync(UserId, entity.Name, entity.AssetTypeId);
-			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Creating new account" });
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Creating new account \"" + entity.Name + "\"" });
 
 			return entity;
 		}

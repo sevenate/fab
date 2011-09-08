@@ -182,14 +182,17 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 			yield return Animation.Stop("ShowActionsPanel");
 			yield return Animation.Stop("HideActionsPanel");
 
-			var dialog = new OpenConfirmationResult(EventAggregator)
-			{
-				Message = "Category edit is not implemented yet",
-				Title = "Sorry",
-				Options = MessageBoxOptions.Ok,
-			};
+			var shell = IoC.Get<IShell>();
+			var categoryViewModel = IoC.Get<NewCategoryViewModel>();
+			
+			categoryViewModel.CategoryId = Id;
+			categoryViewModel.Name = Name;
+			categoryViewModel.SelectedCategoryType = CategoryTypeWrapper.EnumValue;
+			categoryViewModel.IsEditMode = true;
+			
+			shell.Dialogs.ShowDialog(categoryViewModel);
 
-			yield return dialog;
+			yield break;
 		}
 
 		public IEnumerable<IResult> ShowActions()

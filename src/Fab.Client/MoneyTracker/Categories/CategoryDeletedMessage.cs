@@ -8,9 +8,9 @@ using Fab.Client.MoneyServiceReference;
 namespace Fab.Client.MoneyTracker.Categories
 {
 	/// <summary>
-	/// Send by <see cref="CategoriesRepository"/> after one of the category has been created or updated.
+	/// Send by <see cref="CategoryDeletedMessage"/> after one of the category has been deleted.
 	/// </summary>
-	public class CategoryUpdatedMessage
+	public class CategoryDeletedMessage
 	{
 		/// <summary>
 		/// Gets or sets updated user category.

@@ -140,6 +140,7 @@
     <Compile Include="MoneyTracker\Accounts\Single\NewAccountViewModel.cs" />
     <Compile Include="MoneyTracker\CategoriesDashBoardModel.cs" />
     <Compile Include="MoneyTracker\Categories\CategoryTypeToColorConverter.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoryDeletedMessage.cs" />
     <Compile Include="MoneyTracker\Categories\NewCategoryViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\Single\CategoryViewModel.cs" />
     <Compile Include="Resources\Actions\EditIcon.xaml.cs">
