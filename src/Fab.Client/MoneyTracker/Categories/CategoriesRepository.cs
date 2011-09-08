@@ -18,7 +18,7 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// <summary>
 	/// Provide access to all user categories.
 	/// </summary>
-	[Export(typeof (ICategoriesRepository))]
+	[Export(typeof(ICategoriesRepository))]
 	public class CategoriesRepository : RepositoryBase<CategoryDTO>, ICategoriesRepository
 	{
 		#region Ctors
@@ -28,7 +28,8 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// </summary>
 		/// <param name="eventAggregator">Global event aggregator instance to send messages.</param>
 		[ImportingConstructor]
-		public CategoriesRepository(IEventAggregator eventAggregator) : base(eventAggregator)
+		public CategoriesRepository(IEventAggregator eventAggregator)
+			: base(eventAggregator)
 		{
 		}
 
@@ -44,9 +45,9 @@ namespace Fab.Client.MoneyTracker.Categories
 		{
 			base.Handle(message);
 			EventAggregator.Publish(new CategoriesUpdatedMessage
-			                        {
-			                        	Categories = Entities
-			                        });
+									{
+										Categories = Entities
+									});
 		}
 
 		#endregion
@@ -71,26 +72,29 @@ namespace Fab.Client.MoneyTracker.Categories
 			var proxy = new MoneyServiceClient();
 
 			proxy.GetAllCategoriesCompleted += (s, e) =>
-			                                   {
-			                                   	if (e.Error == null)
-			                                   	{
-			                                   		Entities.Clear();
-			                                   		Entities.AddRange(e.Result);
-			                                   		Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
-			                                   		                                                 {
-			                                   		                                                 	Categories = Entities
-			                                   		                                                 }));
-			                                   	}
-			                                   	else
-			                                   	{
-													Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
-			                                   		                                                 {
-			                                   		                                                 	Error = e.Error
-			                                   		                                                 }));
-			                                   	}
-			                                   };
+											   {
+												   if (e.Error == null)
+												   {
+													   Entities.Clear();
+													   Entities.AddRange(e.Result);
+													   Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
+																										{
+																											Categories = Entities
+																										}));
+												   }
+												   else
+												   {
+													   Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+																										{
+																											Error = e.Error
+																										}));
+												   }
+
+												   EventAggregator.Publish(new AsyncOperationCompleteMessage());
+											   };
 
 			proxy.GetAllCategoriesAsync(UserId);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading categories list" });
 		}
 
 		/// <summary>
@@ -106,13 +110,12 @@ namespace Fab.Client.MoneyTracker.Categories
 				if (e.Error == null)
 				{
 					var category = ByKey(key);
-					var index = Entities.IndexOf(category);
 
 					// TODO: find a way to use Automapper for SL4 here
-					Entities[index].CategoryType = e.Result.CategoryType;
-					Entities[index].Id = e.Result.Id;
-					Entities[index].Name = e.Result.Name;
-					Entities[index].Popularity = e.Result.Popularity;
+					category.CategoryType = e.Result.CategoryType;
+					category.Id = e.Result.Id;
+					category.Name = e.Result.Name;
+					category.Popularity = e.Result.Popularity;
 
 					Execute.OnUIThread(() => EventAggregator.Publish(new CategoryUpdatedMessage
 					{
@@ -126,9 +129,12 @@ namespace Fab.Client.MoneyTracker.Categories
 						Error = e.Error
 					}));
 				}
+
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
 			proxy.GetCategoryAsync(UserId, key);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading category #" + key });
 		}
 
 		/// <summary>
@@ -144,28 +150,30 @@ namespace Fab.Client.MoneyTracker.Categories
 			}
 
 			var proxy = new MoneyServiceClient();
-
 			proxy.CreateCategoryCompleted += (s, e) =>
-			                                 {
-			                                 	if (e.Error == null)
-			                                 	{
-			                                 		entity.Id = e.Result;
-			                                 		Entities.Add(entity);
-			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
-			                                 		                                                 {
-			                                 		                                                 	Categories = Entities
-			                                 		                                                 }));
-			                                 	}
-			                                 	else
-			                                 	{
-													Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
-			                                 		                                                 {
-			                                 		                                                 	Error = e.Error
-			                                 		                                                 }));
-			                                 	}
-			                                 };
+											 {
+												 if (e.Error == null)
+												 {
+													 entity.Id = e.Result;
+													 Entities.Add(entity);
+													 Execute.OnUIThread(() => EventAggregator.Publish(new CategoryUpdatedMessage
+																									  {
+																										  Category = entity
+																									  }));
+												 }
+												 else
+												 {
+													 Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+																									  {
+																										  Error = e.Error
+																									  }));
+												 }
+
+												 EventAggregator.Publish(new AsyncOperationCompleteMessage());
+											 };
 
 			proxy.CreateCategoryAsync(UserId, entity.Name, entity.CategoryType);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Creating new category \"" + entity.Name + "\"" });
 
 			return entity;
 		}
@@ -177,7 +185,42 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <returns>Updated entity with filled server-side updatable properties.</returns>
 		public override CategoryDTO Update(CategoryDTO entity)
 		{
-			throw new NotImplementedException();
+			if (entity == null)
+			{
+				throw new ArgumentNullException("entity");
+			}
+
+			var proxy = new MoneyServiceClient();
+			proxy.UpdateCategoryCompleted += (s, e) =>
+			{
+				if (e.Error == null)
+				{
+					var category = Entities.Where(dto => dto.Id == entity.Id).Single();
+
+					// Copy new values on client side after update confirmation on server
+					category.Name = entity.Name;
+					category.CategoryType = entity.CategoryType;
+
+					Execute.OnUIThread(() => EventAggregator.Publish(new CategoryUpdatedMessage
+					{
+						Category = category
+					}));
+				}
+				else
+				{
+					Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+					{
+						Error = e.Error
+					}));
+				}
+
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
+			};
+
+			proxy.UpdateCategoryAsync(UserId, entity.Id, entity.Name, entity.CategoryType);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Updating category \"" + entity.Name + "\"" });
+
+			return entity;
 		}
 
 		/// <summary>
@@ -192,10 +235,12 @@ namespace Fab.Client.MoneyTracker.Categories
 			{
 				if (e.Error == null)
 				{
-					Entities.Remove(ByKey(key));
-					Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
+					var deletedCategory = ByKey(key);
+					Entities.Remove(deletedCategory);
+
+					Execute.OnUIThread(() => EventAggregator.Publish(new CategoryDeletedMessage
 					{
-						Categories = Entities
+						Category = deletedCategory
 					}));
 				}
 				else
@@ -226,14 +271,34 @@ namespace Fab.Client.MoneyTracker.Categories
 		public CategoryDTO Create(string name, CategoryType categoryType)
 		{
 			var category = new CategoryDTO
-			               {
-			               	Id = 0,
-			               	Name = name,
-			               	CategoryType = categoryType,
-			               	Popularity = 0,
-			               };
+						   {
+							   Id = 0,
+							   Name = name,
+							   CategoryType = categoryType,
+							   Popularity = 0,
+						   };
 
 			return Create(category);
+		}
+
+		/// <summary>
+		/// Update category for specific user.
+		/// </summary>
+		/// <param name="id">Existing category id.</param>
+		/// <param name="name">New category name.</param>
+		/// <param name="categoryType">New category type.</param>
+		/// <returns>Updated category.</returns>
+		public CategoryDTO Update(int id, string name, CategoryType categoryType)
+		{
+			var category = new CategoryDTO
+			{
+				Id = id,
+				Name = name,
+				CategoryType = categoryType,
+				Popularity = 0,
+			};
+
+			return Update(category);
 		}
 
 		#endregion

@@ -58,10 +58,26 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		#region Private Properties
+
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets copyright information.
+		/// </summary>
+		public string Copyright
+		{
+			get { return string.Format(ShortCopyrightTemplate, DateTime.Now.Year); }
+		}
+
+		#endregion
 
 		#region Ctors
 
@@ -84,19 +100,6 @@ namespace Fab.Client.Authentication
 		}
 
 		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Gets copyright information.
-		/// </summary>
-		public string Copyright
-		{
-			get { return string.Format(ShortCopyrightTemplate, DateTime.Now.Year); }
-		}
-
-		#endregion
-
 
 		#region Overrides of Screen
 
