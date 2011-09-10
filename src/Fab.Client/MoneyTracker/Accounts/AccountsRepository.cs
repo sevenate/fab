@@ -1,7 +1,7 @@
 // <copyright file="AccountsRepository.cs" company="nReez">
 // 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-26" />
+// <author name="Andrey Levshov" email="78@nreez.com" date="2011-03-26" />
 
 using System;
 using System.ComponentModel.Composition;
@@ -10,7 +10,6 @@ using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
-using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.Shell;
 using Fab.Client.Shell.Async;
 
@@ -71,7 +70,6 @@ namespace Fab.Client.MoneyTracker.Accounts
 		public override void Download()
 		{
 			var proxy = new MoneyServiceClient();
-
 			proxy.GetAllAccountsCompleted += (s, e) =>
 			                                 {
 			                                 	if (e.Error == null)
@@ -95,7 +93,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 											 };
 
 			proxy.GetAllAccountsAsync(UserId);
-			EventAggregator.Publish(new AsyncOperationStartedMessage{OperationName = "Downloading accounts list"});
+			EventAggregator.Publish(new AsyncOperationStartedMessage{OperationName = "Downloading accounts"});
 		}
 
 		/// <summary>
@@ -105,19 +103,17 @@ namespace Fab.Client.MoneyTracker.Accounts
 		public override void Download(int key)
 		{
 			var proxy = new MoneyServiceClient();
-
 			proxy.GetAccountCompleted += (s, e) =>
 			{
 				if (e.Error == null)
 				{
 					var account = ByKey(key);
 					var index = Entities.IndexOf(account);
-					
 					Entities[index] = e.Result;
 
 					Execute.OnUIThread(() => EventAggregator.Publish(new AccountUpdatedMessage
 					{
-						Account = Entities[index]
+						Account = e.Result
 					}));
 				}
 				else
@@ -148,16 +144,15 @@ namespace Fab.Client.MoneyTracker.Accounts
 			}
 
 			var proxy = new MoneyServiceClient();
-
 			proxy.CreateAccountCompleted += (s, e) =>
 			                                {
 			                                	if (e.Error == null)
 			                                	{
 			                                		entity.Id = e.Result;
 			                                		Entities.Add(entity);
-			                                		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
+			                                		Execute.OnUIThread(() => EventAggregator.Publish(new AccountUpdatedMessage
 			                                		                                                 {
-			                                		                                                 	Accounts = Entities
+																										 Account = entity
 			                                		                                                 }));
 			                                	}
 			                                	else
@@ -178,31 +173,68 @@ namespace Fab.Client.MoneyTracker.Accounts
 		}
 
 		/// <summary>
-		/// Update existing entity.
+		/// Update existing account.
 		/// </summary>
-		/// <param name="entity">Updated entity data.</param>
-		/// <returns>Updated entity with filled server-side updatable properties.</returns>
+		/// <param name="entity">Updated account data.</param>
+		/// <returns>Updated account with filled server-side updatable properties.</returns>
 		public override AccountDTO Update(AccountDTO entity)
 		{
-			throw new NotImplementedException();
+			if (entity == null)
+			{
+				throw new ArgumentNullException("entity");
+			}
+
+			var proxy = new MoneyServiceClient();
+			proxy.UpdateAccountCompleted += (s, e) =>
+			{
+				if (e.Error == null)
+				{
+					// Update account in repository only if server update was successful
+					var account = ByKey(entity.Id);
+					account.Name = entity.Name;
+					account.AssetTypeId = entity.AssetTypeId;
+
+					Execute.OnUIThread(() => EventAggregator.Publish(new AccountUpdatedMessage
+					{
+						Account = account
+					}));
+				}
+				else
+				{
+					Execute.OnUIThread(() => EventAggregator.Publish(new ServiceErrorMessage
+					{
+						Error = e.Error
+					}));
+				}
+
+				EventAggregator.Publish(new AsyncOperationCompleteMessage());
+			};
+
+			// TODO: do not pass AssetTypeId here since it is not allowed
+			// to change account initial asset type!
+			proxy.UpdateAccountAsync(UserId, entity.Id, entity.Name, entity.AssetTypeId);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Updating category \"" + entity.Name + "\"" });
+
+			return entity;
 		}
 
 		/// <summary>
-		/// Update existing entity.
+		/// Delete existing account.
 		/// </summary>
-		/// <param name="key">Key if the entity to delete.</param>
+		/// <param name="key">Account ID to delete.</param>
 		public override void Delete(int key)
 		{
 			var proxy = new MoneyServiceClient();
-
 			proxy.DeleteAccountCompleted += (s, e) =>
 			{
 				if (e.Error == null)
 				{
-					Entities.Remove(ByKey(key));
-					Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
+					var deletedAccount = ByKey(key);
+					Entities.Remove(deletedAccount);
+
+					Execute.OnUIThread(() => EventAggregator.Publish(new AccountDeletedMessage
 					{
-						Accounts = Entities
+						Account = deletedAccount
 					}));
 				}
 				else
@@ -245,6 +277,28 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                 };
 
 			return Create(accountDTO);
+		}
+
+		/// <summary>
+		/// Update account.
+		/// </summary>
+		/// <param name="id">Existing account id.</param>
+		/// <param name="name">New account name.</param>
+		/// <param name="assetTypeId">New account asset type.</param>
+		/// <returns>Updated account.</returns>
+		public AccountDTO Update(int id, string name, int assetTypeId)
+		{
+			// TODO: do not pass assetTypeId here since it is not allowed
+			// to change account initial asset type!
+
+			var account = new AccountDTO
+			{
+				Id = id,
+				Name = name,
+				AssetTypeId = assetTypeId,
+			};
+
+			return Update(account);
 		}
 
 		#endregion

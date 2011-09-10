@@ -10,17 +10,28 @@ using System.Linq;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
+using Fab.Client.MoneyTracker.Accounts.AssetTypes;
 using Fab.Client.Shell.Async;
 
 namespace Fab.Client.Shell
 {
 	[Export(typeof(IShell))]
-	public class ShellViewModel : Conductor<IModule>.Collection.OneActive, IShell, IHandle<OpenDialogMessage>, IHandle<OpenMessageBoxMessage>, IHandle<ServiceErrorMessage>
+	public class ShellViewModel : Conductor<IModule>.Collection.OneActive,
+								  IShell,
+								  IHandle<OpenDialogMessage>,
+								  IHandle<OpenMessageBoxMessage>,
+								  IHandle<ServiceErrorMessage>,
+								  IHandle<ApplicationErrorMessage>
 	{
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
+
+		/// <summary>
+		/// Assets repository.
+		/// </summary>
+		private readonly IAssetTypesRepository assetTypes = IoC.Get<IAssetTypesRepository>();
 
 		#region Ctors
 
@@ -214,10 +225,19 @@ namespace Fab.Client.Shell
 
 		#endregion
 
-		//		public override void CanClose(Action<bool> callback)
-		//		{
-		//			base.CanClose(callback);
-		//			ActiveItem.CanClose(callback);
-		//		}
+		#region Implementation of IHandle<ApplicationErrorMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(ApplicationErrorMessage message)
+		{
+			//TODO: show desktop "toast" notification here (if possible)
+			//TODO: use TextBox for application error with stack track information
+			Dialogs.ShowMessageBox(message.Error.ToString(), "Application Error");
+		}
+
+		#endregion
 	}
 }

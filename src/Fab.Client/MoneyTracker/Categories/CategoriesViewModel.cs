@@ -15,21 +15,24 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// <summary>
 	/// Categories view model.
 	/// </summary>
-	[Export(typeof(CategoriesViewModel))]
+	[Export(typeof (CategoriesViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class CategoriesViewModel : Conductor<CategoryViewModel>.Collection.AllActive, IHandle<CategoryUpdatedMessage>, IHandle<CategoriesUpdatedMessage>, IHandle<CategoryDeletedMessage>
+	public class CategoriesViewModel : Conductor<CategoryViewModel>.Collection.AllActive,
+	                                   IHandle<CategoryUpdatedMessage>,
+	                                   IHandle<CategoriesUpdatedMessage>,
+	                                   IHandle<CategoryDeletedMessage>
 	{
 		#region Dependencies
-
-		/// <summary>
-		/// Category repository.
-		/// </summary>
-		private readonly ICategoriesRepository repository = IoC.Get<ICategoriesRepository>();
 
 		/// <summary>
 		/// Gets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private readonly IEventAggregator eventAggregator = IoC.Get<IEventAggregator>();
+
+		/// <summary>
+		/// Category repository.
+		/// </summary>
+		private readonly ICategoriesRepository repository = IoC.Get<ICategoriesRepository>();
 
 		#endregion
 
@@ -109,7 +112,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <param name="message">The message.</param>
 		public void Handle(CategoryUpdatedMessage message)
 		{
-			var categoryViewModel = Items.Where(viewModel => viewModel.Id == message.Category.Id).SingleOrDefault();
+			CategoryViewModel categoryViewModel = Items.Where(viewModel => viewModel.Id == message.Category.Id).SingleOrDefault();
 
 			if (categoryViewModel != null)
 			{
@@ -161,7 +164,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <param name="message">The message.</param>
 		public void Handle(CategoryDeletedMessage message)
 		{
-			var categoryViewModel = Items.Where(viewModel => viewModel.Id == message.Category.Id).SingleOrDefault();
+			CategoryViewModel categoryViewModel = Items.Where(viewModel => viewModel.Id == message.Category.Id).SingleOrDefault();
 
 			if (categoryViewModel != null)
 			{

@@ -5,7 +5,7 @@
 
 using Fab.Client.MoneyServiceReference;
 
-namespace Fab.Client.MoneyTracker.Accounts.Single
+namespace Fab.Client.MoneyTracker.Accounts
 {
 	/// <summary>
 	/// Send by <see cref="AccountsRepository"/> after one of the accounts has been updated.

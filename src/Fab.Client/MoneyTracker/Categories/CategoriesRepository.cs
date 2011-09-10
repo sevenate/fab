@@ -1,7 +1,7 @@
 // <copyright file="CategoriesRepository.cs" company="nReez">
 // 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-26" />
+// <author name="Andrey Levshov" email="78@nreez.com" date="2011-03-26" />
 
 using System;
 using System.ComponentModel.Composition;
@@ -70,7 +70,6 @@ namespace Fab.Client.MoneyTracker.Categories
 		public override void Download()
 		{
 			var proxy = new MoneyServiceClient();
-
 			proxy.GetAllCategoriesCompleted += (s, e) =>
 											   {
 												   if (e.Error == null)
@@ -94,7 +93,7 @@ namespace Fab.Client.MoneyTracker.Categories
 											   };
 
 			proxy.GetAllCategoriesAsync(UserId);
-			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading categories list" });
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading categories" });
 		}
 
 		/// <summary>
@@ -104,7 +103,6 @@ namespace Fab.Client.MoneyTracker.Categories
 		public override void Download(int key)
 		{
 			var proxy = new MoneyServiceClient();
-
 			proxy.GetCategoryCompleted += (s, e) =>
 			{
 				if (e.Error == null)
@@ -112,6 +110,7 @@ namespace Fab.Client.MoneyTracker.Categories
 					var category = ByKey(key);
 
 					// TODO: find a way to use Automapper for SL4 here
+					// TODO: Use approach like in AccountsRepository here instead of copy prop
 					category.CategoryType = e.Result.CategoryType;
 					category.Id = e.Result.Id;
 					category.Name = e.Result.Name;
@@ -179,10 +178,10 @@ namespace Fab.Client.MoneyTracker.Categories
 		}
 
 		/// <summary>
-		/// Update existing entity.
+		/// Update existing category.
 		/// </summary>
-		/// <param name="entity">Updated entity data.</param>
-		/// <returns>Updated entity with filled server-side updatable properties.</returns>
+		/// <param name="entity">Updated category data.</param>
+		/// <returns>Updated category with filled server-side updatable properties.</returns>
 		public override CategoryDTO Update(CategoryDTO entity)
 		{
 			if (entity == null)
@@ -224,9 +223,9 @@ namespace Fab.Client.MoneyTracker.Categories
 		}
 
 		/// <summary>
-		/// Update existing entity.
+		/// Delete existing category.
 		/// </summary>
-		/// <param name="key">Key if the entity to delete.</param>
+		/// <param name="key">Category ID to delete.</param>
 		public override void Delete(int key)
 		{
 			var proxy = new MoneyServiceClient();

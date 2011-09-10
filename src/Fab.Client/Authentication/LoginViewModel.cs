@@ -54,7 +54,7 @@ namespace Fab.Client.Authentication
 		/// <summary>
 		/// "Short" copyright message.
 		/// </summary>
-		private const string ShortCopyrightTemplate = "© {0} nReez.com";
+		private const string ShortCopyrightTemplate = "© {0} nReez";
 
 		#endregion
 

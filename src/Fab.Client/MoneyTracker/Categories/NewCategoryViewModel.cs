@@ -171,7 +171,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		}
 
 		/// <summary>
-		/// Create new category on server.
+		/// Create new category on server or update existing.
 		/// </summary>
 		/// <returns>Async operation result.</returns>
 		[SetBusy]
@@ -199,7 +199,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		}
 
 		/// <summary>
-		/// Cancel category creation.
+		/// Cancel category creation or edition.
 		/// </summary>
 		public void Cancel()
 		{

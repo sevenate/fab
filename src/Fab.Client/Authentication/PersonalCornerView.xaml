@@ -13,15 +13,13 @@
 				TabIndex="0">
 			<Button.Content>
 				<StackPanel Orientation="Horizontal">
-					<TextBlock Text="Sign out ("
+					<TextBlock Text="Sign out"
 							   VerticalAlignment="Center" />
-					<TextBlock Text="{Binding Username}"
+					<TextBlock Text="{Binding Username, StringFormat=( \{0\} )}"
 							   VerticalAlignment="Center"
-							   Foreground="Cyan"
-							   Margin="5,0"
-							   FontWeight="Bold" />
-					<TextBlock Text=")"
-							   VerticalAlignment="Center" />
+							   Foreground="Gray"
+							   Margin="5,0,0,0"
+							   FontSize="9" />
 				</StackPanel>
 			</Button.Content>
 		</Button>

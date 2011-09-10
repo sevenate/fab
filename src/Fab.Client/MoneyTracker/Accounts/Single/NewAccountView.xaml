@@ -3,10 +3,10 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:Controls="clr-namespace:Fab.Client.Controls"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
-             xmlns:Controls1="clr-namespace:Fab.Client.Framework.Controls" mc:Ignorable="d"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 xmlns:Controls="clr-namespace:Fab.Client.Framework.Controls"
+			 mc:Ignorable="d"
 			 Width="200">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -14,21 +14,22 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Controls1:WatermarkedTextbox TabIndex="0"
+		<Controls:WatermarkedTextbox TabIndex="0"
 									 Text="{Binding Path=Name, Mode=TwoWay}"
 									 Watermark="New account name"
 									 MinWidth="75"
 									 Margin="5">
 			<i:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Create}" />
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 				<Behaviors:FocusBehavior HasInitialFocus="True" />
 			</i:Interaction.Behaviors>
-		</Controls1:WatermarkedTextbox>
+		</Controls:WatermarkedTextbox>
 		<ComboBox x:Name="Assets"
-		          Grid.Row="1"
-		          MinWidth="150"
-		          ToolTipService.ToolTip="Asset type"
-		          Margin="5"
+				  Grid.Row="1"
+				  IsEnabled="{Binding Path=IsEditMode, Converter={StaticResource boolToNotBool}}"
+				  MinWidth="150"
+				  ToolTipService.ToolTip="Asset type"
+				  Margin="5"
 				  TabIndex="1">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
@@ -37,22 +38,21 @@
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 		<StackPanel Grid.Row="2"
-		            Orientation="Horizontal"
-		            HorizontalAlignment="Right">
-			<Button x:Name="Create"
-			        Content="Create"
-			        MinWidth="75"
-			        MinHeight="25"
-			        Margin="5,5,0,5"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<Button x:Name="Save"
+					Content="Save"
+					MinWidth="75"
+					MinHeight="25"
+					Margin="5,5,0,5"
 					TabIndex="2" />
 			<Button x:Name="Cancel"
-			        Grid.Row="2"
-			        Content="Cancel"
-			        MinWidth="75"
-			        MinHeight="25"
-			        Margin="5"
+					Grid.Row="2"
+					Content="Cancel"
+					MinWidth="75"
+					MinHeight="25"
+					Margin="5"
 					TabIndex="3" />
 		</StackPanel>
 	</Grid>
-
 </UserControl>
