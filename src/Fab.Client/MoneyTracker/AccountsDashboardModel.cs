@@ -18,10 +18,19 @@ namespace Fab.Client.MoneyTracker
 	/// <summary>
 	/// Money module dashboard with accounts and transactions.
 	/// </summary>
-	[Export(typeof(IModule))]
-	public class AccountsDashboardModel : Conductor<AccountViewModel>.Collection.OneActive, IModule
+	[Export(typeof (IModule))]
+	public class AccountsDashboardModel : Conductor<AccountViewModel>.Collection.OneActive,
+	                                      IModule,
+	                                      IHandle<AccountUpdatedMessage>,
+	                                      IHandle<AccountsUpdatedMessage>,
+	                                      IHandle<AccountDeletedMessage>
 	{
 		#region Fields
+
+		/// <summary>
+		/// Gets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private readonly IEventAggregator eventAggregator = IoC.Get<IEventAggregator>();
 
 		/// <summary>
 		/// Accounts repository.
@@ -48,9 +57,8 @@ namespace Fab.Client.MoneyTracker
 		public AccountsDashboardModel(PostingsFilterViewModel postingsFilterVM)
 		{
 			PostingsFilter = postingsFilterVM;
-			Items.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
-			Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
-			repository.Entities.CollectionChanged += OnEntitiesCollectionChanged;
+			eventAggregator.Subscribe(this);
+			ResetAccounts();
 		}
 
 		#endregion
@@ -65,76 +73,110 @@ namespace Fab.Client.MoneyTracker
 		public void Show()
 		{
 			//TODO: make this method common for all IModels
-			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
+			if (Parent is IHaveActiveItem && ((IHaveActiveItem) Parent).ActiveItem == this)
 			{
 				DisplayName = Name;
 			}
 			else
 			{
-				((IConductor)Parent).ActivateItem(this);
+				((IConductor) Parent).ActivateItem(this);
 			}
 		}
 
 		#endregion
 
-		#region Event Handlers
+		#region Create account
 
 		/// <summary>
-		/// Occurs when the items list of the collection has changed, or the collection is reset.
+		/// Open "new account" dialog.
 		/// </summary>
-		/// <param name="o">Collection that was changed.</param>
-		/// <param name="eventArgs">Change event data.</param>
-		private void OnEntitiesCollectionChanged(object o, NotifyCollectionChangedEventArgs eventArgs)
+		public void CreateAccount()
 		{
-			switch (eventArgs.Action)
-			{
-				case NotifyCollectionChangedAction.Add:
-					int i = eventArgs.NewStartingIndex;
-
-					foreach (var newItem in eventArgs.NewItems)
-					{
-						Items.Insert(i++, ((AccountDTO)newItem).Map());
-					}
-
-					break;
-
-				case NotifyCollectionChangedAction.Remove:
-					foreach (var oldItem in eventArgs.OldItems)
-					{
-						var accountDTO = (AccountDTO)oldItem;
-						var accountViewModel = Items.Where(a => a.Id == accountDTO.Id).Single();
-						Items.Remove(accountViewModel);
-					}
-
-					break;
-
-				case NotifyCollectionChangedAction.Replace:
-					for (int j = 0; j < eventArgs.OldItems.Count; j++)
-					{
-						var oldAccountId = ((AccountDTO)eventArgs.OldItems[j]).Id;
-						var newAccount = ((AccountDTO)eventArgs.NewItems[j]).Map();
-						var oldAccount = Items.Where(model => model.Id == oldAccountId).Single();
-						oldAccount.Name = newAccount.Name;
-						oldAccount.AssetTypeId = newAccount.AssetTypeId;
-						oldAccount.Created = newAccount.Created;
-						oldAccount.Balance = newAccount.Balance;
-						oldAccount.FirstPostingDate = newAccount.FirstPostingDate;
-						oldAccount.LastPostingDate = newAccount.LastPostingDate;
-						oldAccount.PostingsCount = newAccount.PostingsCount;
-					}
-					break;
-
-				case NotifyCollectionChangedAction.Reset:
-					Items.Clear();
-					Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
-					ActivateFirstItem();
-					break;
-			}
-
-			NotifyOfPropertyChange(() => Items);
+			var shell = IoC.Get<IShell>();
+			var newAccountViewModel = IoC.Get<NewAccountViewModel>();
+			shell.Dialogs.ShowDialog(newAccountViewModel);
 		}
 
 		#endregion
+
+		#region Implementation of IHandle<AccountUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountUpdatedMessage message)
+		{
+			AccountViewModel accountViewModel = Items.Where(viewModel => viewModel.Id == message.Account.Id).SingleOrDefault();
+
+			if (accountViewModel != null)
+			{
+				// Update existing
+				// TODO: find a way to use any kind of "auto mapper" here
+				accountViewModel.Name = message.Account.Name;
+				accountViewModel.AssetTypeId = message.Account.AssetTypeId;
+				accountViewModel.Balance = message.Account.Balance;
+				accountViewModel.PostingsCount = message.Account.PostingsCount;
+				accountViewModel.FirstPostingDate = message.Account.FirstPostingDate;
+				accountViewModel.LastPostingDate = message.Account.LastPostingDate;
+			}
+			else
+			{
+				// Add new 
+				Items.Add(message.Account.Map());
+			}
+
+			NotifyOfPropertyChange(() => Name);
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<AccountsUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountsUpdatedMessage message)
+		{
+			ResetAccounts();
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<AccountDeletedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountDeletedMessage message)
+		{
+			AccountViewModel accountViewModel = Items.Where(viewModel => viewModel.Id == message.Account.Id).SingleOrDefault();
+
+			if (accountViewModel != null)
+			{
+				// Remove existing
+				Items.Remove(accountViewModel);
+			}
+
+			NotifyOfPropertyChange(() => Name);
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		/// <summary>
+		/// Clean current list of accounts and fill it with new items from repository.
+		/// </summary>
+		private void ResetAccounts()
+		{
+			Items.Clear();
+			Items.AddRange(repository.Entities.Select(AccountsExtensions.Map));
+			ActivateFirstItem();
+			NotifyOfPropertyChange(() => Name);
+		}
 
 		/// <summary>
 		/// Try to activate first account if there are any.
@@ -147,14 +189,6 @@ namespace Fab.Client.MoneyTracker
 			}
 		}
 
-		/// <summary>
-		/// Open "new account" dialog.
-		/// </summary>
-		public void CreateAccount()
-		{
-			var shell = IoC.Get<IShell>();
-			var newAccountViewModel = IoC.Get<NewAccountViewModel>();
-			shell.Dialogs.ShowDialog(newAccountViewModel);
-		}
+		#endregion
 	}
 }

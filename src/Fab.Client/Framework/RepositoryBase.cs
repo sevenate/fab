@@ -99,27 +99,37 @@ namespace Fab.Client.Framework
 		/// Download one entity from server.
 		/// </summary>
 		/// <param name="key">Entity key.</param>
-		public abstract void Download(int key);
+		public virtual void Download(int key)
+		{
+		}
 
 		/// <summary>
 		/// Create new entity.
 		/// </summary>
 		/// <param name="entity">New entity data to create from.</param>
 		/// <returns>Created entity with filled server-side updated properties.</returns>
-		public abstract T Create(T entity);
+		public virtual T Create(T entity)
+		{
+			return entity;
+		}
 
 		/// <summary>
 		/// Update existing entity.
 		/// </summary>
 		/// <param name="entity">Updated entity data.</param>
 		/// <returns>Updated entity with filled server-side updated properties.</returns>
-		public abstract T Update(T entity);
+		public virtual T Update(T entity)
+		{
+			return entity;
+		}
 
 		/// <summary>
 		/// Delete existing entity.
 		/// </summary>
 		/// <param name="key">Key if the entity to delete.</param>
-		public abstract void Delete(int key);
+		public virtual void Delete(int key)
+		{
+		}
 
 		#endregion
 	}

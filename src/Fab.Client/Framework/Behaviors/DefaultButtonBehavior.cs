@@ -4,6 +4,7 @@
 // <author name="Michael Collins" url="http://blogs.neudesic.com/post/2010/07/27/Text-Boxes-and-Default-Buttons-in-Silverlight-and-WPF.aspx" date="2010-07-27" />
 // <summary>Associated <see cref="TextBox"/> "enter" key press with default button click.</summary>
 
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -91,6 +92,11 @@ namespace Fab.Client.Framework.Behaviors
 			UpdateBinding<WatermarkedTextbox>(sender, WatermarkedTextbox.TextProperty);
 
 			// "click" on associated button
+			if (DefaultButton == null)
+			{
+				throw new Exception("Default button is not specified - or - binding to specified property failed.");
+			}
+
 			var peer = new ButtonAutomationPeer(DefaultButton);
 			var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
 

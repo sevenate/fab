@@ -191,8 +191,6 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 			categoryViewModel.IsEditMode = true;
 			
 			shell.Dialogs.ShowDialog(categoryViewModel);
-
-			yield break;
 		}
 
 		public IEnumerable<IResult> ShowActions()

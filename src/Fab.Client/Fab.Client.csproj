@@ -136,7 +136,11 @@
     <Compile Include="Framework\Extensions\ColorFromString.cs" />
     <Compile Include="Framework\Results\Animation.cs" />
     <Compile Include="Framework\Results\AnimationResult.cs" />
-    <Compile Include="MoneyTracker\Accounts\Single\GetAssetTypesResult.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountDeletedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\AssetTypes\IAssetTypesRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\Single\NewAccountViewModel.cs" />
     <Compile Include="MoneyTracker\CategoriesDashBoardModel.cs" />
     <Compile Include="MoneyTracker\Categories\CategoryTypeToColorConverter.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Resources\Actions\DeleteIcon.xaml.cs">
       <DependentUpon>DeleteIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shell\ApplicationErrorMessage.cs" />
     <Compile Include="Shell\ServiceErrorMessage.cs" />
     <Compile Include="Framework\Converters\NullToQuestionMarkConverter.cs" />
     <Compile Include="Framework\OpenConfirmationResult.cs" />
@@ -191,7 +196,6 @@
     <Compile Include="Framework\Filters\RescueAttribute.cs" />
     <Compile Include="Framework\Filters\SetBusyAttribute.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsExtensions.cs" />
-    <Compile Include="MoneyTracker\Accounts\Single\AccountUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\Single\AccountViewModel.cs" />
     <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountsRepository.cs" />

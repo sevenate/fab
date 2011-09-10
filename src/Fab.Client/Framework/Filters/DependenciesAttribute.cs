@@ -52,7 +52,13 @@ namespace Fab.Client.Framework.Filters
 		private void TargetPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (string.IsNullOrEmpty(e.PropertyName) || PropertyNames.Contains(e.PropertyName))
-				Execute.OnUIThread(() => context.Message.UpdateAvailability());
+				Execute.OnUIThread(() =>
+				{
+					if (context.Message != null)
+					{
+						context.Message.UpdateAvailability();
+					}
+				});
 		}
 	}
 }

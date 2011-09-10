@@ -4,13 +4,17 @@
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-05-24" />
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Framework.Filters;
 using Fab.Client.Framework.Results;
+using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.Postings;
+using Fab.Client.Shell;
 
 namespace Fab.Client.MoneyTracker.Accounts.Single
 {
@@ -370,19 +374,32 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// Edit account.
 		/// </summary>
 		/// <returns>Result of async operation.</returns>
+		[Rescue("EditRescue")]
 		public IEnumerable<IResult> Edit()
 		{
 			yield return Animation.Stop("ShowActionsPanel");
 			yield return Animation.Stop("HideActionsPanel");
 
-			var dialog = new OpenConfirmationResult(EventAggregator)
-			{
-				Message = "Account edit is not implemented yet",
-				Title = "Sorry",
-				Options = MessageBoxOptions.Ok,
-			};
+			var shell = IoC.Get<IShell>();
+			var newAccountViewModel = IoC.Get<NewAccountViewModel>();
 
-			yield return dialog;
+			newAccountViewModel.AccountId = Id;
+			newAccountViewModel.Name = Name;
+			var assetType = newAccountViewModel.Assets.Cast<AssetTypeDTO>().Where<AssetTypeDTO>(a => a.Id == AssetTypeId).Single();
+			newAccountViewModel.Assets.MoveCurrentTo(assetType);
+
+			newAccountViewModel.IsEditMode = true;
+
+			shell.Dialogs.ShowDialog(newAccountViewModel);
+		}
+
+		public bool EditRescue(Exception ex)
+		{
+			EventAggregator.Publish(new ApplicationErrorMessage
+			                        {
+			                        	Error = ex
+			                        });
+			return true;
 		}
 
 		public IEnumerable<IResult> ShowActions()
