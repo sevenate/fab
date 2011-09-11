@@ -24,7 +24,7 @@ namespace Fab.Client.MoneyTracker.Postings
 	/// </summary>
 	[Export(typeof (PostingsViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class PostingsViewModel : Conductor<IPostingPanel>.Collection.OneActive, IHandle<CategoryDeletedMessage>
+	public class PostingsViewModel : Conductor<IPostingPanel>.Collection.OneActive, IHandle<CategoryDeletedMessage>, IHandle<AccountUpdatedMessage>
 	{
 		#region Fields
 
@@ -553,6 +553,23 @@ namespace Fab.Client.MoneyTracker.Postings
 				{
 					transactionRecord.Category = null;
 				}
+			}
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<AccountUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountUpdatedMessage message)
+		{
+			if (message.Account.Id == AccountId)
+			{
+				IsOutdated = true;
+				Update();
 			}
 		}
 
