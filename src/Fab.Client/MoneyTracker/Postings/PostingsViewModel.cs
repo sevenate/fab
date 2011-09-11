@@ -1,8 +1,7 @@
-// <copyright file="TransactionsViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+// <copyright file="TransactionsViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-10" />
-// <summary>Transactions view model.</summary>
+// <author name="Andrey Levshov" email="78@nreez.com" date="2010-04-10" />
 
 using System;
 using System.Collections.Generic;

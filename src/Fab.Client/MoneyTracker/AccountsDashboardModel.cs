@@ -3,12 +3,10 @@
 // </copyright>
 // <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-02" />
 
-using System.Collections.Specialized;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Caliburn.Micro;
 using Fab.Client.Framework;
-using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Filters;
