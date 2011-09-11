@@ -346,7 +346,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 					UserCredentials.Current.UserId,
 					AccountId,
 					date.ToUniversalTime(),
-					decimal.Parse(Price.Trim()),
+					Math.Abs(decimal.Parse(Price.Trim())),
 					decimal.Parse(Quantity.Trim()),
 					Comment != null ? Comment.Trim() : null,
 					CurrentCategory != null
