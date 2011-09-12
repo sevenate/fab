@@ -108,6 +108,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 				{
 					Categories.MoveCurrentTo(null);
 					NotifyOfPropertyChange(() => CurrentCategory);
+					NotifyOfPropertyChange(() => CanSave);
 					return;
 				}
 
@@ -118,6 +119,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 						if (Categories.MoveCurrentTo(category))
 						{
 							NotifyOfPropertyChange(() => CurrentCategory);
+							NotifyOfPropertyChange(() => CanSave);
 						}
 
 						return;
@@ -126,6 +128,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 				Categories.MoveCurrentTo(null);
 				NotifyOfPropertyChange(() => CurrentCategory);
+				NotifyOfPropertyChange(() => CanSave);
 			}
 		}
 
@@ -222,11 +225,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			}
 		}
 
-		public bool CanSave
-		{
-			get { return Amount != null; }
-		}
-
 		#endregion
 
 		#region Ctors
@@ -321,10 +319,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			IsEditMode = true;
 		}
 
+		public bool CanSave
+		{
+			get { return Amount != null && CurrentCategory != null; }
+		}
+
 		public IEnumerable<IResult> Save()
 		{
-//			yield return Loader.Show("Saving...");
-
 			if (IsEditMode)
 			{
 				// To not update date if it was not changed;
@@ -379,8 +380,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			{
 				categoryRepository.Download(CurrentCategory.Id);
 			}
-
-//			yield return Loader.Hide();
 
 			Cancel();
 		}
