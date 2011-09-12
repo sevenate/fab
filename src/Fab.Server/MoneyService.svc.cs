@@ -108,8 +108,7 @@ namespace Fab.Server
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
 		/// <param name="name">Account new name.</param>
-		/// <param name="assetTypeId">The asset type ID.</param>
-		public void UpdateAccount(Guid userId, int accountId, string name, int assetTypeId)
+		public void UpdateAccount(Guid userId, int accountId, string name)
 		{
 			if (userId == Guid.Empty)
 			{
@@ -124,11 +123,7 @@ namespace Fab.Server
 			using (var mc = new ModelContainer())
 			{
 				var account = ModelHelper.GetAccountById(mc, accountId);
-				var assetType = ModelHelper.GetAssetTypeById(mc, assetTypeId);
-
 				account.Name = name;
-				account.AssetType = assetType;
-
 				mc.SaveChanges();
 			}
 		}

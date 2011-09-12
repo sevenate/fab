@@ -40,7 +40,6 @@
         <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q4:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="assetTypeId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

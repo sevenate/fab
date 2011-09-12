@@ -192,7 +192,6 @@ namespace Fab.Client.MoneyTracker.Accounts
 					// Update account in repository only if server update was successful
 					var account = ByKey(entity.Id);
 					account.Name = entity.Name;
-					account.AssetTypeId = entity.AssetTypeId;
 
 					Execute.OnUIThread(() => EventAggregator.Publish(new AccountUpdatedMessage
 					{
@@ -210,9 +209,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			// TODO: do not pass AssetTypeId here since it is not allowed
-			// to change account initial asset type!
-			proxy.UpdateAccountAsync(UserId, entity.Id, entity.Name, entity.AssetTypeId);
+			proxy.UpdateAccountAsync(UserId, entity.Id, entity.Name);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Updating category \"" + entity.Name + "\"" });
 
 			return entity;
@@ -284,18 +281,13 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// </summary>
 		/// <param name="id">Existing account id.</param>
 		/// <param name="name">New account name.</param>
-		/// <param name="assetTypeId">New account asset type.</param>
 		/// <returns>Updated account.</returns>
-		public AccountDTO Update(int id, string name, int assetTypeId)
+		public AccountDTO Update(int id, string name)
 		{
-			// TODO: do not pass assetTypeId here since it is not allowed
-			// to change account initial asset type!
-
 			var account = new AccountDTO
 			{
 				Id = id,
 				Name = name,
-				AssetTypeId = assetTypeId,
 			};
 
 			return Update(account);

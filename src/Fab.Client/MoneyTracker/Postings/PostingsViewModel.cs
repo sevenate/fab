@@ -324,7 +324,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			ActivateItem(TransferDetails);
 		}
 
-		public void EditPosting(PostingRecord transactionRecord)
+		public IEnumerable<IResult> EditPosting(PostingRecord transactionRecord)
 		{
 			if (transactionRecord.Journal is TransactionDTO)
 			{
@@ -333,13 +333,19 @@ namespace Fab.Client.MoneyTracker.Postings
 			}
 			else if (transactionRecord.Journal is TransferDTO)
 			{
-				TransferDetails.Edit(transactionRecord.Journal as TransferDTO, AccountId);
+				var transferResult = new GetPostingResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId, eventAggregator);
+				yield return transferResult;
+
+				var transfer = transferResult.Transaction as TransferDTO;
+				TransferDetails.Edit(transfer, AccountId);
 				ActivateItem(TransferDetails);
 			}
 			else
 			{
 				throw new NotSupportedException("Transaction of type " + transactionRecord.Journal.GetType() + " is not editable.");
 			}
+
+			yield break;
 		}
 
 		public IEnumerable<IResult> DeleteTransaction(PostingRecord transactionRecord)
@@ -357,8 +363,6 @@ namespace Fab.Client.MoneyTracker.Postings
 
 			if (openConfirmationResult.Selected == MessageBoxOptions.Yes)
 			{
-				yield return Loader.Show("Deleting...");
-
 				// Load transaction from server (used below to determine if the deleted posting was transfer)
 				var request = new GetPostingResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId, eventAggregator);
 				yield return request;
@@ -402,8 +406,6 @@ namespace Fab.Client.MoneyTracker.Postings
 						TransactionRecords[i].Balance += deletedAmount;
 					}
 				}
-
-				yield return Loader.Hide();
 			}
 		}
 

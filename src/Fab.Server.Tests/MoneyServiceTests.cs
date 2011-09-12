@@ -61,10 +61,10 @@ namespace Fab.Server.Tests
 			var userService = new UserService();
 			var service = new MoneyService();
 			var userId = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
-			var accountId = service.CreateAccount(userId, "Test Account", 1);
+			var accountId = service.CreateAccount(userId, "Test Account", assetType);
 			DateTime date = DateTime.UtcNow;
 
-			service.UpdateAccount(userId, accountId, accountName, assetType);
+			service.UpdateAccount(userId, accountId, accountName);
 			var account = service.GetAccount(userId, accountId);
 
 			Assert.Equal(accountName, account.Name);

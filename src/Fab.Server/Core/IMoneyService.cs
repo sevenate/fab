@@ -55,9 +55,8 @@ namespace Fab.Server.Core
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
 		/// <param name="name">Account new name.</param>
-		/// <param name="assetTypeId">The asset type ID.</param>
 		[OperationContract]
-		void UpdateAccount(Guid userId, int accountId, string name, int assetTypeId);
+		void UpdateAccount(Guid userId, int accountId, string name);
 
 		/// <summary>
 		/// Mark account as "deleted".
