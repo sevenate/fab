@@ -159,7 +159,8 @@
 									Background="White"
 									HorizontalAlignment="Left"
 									VerticalAlignment="Center"
-									Padding="4,3">
+									Padding="4,3"
+									Visibility="{Binding Path=Category, Converter={StaticResource nullToCollapsed}}">
 								<TextBlock VerticalAlignment="Center"
 										   Foreground="Black"
 										   Text="{Binding Path=Category.Name}"
