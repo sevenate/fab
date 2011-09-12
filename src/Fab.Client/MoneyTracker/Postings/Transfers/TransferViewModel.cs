@@ -22,13 +22,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 	/// <summary>
 	/// Transfer view model.
 	/// </summary>
-	[Export(typeof (TransferViewModel))]
+	[Export(typeof(TransferViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public class TransferViewModel : Screen, IPostingPanel
 	{
 		#region Fields
 
-		private IAccountsRepository accountsRepository;
+		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
 		private readonly CollectionViewSource targetAccountsViewSource = new CollectionViewSource();
 		private int? transactionId;
 		private DateTime operationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
@@ -40,16 +40,39 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 		#region Properties
 
-		private IEnumerable<AccountDTO> TargetAccountsSource
+		private AccountDTO sourceAccount;
+
+		private AccountDTO SourceAccount
 		{
-			get
+			get { return sourceAccount; }
+			set
 			{
-				// Exclude "source" account from the "target" accounts list
-				return accountsRepository.Entities.Except(Enumerable.Repeat<AccountDTO>(SourceAccount, 1));
+				if (sourceAccount != value)
+				{
+					sourceAccount = value;
+					
+					// Exclude "source" account from the "target" accounts list
+					// and leave only accounts with the same AssetType like in the source
+					if (sourceAccount != null)
+					{
+						targetAccountsViewSource.Source = accountsRepository.Entities
+							.Where(dto => dto.AssetTypeId == sourceAccount.AssetTypeId)
+							.Except(
+								Enumerable.Repeat<AccountDTO>(sourceAccount, 1))
+							.ToList();
+						
+						if (!TargetAccounts.IsEmpty)
+						{
+							TargetAccounts.MoveCurrentToFirst();
+						}
+					}
+					else
+					{
+						targetAccountsViewSource.Source = null;
+					}
+				}
 			}
 		}
-
-		private AccountDTO SourceAccount { get; set; }
 
 		public ICollectionView TargetAccounts
 		{
@@ -100,15 +123,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			}
 		}
 
-		public bool CanSave
-		{
-			get
-			{
-				//TODO: add CanSave guard.
-				return true;
-			}
-		}
-
 		#endregion
 
 		#region Ctors
@@ -117,31 +131,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		/// Initializes a new instance of the <see cref="TransferViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public TransferViewModel(IEventAggregator eventAggregator, IAccountsRepository accountsRepository)
+		public TransferViewModel()
 		{
-			this.accountsRepository = accountsRepository;
-			targetAccountsViewSource.Source = TargetAccountsSource;
-			this.accountsRepository.Entities.CollectionChanged += (sender, args) =>
-			                                                      {
-																	  if (SourceAccount != null && accountsRepository.Entities.FirstOrDefault(dto => dto.Id == SourceAccount.Id) == null)
-																	  {
-																		  SourceAccount = null;
-																	  }
-
-
-																	  //TODO: Propagate change notification from repo via linq query
-																	  
-																	  // Try to use Obtics here if possible.
-
-
-																	  NotifyOfPropertyChange(() => TargetAccounts);
-
-																	  if (!targetAccountsViewSource.View.IsEmpty)
-																	  {
-																		  targetAccountsViewSource.View.MoveCurrentToFirst();
-																	  }
-			                                                      };
-			eventAggregator.Subscribe(this);
 		}
 
 		#endregion
@@ -166,7 +157,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 			transactionId = null;
 			SourceAccount = accountsRepository.ByKey(accountId);
-			TargetAccounts.MoveCurrentToFirst();
 			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 			Amount = string.Empty;
 			Comment = string.Empty;
@@ -199,23 +189,38 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			IsEditMode = true;
 		}
 
+		public bool CanSave
+		{
+			get
+			{
+				decimal result;
+
+				if (decimal.TryParse(Amount.Trim(), out result))
+				{
+					return TargetAccounts.CurrentItem != null;
+				}
+
+				return false;
+			}
+		}
+
 		public IEnumerable<IResult> Save()
 		{
-			yield return Loader.Show("Saving...");
+//			yield return Loader.Show("Saving...");
 
 			if (IsEditMode)
 			{
 				// To not update date if it was not changed;
 				// Add time of day to updated date only.
 				var date = OperationDate.Kind == DateTimeKind.Unspecified
-				           	? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
-				           	: OperationDate;
+							? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
+							: OperationDate;
 
 				var request = new UpdateTransferResult(
 					transactionId.Value,
 					UserCredentials.Current.UserId,
 					SourceAccount.Id,
-					((AccountDTO) TargetAccounts.CurrentItem).Id,
+					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Amount.Trim()),
 					Comment != null ? Comment.Trim() : null
@@ -227,13 +232,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			{
 				// Add time of day to date.
 				var date = OperationDate.Kind == DateTimeKind.Unspecified
-				           	? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
-				           	: OperationDate.Date + DateTime.Now.TimeOfDay;
+							? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
+							: OperationDate.Date + DateTime.Now.TimeOfDay;
 
 				var request = new AddTransferResult(
 					UserCredentials.Current.UserId,
 					SourceAccount.Id,
-					((AccountDTO) TargetAccounts.CurrentItem).Id,
+					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Amount.Trim()),
 					Comment != null ? Comment.Trim() : null
@@ -245,7 +250,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			accountsRepository.Download(SourceAccount.Id);
 			accountsRepository.Download(((AccountDTO)TargetAccounts.CurrentItem).Id);
 
-			yield return Loader.Hide();
+//			yield return Loader.Hide();
 
 			Cancel();
 		}

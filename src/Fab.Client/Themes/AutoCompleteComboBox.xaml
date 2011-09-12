@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:myCtrls="clr-namespace:Fab.Client.Controls">
+					xmlns:myCtrls="clr-namespace:Fab.Client.Framework.Controls">
 	<!-- Custom toggle button template -->
 	<Style x:Name="ComboToggleButton"
 		   TargetType="ToggleButton">

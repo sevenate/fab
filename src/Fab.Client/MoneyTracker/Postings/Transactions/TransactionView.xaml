@@ -5,11 +5,12 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 xmlns:local="clr-namespace:Fab.Client.Common"
-			 xmlns:controls="clr-namespace:Fab.Client.Controls"
-			 xmlns:cal="http://www.caliburnproject.org"
+			 xmlns:Controls="clr-namespace:Fab.Client.Framework.Controls"
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
-			 mc:Ignorable="d"
-			 d:DesignWidth="700">
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+			 mc:Ignorable="d">
 	<UserControl.Resources>
 		<!--		<Style x:Key="ComboToggleButton"-->
 		<!--			   TargetType="ToggleButton">-->
@@ -183,11 +184,15 @@
 		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition />
-			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto"
+							  MinWidth="147" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="Auto" />
@@ -195,12 +200,14 @@
 		<sdk:DatePicker Grid.Column="0"
 						x:Name="OperationDate"
 						ToolTipService.ToolTip="Operation Date"
-		                IsTodayHighlighted="True"
-		                SelectedDateFormat="Long"
-		                SelectedDate="{Binding Path=OperationDate,
+						IsTodayHighlighted="True"
+						SelectedDateFormat="Long"
+						SelectedDate="{Binding Path=OperationDate,
 												   Mode=TwoWay,
 												   Converter={StaticResource DateTimeUtcToLocalConverter}}"
-						VerticalAlignment="Center" />
+						VerticalAlignment="Center"
+						TabIndex="6"
+						IsTabStop="True" />
 		<!--			<sdk:AutoCompleteBox ItemsSource="{Binding Categories}"-->
 		<!--								 ValueMemberBinding="{Binding Name}"-->
 		<!--								 MinimumPrefixLength="0"-->
@@ -215,34 +222,33 @@
 		<!--					</DataTemplate>-->
 		<!--				</sdk:AutoCompleteBox.ItemTemplate>-->
 		<!--			</sdk:AutoCompleteBox>-->
-		<controls:AutoCompleteComboBox Grid.Column="1"
+		<Controls:AutoCompleteComboBox Grid.Column="1"
 									   ItemsSource="{Binding Path=Categories}"
 									   ToolTipService.ToolTip="Category"
 									   ValueMemberBinding="{Binding Path=Name}"
 									   MinimumPrefixLength="0"
+									   Margin="5,0"
 									   IsTextCompletionEnabled="True"
 									   FilterMode="Custom"
 									   ItemFilter="{Binding Path=CategoryFilter}"
 									   SelectedItemBinding="{Binding Path=CurrentCategory, Mode=TwoWay}"
 									   MinWidth="100"
-									   VerticalAlignment="Center">
-			<controls:AutoCompleteComboBox.ItemTemplate>
+									   VerticalAlignment="Center"
+									   TabIndex="0"
+									   IsTabStop="True">
+			<Controls:AutoCompleteComboBox.ItemTemplate>
 				<DataTemplate>
-					<TextBlock Text="{Binding Path=Name}" />
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding Path=Name}"
+								   Foreground="{Binding Path=CategoryType, Converter={StaticResource categoryTypeToColor}}" />
+						<TextBlock Text="{Binding Path=Popularity, StringFormat= - \{0\}}"
+								   Margin="5,0,0,0" />
+					</StackPanel>
 				</DataTemplate>
-			</controls:AutoCompleteComboBox.ItemTemplate>
-		</controls:AutoCompleteComboBox>
-		<TextBox x:Name="Comment"
-				 Grid.Column="2"
-				 ToolTipService.ToolTip="Comment"
-				 TextWrapping="Wrap"
-				 MaxLength="255"
-				 Text="{Binding Path=Comment, Mode=TwoWay}"
-				 AcceptsReturn="True"
-				 VerticalScrollBarVisibility="Auto"
-				 MaxHeight="100"
-				 VerticalAlignment="Center" />
-		<Grid Grid.Column="3">
+			</Controls:AutoCompleteComboBox.ItemTemplate>
+		</Controls:AutoCompleteComboBox>
+		<Grid Grid.Column="2"
+			  Margin="5,0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
@@ -263,7 +269,12 @@
 					 ValidatesOnNotifyDataErrors=True,
 					 NotifyOnValidationError=True}"
 					 MinWidth="50"
-					 VerticalAlignment="Center" />
+					 VerticalAlignment="Center"
+					 TabIndex="1">
+				<i:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				</i:Interaction.Behaviors>
+			</TextBox>
 			<TextBlock Grid.Column="1"
 					   Text="X"
 					   Margin="5,0"
@@ -281,7 +292,12 @@
 								ValidatesOnNotifyDataErrors =True,
 								NotifyOnValidationError=True}"
 					 MinWidth="50"
-					 VerticalAlignment="Center" />
+					 VerticalAlignment="Center"
+					 TabIndex="2">
+				<i:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				</i:Interaction.Behaviors>
+			</TextBox>
 			<TextBlock Grid.Column="3"
 					   Text="="
 					   Margin="5,0"
@@ -292,20 +308,48 @@
 					   ToolTipService.ToolTip="Amount"
 					   VerticalAlignment="Center" />
 		</Grid>
-		<Button x:Name="Save"
-				Grid.Column="5"
-				Content="Save"
-				MinWidth="75"
-				MinHeight="23"
-				HorizontalAlignment="Right"
-				VerticalAlignment="Center" />
-		<Button x:Name="Cancel"
-				Grid.Column="6"
-			    Content="Cancel"
-			    MinWidth="75"
-			    MinHeight="23"
-			    Margin="5,0,0,0"
-			    HorizontalAlignment="Right"
-				VerticalAlignment="Center" />
+		<toolkit:DockPanel Grid.Row="1"
+						   Grid.ColumnSpan="3">
+			<Button x:Name="Cancel"
+					toolkit:DockPanel.Dock="Right"
+					Content="Cancel"
+					MinWidth="75"
+					MinHeight="23"
+					HorizontalAlignment="Right"
+					TabIndex="5" />
+			<Button x:Name="Save"
+					toolkit:DockPanel.Dock="Right"
+					Content="Save"
+					MinWidth="75"
+					MinHeight="23"
+					Margin="5,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					TabIndex="4" />
+			<Controls:WatermarkedTextbox x:Name="Comment"
+										 Watermark="Enter optional comment here..."
+										 Text="{Binding Path=Comment, Mode=TwoWay}"
+										 VerticalAlignment="Center"
+										 TabIndex="3"
+										 ToolTipService.ToolTip="Comment">
+				<Controls:WatermarkedTextbox.TextBoxStyle>
+					<Style TargetType="TextBox">
+						<Setter Property="MaxLength"
+								Value="255" />
+						<Setter Property="TextWrapping"
+								Value="Wrap" />
+						<Setter Property="MaxHeight"
+								Value="100" />
+						<Setter Property="AcceptsReturn"
+								Value="True" />
+						<Setter Property="Background"
+								Value="{StaticResource Brush_WindowBackground}" />
+					</Style>
+				</Controls:WatermarkedTextbox.TextBoxStyle>
+				<i:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				</i:Interaction.Behaviors>
+			</Controls:WatermarkedTextbox>
+		</toolkit:DockPanel>
 	</Grid>
 </UserControl>

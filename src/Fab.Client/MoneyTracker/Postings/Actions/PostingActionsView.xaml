@@ -7,19 +7,20 @@
 	<StackPanel Orientation="Horizontal"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Right">
-		<Button x:Name="NewTransaction"
-				Content="Add"
+		<Button x:Name="NewExpense"
+				Content="+ Expense"
+				MinWidth="75"
+				MinHeight="23"
+				Foreground="Red" />
+		<Button x:Name="NewIncome"
+				Content="+ Income"
 				MinWidth="75"
 				MinHeight="23"
 				Foreground="#FF00FF00" />
 		<Button x:Name="NewTransfer"
-				Content="Transfer"
+				Content="+ Transfer"
 				MinWidth="75"
 				MinHeight="23"
 				Foreground="Yellow" />
-		<Button x:Name="DownloadAllTransactions"
-				Content="Update"
-				MinWidth="75"
-				MinHeight="23" />
 	</StackPanel>
 </UserControl>

@@ -1,8 +1,7 @@
-// <copyright file="TransactionDetailsViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+// <copyright file="TransactionDetailsViewModel.cs" company="nReez">
+// 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-11" />
-// <summary>Single transaction details view model.</summary>
+// <author name="Andrey Levshov" email="78@nreez.com" date="2010-04-11" />
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
-using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Categories;
@@ -57,7 +55,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		private int AccountId { get; set; }
 
-		public IObservableCollection<CategoryDTO> CategoriesSource
+		public IEnumerable<CategoryDTO> CategoriesSource
 		{
 			set
 			{
@@ -159,11 +157,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			get { return price; }
 			set
 			{
-				price = value;
-				IsDeposite = CanSave && decimal.Parse(price) >= 0;
-				NotifyOfPropertyChange(() => Price);
-				NotifyOfPropertyChange(() => Amount);
-				NotifyOfPropertyChange(() => CanSave);
+				if (price != value)
+				{
+					price = value;
+					NotifyOfPropertyChange(() => Price);
+					NotifyOfPropertyChange(() => Amount);
+					NotifyOfPropertyChange(() => CanSave);
+				}
 			}
 		}
 
@@ -173,10 +173,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			get { return quantity; }
 			set
 			{
-				quantity = value;
-				NotifyOfPropertyChange(() => Quantity);
-				NotifyOfPropertyChange(() => Amount);
-				NotifyOfPropertyChange(() => CanSave);
+				if (quantity != value)
+				{
+					quantity = value;
+					NotifyOfPropertyChange(() => Quantity);
+					NotifyOfPropertyChange(() => Amount);
+					NotifyOfPropertyChange(() => CanSave);
+				}
 			}
 		}
 
@@ -271,9 +274,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		public void Create(int accountId)
 		{
-			IsDeposite = true;
-			DisplayName = "New Transaction";
-
 			transactionId = null;
 			AccountId = accountId;
 			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
@@ -293,7 +293,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		public void Edit(TransactionDTO transaction, int accountId)
 		{
 			IsDeposite = transaction is DepositDTO;
-			DisplayName = "Edit Transaction";
 
 			transactionId = transaction.Id;
 			AccountId = accountId;
@@ -308,7 +307,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		public IEnumerable<IResult> Save()
 		{
-			yield return Loader.Show("Saving...");
+//			yield return Loader.Show("Saving...");
 
 			if (IsEditMode)
 			{
@@ -346,7 +345,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 					UserCredentials.Current.UserId,
 					AccountId,
 					date.ToUniversalTime(),
-					Math.Abs(decimal.Parse(Price.Trim())),
+					decimal.Parse(Price.Trim()),
 					decimal.Parse(Quantity.Trim()),
 					Comment != null ? Comment.Trim() : null,
 					CurrentCategory != null
@@ -365,7 +364,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 				categoryRepository.Download(CurrentCategory.Id);
 			}
 
-			yield return Loader.Hide();
+//			yield return Loader.Hide();
 
 			Cancel();
 		}

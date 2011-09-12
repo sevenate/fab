@@ -91,7 +91,7 @@
 			</Setter>
 		</Style>
 	</UserControl.Resources>
-	<Grid x:Name="LayoutRoot">
+	<Grid>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="ClearFilterButtonStates">
 				<VisualStateGroup.Transitions>
@@ -163,7 +163,7 @@
 				 LostFocus="TextEntry_LostFocus"
 				 TextChanged="TextEntry_TextChanged"
 				 VerticalAlignment="Center"
-				 d:LayoutOverrides="Width"
+				 VerticalScrollBarVisibility="Auto"
 				 Grid.ColumnSpan="2">
 			<TextBox.Style>
 				<Style TargetType="TextBox">
