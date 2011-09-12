@@ -1,7 +1,8 @@
-// <copyright file="TransactionDetailsViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="TransferViewModel.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2010-04-11" />
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -108,7 +109,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 				{
 					Categories.MoveCurrentTo(null);
 					NotifyOfPropertyChange(() => CurrentCategory);
-					NotifyOfPropertyChange(() => CanSave);
+				NotifyOfPropertyChange(() => CanSave);
 					return;
 				}
 

@@ -26,8 +26,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// </summary>
 		/// <param name="id">Existing account id.</param>
 		/// <param name="name">New account name.</param>
-		/// <param name="assetTypeId">New account asset type.</param>
 		/// <returns>Updated account.</returns>
-		AccountDTO Update(int id, string name, int assetTypeId);
+		AccountDTO Update(int id, string name);
 	}
 }

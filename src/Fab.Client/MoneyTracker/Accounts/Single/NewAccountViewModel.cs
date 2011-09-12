@@ -184,13 +184,11 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		[Dependencies("Name")]
 		public IEnumerable<IResult> Save()
 		{
-			int assetTypeId = ((AssetTypeDTO)Assets.CurrentItem).Id;
-
 			if (IsEditMode)
 			{
 				if (AccountId.HasValue)
 				{
-					accounts.Update(AccountId.Value, Name.Trim(), assetTypeId);
+					accounts.Update(AccountId.Value, Name.Trim());
 				}
 				else
 				{
@@ -199,6 +197,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			}
 			else
 			{
+				int assetTypeId = ((AssetTypeDTO)Assets.CurrentItem).Id;
 				accounts.Create(Name.Trim(), assetTypeId);
 			}
 

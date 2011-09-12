@@ -117,6 +117,8 @@
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition />
 			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		<sdk:DatePicker x:Name="OperationDate"
 						Grid.Column="0"
@@ -129,11 +131,11 @@
 						VerticalAlignment="Center"
 						IsTabStop="True"
 						TabIndex="5" />
-		<ComboBox x:Name="TargetAccounts"
+		<ComboBox x:Name="SourceAccounts"
 				  Grid.Column="1"
 				  MinWidth="150"
 				  Margin="5,0"
-				  ToolTipService.ToolTip="To Account"
+				  ToolTipService.ToolTip="From Account"
 				  VerticalAlignment="Center"
 				  HorizontalAlignment="Stretch"
 				  HorizontalContentAlignment="Stretch"
@@ -160,8 +162,42 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
+		<TextBlock Grid.Column="2"
+				   VerticalAlignment="Center"
+				   Text="->" />
+		<ComboBox x:Name="TargetAccounts"
+				  Grid.Column="3"
+				  MinWidth="150"
+				  Margin="5,0"
+				  ToolTipService.ToolTip="To Account"
+				  VerticalAlignment="Center"
+				  HorizontalAlignment="Stretch"
+				  HorizontalContentAlignment="Stretch"
+				  TabIndex="1"
+				  ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<toolkit:DockPanel HorizontalAlignment="Stretch">
+						<TextBlock toolkit:DockPanel.Dock="Right"
+								   Margin="5,0,0,0"
+								   MinWidth="20"
+								   Text="{Binding Path=AssetTypeId, Converter={StaticResource assetTypeIdToString}}"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Left" />
+						<TextBlock toolkit:DockPanel.Dock="Right"
+								   Text="{Binding Path=Balance, StringFormat=\{0:N\}}"
+								   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
+								   Margin="5,0,0,0"
+								   HorizontalAlignment="Right"
+								   VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Path=Name}"
+								   FontWeight="Bold" />
+					</toolkit:DockPanel>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
 		<TextBox x:Name="Amount"
-				 Grid.Column="2"
+				 Grid.Column="4"
 				 ToolTipService.ToolTip="Amount"
 				 MaxLength="50"
 				 MinWidth="50"
@@ -175,12 +211,12 @@
 							ValidatesOnNotifyDataErrors=True,
 							NotifyOnValidationError=True}"
 				 VerticalAlignment="Center"
-				 TabIndex="1">
+				 TabIndex="4">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 			</i:Interaction.Behaviors>
 		</TextBox>
-		<toolkit:DockPanel Grid.ColumnSpan="3"
+		<toolkit:DockPanel Grid.ColumnSpan="5"
 						   Grid.Row="1">
 			<Button x:Name="Cancel"
 					toolkit:DockPanel.Dock="Right"

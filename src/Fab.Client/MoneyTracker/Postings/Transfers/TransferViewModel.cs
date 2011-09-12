@@ -1,8 +1,8 @@
-// <copyright file="TransferViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="TransferViewModel.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-06-19" />
-// <summary>Transfer view model.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ using System.Linq;
 using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
-using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 
@@ -29,7 +28,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		#region Fields
 
 		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
-		private readonly CollectionViewSource targetAccountsViewSource = new CollectionViewSource();
 		private int? transactionId;
 		private DateTime operationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 		private string amount;
@@ -40,41 +38,44 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 		#region Properties
 
-		private AccountDTO sourceAccount;
+		#region Accounts
 
-		private AccountDTO SourceAccount
+		private AccountDTO prevSourceAccont;
+		private AccountDTO prevTargetAccont;
+		private readonly CollectionViewSource sourceAccountsViewSource = new CollectionViewSource();
+		private readonly CollectionViewSource targetAccountsViewSource = new CollectionViewSource();
+
+		public ICollectionView SourceAccounts
 		{
-			get { return sourceAccount; }
-			set
-			{
-				sourceAccount = value;
-					
-				// Exclude "source" account from the "target" accounts list
-				// and leave only accounts with the same AssetType like in the source
-				if (sourceAccount != null)
-				{
-					targetAccountsViewSource.Source = accountsRepository.Entities
-						.Where(dto => dto.AssetTypeId == sourceAccount.AssetTypeId)
-						.Except(
-							Enumerable.Repeat<AccountDTO>(sourceAccount, 1))
-						.ToList();
-						
-					if (!TargetAccounts.IsEmpty)
-					{
-						TargetAccounts.MoveCurrentToFirst();
-					}
-				}
-				else
-				{
-					targetAccountsViewSource.Source = null;
-				}
-			}
+			get { return sourceAccountsViewSource.View; }
 		}
 
 		public ICollectionView TargetAccounts
 		{
 			get { return targetAccountsViewSource.View; }
 		}
+
+		private void InitSourceAccounts()
+		{
+			sourceAccountsViewSource.Source = accountsRepository.Entities.ToList();
+
+			if (!SourceAccounts.IsEmpty)
+			{
+				SourceAccounts.MoveCurrentToFirst();
+			}
+		}
+
+		private void InitTargetAccounts()
+		{
+			targetAccountsViewSource.Source = accountsRepository.Entities.ToList();
+
+			if (!TargetAccounts.IsEmpty)
+			{
+				TargetAccounts.MoveCurrentToFirst();
+			}
+		}
+
+		#endregion
 
 		[DataType(DataType.DateTime)]
 		public DateTime OperationDate
@@ -153,7 +154,15 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			DisplayName = "New Transfer";
 
 			transactionId = null;
-			SourceAccount = accountsRepository.ByKey(accountId);
+			InitSourceAccounts();
+			InitTargetAccounts();
+
+			var newAccount = accountsRepository.ByKey(accountId);
+			SourceAccounts.MoveCurrentTo(newAccount);
+
+			prevSourceAccont = (AccountDTO)SourceAccounts.CurrentItem;
+			prevTargetAccont = (AccountDTO)TargetAccounts.CurrentItem;
+
 			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 			Amount = string.Empty;
 			Comment = string.Empty;
@@ -165,22 +174,49 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		/// Open specific transfer to edit.
 		/// </summary>
 		/// <param name="transfer">Transfer to edit.</param>
-		/// <param name="fromAccountId">Account, the source of the transfer founds.</param>
-		public void Edit(TransferDTO transfer, int fromAccountId)
+		/// <param name="firstAccountId">First account of the transfer.</param>
+		public void Edit(TransferDTO transfer, int firstAccountId)
 		{
 			DisplayName = "Edit Transfer";
+			InitSourceAccounts();
+			InitTargetAccounts();
 
 			transactionId = transfer.Id;
-			SourceAccount = accountsRepository.ByKey(fromAccountId);
+
+			var firstAccount = accountsRepository.ByKey(firstAccountId);
+			AccountDTO secondAccount = null;
 
 			if (transfer.SecondAccountId.HasValue)
 			{
-				var selectedAccount2 = accountsRepository.ByKey(transfer.SecondAccountId.Value);
-				TargetAccounts.MoveCurrentTo(selectedAccount2);
+				secondAccount = accountsRepository.ByKey(transfer.SecondAccountId.Value);
 			}
 
+			if (transfer is IncomingTransferDTO)
+			{
+				Amount = transfer.Amount.ToString();
+
+				TargetAccounts.MoveCurrentTo(firstAccount);
+
+				if (secondAccount != null)
+				{
+					SourceAccounts.MoveCurrentTo(secondAccount);
+				}
+			}
+			else if (transfer is OutgoingTransferDTO)
+			{
+				Amount = (-transfer.Amount).ToString();
+				SourceAccounts.MoveCurrentTo(firstAccount);
+
+				if (secondAccount != null)
+				{
+					TargetAccounts.MoveCurrentTo(secondAccount);
+				}
+			}
+
+			prevSourceAccont = (AccountDTO)SourceAccounts.CurrentItem;
+			prevTargetAccont = (AccountDTO)TargetAccounts.CurrentItem;
+
 			OperationDate = transfer.Date.ToLocalTime();
-			Amount = transfer.Amount.ToString();
 			Comment = transfer.Comment;
 
 			IsEditMode = true;
@@ -194,7 +230,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 				if (decimal.TryParse(Amount.Trim(), out result))
 				{
-					return TargetAccounts.CurrentItem != null;
+					return SourceAccounts.CurrentItem != null && TargetAccounts.CurrentItem != null;
 				}
 
 				return false;
@@ -203,8 +239,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 		public IEnumerable<IResult> Save()
 		{
-//			yield return Loader.Show("Saving...");
-
 			if (IsEditMode)
 			{
 				// To not update date if it was not changed;
@@ -216,7 +250,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 				var request = new UpdateTransferResult(
 					transactionId.Value,
 					UserCredentials.Current.UserId,
-					SourceAccount.Id,
+					((AccountDTO)SourceAccounts.CurrentItem).Id,
 					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Amount.Trim()),
@@ -234,7 +268,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 				var request = new AddTransferResult(
 					UserCredentials.Current.UserId,
-					SourceAccount.Id,
+					((AccountDTO)SourceAccounts.CurrentItem).Id,
 					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Amount.Trim()),
@@ -244,10 +278,23 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 				yield return request;
 			}
 
-			accountsRepository.Download(SourceAccount.Id);
-			accountsRepository.Download(((AccountDTO)TargetAccounts.CurrentItem).Id);
+			var sourceAccountId = (AccountDTO)SourceAccounts.CurrentItem;
+			var targetAccountId = (AccountDTO)TargetAccounts.CurrentItem;
 
-//			yield return Loader.Hide();
+			var accountsToUpdate = new[]
+			{
+				prevSourceAccont.Id,
+				prevTargetAccont.Id,
+				sourceAccountId.Id,
+				targetAccountId.Id,
+			}
+			.Distinct();
+
+			// Download only updated accounts (up to 4 in worst case)
+			foreach (var accountId in accountsToUpdate)
+			{
+				accountsRepository.Download(accountId);
+			}
 
 			Cancel();
 		}

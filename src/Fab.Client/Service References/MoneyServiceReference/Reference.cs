@@ -599,7 +599,7 @@ namespace Fab.Client.MoneyServiceReference {
         Fab.Client.MoneyServiceReference.AccountDTO EndGetAccount(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMoneyService/UpdateAccount", ReplyAction="http://tempuri.org/IMoneyService/UpdateAccountResponse")]
-        System.IAsyncResult BeginUpdateAccount(System.Guid userId, int accountId, string name, int assetTypeId, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginUpdateAccount(System.Guid userId, int accountId, string name, System.AsyncCallback callback, object asyncState);
         
         void EndUpdateAccount(System.IAsyncResult result);
         
@@ -1328,8 +1328,8 @@ namespace Fab.Client.MoneyServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.MoneyServiceReference.IMoneyService.BeginUpdateAccount(System.Guid userId, int accountId, string name, int assetTypeId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginUpdateAccount(userId, accountId, name, assetTypeId, callback, asyncState);
+        System.IAsyncResult Fab.Client.MoneyServiceReference.IMoneyService.BeginUpdateAccount(System.Guid userId, int accountId, string name, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateAccount(userId, accountId, name, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1341,8 +1341,7 @@ namespace Fab.Client.MoneyServiceReference {
             System.Guid userId = ((System.Guid)(inValues[0]));
             int accountId = ((int)(inValues[1]));
             string name = ((string)(inValues[2]));
-            int assetTypeId = ((int)(inValues[3]));
-            return ((Fab.Client.MoneyServiceReference.IMoneyService)(this)).BeginUpdateAccount(userId, accountId, name, assetTypeId, callback, asyncState);
+            return ((Fab.Client.MoneyServiceReference.IMoneyService)(this)).BeginUpdateAccount(userId, accountId, name, callback, asyncState);
         }
         
         private object[] OnEndUpdateAccount(System.IAsyncResult result) {
@@ -1357,11 +1356,11 @@ namespace Fab.Client.MoneyServiceReference {
             }
         }
         
-        public void UpdateAccountAsync(System.Guid userId, int accountId, string name, int assetTypeId) {
-            this.UpdateAccountAsync(userId, accountId, name, assetTypeId, null);
+        public void UpdateAccountAsync(System.Guid userId, int accountId, string name) {
+            this.UpdateAccountAsync(userId, accountId, name, null);
         }
         
-        public void UpdateAccountAsync(System.Guid userId, int accountId, string name, int assetTypeId, object userState) {
+        public void UpdateAccountAsync(System.Guid userId, int accountId, string name, object userState) {
             if ((this.onBeginUpdateAccountDelegate == null)) {
                 this.onBeginUpdateAccountDelegate = new BeginOperationDelegate(this.OnBeginUpdateAccount);
             }
@@ -1374,8 +1373,7 @@ namespace Fab.Client.MoneyServiceReference {
             base.InvokeAsync(this.onBeginUpdateAccountDelegate, new object[] {
                         userId,
                         accountId,
-                        name,
-                        assetTypeId}, this.onEndUpdateAccountDelegate, this.onUpdateAccountCompletedDelegate, userState);
+                        name}, this.onEndUpdateAccountDelegate, this.onUpdateAccountCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2405,12 +2403,11 @@ namespace Fab.Client.MoneyServiceReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginUpdateAccount(System.Guid userId, int accountId, string name, int assetTypeId, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[4];
+            public System.IAsyncResult BeginUpdateAccount(System.Guid userId, int accountId, string name, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = userId;
                 _args[1] = accountId;
                 _args[2] = name;
-                _args[3] = assetTypeId;
                 System.IAsyncResult _result = base.BeginInvoke("UpdateAccount", _args, callback, asyncState);
                 return _result;
             }
