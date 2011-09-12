@@ -298,9 +298,29 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// <summary>
 		/// Open dialog for creating new transaction.
 		/// </summary>
-		public void NewTransaction()
+		public void NewIncome()
 		{
-			TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>().Entities;
+			TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>()
+							.Entities
+							.Where(dto => dto.CategoryType == CategoryType.Deposit
+									   || dto.CategoryType == CategoryType.Common)
+							.OrderByDescending(dto => dto.Popularity);
+			TransactionDetails.IsDeposite = true;
+			TransactionDetails.Create(AccountId);
+			ActivateItem(TransactionDetails);
+		}
+
+		/// <summary>
+		/// Open dialog for creating new transaction.
+		/// </summary>
+		public void NewExpense()
+		{
+			TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>()
+							.Entities
+							.Where(dto => dto.CategoryType == CategoryType.Withdrawal
+									   || dto.CategoryType == CategoryType.Common)
+							.OrderByDescending(dto => dto.Popularity);
+			TransactionDetails.IsDeposite = false;
 			TransactionDetails.Create(AccountId);
 			ActivateItem(TransactionDetails);
 		}
@@ -448,7 +468,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// Download all transactions for specific account of the specific user.
 		/// </summary>
 		/// <returns>Operation result.</returns>
-		public IEnumerable<IResult> DownloadAllTransactions()
+		private IEnumerable<IResult> DownloadAllTransactions()
 		{
 			yield return Loader.Show("Loading...");
 

@@ -7,7 +7,6 @@ using System.ComponentModel.Composition.Primitives;
 using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
-using Fab.Client.Controls;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Controls;
 using Fab.Client.MoneyTracker.Accounts;

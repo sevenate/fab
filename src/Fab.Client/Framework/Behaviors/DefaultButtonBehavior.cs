@@ -12,7 +12,6 @@ using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using Fab.Client.Controls;
 using Fab.Client.Framework.Controls;
 
 namespace Fab.Client.Framework.Behaviors

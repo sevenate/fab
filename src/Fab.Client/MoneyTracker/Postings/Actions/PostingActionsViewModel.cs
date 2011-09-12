@@ -17,11 +17,19 @@ namespace Fab.Client.MoneyTracker.Postings.Actions
 	public class PostingActionsViewModel : Screen, IPostingPanel
 	{
 		/// <summary>
-		/// Open dialog for creating new transaction.
+		/// Open dialog for creating new income transaction.
 		/// </summary>
-		public void NewTransaction()
+		public void NewIncome()
 		{
-			((PostingsViewModel)Parent).NewTransaction();
+			((PostingsViewModel)Parent).NewIncome();
+		}
+
+		/// <summary>
+		/// Open dialog for creating new expense transaction.
+		/// </summary>
+		public void NewExpense()
+		{
+			((PostingsViewModel)Parent).NewExpense();
 		}
 
 		/// <summary>
@@ -30,15 +38,6 @@ namespace Fab.Client.MoneyTracker.Postings.Actions
 		public void NewTransfer()
 		{
 			((PostingsViewModel)Parent).NewTransfer();
-		}
-
-		/// <summary>
-		/// Download all transactions for specific account of the specific user.
-		/// </summary>
-		/// <returns>Operation result.</returns>
-		public IEnumerable<IResult> DownloadAllTransactions()
-		{
-			return ((PostingsViewModel)Parent).DownloadAllTransactions();
 		}
 	}
 }

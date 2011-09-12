@@ -9,7 +9,6 @@
 // 	<email>alevshoff@hd.com</email>
 // 	<date>2010-06-02</date>
 // </editor>
-// <summary>"Editable" combobox with autocomplete functionality.</summary>
 
 using System;
 using System.Windows;
@@ -19,7 +18,7 @@ using System.Windows.Controls.Primitives;
 using System.Reflection;
 using System.Windows.Data;
 
-namespace Fab.Client.Controls
+namespace Fab.Client.Framework.Controls
 {
 	/// <summary>
 	/// "Editable" combobox with autocomplete functionality.

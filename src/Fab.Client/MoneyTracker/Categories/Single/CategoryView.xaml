@@ -31,7 +31,8 @@
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</UserControl.Resources>
-	<toolkit:DockPanel VerticalAlignment="Center" Background="{StaticResource Brush_WindowBackground}">
+	<toolkit:DockPanel VerticalAlignment="Center"
+					   Background="{StaticResource Brush_WindowBackground}">
 		<StackPanel x:Name="actionsPanel"
 					toolkit:DockPanel.Dock="Right"
 					Opacity="0"
@@ -53,10 +54,12 @@
 		</StackPanel>
 		<TextBlock toolkit:DockPanel.Dock="Right"
 				   VerticalAlignment="Top"
-				   Text="{Binding Path=Popularity}" Margin="5,0" />
+				   Text="{Binding Path=Popularity}"
+				   Margin="5,0" />
 		<TextBlock Text="{Binding Path=Name}"
 				   VerticalAlignment="Top"
-				   Foreground="{Binding Path=CategoryTypeWrapper.EnumValue, Converter={StaticResource categoryTypeToColor}}" TextWrapping="Wrap">
+				   Foreground="{Binding Path=CategoryTypeWrapper.EnumValue, Converter={StaticResource categoryTypeToColor}}"
+				   TextWrapping="Wrap">
 			<ToolTipService.ToolTip>
 				<ToolTips:ToolTip DisplayTime="00:00:03"
 								  InitialDelay="00:00:03"
