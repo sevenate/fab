@@ -274,6 +274,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		public void Create(int accountId)
 		{
+			InitCategories();
+
 			transactionId = null;
 			AccountId = accountId;
 			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
@@ -286,6 +288,19 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		}
 
 		/// <summary>
+		/// Initialize categories from repository.
+		/// </summary>
+		private void InitCategories()
+		{
+			var specific—ategoryType = IsDeposite ? CategoryType.Deposit : CategoryType.Withdrawal;
+
+			CategoriesSource = IoC.Get<ICategoriesRepository>().Entities
+								.Where(dto => dto.CategoryType == CategoryType.Common
+										   || dto.CategoryType == specific—ategoryType)
+								.OrderByDescending(dto => dto.Popularity);
+		}
+
+		/// <summary>
 		/// Open specific deposit or withdrawal transaction to edit.
 		/// </summary>
 		/// <param name="transaction">Transaction to edit.</param>
@@ -293,6 +308,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		public void Edit(TransactionDTO transaction, int accountId)
 		{
 			IsDeposite = transaction is DepositDTO;
+			InitCategories();
 
 			transactionId = transaction.Id;
 			AccountId = accountId;
