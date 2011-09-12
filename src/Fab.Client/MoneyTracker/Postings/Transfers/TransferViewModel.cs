@@ -47,29 +47,26 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			get { return sourceAccount; }
 			set
 			{
-				if (sourceAccount != value)
-				{
-					sourceAccount = value;
+				sourceAccount = value;
 					
-					// Exclude "source" account from the "target" accounts list
-					// and leave only accounts with the same AssetType like in the source
-					if (sourceAccount != null)
-					{
-						targetAccountsViewSource.Source = accountsRepository.Entities
-							.Where(dto => dto.AssetTypeId == sourceAccount.AssetTypeId)
-							.Except(
-								Enumerable.Repeat<AccountDTO>(sourceAccount, 1))
-							.ToList();
+				// Exclude "source" account from the "target" accounts list
+				// and leave only accounts with the same AssetType like in the source
+				if (sourceAccount != null)
+				{
+					targetAccountsViewSource.Source = accountsRepository.Entities
+						.Where(dto => dto.AssetTypeId == sourceAccount.AssetTypeId)
+						.Except(
+							Enumerable.Repeat<AccountDTO>(sourceAccount, 1))
+						.ToList();
 						
-						if (!TargetAccounts.IsEmpty)
-						{
-							TargetAccounts.MoveCurrentToFirst();
-						}
-					}
-					else
+					if (!TargetAccounts.IsEmpty)
 					{
-						targetAccountsViewSource.Source = null;
+						TargetAccounts.MoveCurrentToFirst();
 					}
+				}
+				else
+				{
+					targetAccountsViewSource.Source = null;
 				}
 			}
 		}

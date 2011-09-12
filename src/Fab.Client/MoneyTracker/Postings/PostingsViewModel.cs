@@ -300,11 +300,6 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// </summary>
 		public void NewIncome()
 		{
-			TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>()
-							.Entities
-							.Where(dto => dto.CategoryType == CategoryType.Deposit
-									   || dto.CategoryType == CategoryType.Common)
-							.OrderByDescending(dto => dto.Popularity);
 			TransactionDetails.IsDeposite = true;
 			TransactionDetails.Create(AccountId);
 			ActivateItem(TransactionDetails);
@@ -315,11 +310,6 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// </summary>
 		public void NewExpense()
 		{
-			TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>()
-							.Entities
-							.Where(dto => dto.CategoryType == CategoryType.Withdrawal
-									   || dto.CategoryType == CategoryType.Common)
-							.OrderByDescending(dto => dto.Popularity);
 			TransactionDetails.IsDeposite = false;
 			TransactionDetails.Create(AccountId);
 			ActivateItem(TransactionDetails);
@@ -338,7 +328,6 @@ namespace Fab.Client.MoneyTracker.Postings
 		{
 			if (transactionRecord.Journal is TransactionDTO)
 			{
-				TransactionDetails.CategoriesSource = IoC.Get<ICategoriesRepository>().Entities;
 				TransactionDetails.Edit(transactionRecord.Journal as TransactionDTO, AccountId);
 				ActivateItem(TransactionDetails);
 			}

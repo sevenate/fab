@@ -215,6 +215,8 @@
 								Value="100" />
 						<Setter Property="AcceptsReturn"
 								Value="True" />
+						<Setter Property="Foreground"
+								Value="White" />
 						<Setter Property="Background"
 								Value="{StaticResource Brush_WindowBackground}" />
 					</Style>
