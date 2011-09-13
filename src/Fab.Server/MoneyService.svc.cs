@@ -91,14 +91,9 @@ namespace Fab.Server
 
 			using (var mc = new ModelContainer())
 			{
-				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(
-					new DefaultMapConfig()
-						.MatchMembers((m1, m2) => m1 == m2 || m1 + "Id" == m2)
-						.ConvertUsing<AssetType, int>(type => type.Id)
-						.ConvertUsing<DateTime, DateTime>(type => DateTime.SpecifyKind(type, DateTimeKind.Utc))
-					);
-
-				return accountMapper.Map(ModelHelper.GetAccountById(mc, accountId));
+				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
+				var result = accountMapper.Map(ModelHelper.GetAccountById(mc, accountId));
+				return SetUTCforAccountNullableDates(result);
 			}
 		}
 
@@ -165,19 +160,21 @@ namespace Fab.Server
 
 			using (var mc = new ModelContainer())
 			{
-				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(
-					new DefaultMapConfig()
-						.MatchMembers((m1, m2) => m1 == m2 || m1 + "Id" == m2)
-						.ConvertUsing<AssetType, int>(type => type.Id)
-						.ConvertUsing<DateTime, DateTime>(type => DateTime.SpecifyKind(type, DateTimeKind.Utc))
-					);
+				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
 
-				return mc.Accounts.Include("AssetType")
+				var result = mc.Accounts.Include("AssetType")
 					.Where(a => a.User.Id == userId && a.IsClosed == false)
 					.OrderBy(a => a.Created)
 					.ToList()
 					.Select(accountMapper.Map)
 					.ToList();
+
+				foreach (var accountDTO in result)
+				{
+					SetUTCforAccountNullableDates(accountDTO);
+				}
+
+				return result;
 			}
 		}
 
@@ -210,6 +207,57 @@ namespace Fab.Server
 			}
 
 			return balance;
+		}
+
+		/// <summary>
+		/// Default mapping between <see cref="Account"/> and <see cref="AccountDTO"/>.
+		/// </summary>
+		private static DefaultMapConfig AccountMappingConfigurator
+		{
+			get
+			{
+				return new DefaultMapConfig()
+					.MatchMembers((m1, m2) => m1 == m2 || m1 + "Id" == m2)
+					.ConvertUsing<AssetType, int>(type => type.Id)
+					.ConvertUsing<DateTime, DateTime>(type => DateTime.SpecifyKind(type, DateTimeKind.Utc));
+//						.ConvertUsing<DateTime?, DateTime?>(type => type.HasValue
+//						                                            	? DateTime.SpecifyKind(type.Value, DateTimeKind.Utc)
+//						                                            	: (DateTime?) null)
+//						.PostProcess<AccountDTO>((value, state) =>
+//						                         {
+//													 if (value.FirstPostingDate.HasValue)
+//													 {
+//														 value.FirstPostingDate = DateTime.SpecifyKind(value.FirstPostingDate.Value, DateTimeKind.Utc);
+//													 }
+//
+//													 if (value.LastPostingDate.HasValue)
+//													 {
+//														 value.LastPostingDate = DateTime.SpecifyKind(value.LastPostingDate.Value, DateTimeKind.Utc);
+//													 }
+//
+//						                         	return value;
+//						                         })
+			}
+		}
+
+		/// <summary>
+		/// Workaround for "DateTime?" properties mapping between <see cref="Account"/> and <see cref="AccountDTO" />
+		/// </summary>
+		/// <param name="accountDTO">Account data transfer object for post processing.</param>
+		/// <returns>Modified source account DTO.</returns>
+		private AccountDTO SetUTCforAccountNullableDates(AccountDTO accountDTO)
+		{
+			if (accountDTO.FirstPostingDate.HasValue)
+			{
+				accountDTO.FirstPostingDate = DateTime.SpecifyKind(accountDTO.FirstPostingDate.Value, DateTimeKind.Utc);
+			}
+
+			if (accountDTO.LastPostingDate.HasValue)
+			{
+				accountDTO.LastPostingDate = DateTime.SpecifyKind(accountDTO.LastPostingDate.Value, DateTimeKind.Utc);
+			}
+
+			return accountDTO;
 		}
 
 		#endregion
@@ -466,6 +514,7 @@ namespace Fab.Server
 						       	  	SecondAccountId = posting2.Account.Id
 						       	  };
 					}
+
 					default:
 						throw new NotSupportedException(string.Format("Unknown journal type - {0}.", journal.JournalType));
 				}
@@ -500,7 +549,7 @@ namespace Fab.Server
 				//TODO: remove duplicated code with GetJournals() method
 				var query = from p in mc.Postings
 				            where p.Account.Id == accountId
-				            orderby p.Date , p.Journal.Id
+				            orderby p.Date, p.Journal.Id
 				            select new
 				                   {
 				                   	Posting = p,
@@ -596,7 +645,7 @@ namespace Fab.Server
 				//TODO: remove duplicated code with GetJournalsCounts() method
 				var query = from p in mc.Postings
 				            where p.Account.Id == accountId
-				            orderby p.Date , p.Journal.Id
+				            orderby p.Date, p.Journal.Id
 				            select new
 				                   {
 				                   	Posting = p,
