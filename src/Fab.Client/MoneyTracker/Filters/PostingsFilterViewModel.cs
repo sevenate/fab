@@ -1,7 +1,8 @@
+//------------------------------------------------------------
 // <copyright file="PostingsFilterViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-05-12" />
+//------------------------------------------------------------
 
 using System;
 using System.ComponentModel.Composition;
@@ -23,59 +24,35 @@ namespace Fab.Client.MoneyTracker.Filters
 		/// </summary>
 		private readonly IEventAggregator eventAggregator;
 
-		/// <summary>
-		/// Start date for filtering transactions.
-		/// </summary>
-		private DateTime fromDate;
-
-		/// <summary>
-		/// Start date for filtering transactions.
-		/// </summary>
-		private DateTime tillDate;
-
 		#endregion
 
-		#region Properties
+		#region Selected range
 
 		/// <summary>
-		/// Gets or sets start date for filtering transactions.
+		/// Start (Item1) and end (Item2) dates for filtering transactions.
 		/// </summary>
-		public DateTime FromDate
-		{
-			get { return fromDate; }
-			set
-			{
-				if (fromDate != value)
-				{
-					fromDate = value;
-					NotifyOfPropertyChange(() => FromDate);
-					eventAggregator.Publish(new PostingsFilterUpdatedMessage
-					{
-						Start = fromDate,
-						End = tillDate
-					});
-				}
-			}
-		}
+		private Tuple<DateTime, DateTime> selectedRange;
 
 		/// <summary>
-		/// Gets or sets end date for filtering transactions.
+		/// Gets or sets start (Item1) and end (Item2) dates for filtering transactions.
 		/// </summary>
-		public DateTime TillDate
+		public Tuple<DateTime, DateTime> SelectedRange
 		{
-			get { return tillDate; }
+			get { return selectedRange; }
 			set
 			{
-				if (tillDate != value)
+				selectedRange = value;
+				NotifyOfPropertyChange(() => SelectedRange);
+
+				eventAggregator.Publish(new PostingsFilterUpdatedMessage
 				{
-					tillDate = value;
-					NotifyOfPropertyChange(() => TillDate);
-					eventAggregator.Publish(new PostingsFilterUpdatedMessage
-					{
-						Start = fromDate,
-						End = tillDate
-					});
-				}
+					Start = selectedRange.Item1 < selectedRange.Item2
+								? selectedRange.Item1
+								: selectedRange.Item2,
+					End = selectedRange.Item1 >= selectedRange.Item2
+								? selectedRange.Item1
+								: selectedRange.Item2,
+				});
 			}
 		}
 
@@ -93,6 +70,7 @@ namespace Fab.Client.MoneyTracker.Filters
 		public PostingsFilterViewModel(IEventAggregator eventAggregator)
 		{
 			this.eventAggregator = eventAggregator;
+			this.eventAggregator.Subscribe(this);
 			ResetToCurrentDate();
 		}
 
@@ -139,14 +117,12 @@ namespace Fab.Client.MoneyTracker.Filters
 		#region Methods
 
 		/// <summary>
-		/// Set <see cref="FromDate"/> and <see cref="TillDate"/> to current date.
+		/// Set <see cref="SelectedRange"/> to current date.
 		/// </summary>
 		private void ResetToCurrentDate()
 		{
-			fromDate = DateTime.Now.Date;
-			tillDate = DateTime.Now.Date;
-			NotifyOfPropertyChange(() => FromDate);
-			NotifyOfPropertyChange(() => TillDate);
+			var initDate = DateTime.Now;
+			SelectedRange = Tuple.Create(initDate, initDate);
 		}
 
 		#endregion
