@@ -1,7 +1,8 @@
-// <copyright file="CalendarLimitedSelectedRangeBehavior.cs" company="HD">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="CalendarLimitedSelectedRangeBehavior.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-04-09" />
+//------------------------------------------------------------
 
 using System;
 using System.ComponentModel;
@@ -40,48 +41,59 @@ namespace Fab.Client.Framework.Behaviors
 
 		#endregion
 
-		#region Start Date
+		#region Selected Range
 
 		/// <summary>
-		/// Dependency property registration for <see cref="StartDate"/>.
+		/// Dependency property registration for <see cref="SelectedRange"/>.
 		/// </summary>
-		public static readonly DependencyProperty StartDateProperty = DependencyProperty.RegisterAttached(
-			"StartDate",
-			typeof(DateTime),
+		public static readonly DependencyProperty SelectedRangeProperty = DependencyProperty.RegisterAttached(
+			"SelectedRange",
+			typeof(Tuple<DateTime, DateTime>),
 			typeof(CalendarLimitedSelectedRangeBehavior),
-			new PropertyMetadata(null));
+			new PropertyMetadata(OnSelectedRangeChanged));
 
 		/// <summary>
-		/// Gets or sets start date of the selected range (i.e. "first day in period").
+		/// Flag that prevent recursive "OnSelectedRangeChanged" calls.
 		/// </summary>
-		[Description("Gets or sets start date of the selected range (i.e. \"first day in period\").")]
-		public DateTime StartDate
+		private bool isUpdatingBack;
+
+		/// <summary>
+		/// <see cref="SelectedRangeProperty"/> changed event handler.
+		/// </summary>
+		/// <param name="o"><see cref="CalendarLimitedSelectedRangeBehavior"/> instance.</param>
+		/// <param name="args">Event data.</param>
+		private static void OnSelectedRangeChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
 		{
-			get { return (DateTime)GetValue(StartDateProperty); }
-			set { SetValue(StartDateProperty, value); }
+			var b = (CalendarLimitedSelectedRangeBehavior)o;
+			var newValue = (Tuple<DateTime, DateTime>)args.NewValue;
+
+			if (!b.isUpdatingBack)
+			{
+				b.isUpdatingBack = true;
+
+				b.AssociatedObject.SelectedDates.Clear();
+
+				if (newValue.Item1.Date == newValue.Item2.Date)
+				{
+					b.AssociatedObject.SelectedDates.Add(newValue.Item1);
+				}
+				else
+				{
+					b.AssociatedObject.SelectedDates.AddRange(newValue.Item1, newValue.Item2);
+				}
+
+				b.isUpdatingBack = false;
+			}
 		}
 
-		#endregion
-
-		#region End Date
-
 		/// <summary>
-		/// Dependency property registration for <see cref="EndDate"/>.
+		/// Gets or sets start (min) and end (max) date of the selected range.
 		/// </summary>
-		public static readonly DependencyProperty EndDateProperty = DependencyProperty.RegisterAttached(
-			"EndDate",
-			typeof(DateTime),
-			typeof(CalendarLimitedSelectedRangeBehavior),
-			new PropertyMetadata(null));
-
-		/// <summary>
-		/// Gets or sets end date of the selected range (i.e. "last day in period").
-		/// </summary>
-		[Description("Gets or sets end date of the selected range (i.e. \"last day in period\").")]
-		public DateTime EndDate
+		[Description("Gets or sets start (min) and end (max) date of the selected range.")]
+		public Tuple<DateTime, DateTime> SelectedRange
 		{
-			get { return (DateTime)GetValue(EndDateProperty); }
-			set { SetValue(EndDateProperty, value); }
+			get { return (Tuple<DateTime, DateTime>)GetValue(SelectedRangeProperty); }
+			set { SetValue(SelectedRangeProperty, value); }
 		}
 
 		#endregion
@@ -149,8 +161,6 @@ namespace Fab.Client.Framework.Behaviors
 				maxEndDate = firstDate.AddDays(MaxSingleRangeLength - 1);
 				
 				AssociatedObject.SelectedDates.AddRange(firstDate, maxEndDate);
-//				StartDate = firstDate;
-//				EndDate = maxEndDate;
 				
 				isUpdating = false;
 			}
@@ -164,23 +174,13 @@ namespace Fab.Client.Framework.Behaviors
 				maxEndDate = firstDate.AddMonths(1).AddDays(-1);
 				
 				AssociatedObject.SelectedDates.AddRange(firstDate, maxEndDate);
-//				StartDate = firstDate;
-//				EndDate = maxEndDate;
 				
 				isUpdating = false;
 			}
 
 			if (!isUpdating)
 			{
-				if (StartDate != firstDate)
-				{
-					StartDate = firstDate;
-				}
-
-				if (EndDate != maxEndDate)
-				{
-					EndDate = maxEndDate;
-				}
+				SelectedRange = Tuple.Create(firstDate, maxEndDate);
 			}
 		}
 

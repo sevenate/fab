@@ -180,7 +180,9 @@ namespace Fab.Client.MoneyTracker.Postings
 			{
 				return fromDate.Date == tillDate.Date
 				       	? fromDate.Date.ToLongDateString()
-				       	: fromDate.Date.ToLongDateString() + " - " + tillDate.Date.ToLongDateString();
+				       	: fromDate.Month == tillDate.Month
+							? fromDate.Day + " - " + tillDate.Day + " " + fromDate.ToString("MMMM yyyy ã.") + " (" + ((tillDate - fromDate).TotalDays + 1) + " days)"
+							: fromDate.Date.ToLongDateString() + " - " + tillDate.Date.ToLongDateString() + " (" + ((tillDate - fromDate).TotalDays + 1) + " days)";
 			}
 		}
 

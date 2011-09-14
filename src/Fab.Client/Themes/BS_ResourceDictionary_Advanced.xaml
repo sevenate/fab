@@ -1616,12 +1616,12 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 						<Rectangle x:Name="TodayBackground"
-								   Fill="{StaticResource Brush_RowBackground}"
+								   Fill="Red"
 								   Opacity="0"
 								   RadiusY="1"
 								   RadiusX="1" />
 						<Rectangle x:Name="SelectedBackground"
-								   Fill="{TemplateBinding Background}"
+								   Fill="Yellow"
 								   Opacity="0"
 								   RadiusY="1"
 								   RadiusX="1" />

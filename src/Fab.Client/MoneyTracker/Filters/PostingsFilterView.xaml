@@ -8,14 +8,13 @@
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 			 mc:Ignorable="d">
 	<Grid x:Name="LayoutRoot">
-		<!--	SelectedDate="{Binding Path=FromDate, Mode=TwoWay}"	-->
 		<sdk:Calendar x:Name="FromDateCalendar"
 					  SelectionMode="SingleRange"
+					  IsTodayHighlighted="True"
 					  Height="{Binding ElementName=FromDateCalendar, Path=ActualWidth}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:CalendarLimitedSelectedRangeBehavior MaxSingleRangeLength="-1"
-																StartDate="{Binding Path=FromDate, Mode=TwoWay}"
-																EndDate="{Binding Path=TillDate, Mode=TwoWay}" />
+																SelectedRange="{Binding Path=SelectedRange, Mode=TwoWay}" />
 			</Interactivity:Interaction.Behaviors>
 		</sdk:Calendar>
 	</Grid>
