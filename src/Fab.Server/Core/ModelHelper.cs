@@ -97,12 +97,12 @@ namespace Fab.Server.Core
 		}
 
 		/// <summary>
-		/// Update account's cached "first posting date" and "last posting date"
+		/// Check account's cached "first posting date" and "last posting date"
 		/// to the date of new posting if is is out of current range.
 		/// </summary>
-		/// <param name="account">Account to update.</param>
+		/// <param name="account">Account to check.</param>
 		/// <param name="date">New posting date.</param>
-		private static void UpdateAccountPeriod(Account account, DateTime date)
+		private static void CheckAccountPeriod(Account account, DateTime date)
 		{
 			if (!account.FirstPostingDate.HasValue || account.FirstPostingDate > date)
 			{
@@ -112,6 +112,47 @@ namespace Fab.Server.Core
 			if (!account.LastPostingDate.HasValue || account.LastPostingDate < date)
 			{
 				account.LastPostingDate = date;
+			}
+		}
+
+		/// <summary>
+		/// Update account's cached "first posting date" and "last posting date" after deleted posting.
+		/// </summary>
+		/// <param name="mc">Entity Framework model container.</param>
+		/// <param name="account">Account to check.</param>
+		/// <param name="date">Deleted posting date.</param>
+		private static void UpdateAccountPeriod(ModelContainer mc, Account account, DateTime date)
+		{
+			if (account.FirstPostingDate.HasValue && account.FirstPostingDate == date)
+			{
+				// Find 2nd (by date) post from the start
+				var firstDate = (from posting in mc.Postings
+								 where posting.Account.Id == account.Id
+								 orderby posting.Date
+				                 select posting.Date)
+								 .Skip(1)
+								 .Take(1)
+								 .ToArray();
+
+				account.FirstPostingDate = firstDate.Length > 0
+														? firstDate[0]
+														: (DateTime?) null;
+			}
+
+			if (account.LastPostingDate.HasValue && account.LastPostingDate == date)
+			{
+				// Find 2nd (by date) post from the end
+				var lastDate = (from posting in mc.Postings
+								 where posting.Account.Id == account.Id
+								 orderby posting.Date descending 
+								 select posting.Date)
+								.Skip(1)
+								.Take(1)
+								.ToArray();
+
+				account.LastPostingDate = lastDate.Length > 0
+														? lastDate[0]
+														: (DateTime?)null;;
 			}
 		}
 
@@ -264,6 +305,8 @@ namespace Fab.Server.Core
 				// Update cached postings count
 				posting.Account.PostingsCount--;
 
+				UpdateAccountPeriod(mc, posting.Account, posting.Date);
+
 				// Delete original postings
 				mc.Postings.DeleteObject(posting);
 			}
@@ -353,8 +396,8 @@ namespace Fab.Server.Core
 			creditAccount.PostingsCount++;
 			debitAccount.PostingsCount++;
 
-			UpdateAccountPeriod(creditAccount, date);
-			UpdateAccountPeriod(debitAccount, date);
+			CheckAccountPeriod(creditAccount, date);
+			CheckAccountPeriod(debitAccount, date);
 
 			return journal;
 		}
@@ -444,8 +487,8 @@ namespace Fab.Server.Core
 				journal.Category = category;
 			}
 
-			UpdateAccountPeriod(targetAccount, date);
-			UpdateAccountPeriod(cashAccount, date);
+			CheckAccountPeriod(targetAccount, date);
+			CheckAccountPeriod(cashAccount, date);
 
 			mc.SaveChanges();
 		}
@@ -512,8 +555,8 @@ namespace Fab.Server.Core
 			targetAccount.PostingsCount++;
 			sourceAccount.PostingsCount++;
 			
-			UpdateAccountPeriod(sourceAccount, date);
-			UpdateAccountPeriod(targetAccount, date);
+			CheckAccountPeriod(sourceAccount, date);
+			CheckAccountPeriod(targetAccount, date);
 
 			return journal;
 		}
@@ -587,8 +630,8 @@ namespace Fab.Server.Core
 			journal.Quantity = quantity;
 			journal.Comment = comment;
 
-			UpdateAccountPeriod(sourceAccount, date);
-			UpdateAccountPeriod(targetAccount, date);
+			CheckAccountPeriod(sourceAccount, date);
+			CheckAccountPeriod(targetAccount, date);
 
 			mc.SaveChanges();
 		}
