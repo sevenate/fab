@@ -29,8 +29,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			proxy.DeleteJournalCompleted += OnDeleteCompleted;
 			proxy.DeleteJournalAsync(userId,
 			                         accountId,
-			                         transactionId,
-			                         DateTime.UtcNow
+			                         transactionId
 				);
 		}
 
