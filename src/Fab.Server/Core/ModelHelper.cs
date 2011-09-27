@@ -102,7 +102,7 @@ namespace Fab.Server.Core
 		/// </summary>
 		/// <param name="account">Account to check.</param>
 		/// <param name="date">New posting date.</param>
-		private static void CheckAccountPeriod(Account account, DateTime date)
+		private static void UpdateAccountPeriodAfterNewPosting(Account account, DateTime date)
 		{
 			if (!account.FirstPostingDate.HasValue || account.FirstPostingDate > date)
 			{
@@ -121,7 +121,7 @@ namespace Fab.Server.Core
 		/// <param name="mc">Entity Framework model container.</param>
 		/// <param name="account">Account to check.</param>
 		/// <param name="date">Deleted posting date.</param>
-		private static void UpdateAccountPeriod(ModelContainer mc, Account account, DateTime date)
+		private static void UpdateAccountPeriodAfterDeletePosting(ModelContainer mc, Account account, DateTime date)
 		{
 			if (account.FirstPostingDate.HasValue && account.FirstPostingDate == date)
 			{
@@ -305,7 +305,7 @@ namespace Fab.Server.Core
 				// Update cached postings count
 				posting.Account.PostingsCount--;
 
-				UpdateAccountPeriod(mc, posting.Account, posting.Date);
+				UpdateAccountPeriodAfterDeletePosting(mc, posting.Account, posting.Date);
 
 				// Delete original postings
 				mc.Postings.DeleteObject(posting);
@@ -396,8 +396,8 @@ namespace Fab.Server.Core
 			creditAccount.PostingsCount++;
 			debitAccount.PostingsCount++;
 
-			CheckAccountPeriod(creditAccount, date);
-			CheckAccountPeriod(debitAccount, date);
+			UpdateAccountPeriodAfterNewPosting(creditAccount, date);
+			UpdateAccountPeriodAfterNewPosting(debitAccount, date);
 
 			return journal;
 		}
@@ -468,6 +468,12 @@ namespace Fab.Server.Core
 				cashAccount.Balance += amount;
 			}
 
+			// Update account cached "first" and "last" posting dates
+			UpdateAccountPeriodAfterDeletePosting(mc, targetAccount, targetAccountPosting.Date);
+			UpdateAccountPeriodAfterDeletePosting(mc, cashAccount, cashAccountPosting.Date);
+			UpdateAccountPeriodAfterNewPosting(targetAccount, date);
+			UpdateAccountPeriodAfterNewPosting(cashAccount, date);
+
 			targetAccountPosting.Date = date;
 			cashAccountPosting.Date = date;
 
@@ -486,9 +492,6 @@ namespace Fab.Server.Core
 				category.Popularity++;
 				journal.Category = category;
 			}
-
-			CheckAccountPeriod(targetAccount, date);
-			CheckAccountPeriod(cashAccount, date);
 
 			mc.SaveChanges();
 		}
@@ -555,8 +558,8 @@ namespace Fab.Server.Core
 			targetAccount.PostingsCount++;
 			sourceAccount.PostingsCount++;
 			
-			CheckAccountPeriod(sourceAccount, date);
-			CheckAccountPeriod(targetAccount, date);
+			UpdateAccountPeriodAfterNewPosting(sourceAccount, date);
+			UpdateAccountPeriodAfterNewPosting(targetAccount, date);
 
 			return journal;
 		}
@@ -623,15 +626,18 @@ namespace Fab.Server.Core
 			sourceAccountPosting.Account = sourceAccount;
 			targetAccountPosting.Account = targetAccount;
 
-			sourceAccountPosting.Date = date;
-			targetAccountPosting.Date = date;
-
 			journal.Rate = rate;
 			journal.Quantity = quantity;
 			journal.Comment = comment;
 
-			CheckAccountPeriod(sourceAccount, date);
-			CheckAccountPeriod(targetAccount, date);
+			// Update account cached "first" and "last" posting dates
+			UpdateAccountPeriodAfterDeletePosting(mc, targetAccount, targetAccountPosting.Date);
+			UpdateAccountPeriodAfterDeletePosting(mc, sourceAccount, sourceAccountPosting.Date);
+			UpdateAccountPeriodAfterNewPosting(targetAccount, date);
+			UpdateAccountPeriodAfterNewPosting(sourceAccount, date);
+
+			sourceAccountPosting.Date = date;
+			targetAccountPosting.Date = date;
 
 			mc.SaveChanges();
 		}

@@ -6,19 +6,19 @@
 				<binding name="BasicHttpBinding_IUserService"
 						 maxBufferSize="2147483647"
 						 maxReceivedMessageSize="2147483647"
-						 openTimeout="00:01:00"
-						 receiveTimeout="00:10:00"
-						 sendTimeout="00:01:00"
-						 closeTimeout="00:01:00">
+						 openTimeout="01:01:00"
+						 receiveTimeout="01:10:00"
+						 sendTimeout="01:01:00"
+						 closeTimeout="01:01:00">
 					<security mode="None" />
 				</binding>
 				<binding name="BasicHttpBinding_IMoneyService"
 						 maxBufferSize="2147483647"
 						 maxReceivedMessageSize="2147483647"
-						 openTimeout="00:01:00"
-						 receiveTimeout="00:10:00"
-						 sendTimeout="00:01:00"
-						 closeTimeout="00:01:00">
+						 openTimeout="01:01:00"
+						 receiveTimeout="01:10:00"
+						 sendTimeout="01:01:00"
+						 closeTimeout="01:01:00">
 					<security mode="None" />
 				</binding>
 			</basicHttpBinding>
