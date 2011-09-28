@@ -1,0 +1,4 @@
+﻿<local:AsyncProgressIndicatorViewModel xmlns:local="clr-namespace:Fab.Client.Shell.Async"
+									   BackgroundTasksCount="5"
+									   HasBackgroundOperation="True"
+									   LastStartedOperation="Downloading postings for account #1"/>

@@ -1,0 +1,35 @@
+﻿<configuration>
+	<system.serviceModel>
+		<extensions />
+		<bindings>
+			<basicHttpBinding>
+				<binding name="BasicHttpBinding_IUserService"
+						 maxBufferSize="2147483647"
+						 maxReceivedMessageSize="2147483647"
+						 openTimeout="01:01:00"
+						 receiveTimeout="01:10:00"
+						 sendTimeout="01:01:00"
+						 closeTimeout="01:01:00">
+					<security mode="None" />
+				</binding>
+				<binding name="BasicHttpBinding_IMoneyService"
+						 maxBufferSize="2147483647"
+						 maxReceivedMessageSize="2147483647"
+						 openTimeout="01:01:00"
+						 receiveTimeout="01:10:00"
+						 sendTimeout="01:01:00"
+						 closeTimeout="01:01:00">
+					<security mode="None" />
+				</binding>
+			</basicHttpBinding>
+		</bindings>
+		<client>
+			<endpoint address="http://localhost/StagingFab/MoneyService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IMoneyService"
+                contract="MoneyServiceReference.IMoneyService" name="BasicHttpBinding_IMoneyService" />
+			<endpoint address="http://localhost/StagingFab/UserService.svc"
+					  binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IUserService"
+					  contract="UserServiceReference.IUserService" name="BasicHttpBinding_IUserService" />
+		</client>
+	</system.serviceModel>
+</configuration>

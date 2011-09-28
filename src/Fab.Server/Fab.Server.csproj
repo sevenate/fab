@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{192B90DA-497A-4986-9863-1AFAF66A1332}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fab.Server</RootNamespace>
+    <AssemblyName>Fab.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <UseIISExpress>false</UseIISExpress>
+    <SilverlightApplicationList>{C75F0C64-CBBF-4B29-9E9E-A362AC3A4760}|..\Fab.Client\Fab.Client.csproj|ClientBin|False</SilverlightApplicationList>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>&lt;Objects&gt;&lt;ObjectGroup Name="ModelContainer" Order="1" Enabled="True"&gt;&lt;Destination Path="" /&gt;&lt;Object Type="dbFullSql"&gt;&lt;PreSource Path="metadata=res://%2a/Model.csdl|res://%2a/Model.ssdl|res://%2a/Model.msl%3bprovider=System.Data.SqlClient%3bprovider connection string=&amp;quot%3bData Source=.\SQLEXPRESS%3bAttachDbFilename=|DataDirectory|\Database.mdf%3bIntegrated Security=True%3bUser Instance=True%3bMultipleActiveResultSets=True&amp;quot%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" /&gt;&lt;Source Path="obj\Debug\AutoScripts\ModelContainer_SchemaOnly.sql" /&gt;&lt;/Object&gt;&lt;/ObjectGroup&gt;&lt;/Objects&gt;</PublishDatabaseSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EmitMapper">
+      <HintPath>..\..\ext\.NET 4\EmitMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdminService.svc" />
+    <Content Include="ClientBin\SilverFAB.xap" />
+    <Content Include="Database\Fill Test Data.sql" />
+    <Content Include="favicon.png" />
+    <Content Include="index.html" />
+    <Content Include="MoneyService.svc" />
+    <None Include="Database\Create.sql" />
+    <None Include="Database\Fill.sql" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\Silverlight.js" />
+    <Content Include="UserService.svc" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Generated.cs">
+      <Link>Properties\AssemblyInfo.Generated.cs</Link>
+    </Compile>
+    <Compile Include="AdminService.svc.cs">
+      <DependentUpon>AdminService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Core\DTO\AccountDTO.cs" />
+    <Compile Include="Core\DTO\AssetTypeDTO.cs" />
+    <Compile Include="Core\DTO\CategoryDTO.cs" />
+    <Compile Include="Core\Enums\CategoryType.cs" />
+    <Compile Include="Core\DTO\DepositDTO.cs" />
+    <Compile Include="Core\DTO\IncomingTransferDTO.cs" />
+    <Compile Include="Core\DTO\JournalDTO.cs" />
+    <Compile Include="Core\DTO\OutgoingTransferDTO.cs" />
+    <Compile Include="Core\DTO\TransferDTO.cs" />
+    <Compile Include="Core\DTO\TransactionDTO.cs" />
+    <Compile Include="Core\DTO\UserDTO.cs" />
+    <Compile Include="Core\DTO\WithdrawalDTO.cs" />
+    <Compile Include="Core\Filters\CategoryFilter.cs" />
+    <Compile Include="Core\Filters\IQueryFilter.cs" />
+    <Compile Include="Core\Filters\QueryFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Filters\TextSearchFilter.cs" />
+    <Compile Include="MoneyService.svc.cs">
+      <DependentUpon>MoneyService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Core\IAdminService.cs" />
+    <Compile Include="Core\IMoneyService.cs" />
+    <Compile Include="Core\Enums\JournalType.cs" />
+    <Compile Include="Core\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Core\IUserService.cs" />
+    <Compile Include="Core\ModelHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserService.svc.cs">
+      <DependentUpon>UserService.svc</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Core\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="..\..\msbuild.common.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>33809</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/StagingFab</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <EnableWcfTestClientForSVCDefaultValue>True</EnableWcfTestClientForSVCDefaultValue>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
