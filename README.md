@@ -10,7 +10,7 @@ FAB is a client server application for tracking and planning family assets.
 Links
 --------
 
-* [Download](https://bitbucket.org/sevenate/fab/downloads) (**TBA**)
+* [Download](https://bitbucket.org/sevenate/fab/downloads)
 * [Installation](https://bitbucket.org/sevenate/fab/wiki/Installation)
 * [Changelog](https://bitbucket.org/sevenate/fab/wiki/Changelog)
 * [Roadmap](https://bitbucket.org/sevenate/fab/wiki/Roadmap)
