@@ -73,6 +73,7 @@
     <Content Include="AdminService.svc" />
     <Content Include="ClientBin\SilverFAB.xap" />
     <Content Include="Database\Fill Test Data.sql" />
+    <Content Include="favicon.png" />
     <Content Include="index.html" />
     <Content Include="MoneyService.svc" />
     <None Include="Database\Create.sql" />
