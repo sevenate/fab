@@ -69,10 +69,10 @@
   <ItemGroup>
     <Content Include="AdminService.svc" />
     <Content Include="ClientBin\SilverFAB.xap" />
-    <None Include="Database\Create.sqlce" />
-    <None Include="Database\Fill.sqlce" />
-    <Content Include="Database\Create.sql" />
-    <Content Include="Database\Fill.sql" />
+    <None Include="SqlScripts\Create.sqlce" />
+    <None Include="SqlScripts\Fill.sqlce" />
+    <Content Include="SqlScripts\Create.sql" />
+    <Content Include="SqlScripts\Fill.sql" />
     <Content Include="favicon.png" />
     <Content Include="index.html" />
     <Content Include="MoneyService.svc" />
