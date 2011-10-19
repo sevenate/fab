@@ -27,21 +27,21 @@ namespace Fab.Client.Authentication
 		{
 			var proxy = new UserServiceClient();
 
-			proxy.GetUserIdCompleted += (sender, args) =>
+			proxy.GetUserCompleted += (sender, args) =>
 			                            	{
-												if (args.Error != null || args.Result == Guid.Empty)
+												if (args.Error != null || args.Result.Id == Guid.Empty)
 												{
 													Caliburn.Micro.Execute.OnUIThread(
 														() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
 												}
 												else
 												{
-													Credentials = new UserCredentials(args.Result, Username);
+													Credentials = new UserCredentials(args.Result.Id, Username);
 													Succeeded = true;
 													Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 												}
 			                            	};
-			proxy.GetUserIdAsync(Username);
+			proxy.GetUserAsync(Username, Password);
 		}
 
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };

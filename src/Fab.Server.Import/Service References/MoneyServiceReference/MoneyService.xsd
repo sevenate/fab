@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
+  <xs:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
   <xs:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" />
   <xs:element name="CreateAccount">
     <xs:complexType>
@@ -40,7 +40,6 @@
         <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q4:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="assetTypeId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -229,20 +228,22 @@
   </xs:element>
   <xs:element name="GetAllAssetTypes">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q24:guid" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAssetTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllAssetTypesResult" nillable="true" type="q24:ArrayOfAssetTypeDTO" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllAssetTypesResult" nillable="true" type="q25:ArrayOfAssetTypeDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="Deposit">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q25:guid" />
+        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q26:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
         <xs:element minOccurs="0" name="rate" type="xs:decimal" />
@@ -262,7 +263,7 @@
   <xs:element name="Withdrawal">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q26:guid" />
+        <xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q27:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
         <xs:element minOccurs="0" name="rate" type="xs:decimal" />
@@ -282,7 +283,7 @@
   <xs:element name="UpdateTransaction">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q27:guid" />
+        <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q28:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="transactionId" type="xs:int" />
         <xs:element minOccurs="0" name="isDeposit" type="xs:boolean" />
@@ -302,7 +303,7 @@
   <xs:element name="Transfer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q28:guid" />
+        <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q29:guid" />
         <xs:element minOccurs="0" name="fromAccountId" type="xs:int" />
         <xs:element minOccurs="0" name="toAccountId" type="xs:int" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
@@ -322,7 +323,7 @@
   <xs:element name="UpdateTransfer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q29:guid" />
+        <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q30:guid" />
         <xs:element minOccurs="0" name="transactionId" type="xs:int" />
         <xs:element minOccurs="0" name="fromAccountId" type="xs:int" />
         <xs:element minOccurs="0" name="toAccountId" type="xs:int" />

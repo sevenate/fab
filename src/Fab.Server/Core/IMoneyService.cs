@@ -177,11 +177,12 @@ namespace Fab.Server.Core
 		IList<JournalDTO> GetJournals(Guid userId, int accountId, IQueryFilter queryFilter);
 
 		/// <summary>
-		/// Gets all available asset types (i.e. "currency names").
+		/// Gets all available asset types (i.e. "currency names") for user.
 		/// </summary>
-		/// <returns>Asset types presented in the system.</returns>
+		/// <param name="userId">The user unique ID.</param>
+		/// <returns>Asset types presented by default or defined by the user.</returns>
 		[OperationContract]
-		IList<AssetTypeDTO> GetAllAssetTypes();
+		IList<AssetTypeDTO> GetAllAssetTypes(Guid userId);
 
 		#endregion
 

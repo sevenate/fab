@@ -1,11 +1,12 @@
-﻿// <copyright file="MoneyService.svc.cs" company="HD">
-//  Copyright (c) 2009-2010 nReez. All rights reserved.
+﻿//------------------------------------------------------------
+// <copyright file="UserService.svc.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-01-28" />
-// <summary>Money service.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using EmitMapper;
 using EmitMapper.MappingConfiguration;
@@ -21,6 +22,48 @@ namespace Fab.Server
 	/// </summary>
 	public class MoneyService : IMoneyService
 	{
+		#region Dependencies
+
+		/// <summary>
+		/// Database manager dependency.
+		/// </summary>
+		private readonly DatabaseManager dbManager;
+
+		#endregion
+
+		#region Default folder
+
+		/// <summary>
+		/// Default root folder for master and personal databases = |DataDirectory|.
+		/// </summary>
+		private string defaultFolder = "|DataDirectory|";
+
+		/// <summary>
+		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
+		/// </summary>
+		public string DefaultFolder
+		{
+			[DebuggerStepThrough]
+			get { return defaultFolder; }
+
+			[DebuggerStepThrough]
+			set { defaultFolder = value; }
+		}
+
+		#endregion
+
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MoneyService"/> class.
+		/// </summary>
+		public MoneyService()
+		{
+			dbManager = new DatabaseManager();
+		}
+
+		#endregion
+
 		#region Implementation of IMoneyService
 
 		#region Accounts
@@ -50,14 +93,12 @@ namespace Fab.Server
 				throw new Exception("Account name is too long. Maximum length is 50.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var pc = new ModelContainer(GetPersonalConnection(userId)))
 			{
-				var user = ModelHelper.GetUserById(mc, userId);
-				var assetType = ModelHelper.GetAssetTypeById(mc, assetTypeId);
+				var assetType = ModelHelper.GetAssetTypeById(pc, assetTypeId);
 
 				var account = new Account
 				              {
-				              	User = user,
 				              	AssetType = assetType,
 				              	Name = name,
 				              	Created = DateTime.UtcNow,
@@ -69,8 +110,8 @@ namespace Fab.Server
 								LastPostingDate = null,
 							  };
 
-				mc.Accounts.AddObject(account);
-				mc.SaveChanges();
+				pc.Accounts.AddObject(account);
+				pc.SaveChanges();
 
 				return account.Id;
 			}
@@ -89,7 +130,7 @@ namespace Fab.Server
 				throw new ArgumentException("User ID must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
 				var result = accountMapper.Map(ModelHelper.GetAccountById(mc, accountId));
@@ -115,7 +156,7 @@ namespace Fab.Server
 				throw new ArgumentException("Account name must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var account = ModelHelper.GetAccountById(mc, accountId);
 				account.Name = name;
@@ -135,7 +176,7 @@ namespace Fab.Server
 				throw new ArgumentException("User ID must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var account = ModelHelper.GetAccountById(mc, accountId);
 
@@ -158,12 +199,12 @@ namespace Fab.Server
 				throw new ArgumentException("User ID must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
 
 				var result = mc.Accounts.Include("AssetType")
-					.Where(a => a.User.Id == userId && a.IsClosed == false)
+					.Where(a => !a.IsSystem && !a.IsClosed)
 					.OrderBy(a => a.Created)
 					.ToList()
 					.Select(accountMapper.Map)
@@ -194,7 +235,7 @@ namespace Fab.Server
 
 			decimal balance;
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				// Todo: Fix Sum() of Postings when there is no any posting yet.
 				var firstPosting = mc.Postings.Where(p => p.Account.Id == accountId && p.Date < dateTime)
@@ -289,13 +330,10 @@ namespace Fab.Server
 				throw new Exception("Category name is too long. Maximum length is 50.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
-				var user = ModelHelper.GetUserById(mc, userId);
-
 				var category = new Category
 				               {
-				               	User = user,
 				               	Name = name,
 				               	CategoryType = (byte) categoryType,
 				               	Popularity = 0,
@@ -322,7 +360,7 @@ namespace Fab.Server
 				throw new ArgumentException("User ID must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
 				return categoryMapper.Map(ModelHelper.GetCategoryById(mc, categoryId));
@@ -348,7 +386,7 @@ namespace Fab.Server
 				throw new ArgumentException("Category name must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var category = ModelHelper.GetCategoryById(mc, categoryId);
 
@@ -371,7 +409,7 @@ namespace Fab.Server
 				throw new ArgumentException("User ID must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var category = ModelHelper.GetCategoryById(mc, categoryId);
 
@@ -388,10 +426,10 @@ namespace Fab.Server
 		/// <returns>All categories.</returns>
 		public IList<CategoryDTO> GetAllCategories(Guid userId)
 		{
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
-				var categories = mc.Categories.Where(c => c.User.Id == userId && c.Deleted == null)
+				var categories = mc.Categories.Where(c => c.Deleted == null)
 											  .OrderBy(c => c.Name)
 											  .ToList();
 
@@ -418,7 +456,7 @@ namespace Fab.Server
 
 			//Todo: check user permission (user ID and account ID) before deleting transaction.
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				ModelHelper.DeleteJournal(mc, journalId);
 				mc.SaveChanges();
@@ -434,7 +472,7 @@ namespace Fab.Server
 		/// <returns>Journal record details.</returns>
 		public JournalDTO GetJournal(Guid userId, int accountId, int journalId)
 		{
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				/*
 				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>();
@@ -544,7 +582,7 @@ namespace Fab.Server
 
 			// Bug: warning security weakness!
 			// Check User.IsDisabled + Account.IsDeleted also
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				//TODO: remove duplicated code with GetJournals() method
 				var query = from p in mc.Postings
@@ -640,7 +678,7 @@ namespace Fab.Server
 
 			// Bug: warning security weakness!
 			// Check User.IsDisabled + Account.IsDeleted also
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				//TODO: remove duplicated code with GetJournalsCounts() method
 				var query = from p in mc.Postings
@@ -781,12 +819,14 @@ namespace Fab.Server
 		}
 
 		/// <summary>
-		/// Gets all available asset types (i.e. "currency names").
+		/// Gets all available asset types (i.e. "currency names") for user.
 		/// </summary>
-		/// <returns>Asset types presented in the system.</returns>
-		public IList<AssetTypeDTO> GetAllAssetTypes()
+		/// <param name="userId">The user unique ID.</param>
+		/// <returns>Asset types presented by default or defined by the user.</returns>
+		public IList<AssetTypeDTO> GetAllAssetTypes(Guid userId)
 		{
-			using (var mc = new ModelContainer())
+			//TODO: use GetPersonalConnection(userId) here
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var assetTypeMapper = ObjectMapperManager.DefaultInstance.GetMapper<AssetType, AssetTypeDTO>();
 
@@ -888,7 +928,7 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				ModelHelper.UpdateTransaction(mc, accountId, transactionId, isDeposit, date, rate, quantity, categoryId, comment);
 			}
@@ -912,7 +952,7 @@ namespace Fab.Server
 		/// <param name="categoryId">The category ID.</param>
 		/// <param name="comment">Comment notes.</param>
 		/// <returns>Created transaction ID.</returns>
-		private static int CreateTransaction(Guid userId, int accountId, bool isDeposit, DateTime date, decimal rate,
+		private int CreateTransaction(Guid userId, int accountId, bool isDeposit, DateTime date, decimal rate,
 		                                     decimal quantity, int? categoryId, string comment)
 		{
 			if (userId == Guid.Empty)
@@ -938,7 +978,7 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var journal = ModelHelper.CreateTransaction(mc, accountId, isDeposit ? JournalType.Deposit : JournalType.Withdrawal,
 				                                            date, rate, quantity, categoryId, comment);
@@ -996,7 +1036,7 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				var journal = ModelHelper.CreateTransfer(mc, date, fromAccountId, toAccountId, rate, quantity, comment);
 				mc.SaveChanges();
@@ -1054,13 +1094,36 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer())
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
 			{
 				ModelHelper.UpdateTransfer(mc, transactionId, fromAccountId, toAccountId, date, rate, quantity, comment);
 			}
 		}
 
 		#endregion
+
+		#endregion
+
+		#region Private Methods
+
+		/// <summary>
+		/// Gets connection string to the user personal database based on user ID.
+		/// </summary>
+		/// <param name="userId">User unique ID.</param>
+		/// <returns>Connection string to the user personal database.</returns>
+		private string GetPersonalConnection(Guid userId)
+		{
+			string personalConnection;
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
+			{
+				personalConnection = mc.Users.Where(user => user.Id == userId).Select(user => user.DatabasePath).Single();
+			}
+
+			//personalConnection = dbManager.GetPersonalConnection(userId, ?? user.Registered ??, DefaultFolder);
+			return personalConnection;
+		}
 
 		#endregion
 	}

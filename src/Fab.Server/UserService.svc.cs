@@ -1,12 +1,16 @@
-﻿// <copyright file="UserService.svc.cs" company="HD">
-//  Copyright (c) 2010 HD. All rights reserved.
+﻿//------------------------------------------------------------
+// <copyright file="UserService.svc.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-01-28" />
-// <summary>User service.</summary>
+//------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Linq;
+using EmitMapper;
 using Fab.Server.Core;
+using Fab.Server.Core.DTO;
+using Fab.Server.Properties;
 
 namespace Fab.Server
 {
@@ -15,6 +19,48 @@ namespace Fab.Server
 	/// </summary>
 	public class UserService : IUserService
 	{
+		#region Dependencies
+
+		/// <summary>
+		/// Database manager dependency.
+		/// </summary>
+		private readonly DatabaseManager dbManager;
+
+		#endregion
+
+		#region Default folder
+
+		/// <summary>
+		/// Default root folder for master and personal databases = |DataDirectory|.
+		/// </summary>
+		private string defaultFolder = "|DataDirectory|";
+
+		/// <summary>
+		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
+		/// </summary>
+		public string DefaultFolder
+		{
+			[DebuggerStepThrough]
+			get { return defaultFolder; }
+
+			[DebuggerStepThrough]
+			set { defaultFolder = value; }
+		}
+
+		#endregion
+
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="UserService"/> class.
+		/// </summary>
+		public UserService()
+		{
+			dbManager = new DatabaseManager();
+		}
+
+		#endregion
+
 		#region Implementation of IUserService
 
 		/// <summary>
@@ -48,7 +94,9 @@ namespace Fab.Server
 				return false;
 			}
 
-			using (var mc = new ModelContainer())
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
 			{
 				return ModelHelper.IsLoginAvailable(mc, newLogin);
 			}
@@ -59,8 +107,8 @@ namespace Fab.Server
 		/// </summary>
 		/// <param name="login">User login name.</param>
 		/// <param name="password">User password.</param>
-		/// <returns>Created user ID.</returns>
-		public Guid Register(string login, string password)
+		/// <returns>Created user object.</returns>
+		public UserDTO Register(string login, string password)
 		{
 			if (string.IsNullOrWhiteSpace(login))
 			{
@@ -94,32 +142,40 @@ namespace Fab.Server
 			}
 
 			// Check password max length
-			if (password.Length > 256)
+			if (password.Length > 255)
 			{
-				throw new Exception("New password is too long. Maximum length is 256.");
+				throw new Exception("New password is too long. Maximum length is 255.");
 			}
 
-			using (var mc = new ModelContainer())
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
 			{
+				var usersMapper = ObjectMapperManager.DefaultInstance.GetMapper<User, UserDTO>();
+
 				// Check login uniqueness
 				if (!ModelHelper.IsLoginAvailable(mc, newLogin))
 				{
-					return Guid.Empty;
+					throw new Exception(string.Format("Login name \"{0}\" is already used. Please use another one.", newLogin));
 				}
 
 				var user = new User
 				{
 					Id = Guid.NewGuid(),
 					Login = newLogin,
-					Password = password, // Todo: use hash algorithm instead of plain text here!
+					Password = password.Hash(),
 					Registered = DateTime.UtcNow,
-					IsDisabled = false
+					IsDisabled = false,
+					ServiceUrl = Resources.DefaultServiceUrl
 				};
+
+				// Create personal database for user and save path to it
+				user.DatabasePath = dbManager.GetPersonalConnection(user.Id, user.Registered, DefaultFolder);
 
 				mc.Users.AddObject(user);
 				mc.SaveChanges();
 
-				return user.Id;
+				return usersMapper.Map(user);
 			}
 		}
 
@@ -159,16 +215,18 @@ namespace Fab.Server
 				throw new Exception("New password is too long. Maximum length is 256.");
 			}
 
-			using (var mc = new ModelContainer())
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
 			{
 				User user = ModelHelper.GetUserById(mc, userId);
 
-				if (user.Password != oldPassword)
+				if (user.Password != oldPassword.Hash())
 				{
 					throw new Exception("Old password is incorrect.");
 				}
 
-				user.Password = newPassword;
+				user.Password = newPassword.Hash();
 				user.Email = string.IsNullOrWhiteSpace(newEmail)
 								? null
 								: newEmail.Trim();
@@ -178,22 +236,41 @@ namespace Fab.Server
 		}
 
 		/// <summary>
-		/// Get user ID by unique login name.
+		/// Get user by unique login and password.
 		/// </summary>
 		/// <param name="login">User unique login name.</param>
-		/// <returns>User unique ID.</returns>
-		public Guid GetUserId(string login)
+		/// <param name="password">User password.</param>
+		/// <returns>User instance.</returns>
+		public UserDTO GetUser(string login, string password)
 		{
 			if (string.IsNullOrWhiteSpace(login))
 			{
 				throw new ArgumentException("Login must not be empty.");
 			}
 
-			using (var mc = new ModelContainer())
+			if (string.IsNullOrWhiteSpace(password))
 			{
-				return mc.Users.Where(u => u.Login == login.Trim())
-						.Select(u => u.Id)
+				throw new ArgumentException("Password must not be empty.");
+			}
+
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
+			{
+				var usersMapper = ObjectMapperManager.DefaultInstance.GetMapper<User, UserDTO>();
+
+				var hash = password.Hash();
+				var user = mc.Users.Where(u => u.Login == login.Trim() && u.Password == hash)
+						.Select(u => u)
 						.SingleOrDefault();
+
+				if (user != null)
+				{
+					user.LastAccess = DateTime.UtcNow;
+					mc.SaveChanges();
+				}
+
+				return usersMapper.Map(user);
 			}
 		}
 

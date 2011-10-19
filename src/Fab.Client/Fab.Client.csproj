@@ -439,6 +439,12 @@
     <None Include="Service References\MoneyServiceReference\MoneyService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\UserServiceReference\Fab.Client.UserServiceReference.UserDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServiceReference\UserService.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\UserServiceReference\UserService1.wsdl" />
     <None Include="Service References\UserServiceReference\UserService2.xsd">
       <SubType>Designer</SubType>

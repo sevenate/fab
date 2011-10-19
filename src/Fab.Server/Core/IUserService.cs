@@ -6,6 +6,7 @@
 
 using System;
 using System.ServiceModel;
+using Fab.Server.Core.DTO;
 
 namespace Fab.Server.Core
 {
@@ -35,9 +36,9 @@ namespace Fab.Server.Core
 		/// </summary>
 		/// <param name="login">User login name.</param>
 		/// <param name="password">User password.</param>
-		/// <returns>Created user ID.</returns>
+		/// <returns>Created user object.</returns>
 		[OperationContract]
-		Guid Register(string login, string password);
+		UserDTO Register(string login, string password);
 
 		/// <summary>
 		/// Change user password or email to new values.
@@ -50,12 +51,13 @@ namespace Fab.Server.Core
 		void Update(Guid userId, string oldPassword, string newPassword, string newEmail);
 
 		/// <summary>
-		/// Get user ID by unique login name.
+		/// Get user by unique login name and password.
 		/// </summary>
 		/// <param name="login">User unique login name.</param>
-		/// <returns>User unique ID.</returns>
+		/// <param name="password">User password.</param>
+		/// <returns>User instance.</returns>
 		[OperationContract]
-		Guid GetUserId(string login);
+		UserDTO GetUser(string login, string password);
 
 		/// <summary>
 		/// If user with specified login name have email and this email is match to specified email,

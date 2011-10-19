@@ -1,11 +1,12 @@
-﻿// <copyright file="AdminService.svc.cs" company="HD">
-// 	Copyright (c) 2009-2010 nReez. All rights reserved.
+﻿//------------------------------------------------------------
+// <copyright file="AdminService.svc.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-02-04" />
-// <summary>Administrative service.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using EmitMapper;
 using Fab.Server.Core;
@@ -18,17 +19,61 @@ namespace Fab.Server
 	/// </summary>
 	public class AdminService : IAdminService
 	{
+		#region Dependencies
+
+		/// <summary>
+		/// Database manager dependency.
+		/// </summary>
+		private readonly DatabaseManager dbManager;
+
+		#endregion
+
+		#region Default folder
+
+		/// <summary>
+		/// Default root folder for master and personal databases = |DataDirectory|.
+		/// </summary>
+		private string defaultFolder = "|DataDirectory|";
+
+		/// <summary>
+		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
+		/// </summary>
+		public string DefaultFolder
+		{
+			[DebuggerStepThrough]
+			get { return defaultFolder; }
+
+			[DebuggerStepThrough]
+			set { defaultFolder = value; }
+		}
+
+		#endregion
+
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AdminService"/> class.
+		/// </summary>
+		public AdminService()
+		{
+			dbManager = new DatabaseManager();
+		}
+
+		#endregion
+
 		#region Implementation of IAdminService
 
 		/// <summary>
 		/// Retrieve all registered users from the system.
 		/// </summary>
 		/// <returns>All users.</returns>
-		public IList<UserDTO> GetAllUsers()
+		public IList<AdminUserDTO> GetAllUsers()
 		{
-			using (var mc = new ModelContainer())
+			var masterConnectioString = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnectioString))
 			{
-				var userMaper = ObjectMapperManager.DefaultInstance.GetMapper<User, UserDTO>();
+				var userMaper = ObjectMapperManager.DefaultInstance.GetMapper<User, AdminUserDTO>();
 
 				return mc.Users.OrderBy(u => u.Registered)
 									.ToList()
@@ -43,7 +88,9 @@ namespace Fab.Server
 		/// <param name="userId">User ID to disable.</param>
 		public void DisableUser(Guid userId)
 		{
-			using (var mc = new ModelContainer())
+			var masterConnectioString = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnectioString))
 			{
 				var user = ModelHelper.GetUserById(mc, userId);
 				user.IsDisabled = true;
