@@ -4,286 +4,248 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-  <EntityContainer Name="ModelStoreContainer">
-    <EntitySet Name="Accounts" EntityType="Model.Store.Accounts" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AssetTypes" EntityType="Model.Store.AssetTypes" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Categories" EntityType="Model.Store.Categories" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Journals" EntityType="Model.Store.Journals" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Postings" EntityType="Model.Store.Postings" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Users" EntityType="Model.Store.Users" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DeletedPostings" EntityType="Model.Store.DeletedPostings" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DeletedJournals" EntityType="Model.Store.DeletedJournals" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_AccountPosting" Association="Model.Store.FK_AccountPosting">
-      <End Role="Account" EntitySet="Accounts" />
-      <End Role="Posting" EntitySet="Postings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserAccount" Association="Model.Store.FK_UserAccount">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Account" EntitySet="Accounts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PostingAssetType" Association="Model.Store.FK_PostingAssetType">
-      <End Role="AssetType" EntitySet="AssetTypes" />
-      <End Role="Posting" EntitySet="Postings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CategoryUser" Association="Model.Store.FK_CategoryUser">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Category" EntitySet="Categories" />
-    </AssociationSet>
-    <AssociationSet Name="FK_JournalPosting" Association="Model.Store.FK_JournalPosting">
-      <End Role="Journal" EntitySet="Journals" />
-      <End Role="Posting" EntitySet="Postings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AccountAssetType" Association="Model.Store.FK_AccountAssetType">
-      <End Role="AssetType" EntitySet="AssetTypes" />
-      <End Role="Account" EntitySet="Accounts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CategoryJournal" Association="Model.Store.FK_CategoryJournal">
-      <End Role="Category" EntitySet="Categories" />
-      <End Role="Journal" EntitySet="Journals" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AccountDeletedPosting" Association="Model.Store.FK_AccountDeletedPosting">
-      <End Role="Account" EntitySet="Accounts" />
-      <End Role="DeletedPosting" EntitySet="DeletedPostings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DeletedPostingAssetType" Association="Model.Store.FK_DeletedPostingAssetType">
-      <End Role="AssetType" EntitySet="AssetTypes" />
-      <End Role="DeletedPosting" EntitySet="DeletedPostings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DeletedJournalDeletedPosting" Association="Model.Store.FK_DeletedJournalDeletedPosting">
-      <End Role="DeletedJournal" EntitySet="DeletedJournals" />
-      <End Role="DeletedPosting" EntitySet="DeletedPostings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CategoryDeletedJournal" Association="Model.Store.FK_CategoryDeletedJournal">
-      <End Role="Category" EntitySet="Categories" />
-      <End Role="DeletedJournal" EntitySet="DeletedJournals" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Accounts">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Created" Type="datetime" Nullable="false" />
-    <Property Name="Balance" Type="decimal" Nullable="false" DefaultValue="0" Precision="19" Scale="4" />
-    <Property Name="IsClosed" Type="bit" Nullable="false" />
-    <Property Name="ClosedChanged" Type="datetime" Nullable="true" />
-    <Property Name="PostingsCount" Type="int" Nullable="false" DefaultValue="0" />
-    <Property Name="FirstPostingDate" Type="datetime" Nullable="true" />
-    <Property Name="LastPostingDate" Type="datetime" Nullable="true" />
-    <Property Name="User_Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="AssetType_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AssetTypes">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Categories">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="CategoryType" Type="tinyint" Nullable="false" />
-    <Property Name="Popularity" Type="int" Nullable="false" DefaultValue="0" />
-    <Property Name="Deleted" Type="datetime" Nullable="true" />
-    <Property Name="User_Id" Type="uniqueidentifier" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Journals">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="JournalType" Type="tinyint" Nullable="false" />
-    <Property Name="Comment" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="Rate" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Quantity" Type="decimal" Nullable="false" Precision="10" Scale="4" />
-    <Property Name="Category_Id" Type="int" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Postings">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="Amount" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Account_Id" Type="int" Nullable="false" />
-    <Property Name="AssetType_Id" Type="int" Nullable="false" />
-    <Property Name="Journal_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Users">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="256" />
-    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="Registered" Type="datetime" Nullable="false" />
-    <Property Name="LastAccess" Type="datetime" Nullable="true" />
-    <Property Name="IsDisabled" Type="bit" Nullable="false" />
-    <Property Name="DisabledChanged" Type="datetime" Nullable="true" />
-  </EntityType>
-  <EntityType Name="DeletedPostings">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="Amount" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Deleted" Type="datetime" Nullable="false" />
-    <Property Name="Account_Id" Type="int" Nullable="false" />
-    <Property Name="AssetType_Id" Type="int" Nullable="false" />
-    <Property Name="DeletedJournal_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="DeletedJournals">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="JournalType" Type="tinyint" Nullable="false" />
-    <Property Name="Comment" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="Rate" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Quantity" Type="decimal" Nullable="false" Precision="10" Scale="4" />
-    <Property Name="Category_Id" Type="int" Nullable="true" />
-  </EntityType>
-  <Association Name="FK_AccountPosting">
-    <End Role="Account" Type="Model.Store.Accounts" Multiplicity="1" />
-    <End Role="Posting" Type="Model.Store.Postings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Account">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Posting">
-        <PropertyRef Name="Account_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserAccount">
-    <End Role="User" Type="Model.Store.Users" Multiplicity="1" />
-    <End Role="Account" Type="Model.Store.Accounts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Account">
-        <PropertyRef Name="User_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PostingAssetType">
-    <End Role="AssetType" Type="Model.Store.AssetTypes" Multiplicity="1" />
-    <End Role="Posting" Type="Model.Store.Postings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AssetType">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Posting">
-        <PropertyRef Name="AssetType_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CategoryUser">
-    <End Role="User" Type="Model.Store.Users" Multiplicity="1" />
-    <End Role="Category" Type="Model.Store.Categories" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Category">
-        <PropertyRef Name="User_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_JournalPosting">
-    <End Role="Journal" Type="Model.Store.Journals" Multiplicity="1" />
-    <End Role="Posting" Type="Model.Store.Postings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Journal">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Posting">
-        <PropertyRef Name="Journal_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AccountAssetType">
-    <End Role="AssetType" Type="Model.Store.AssetTypes" Multiplicity="1" />
-    <End Role="Account" Type="Model.Store.Accounts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AssetType">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Account">
-        <PropertyRef Name="AssetType_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CategoryJournal">
-    <End Role="Category" Type="Model.Store.Categories" Multiplicity="0..1" />
-    <End Role="Journal" Type="Model.Store.Journals" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Category">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Journal">
-        <PropertyRef Name="Category_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AccountDeletedPosting">
-    <End Role="Account" Type="Model.Store.Accounts" Multiplicity="1" />
-    <End Role="DeletedPosting" Type="Model.Store.DeletedPostings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Account">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DeletedPosting">
-        <PropertyRef Name="Account_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DeletedPostingAssetType">
-    <End Role="AssetType" Type="Model.Store.AssetTypes" Multiplicity="1" />
-    <End Role="DeletedPosting" Type="Model.Store.DeletedPostings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AssetType">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DeletedPosting">
-        <PropertyRef Name="AssetType_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DeletedJournalDeletedPosting">
-    <End Role="DeletedJournal" Type="Model.Store.DeletedJournals" Multiplicity="1" />
-    <End Role="DeletedPosting" Type="Model.Store.DeletedPostings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DeletedJournal">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DeletedPosting">
-        <PropertyRef Name="DeletedJournal_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CategoryDeletedJournal">
-    <End Role="Category" Type="Model.Store.Categories" Multiplicity="0..1" />
-    <End Role="DeletedJournal" Type="Model.Store.DeletedJournals" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Category">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DeletedJournal">
-        <PropertyRef Name="Category_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="Model.Store.Accounts" store:Type="Tables" />
+          <EntitySet Name="AssetTypes" EntityType="Model.Store.AssetTypes" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Model.Store.Categories" store:Type="Tables" />
+          <EntitySet Name="DeletedJournals" EntityType="Model.Store.DeletedJournals" store:Type="Tables" />
+          <EntitySet Name="DeletedPostings" EntityType="Model.Store.DeletedPostings" store:Type="Tables" />
+          <EntitySet Name="Journals" EntityType="Model.Store.Journals" store:Type="Tables" />
+          <EntitySet Name="Postings" EntityType="Model.Store.Postings" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Model.Store.Settings" store:Type="Tables" />
+          <AssociationSet Name="FK_AccountAssetType" Association="Model.Store.FK_AccountAssetType">
+            <End Role="AssetTypes" EntitySet="AssetTypes" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountDeletedPosting" Association="Model.Store.FK_AccountDeletedPosting">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="DeletedPostings" EntitySet="DeletedPostings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountPosting" Association="Model.Store.FK_AccountPosting">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Postings" EntitySet="Postings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryDeletedJournal" Association="Model.Store.FK_CategoryDeletedJournal">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="DeletedJournals" EntitySet="DeletedJournals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryJournal" Association="Model.Store.FK_CategoryJournal">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Journals" EntitySet="Journals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeletedJournalDeletedPosting" Association="Model.Store.FK_DeletedJournalDeletedPosting">
+            <End Role="DeletedJournals" EntitySet="DeletedJournals" />
+            <End Role="DeletedPostings" EntitySet="DeletedPostings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeletedPostingAssetType" Association="Model.Store.FK_DeletedPostingAssetType">
+            <End Role="AssetTypes" EntitySet="AssetTypes" />
+            <End Role="DeletedPostings" EntitySet="DeletedPostings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalPosting" Association="Model.Store.FK_JournalPosting">
+            <End Role="Journals" EntitySet="Journals" />
+            <End Role="Postings" EntitySet="Postings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostingAssetType" Association="Model.Store.FK_PostingAssetType">
+            <End Role="AssetTypes" EntitySet="AssetTypes" />
+            <End Role="Postings" EntitySet="Postings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Balance" Type="money" Nullable="false" />
+          <Property Name="IsSystem" Type="bit" Nullable="false" />
+          <Property Name="IsClosed" Type="bit" Nullable="false" />
+          <Property Name="ClosedChanged" Type="datetime" />
+          <Property Name="PostingsCount" Type="int" Nullable="false" />
+          <Property Name="FirstPostingDate" Type="datetime" />
+          <Property Name="LastPostingDate" Type="datetime" />
+          <Property Name="AssetType_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CategoryType" Type="tinyint" Nullable="false" />
+          <Property Name="Popularity" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DeletedJournals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="JournalType" Type="tinyint" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="256" />
+          <Property Name="Rate" Type="money" Nullable="false" />
+          <Property Name="Quantity" Type="numeric" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Category_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="DeletedPostings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" Nullable="false" />
+          <Property Name="Account_Id" Type="int" Nullable="false" />
+          <Property Name="AssetType_Id" Type="int" Nullable="false" />
+          <Property Name="DeletedJournal_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Journals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="JournalType" Type="tinyint" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="256" />
+          <Property Name="Rate" Type="money" Nullable="false" />
+          <Property Name="Quantity" Type="numeric" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Category_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Postings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Account_Id" Type="int" Nullable="false" />
+          <Property Name="AssetType_Id" Type="int" Nullable="false" />
+          <Property Name="Journal_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="Value" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <Association Name="FK_AccountAssetType">
+          <End Role="AssetTypes" Type="Model.Store.AssetTypes" Multiplicity="1" />
+          <End Role="Accounts" Type="Model.Store.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="AssetType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountDeletedPosting">
+          <End Role="Accounts" Type="Model.Store.Accounts" Multiplicity="1" />
+          <End Role="DeletedPostings" Type="Model.Store.DeletedPostings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeletedPostings">
+              <PropertyRef Name="Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountPosting">
+          <End Role="Accounts" Type="Model.Store.Accounts" Multiplicity="1" />
+          <End Role="Postings" Type="Model.Store.Postings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Postings">
+              <PropertyRef Name="Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryDeletedJournal">
+          <End Role="Categories" Type="Model.Store.Categories" Multiplicity="0..1" />
+          <End Role="DeletedJournals" Type="Model.Store.DeletedJournals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeletedJournals">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryJournal">
+          <End Role="Categories" Type="Model.Store.Categories" Multiplicity="0..1" />
+          <End Role="Journals" Type="Model.Store.Journals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journals">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeletedJournalDeletedPosting">
+          <End Role="DeletedJournals" Type="Model.Store.DeletedJournals" Multiplicity="1" />
+          <End Role="DeletedPostings" Type="Model.Store.DeletedPostings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeletedJournals">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeletedPostings">
+              <PropertyRef Name="DeletedJournal_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeletedPostingAssetType">
+          <End Role="AssetTypes" Type="Model.Store.AssetTypes" Multiplicity="1" />
+          <End Role="DeletedPostings" Type="Model.Store.DeletedPostings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeletedPostings">
+              <PropertyRef Name="AssetType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalPosting">
+          <End Role="Journals" Type="Model.Store.Journals" Multiplicity="1" />
+          <End Role="Postings" Type="Model.Store.Postings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journals">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Postings">
+              <PropertyRef Name="Journal_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostingAssetType">
+          <End Role="AssetTypes" Type="Model.Store.AssetTypes" Multiplicity="1" />
+          <End Role="Postings" Type="Model.Store.Postings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Postings">
+              <PropertyRef Name="AssetType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -291,163 +253,88 @@
           <EntitySet Name="Accounts" EntityType="Model.Account" />
           <EntitySet Name="AssetTypes" EntityType="Model.AssetType" />
           <EntitySet Name="Categories" EntityType="Model.Category" />
+          <EntitySet Name="DeletedJournals" EntityType="Model.DeletedJournal" />
+          <EntitySet Name="DeletedPostings" EntityType="Model.DeletedPosting" />
           <EntitySet Name="Journals" EntityType="Model.Journal" />
           <EntitySet Name="Postings" EntityType="Model.Posting" />
-          <EntitySet Name="Users" EntityType="Model.User" />
-          <AssociationSet Name="FK_AccountPosting" Association="Model.FK_AccountPosting">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Posting" EntitySet="Postings" /></AssociationSet>
-          <AssociationSet Name="FK_UserAccount" Association="Model.FK_UserAccount">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Account" EntitySet="Accounts" /></AssociationSet>
-          <AssociationSet Name="FK_PostingAssetType" Association="Model.FK_PostingAssetType">
-            <End Role="AssetType" EntitySet="AssetTypes" />
-            <End Role="Posting" EntitySet="Postings" /></AssociationSet>
-          <AssociationSet Name="FK_CategoryUser" Association="Model.FK_CategoryUser">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Category" EntitySet="Categories" /></AssociationSet>
-          <AssociationSet Name="FK_JournalPosting" Association="Model.FK_JournalPosting">
-            <End Role="Journal" EntitySet="Journals" />
-            <End Role="Posting" EntitySet="Postings" /></AssociationSet>
+          <EntitySet Name="Settings" EntityType="Model.Setting" />
           <AssociationSet Name="FK_AccountAssetType" Association="Model.FK_AccountAssetType">
             <End Role="AssetType" EntitySet="AssetTypes" />
             <End Role="Account" EntitySet="Accounts" />
           </AssociationSet>
-          <AssociationSet Name="FK_CategoryJournal" Association="Model.FK_CategoryJournal">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Journal" EntitySet="Journals" />
-          </AssociationSet>
-          <EntitySet Name="DeletedPostings" EntityType="Model.DeletedPosting" />
           <AssociationSet Name="FK_AccountDeletedPosting" Association="Model.FK_AccountDeletedPosting">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="DeletedPosting" EntitySet="DeletedPostings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountPosting" Association="Model.FK_AccountPosting">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Posting" EntitySet="Postings" />
           </AssociationSet>
           <AssociationSet Name="FK_DeletedPostingAssetType" Association="Model.FK_DeletedPostingAssetType">
             <End Role="AssetType" EntitySet="AssetTypes" />
             <End Role="DeletedPosting" EntitySet="DeletedPostings" />
           </AssociationSet>
-          <EntitySet Name="DeletedJournals" EntityType="Model.DeletedJournal" />
-          <AssociationSet Name="FK_DeletedJournalDeletedPosting" Association="Model.FK_DeletedJournalDeletedPosting">
-            <End Role="DeletedJournal" EntitySet="DeletedJournals" />
-            <End Role="DeletedPosting" EntitySet="DeletedPostings" />
+          <AssociationSet Name="FK_PostingAssetType" Association="Model.FK_PostingAssetType">
+            <End Role="AssetType" EntitySet="AssetTypes" />
+            <End Role="Posting" EntitySet="Postings" />
           </AssociationSet>
           <AssociationSet Name="FK_CategoryDeletedJournal" Association="Model.FK_CategoryDeletedJournal">
             <End Role="Category" EntitySet="Categories" />
             <End Role="DeletedJournal" EntitySet="DeletedJournals" />
           </AssociationSet>
-          </EntityContainer>
+          <AssociationSet Name="FK_CategoryJournal" Association="Model.FK_CategoryJournal">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Journal" EntitySet="Journals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeletedJournalDeletedPosting" Association="Model.FK_DeletedJournalDeletedPosting">
+            <End Role="DeletedJournal" EntitySet="DeletedJournals" />
+            <End Role="DeletedPosting" EntitySet="DeletedPostings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalPosting" Association="Model.FK_JournalPosting">
+            <End Role="Journal" EntitySet="Journals" />
+            <End Role="Posting" EntitySet="Postings" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="Id" /></Key>
-          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="Created" Nullable="false" />
-          <NavigationProperty Name="Postings" Relationship="Model.FK_AccountPosting" FromRole="Account" ToRole="Posting" />
-          <NavigationProperty Name="User" Relationship="Model.FK_UserAccount" FromRole="Account" ToRole="User" />
-          <NavigationProperty Name="AssetType" Relationship="Model.FK_AccountAssetType" FromRole="Account" ToRole="AssetType" />
-          <NavigationProperty Name="DeletedPostings" Relationship="Model.FK_AccountDeletedPosting" FromRole="Account" ToRole="DeletedPosting" />
-          <Property Type="Decimal" Name="Balance" Nullable="false" DefaultValue="0" Precision="19" Scale="4" />
-          <Property Type="Boolean" Name="IsClosed" Nullable="false" />
-          <Property Type="DateTime" Name="ClosedChanged" Nullable="true" />
-          <Property Type="Int32" Name="PostingsCount" Nullable="false" DefaultValue="0" />
-          <Property Type="DateTime" Name="FirstPostingDate" Nullable="true" />
-          <Property Type="DateTime" Name="LastPostingDate" Nullable="true" /></EntityType>
-        <EntityType Name="AssetType">
-          <Key>
-            <PropertyRef Name="Id" /></Key>
-          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Postings" Relationship="Model.FK_PostingAssetType" FromRole="AssetType" ToRole="Posting" />
-          <NavigationProperty Name="Accounts" Relationship="Model.FK_AccountAssetType" FromRole="AssetType" ToRole="Account" />
-          <NavigationProperty Name="DeletedPostings" Relationship="Model.FK_DeletedPostingAssetType" FromRole="AssetType" ToRole="DeletedPosting" /></EntityType>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="Id" /></Key>
-          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="Model.FK_CategoryUser" FromRole="Category" ToRole="User" />
-          <NavigationProperty Name="Journals" Relationship="Model.FK_CategoryJournal" FromRole="Category" ToRole="Journal" />
-          <Property Type="Byte" Name="CategoryType" Nullable="false" />
-          <Property Type="Int32" Name="Popularity" Nullable="false" DefaultValue="0" />
-          <Property Type="DateTime" Name="Deleted" Nullable="true" />
-          <NavigationProperty Name="DeletedJournals" Relationship="Model.FK_CategoryDeletedJournal" FromRole="Category" ToRole="DeletedJournal" /></EntityType>
-        <EntityType Name="Journal" Abstract="false">
-          <Key>
-            <PropertyRef Name="Id" />
-		  </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <NavigationProperty Name="Postings" Relationship="Model.FK_JournalPosting" FromRole="Journal" ToRole="Posting" />
-          <Property Type="Byte" Name="JournalType" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="Model.FK_CategoryJournal" FromRole="Journal" ToRole="Category" />
-          <Property Type="String" Name="Comment" MaxLength="256" Unicode="true" FixedLength="false" />
-          <Property Type="Decimal" Name="Rate" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="10" Scale="4" />
-          </EntityType>
-        <EntityType Name="Posting">
-          <Key>
-            <PropertyRef Name="Id" /></Key>
-          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="Account" Relationship="Model.FK_AccountPosting" FromRole="Posting" ToRole="Account" />
-          <NavigationProperty Name="AssetType" Relationship="Model.FK_PostingAssetType" FromRole="Posting" ToRole="AssetType" />
-          <NavigationProperty Name="Journal" Relationship="Model.FK_JournalPosting" FromRole="Posting" ToRole="Journal" /></EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" /></Key>
-          <Property Type="Guid" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Login" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Password" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Email" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="Registered" Nullable="false" />
-          <Property Type="DateTime" Name="LastAccess" />
-          <Property Type="Boolean" Name="IsDisabled" Nullable="false" />
-          <NavigationProperty Name="Accounts" Relationship="Model.FK_UserAccount" FromRole="User" ToRole="Account" />
-          <NavigationProperty Name="Categories" Relationship="Model.FK_CategoryUser" FromRole="User" ToRole="Category" />
-          <Property Type="DateTime" Name="DisabledChanged" Nullable="true" /></EntityType>
-        <Association Name="FK_AccountPosting">
-          <End Type="Model.Account" Role="Account" Multiplicity="1" />
-          <End Type="Model.Posting" Role="Posting" Multiplicity="*" /></Association>
-        <Association Name="FK_UserAccount">
-          <End Type="Model.User" Role="User" Multiplicity="1" />
-          <End Type="Model.Account" Role="Account" Multiplicity="*" /></Association>
-        <Association Name="FK_PostingAssetType">
-          <End Type="Model.AssetType" Role="AssetType" Multiplicity="1" />
-          <End Type="Model.Posting" Role="Posting" Multiplicity="*" /></Association>
-        <Association Name="FK_CategoryUser">
-          <End Type="Model.User" Role="User" Multiplicity="1" />
-          <End Type="Model.Category" Role="Category" Multiplicity="*" /></Association>
-        <Association Name="FK_JournalPosting">
-          <End Type="Model.Journal" Role="Journal" Multiplicity="1" />
-          <End Type="Model.Posting" Role="Posting" Multiplicity="*" /></Association>
-        <Association Name="FK_AccountAssetType">
-          <End Type="Model.AssetType" Role="AssetType" Multiplicity="1" />
-          <End Type="Model.Account" Role="Account" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_CategoryJournal">
-          <End Type="Model.Category" Role="Category" Multiplicity="0..1" />
-          <End Type="Model.Journal" Role="Journal" Multiplicity="*" />
-        </Association>
-        <EntityType Name="DeletedPosting">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <NavigationProperty Name="Account" Relationship="Model.FK_AccountDeletedPosting" FromRole="DeletedPosting" ToRole="Account" />
-          <NavigationProperty Name="AssetType" Relationship="Model.FK_DeletedPostingAssetType" FromRole="DeletedPosting" ToRole="AssetType" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="DateTime" Name="Deleted" Nullable="false" />
-          <NavigationProperty Name="DeletedJournal" Relationship="Model.FK_DeletedJournalDeletedPosting" FromRole="DeletedPosting" ToRole="DeletedJournal" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Created" Nullable="false" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsSystem" Nullable="false" />
+          <Property Type="Boolean" Name="IsClosed" Nullable="false" />
+          <Property Type="DateTime" Name="ClosedChanged" />
+          <Property Type="Int32" Name="PostingsCount" Nullable="false" />
+          <Property Type="DateTime" Name="FirstPostingDate" />
+          <Property Type="DateTime" Name="LastPostingDate" />
+          <NavigationProperty Name="AssetType" Relationship="Model.FK_AccountAssetType" FromRole="Account" ToRole="AssetType" />
+          <NavigationProperty Name="DeletedPostings" Relationship="Model.FK_AccountDeletedPosting" FromRole="Account" ToRole="DeletedPosting" />
+          <NavigationProperty Name="Postings" Relationship="Model.FK_AccountPosting" FromRole="Account" ToRole="Posting" />
         </EntityType>
-        <Association Name="FK_AccountDeletedPosting">
-          <End Type="Model.Account" Role="Account" Multiplicity="1" />
-          <End Type="Model.DeletedPosting" Role="DeletedPosting" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_DeletedPostingAssetType">
-          <End Type="Model.AssetType" Role="AssetType" Multiplicity="1" />
-          <End Type="Model.DeletedPosting" Role="DeletedPosting" Multiplicity="*" />
-        </Association>
+        <EntityType Name="AssetType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="Model.FK_AccountAssetType" FromRole="AssetType" ToRole="Account" />
+          <NavigationProperty Name="DeletedPostings" Relationship="Model.FK_DeletedPostingAssetType" FromRole="AssetType" ToRole="DeletedPosting" />
+          <NavigationProperty Name="Postings" Relationship="Model.FK_PostingAssetType" FromRole="AssetType" ToRole="Posting" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Byte" Name="CategoryType" Nullable="false" />
+          <Property Type="Int32" Name="Popularity" Nullable="false" />
+          <Property Type="DateTime" Name="Deleted" />
+          <NavigationProperty Name="DeletedJournals" Relationship="Model.FK_CategoryDeletedJournal" FromRole="Category" ToRole="DeletedJournal" />
+          <NavigationProperty Name="Journals" Relationship="Model.FK_CategoryJournal" FromRole="Category" ToRole="Journal" />
+        </EntityType>
         <EntityType Name="DeletedJournal">
           <Key>
             <PropertyRef Name="Id" />
@@ -457,16 +344,87 @@
           <Property Type="String" Name="Comment" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Type="Decimal" Name="Rate" Nullable="false" Precision="19" Scale="4" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="10" Scale="4" />
-          <NavigationProperty Name="DeletedPostings" Relationship="Model.FK_DeletedJournalDeletedPosting" FromRole="DeletedJournal" ToRole="DeletedPosting" />
           <NavigationProperty Name="Category" Relationship="Model.FK_CategoryDeletedJournal" FromRole="DeletedJournal" ToRole="Category" />
+          <NavigationProperty Name="DeletedPostings" Relationship="Model.FK_DeletedJournalDeletedPosting" FromRole="DeletedJournal" ToRole="DeletedPosting" />
         </EntityType>
-        <Association Name="FK_DeletedJournalDeletedPosting">
-          <End Type="Model.DeletedJournal" Role="DeletedJournal" Multiplicity="1" />
+        <EntityType Name="DeletedPosting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="Deleted" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Model.FK_AccountDeletedPosting" FromRole="DeletedPosting" ToRole="Account" />
+          <NavigationProperty Name="AssetType" Relationship="Model.FK_DeletedPostingAssetType" FromRole="DeletedPosting" ToRole="AssetType" />
+          <NavigationProperty Name="DeletedJournal" Relationship="Model.FK_DeletedJournalDeletedPosting" FromRole="DeletedPosting" ToRole="DeletedJournal" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Byte" Name="JournalType" Nullable="false" />
+          <Property Type="String" Name="Comment" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Rate" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="10" Scale="4" />
+          <NavigationProperty Name="Category" Relationship="Model.FK_CategoryJournal" FromRole="Journal" ToRole="Category" />
+          <NavigationProperty Name="Postings" Relationship="Model.FK_JournalPosting" FromRole="Journal" ToRole="Posting" />
+        </EntityType>
+        <EntityType Name="Posting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Account" Relationship="Model.FK_AccountPosting" FromRole="Posting" ToRole="Account" />
+          <NavigationProperty Name="AssetType" Relationship="Model.FK_PostingAssetType" FromRole="Posting" ToRole="AssetType" />
+          <NavigationProperty Name="Journal" Relationship="Model.FK_JournalPosting" FromRole="Posting" ToRole="Journal" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Key" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Value" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_AccountAssetType">
+          <End Type="Model.AssetType" Role="AssetType" Multiplicity="1" />
+          <End Type="Model.Account" Role="Account" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_AccountDeletedPosting">
+          <End Type="Model.Account" Role="Account" Multiplicity="1" />
           <End Type="Model.DeletedPosting" Role="DeletedPosting" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_AccountPosting">
+          <End Type="Model.Account" Role="Account" Multiplicity="1" />
+          <End Type="Model.Posting" Role="Posting" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_DeletedPostingAssetType">
+          <End Type="Model.AssetType" Role="AssetType" Multiplicity="1" />
+          <End Type="Model.DeletedPosting" Role="DeletedPosting" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_PostingAssetType">
+          <End Type="Model.AssetType" Role="AssetType" Multiplicity="1" />
+          <End Type="Model.Posting" Role="Posting" Multiplicity="*" />
         </Association>
         <Association Name="FK_CategoryDeletedJournal">
           <End Type="Model.Category" Role="Category" Multiplicity="0..1" />
           <End Type="Model.DeletedJournal" Role="DeletedJournal" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_CategoryJournal">
+          <End Type="Model.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="Model.Journal" Role="Journal" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_DeletedJournalDeletedPosting">
+          <End Type="Model.DeletedJournal" Role="DeletedJournal" Multiplicity="1" />
+          <End Type="Model.DeletedPosting" Role="DeletedPosting" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_JournalPosting">
+          <End Type="Model.Journal" Role="Journal" Multiplicity="1" />
+          <End Type="Model.Posting" Role="Posting" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -474,186 +432,166 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
-    <EntitySetMapping Name="Accounts">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Account)">
-        <MappingFragment StoreEntitySet="Accounts">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Created" ColumnName="Created" />
-          <ScalarProperty Name="Balance" ColumnName="Balance" />
-          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
-          <ScalarProperty Name="ClosedChanged" ColumnName="ClosedChanged" />
-          <ScalarProperty Name="PostingsCount" ColumnName="PostingsCount" />
-          <ScalarProperty Name="FirstPostingDate" ColumnName="FirstPostingDate" />
-          <ScalarProperty Name="LastPostingDate" ColumnName="LastPostingDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AssetTypes">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.AssetType)">
-        <MappingFragment StoreEntitySet="AssetTypes">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Category)">
-        <MappingFragment StoreEntitySet="Categories">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="CategoryType" ColumnName="CategoryType" />
-          <ScalarProperty Name="Popularity" ColumnName="Popularity" />
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Journals">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Journal)">
-        <MappingFragment StoreEntitySet="Journals">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="JournalType" ColumnName="JournalType" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="Rate" ColumnName="Rate" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Postings">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Posting)">
-        <MappingFragment StoreEntitySet="Postings">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.User)">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Login" ColumnName="Login" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Registered" ColumnName="Registered" />
-          <ScalarProperty Name="LastAccess" ColumnName="LastAccess" />
-          <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
-          <ScalarProperty Name="DisabledChanged" ColumnName="DisabledChanged" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DeletedPostings">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.DeletedPosting)">
-        <MappingFragment StoreEntitySet="DeletedPostings">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DeletedJournals">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.DeletedJournal)">
-        <MappingFragment StoreEntitySet="DeletedJournals">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="JournalType" ColumnName="JournalType" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="Rate" ColumnName="Rate" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="FK_AccountPosting" TypeName="Model.FK_AccountPosting" StoreEntitySet="Postings">
-      <EndProperty Name="Account">
-        <ScalarProperty Name="Id" ColumnName="Account_Id" />
-      </EndProperty>
-      <EndProperty Name="Posting">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_UserAccount" TypeName="Model.FK_UserAccount" StoreEntitySet="Accounts">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="User_Id" />
-      </EndProperty>
-      <EndProperty Name="Account">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_PostingAssetType" TypeName="Model.FK_PostingAssetType" StoreEntitySet="Postings">
-      <EndProperty Name="AssetType">
-        <ScalarProperty Name="Id" ColumnName="AssetType_Id" />
-      </EndProperty>
-      <EndProperty Name="Posting">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_CategoryUser" TypeName="Model.FK_CategoryUser" StoreEntitySet="Categories">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="User_Id" />
-      </EndProperty>
-      <EndProperty Name="Category">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_JournalPosting" TypeName="Model.FK_JournalPosting" StoreEntitySet="Postings">
-      <EndProperty Name="Journal">
-        <ScalarProperty Name="Id" ColumnName="Journal_Id" />
-      </EndProperty>
-      <EndProperty Name="Posting">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_AccountAssetType" TypeName="Model.FK_AccountAssetType" StoreEntitySet="Accounts">
-      <EndProperty Name="AssetType">
-        <ScalarProperty Name="Id" ColumnName="AssetType_Id" />
-      </EndProperty>
-      <EndProperty Name="Account">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_CategoryJournal" TypeName="Model.FK_CategoryJournal" StoreEntitySet="Journals">
-      <EndProperty Name="Category">
-        <ScalarProperty Name="Id" ColumnName="Category_Id" />
-      </EndProperty>
-      <EndProperty Name="Journal">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition ColumnName="Category_Id" IsNull="false" />
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_AccountDeletedPosting" TypeName="Model.FK_AccountDeletedPosting" StoreEntitySet="DeletedPostings">
-      <EndProperty Name="Account">
-        <ScalarProperty Name="Id" ColumnName="Account_Id" />
-      </EndProperty>
-      <EndProperty Name="DeletedPosting">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_DeletedPostingAssetType" TypeName="Model.FK_DeletedPostingAssetType" StoreEntitySet="DeletedPostings">
-      <EndProperty Name="AssetType">
-        <ScalarProperty Name="Id" ColumnName="AssetType_Id" />
-      </EndProperty>
-      <EndProperty Name="DeletedPosting">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_DeletedJournalDeletedPosting" TypeName="Model.FK_DeletedJournalDeletedPosting" StoreEntitySet="DeletedPostings">
-      <EndProperty Name="DeletedJournal">
-        <ScalarProperty Name="Id" ColumnName="DeletedJournal_Id" />
-      </EndProperty>
-      <EndProperty Name="DeletedPosting">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_CategoryDeletedJournal" TypeName="Model.FK_CategoryDeletedJournal" StoreEntitySet="DeletedJournals">
-      <EndProperty Name="Category">
-        <ScalarProperty Name="Id" ColumnName="Category_Id" />
-      </EndProperty>
-      <EndProperty Name="DeletedJournal">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition ColumnName="Category_Id" IsNull="false" />
-    </AssociationSetMapping>
-  </EntityContainerMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="Model.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="LastPostingDate" ColumnName="LastPostingDate" />
+                <ScalarProperty Name="FirstPostingDate" ColumnName="FirstPostingDate" />
+                <ScalarProperty Name="PostingsCount" ColumnName="PostingsCount" />
+                <ScalarProperty Name="ClosedChanged" ColumnName="ClosedChanged" />
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+                <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetTypes">
+            <EntityTypeMapping TypeName="Model.AssetType">
+              <MappingFragment StoreEntitySet="AssetTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Model.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Popularity" ColumnName="Popularity" />
+                <ScalarProperty Name="CategoryType" ColumnName="CategoryType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeletedJournals">
+            <EntityTypeMapping TypeName="Model.DeletedJournal">
+              <MappingFragment StoreEntitySet="DeletedJournals">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="JournalType" ColumnName="JournalType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeletedPostings">
+            <EntityTypeMapping TypeName="Model.DeletedPosting">
+              <MappingFragment StoreEntitySet="DeletedPostings">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Journals">
+            <EntityTypeMapping TypeName="Model.Journal">
+              <MappingFragment StoreEntitySet="Journals">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="JournalType" ColumnName="JournalType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postings">
+            <EntityTypeMapping TypeName="Model.Posting">
+              <MappingFragment StoreEntitySet="Postings">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="Model.Setting">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_AccountAssetType" TypeName="Model.FK_AccountAssetType" StoreEntitySet="Accounts">
+            <EndProperty Name="Account">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="AssetType">
+              <ScalarProperty Name="Id" ColumnName="AssetType_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_AccountDeletedPosting" TypeName="Model.FK_AccountDeletedPosting" StoreEntitySet="DeletedPostings">
+            <EndProperty Name="DeletedPosting">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Account">
+              <ScalarProperty Name="Id" ColumnName="Account_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_AccountPosting" TypeName="Model.FK_AccountPosting" StoreEntitySet="Postings">
+            <EndProperty Name="Posting">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Account">
+              <ScalarProperty Name="Id" ColumnName="Account_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_DeletedPostingAssetType" TypeName="Model.FK_DeletedPostingAssetType" StoreEntitySet="DeletedPostings">
+            <EndProperty Name="DeletedPosting">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="AssetType">
+              <ScalarProperty Name="Id" ColumnName="AssetType_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_PostingAssetType" TypeName="Model.FK_PostingAssetType" StoreEntitySet="Postings">
+            <EndProperty Name="Posting">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="AssetType">
+              <ScalarProperty Name="Id" ColumnName="AssetType_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_CategoryDeletedJournal" TypeName="Model.FK_CategoryDeletedJournal" StoreEntitySet="DeletedJournals">
+            <EndProperty Name="DeletedJournal">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Category">
+              <ScalarProperty Name="Id" ColumnName="Category_Id" />
+            </EndProperty>
+            <Condition ColumnName="Category_Id" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_CategoryJournal" TypeName="Model.FK_CategoryJournal" StoreEntitySet="Journals">
+            <EndProperty Name="Journal">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Category">
+              <ScalarProperty Name="Id" ColumnName="Category_Id" />
+            </EndProperty>
+            <Condition ColumnName="Category_Id" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_DeletedJournalDeletedPosting" TypeName="Model.FK_DeletedJournalDeletedPosting" StoreEntitySet="DeletedPostings">
+            <EndProperty Name="DeletedPosting">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="DeletedJournal">
+              <ScalarProperty Name="Id" ColumnName="DeletedJournal_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_JournalPosting" TypeName="Model.FK_JournalPosting" StoreEntitySet="Postings">
+            <EndProperty Name="Posting">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Journal">
+              <ScalarProperty Name="Id" ColumnName="Journal_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
@@ -673,60 +611,54 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram Name="Model" ShowGrid="false" DisplayType="true" xmlns="http://schemas.microsoft.com/ado/2008/10/edmx" ZoomLevel="100">
-        <EntityTypeShape EntityType="Model.Account" Width="2.125" PointX="0.5" PointY="4" Height="3.3263964843749996" />
-        <EntityTypeShape EntityType="Model.AssetType" Width="1.625" PointX="3" PointY="5.125" Height="1.9802864583333335" />
-        <EntityTypeShape EntityType="Model.Category" Width="1.625" PointX="7.125" PointY="4.125" Height="2.5571907552083326" />
-        <EntityTypeShape EntityType="Model.Journal" Width="1.625" PointX="5" PointY="2.5" Height="2.3648893229166656" />
-        <EntityTypeShape EntityType="Model.Posting" Width="1.625" PointX="3" PointY="2.5" Height="2.1725878906249996" />
-        <EntityTypeShape EntityType="Model.User" Width="2.125" PointX="0.5" PointY="0.5" Height="2.9417936197916665" />
+        <EntityTypeShape EntityType="Model.Account" Width="2.125" PointX="0.625" PointY="3.625" Height="3.5186979166666652" />
+        <EntityTypeShape EntityType="Model.AssetType" Width="1.5" PointX="3.375" PointY="4.125" Height="1.9802864583333326" />
+        <EntityTypeShape EntityType="Model.Category" Width="1.5" PointX="5.625" PointY="4.125" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model.DeletedJournal" Width="1.625" PointX="5.625" PointY="7" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model.DeletedPosting" Width="1.625" PointX="3.375" PointY="6.625" Height="2.3648893229166661" />
+        <EntityTypeShape EntityType="Model.Journal" Width="1.625" PointX="5.625" PointY="1.375" Height="2.3648893229166683" />
+        <EntityTypeShape EntityType="Model.Posting" Width="1.5" PointX="3.375" PointY="1.5" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="Model.Setting" Width="1.5" PointX="0.625" PointY="1.5" Height="1.5956835937500005" />
+        <AssociationConnector Association="Model.FK_AccountAssetType" >
+          <ConnectorPoint PointX="3.375" PointY="5.1151432291666659" />
+          <ConnectorPoint PointX="2.75" PointY="5.1151432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_AccountDeletedPosting" >
+          <ConnectorPoint PointX="1.14943722663754" PointY="7.1436979166666656" />
+          <ConnectorPoint PointX="1.14943722663754" PointY="8.0667941197916662" />
+          <ConnectorPoint PointX="3.375" PointY="8.0667941197916662" />
+        </AssociationConnector>
         <AssociationConnector Association="Model.FK_AccountPosting" >
-          <ConnectorPoint PointX="2.625" PointY="4.3362939453125" />
-          <ConnectorPoint PointX="3" PointY="4.3362939453125" />
-          </AssociationConnector>
-        <AssociationConnector Association="Model.FK_UserAccount" >
-          <ConnectorPoint PointX="1.5625" PointY="3.4417936197916665" />
-          <ConnectorPoint PointX="1.5625" PointY="4" />
-          </AssociationConnector>
+          <ConnectorPoint PointX="1.6875" PointY="3.625" />
+          <ConnectorPoint PointX="1.6875" PointY="3.325" />
+          <ConnectorPoint PointX="3.075" PointY="3.325" />
+          <ConnectorPoint PointX="3.075" PointY="2.5862939453125" />
+          <ConnectorPoint PointX="3.375" PointY="2.5862939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_DeletedPostingAssetType" >
+          <ConnectorPoint PointX="4.125" PointY="6.1052864583333326" />
+          <ConnectorPoint PointX="4.125" PointY="6.625" />
+        </AssociationConnector>
         <AssociationConnector Association="Model.FK_PostingAssetType" >
-          <ConnectorPoint PointX="3.8125" PointY="5.125" />
-          <ConnectorPoint PointX="3.8125" PointY="4.672587890625" />
-          </AssociationConnector>
-        <AssociationConnector Association="Model.FK_CategoryUser" >
-          <ConnectorPoint PointX="2.625" PointY="1.46875" />
-          <ConnectorPoint PointX="7.9375" PointY="1.46875" />
-          <ConnectorPoint PointX="7.9375" PointY="4.125" />
-          </AssociationConnector>
+          <ConnectorPoint PointX="4.125" PointY="4.125" />
+          <ConnectorPoint PointX="4.125" PointY="3.6725878906249996" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_CategoryDeletedJournal" >
+          <ConnectorPoint PointX="6.375" PointY="6.4898893229166674" />
+          <ConnectorPoint PointX="6.375" PointY="7" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_CategoryJournal" >
+          <ConnectorPoint PointX="6.375" PointY="4.125" />
+          <ConnectorPoint PointX="6.375" PointY="3.7398893229166683" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_DeletedJournalDeletedPosting" >
+          <ConnectorPoint PointX="5.625" PointY="7.9949446614583328" />
+          <ConnectorPoint PointX="5" PointY="7.9949446614583328" />
+        </AssociationConnector>
         <AssociationConnector Association="Model.FK_JournalPosting" >
-          <ConnectorPoint PointX="5" PointY="3.5862939453125" />
-          <ConnectorPoint PointX="4.625" PointY="3.5862939453125" />
-          </AssociationConnector>
-        <AssociationConnector Association="Model.FK_AccountAssetType">
-          <ConnectorPoint PointX="3" PointY="6.1151432291666667" />
-          <ConnectorPoint PointX="2.625" PointY="6.1151432291666667" />
+          <ConnectorPoint PointX="5.625" PointY="2.5862939453125" />
+          <ConnectorPoint PointX="4.875" PointY="2.5862939453125" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_CategoryJournal" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.125" PointY="4.4949446614583328" />
-          <ConnectorPoint PointX="6.625" PointY="4.4949446614583328" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="Model.DeletedPosting" Width="1.625" PointX="3" PointY="7.625" Height="2.3648893229166656" />
-        <AssociationConnector Association="Model.FK_AccountDeletedPosting">
-          <ConnectorPoint PointX="2.625" PointY="7.326396484375" />
-          <ConnectorPoint PointX="2.9999999999999987" PointY="7.625" />
-        </AssociationConnector>
-        <AssociationConnector Association="Model.FK_DeletedPostingAssetType">
-          <ConnectorPoint PointX="3.8125" PointY="7.1052864583333335" />
-          <ConnectorPoint PointX="3.8125" PointY="7.625" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="Model.DeletedJournal" Width="1.625" PointX="5" PointY="7.625" Height="2.3648893229166674" />
-        <AssociationConnector Association="Model.FK_DeletedJournalDeletedPosting">
-          <ConnectorPoint PointX="5" PointY="8.8074446614583337" />
-          <ConnectorPoint PointX="4.625" PointY="8.8074446614583337" />
-        </AssociationConnector>
-        <AssociationConnector Association="Model.FK_CategoryDeletedJournal" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.9375" PointY="6.6821907552083326" />
-          <ConnectorPoint PointX="7.9375" PointY="8.8074446614583337" />
-          <ConnectorPoint PointX="6.625" PointY="8.8074446614583337" />
-        </AssociationConnector>
-        </Diagram></edmx:Diagrams>
+      </Diagram></edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -73,6 +73,7 @@
       <Link>Properties\AssemblyInfo.Generated.cs</Link>
     </Compile>
     <Compile Include="AdminServiceTests.cs" />
+    <Compile Include="DatabaseManagerTests.cs" />
     <Compile Include="MoneyServiceTests.cs" />
     <Compile Include="UserServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -658,13 +658,13 @@ namespace Fab.Client.MoneyServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TextSearchFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryFilter))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.IncomingTransferDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransferDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.OutgoingTransferDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryDTO))]
@@ -681,13 +681,13 @@ namespace Fab.Client.MoneyServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TextSearchFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryFilter))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.IncomingTransferDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransferDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.OutgoingTransferDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryDTO))]
@@ -700,7 +700,7 @@ namespace Fab.Client.MoneyServiceReference {
         Fab.Client.MoneyServiceReference.JournalDTO[] EndGetJournals(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMoneyService/GetAllAssetTypes", ReplyAction="http://tempuri.org/IMoneyService/GetAllAssetTypesResponse")]
-        System.IAsyncResult BeginGetAllAssetTypes(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetAllAssetTypes(System.Guid userId, System.AsyncCallback callback, object asyncState);
         
         Fab.Client.MoneyServiceReference.AssetTypeDTO[] EndGetAllAssetTypes(System.IAsyncResult result);
         
@@ -1961,8 +1961,8 @@ namespace Fab.Client.MoneyServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.MoneyServiceReference.IMoneyService.BeginGetAllAssetTypes(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetAllAssetTypes(callback, asyncState);
+        System.IAsyncResult Fab.Client.MoneyServiceReference.IMoneyService.BeginGetAllAssetTypes(System.Guid userId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAllAssetTypes(userId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1971,7 +1971,8 @@ namespace Fab.Client.MoneyServiceReference {
         }
         
         private System.IAsyncResult OnBeginGetAllAssetTypes(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((Fab.Client.MoneyServiceReference.IMoneyService)(this)).BeginGetAllAssetTypes(callback, asyncState);
+            System.Guid userId = ((System.Guid)(inValues[0]));
+            return ((Fab.Client.MoneyServiceReference.IMoneyService)(this)).BeginGetAllAssetTypes(userId, callback, asyncState);
         }
         
         private object[] OnEndGetAllAssetTypes(System.IAsyncResult result) {
@@ -1987,11 +1988,11 @@ namespace Fab.Client.MoneyServiceReference {
             }
         }
         
-        public void GetAllAssetTypesAsync() {
-            this.GetAllAssetTypesAsync(null);
+        public void GetAllAssetTypesAsync(System.Guid userId) {
+            this.GetAllAssetTypesAsync(userId, null);
         }
         
-        public void GetAllAssetTypesAsync(object userState) {
+        public void GetAllAssetTypesAsync(System.Guid userId, object userState) {
             if ((this.onBeginGetAllAssetTypesDelegate == null)) {
                 this.onBeginGetAllAssetTypesDelegate = new BeginOperationDelegate(this.OnBeginGetAllAssetTypes);
             }
@@ -2001,7 +2002,8 @@ namespace Fab.Client.MoneyServiceReference {
             if ((this.onGetAllAssetTypesCompletedDelegate == null)) {
                 this.onGetAllAssetTypesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAllAssetTypesCompleted);
             }
-            base.InvokeAsync(this.onBeginGetAllAssetTypesDelegate, null, this.onEndGetAllAssetTypesDelegate, this.onGetAllAssetTypesCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetAllAssetTypesDelegate, new object[] {
+                        userId}, this.onEndGetAllAssetTypesDelegate, this.onGetAllAssetTypesCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2587,8 +2589,9 @@ namespace Fab.Client.MoneyServiceReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetAllAssetTypes(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginGetAllAssetTypes(System.Guid userId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = userId;
                 System.IAsyncResult _result = base.BeginInvoke("GetAllAssetTypes", _args, callback, asyncState);
                 return _result;
             }

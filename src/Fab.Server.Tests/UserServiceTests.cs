@@ -1,10 +1,11 @@
-// <copyright file="UserServiceTests.cs" company="HD">
-//  Copyright (c) 2010 HD. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="UserServiceTests.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-02-04" />
-// <summary>Unit tests for UserService.</summary>
+//------------------------------------------------------------
 
 using System;
+using System.IO;
 using Xunit;
 
 namespace Fab.Server.Tests
@@ -12,8 +13,39 @@ namespace Fab.Server.Tests
 	/// <summary>
 	/// Unit tests for <see cref="UserService"/>.
 	/// </summary>
-	public class UserServiceTests
+	public class UserServiceTests : IDisposable
 	{
+		#region Dependencies
+
+		/// <summary>
+		/// Test folder with databases for unit tests - "db".
+		/// </summary>
+		private const string DefaultFolder = "db";
+
+		/// <summary>
+		/// User service dependency.
+		/// </summary>
+		private readonly UserService service;
+
+		#endregion
+
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="UserServiceTests"/> class.
+		/// </summary>
+		public UserServiceTests()
+		{
+			Dispose();
+
+			service = new UserService
+			{
+				DefaultFolder = DefaultFolder
+			};
+		}
+
+		#endregion
+
 		#region User Service
 
 		/// <summary>
@@ -22,11 +54,8 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void RegisterNewUser()
 		{
-			var service = new UserService();
-
-			Guid userId = service.Register("testUser" + Guid.NewGuid(), "testPassword");
-
-			Assert.NotEqual(Guid.Empty, userId);
+			var userId = service.Register("testUser" + Guid.NewGuid(), "testPassword");
+			Assert.NotNull(userId);
 		}
 
 		/// <summary>
@@ -35,10 +64,7 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void CheckIsLoginAvailable()
 		{
-			var service = new UserService();
-
 			bool isAvailable = service.IsLoginAvailable("testUser" + Guid.NewGuid());
-
 			Assert.True(isAvailable);
 		}
 
@@ -49,7 +75,6 @@ namespace Fab.Server.Tests
 		public void CheckIsLoginNotAvailable()
 		{
 			string login = "testUser" + Guid.NewGuid();
-			var service = new UserService();
 			service.Register(login, "testPassword");
 
 			bool isAvailable = service.IsLoginAvailable(login);
@@ -63,8 +88,6 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void GenerateUniqueUserLogin()
 		{
-			var service = new UserService();
-
 			string uniqueLogin = service.GenerateUniqueLogin();
 
 			bool isAvailable = service.IsLoginAvailable(uniqueLogin);
@@ -77,27 +100,24 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void UpdateUser()
 		{
-			var service = new UserService();
-			Guid userId = service.Register("testUser" + Guid.NewGuid(), "testPassword");
-
-			service.Update(userId, "testPassword", "newTestPassword", "new@email");
+			var userId = service.Register("testUser" + Guid.NewGuid(), "testPassword");
+			service.Update(userId.Id, "testPassword", "newTestPassword", "new@email");
 		}
 
 		/// <summary>
-		/// Test <see cref="UserService.GetUserId"/> method.
+		/// Test <see cref="UserService.GetUser"/> method.
 		/// </summary>
 		[Fact]
 		public void GetUserId()
 		{
 			string login = "testUser" + Guid.NewGuid();
-			var service = new UserService();
-			Guid userId = service.Register(login, "testPassword");
+			const string password = "testPassword";
+			var userId = service.Register(login, password);
 
-			Guid actualUserId = service.GetUserId(login);
+			var userDTO = service.GetUser(login, password);
 
-			Assert.NotEqual(Guid.Empty, userId);
-			Assert.NotEqual(Guid.Empty, actualUserId);
-			Assert.Equal(userId, actualUserId);
+			Assert.NotNull(userDTO);
+			Assert.Equal(userId.Id, userDTO.Id);
 		}
 
 		/// <summary>
@@ -107,11 +127,26 @@ namespace Fab.Server.Tests
 		public void ResetPassword()
 		{
 			string login = "testUser" + Guid.NewGuid();
-			var service = new UserService();
-			Guid userId = service.Register(login, "testPassword");
-			service.Update(userId, "testPassword", "newTestPassword", "new@email");
+			var userId = service.Register(login, "testPassword");
+			service.Update(userId.Id, "testPassword", "newTestPassword", "new@email");
 
 			service.ResetPassword(login, "new@email");
+		}
+
+		#endregion
+
+		#region Implementation of IDisposable
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		/// <filterpriority>2</filterpriority>
+		public void Dispose()
+		{
+			if (Directory.Exists(DefaultFolder))
+			{
+				Directory.Delete(DefaultFolder, true);
+			}
 		}
 
 		#endregion

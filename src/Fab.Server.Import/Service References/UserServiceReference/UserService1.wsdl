@@ -4,6 +4,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost/StagingFab/UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost/StagingFab/UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/StagingFab/UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserService_GenerateUniqueLogin_InputMessage">
@@ -30,11 +31,11 @@
   <wsdl:message name="IUserService_Update_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_GetUserId_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetUserId" />
+  <wsdl:message name="IUserService_GetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUser" />
   </wsdl:message>
-  <wsdl:message name="IUserService_GetUserId_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetUserIdResponse" />
+  <wsdl:message name="IUserService_GetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
   </wsdl:message>
   <wsdl:message name="IUserService_ResetPassword_InputMessage">
     <wsdl:part name="parameters" element="tns:ResetPassword" />
@@ -59,9 +60,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Update" message="tns:IUserService_Update_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateResponse" message="tns:IUserService_Update_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetUserId">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUserId" message="tns:IUserService_GetUserId_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserIdResponse" message="tns:IUserService_GetUserId_OutputMessage" />
+    <wsdl:operation name="GetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUser" message="tns:IUserService_GetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserResponse" message="tns:IUserService_GetUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ResetPassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/ResetPassword" message="tns:IUserService_ResetPassword_InputMessage" />
@@ -106,8 +107,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUserId">
-      <soap:operation soapAction="http://tempuri.org/IUserService/GetUserId" style="document" />
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

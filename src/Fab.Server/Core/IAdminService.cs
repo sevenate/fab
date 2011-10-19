@@ -1,8 +1,8 @@
-// <copyright file="IAdminService.cs" company="HD">
-// 	Copyright (c) 2009-2010 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="IAdminService.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-01-28" />
-// <summary>Administrative service contract.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace Fab.Server.Core
 		/// </summary>
 		/// <returns>All users.</returns>
 		[OperationContract]
-		IList<UserDTO> GetAllUsers();
+		IList<AdminUserDTO> GetAllUsers();
 
 		/// <summary>
 		/// Disable login for specific user by his internal unique ID.
