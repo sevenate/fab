@@ -92,8 +92,6 @@ namespace Fab.Client.Authentication
 			EventAggregator.Subscribe(this);
 #if DEBUG
 			ShowCharacters = true;
-			Username = "import";
-			Password = "import";
 #endif
 
 			Status = AuthenticationInProgress;

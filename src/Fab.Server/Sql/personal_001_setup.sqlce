@@ -140,5 +140,5 @@ GO
 INSERT INTO [Accounts] ([Name], [AssetType_Id], [IsSystem]) VALUES (N'System Cash (RUR)', 4, 1);
 GO
 -- Create default settings
-INSERT INTO [Settings] ([Key], [Value]) VALUES ('db_version', '1');
+INSERT INTO [Settings] ([Key], [Value]) VALUES ('db-version', '1');
 GO

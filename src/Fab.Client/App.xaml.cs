@@ -13,7 +13,7 @@ namespace Fab.Client
 			// with SOAP Faults xml information returned from WCF service in case of server side error.
 			// Details: http://blogs.msdn.com/carlosfigueira/archive/2009/08/15/fault-support-in-silverlight-3.aspx
 			// Note: should always return "true", unless the prefix has been previously registered.
-			WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
+			WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
 		}
 	}
 }

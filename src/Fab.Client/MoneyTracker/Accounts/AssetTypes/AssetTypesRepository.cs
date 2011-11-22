@@ -50,7 +50,7 @@ namespace Fab.Client.MoneyTracker.Accounts.AssetTypes
 		/// </summary>
 		public override void Download()
 		{
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.GetAllAssetTypesCompleted += (s, e) =>
 			                                 {
 			                                 	if (e.Error == null)

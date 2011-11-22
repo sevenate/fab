@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="UserDTO" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Fab.Client.UserServiceReference.UserDTO, Service References.UserServiceReference.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>Fab.Client.UserServiceReference.UserDTO, SilverFAB, Version=0.3.83.23, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

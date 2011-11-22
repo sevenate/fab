@@ -69,7 +69,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// </summary>
 		public override void Download()
 		{
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.GetAllAccountsCompleted += (s, e) =>
 			                                 {
 			                                 	if (e.Error == null)
@@ -102,7 +102,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// <param name="key">Entity key.</param>
 		public override void Download(int key)
 		{
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.GetAccountCompleted += (s, e) =>
 			{
 				if (e.Error == null)
@@ -143,7 +143,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 				throw new ArgumentNullException("entity");
 			}
 
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.CreateAccountCompleted += (s, e) =>
 			                                {
 			                                	if (e.Error == null)
@@ -184,7 +184,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 				throw new ArgumentNullException("entity");
 			}
 
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.UpdateAccountCompleted += (s, e) =>
 			{
 				if (e.Error == null)
@@ -221,7 +221,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 		/// <param name="key">Account ID to delete.</param>
 		public override void Delete(int key)
 		{
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.DeleteAccountCompleted += (s, e) =>
 			{
 				if (e.Error == null)

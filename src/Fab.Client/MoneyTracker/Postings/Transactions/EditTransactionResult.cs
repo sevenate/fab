@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.Shell;
 
 namespace Fab.Client.MoneyTracker.Postings.Transactions
 {
@@ -34,7 +35,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		public void Execute(ActionExecutionContext context)
 		{
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.UpdateTransactionCompleted += OnUpdateTransactionCompleted;
 			proxy.UpdateTransactionAsync(userId,
 										 accountId,

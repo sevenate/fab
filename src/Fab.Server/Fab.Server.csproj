@@ -60,6 +60,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -69,7 +70,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdminService.svc" />
     <Content Include="ClientBin\SilverFAB.xap" />
     <EntityDeploy Include="Core\Master.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -79,10 +79,8 @@
     <None Include="Sql\personal_001_setup.sqlce" />
     <Content Include="favicon.png" />
     <Content Include="index.html" />
-    <Content Include="MoneyService.svc" />
     <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\Silverlight.js" />
-    <Content Include="UserService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -97,9 +95,7 @@
     <Compile Include="..\AssemblyInfo.Generated.cs">
       <Link>Properties\AssemblyInfo.Generated.cs</Link>
     </Compile>
-    <Compile Include="AdminService.svc.cs">
-      <DependentUpon>AdminService.svc</DependentUpon>
-    </Compile>
+    <Compile Include="Core\Services\AdminService.cs" />
     <Compile Include="Core\DatabaseManager.cs" />
     <Compile Include="Core\DTO\AccountDTO.cs" />
     <Compile Include="Core\DTO\AssetTypeDTO.cs" />
@@ -126,27 +122,24 @@
       <DependentUpon>Master.edmx</DependentUpon>
     </Compile>
     <Compile Include="Core\StringExtensions.cs" />
-    <Compile Include="MoneyService.svc.cs">
-      <DependentUpon>MoneyService.svc</DependentUpon>
-    </Compile>
-    <Compile Include="Core\IAdminService.cs" />
-    <Compile Include="Core\IMoneyService.cs" />
+    <Compile Include="Core\CustomUserNameValidator.cs" />
+    <Compile Include="Core\Contracts\IAdminService.cs" />
+    <Compile Include="Core\Contracts\IMoneyService.cs" />
     <Compile Include="Core\Enums\JournalType.cs" />
     <Compile Include="Core\Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Core\IUserService.cs" />
+    <Compile Include="Core\Contracts\IUserService.cs" />
     <Compile Include="Core\ModelHelper.cs" />
+    <Compile Include="Core\Services\MoneyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Services\UserService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="UserService.svc.cs">
-      <DependentUpon>UserService.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -162,7 +155,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -176,7 +168,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>33809</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/StagingFab</IISUrl>
+          <IISUrl>https://thor/StagingFab</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
