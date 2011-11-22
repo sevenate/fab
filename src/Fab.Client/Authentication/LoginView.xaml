@@ -68,7 +68,9 @@
 						  Content="Remember me"
 						  Margin="0,10"
 						  HorizontalAlignment="Right"
-						  TabIndex="3">
+						  TabIndex="3"
+						  IsEnabled="False"
+						  ToolTipService.ToolTip="Not implemented yet">
 					<Interactivity:Interaction.Behaviors>
 						<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 					</Interactivity:Interaction.Behaviors>

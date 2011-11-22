@@ -154,6 +154,7 @@
       <DependentUpon>DeleteIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\ApplicationErrorMessage.cs" />
+    <Compile Include="Shell\ErrorDialogViewModel.cs" />
     <Compile Include="Shell\ServiceErrorMessage.cs" />
     <Compile Include="Framework\Converters\NullToQuestionMarkConverter.cs" />
     <Compile Include="Framework\OpenConfirmationResult.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Authentication\AuthenticateResult.cs" />
     <Compile Include="Authentication\ILoginViewModel.cs" />
     <Compile Include="Authentication\LoginViewModel.cs" />
+    <Compile Include="Shell\ServiceFactory.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +366,10 @@
     <DesignData Include="Shell\Async\SampleData\AsyncData.xaml">
       <SubType>Designer</SubType>
     </DesignData>
+    <Page Include="Shell\ErrorDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\BS_ResourceDictionary_Advanced.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -423,33 +429,33 @@
     <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.JournalDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService.wsdl" />
-    <None Include="Service References\MoneyServiceReference\MoneyService.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService1.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService1.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService41.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService11.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService42.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService2.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService43.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService3.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService44.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\UserServiceReference\Fab.Client.UserServiceReference.UserDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\UserServiceReference\UserService.xsd">
+    <None Include="Service References\UserServiceReference\UserService.wsdl" />
+    <None Include="Service References\UserServiceReference\UserService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService1.wsdl" />
-    <None Include="Service References\UserServiceReference\UserService2.xsd">
+    <None Include="Service References\UserServiceReference\UserService11.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService21.xsd">
+    <None Include="Service References\UserServiceReference\UserService12.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -479,7 +485,9 @@
     <Content Include="Resources\AppIcon_48x48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ServiceReferences.ClientConfig" />
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

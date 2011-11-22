@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.ServiceModel;
 using EmitMapper;
 using EmitMapper.MappingConfiguration;
 using Fab.Server.Core;
@@ -37,6 +38,25 @@ namespace Fab.Server
 		/// Default root folder for master and personal databases = |DataDirectory|.
 		/// </summary>
 		private string defaultFolder = "|DataDirectory|";
+
+		/// <summary>
+		/// Primary identity name.
+		/// </summary>
+		private string userName;
+
+		/// <summary>
+		/// Gets or sets primary identity name.
+		/// </summary>
+		public string UserName
+		{
+			get
+			{
+				return ServiceSecurityContext.Current == null
+					? userName
+					: ServiceSecurityContext.Current.PrimaryIdentity.Name;
+			}
+			set { userName = value; }
+		}
 
 		/// <summary>
 		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
@@ -77,11 +97,6 @@ namespace Fab.Server
 		/// <returns>Created account ID.</returns>
 		public int CreateAccount(Guid userId, string name, int assetTypeId)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			if (string.IsNullOrWhiteSpace(name))
 			{
 				throw new ArgumentException("Account name must not be empty.");
@@ -93,7 +108,7 @@ namespace Fab.Server
 				throw new Exception("Account name is too long. Maximum length is 50.");
 			}
 
-			using (var pc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var pc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var assetType = ModelHelper.GetAssetTypeById(pc, assetTypeId);
 
@@ -125,12 +140,7 @@ namespace Fab.Server
 		/// <returns>Account data transfer object.</returns>
 		public AccountDTO GetAccount(Guid userId, int accountId)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
 				var result = accountMapper.Map(ModelHelper.GetAccountById(mc, accountId));
@@ -146,17 +156,12 @@ namespace Fab.Server
 		/// <param name="name">Account new name.</param>
 		public void UpdateAccount(Guid userId, int accountId, string name)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			if (string.IsNullOrWhiteSpace(name))
 			{
 				throw new ArgumentException("Account name must not be empty.");
 			}
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var account = ModelHelper.GetAccountById(mc, accountId);
 				account.Name = name;
@@ -171,12 +176,7 @@ namespace Fab.Server
 		/// <param name="accountId">Account ID to mark as deleted.</param>
 		public void DeleteAccount(Guid userId, int accountId)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var account = ModelHelper.GetAccountById(mc, accountId);
 
@@ -194,12 +194,7 @@ namespace Fab.Server
 		/// <returns>All accounts.</returns>
 		public IList<AccountDTO> GetAllAccounts(Guid userId)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
 
@@ -228,14 +223,9 @@ namespace Fab.Server
 		/// <returns>Account balance at the specific date.</returns>
 		public decimal GetAccountBalance(Guid userId, int accountId, DateTime dateTime)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			decimal balance;
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				// Todo: Fix Sum() of Postings when there is no any posting yet.
 				var firstPosting = mc.Postings.Where(p => p.Account.Id == accountId && p.Date < dateTime)
@@ -314,11 +304,6 @@ namespace Fab.Server
 		/// <returns>Created category ID.</returns>
 		public int CreateCategory(Guid userId, string name, CategoryType categoryType)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			if (string.IsNullOrWhiteSpace(name))
 			{
 				throw new ArgumentException("Category name must not be empty.");
@@ -330,7 +315,7 @@ namespace Fab.Server
 				throw new Exception("Category name is too long. Maximum length is 50.");
 			}
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var category = new Category
 				               {
@@ -355,12 +340,7 @@ namespace Fab.Server
 		/// <returns>Category data transfer object.</returns>
 		public CategoryDTO GetCategory(Guid userId, int categoryId)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
 				return categoryMapper.Map(ModelHelper.GetCategoryById(mc, categoryId));
@@ -376,23 +356,16 @@ namespace Fab.Server
 		/// <param name="categoryType">Category new type.</param>
 		public void UpdateCategory(Guid userId, int categoryId, string name, CategoryType categoryType)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			if (string.IsNullOrWhiteSpace(name))
 			{
 				throw new ArgumentException("Category name must not be empty.");
 			}
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var category = ModelHelper.GetCategoryById(mc, categoryId);
-
 				category.Name = name;
 				category.CategoryType = (byte) categoryType;
-
 				mc.SaveChanges();
 			}
 		}
@@ -404,17 +377,10 @@ namespace Fab.Server
 		/// <param name="categoryId">Category ID to mark as deleted.</param>
 		public void DeleteCategory(Guid userId, int categoryId)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var category = ModelHelper.GetCategoryById(mc, categoryId);
-
 				category.Deleted = DateTime.UtcNow;
-
 				mc.SaveChanges();
 			}
 		}
@@ -426,7 +392,7 @@ namespace Fab.Server
 		/// <returns>All categories.</returns>
 		public IList<CategoryDTO> GetAllCategories(Guid userId)
 		{
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var categoryMapper = ObjectMapperManager.DefaultInstance.GetMapper<Category, CategoryDTO>();
 				var categories = mc.Categories.Where(c => c.Deleted == null)
@@ -449,14 +415,7 @@ namespace Fab.Server
 		/// <param name="journalId">Journal ID.</param>
 		public void DeleteJournal(Guid userId, int accountId, int journalId)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
-			//Todo: check user permission (user ID and account ID) before deleting transaction.
-
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				ModelHelper.DeleteJournal(mc, journalId);
 				mc.SaveChanges();
@@ -472,7 +431,7 @@ namespace Fab.Server
 		/// <returns>Journal record details.</returns>
 		public JournalDTO GetJournal(Guid userId, int accountId, int journalId)
 		{
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				/*
 				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>();
@@ -568,11 +527,6 @@ namespace Fab.Server
 		/// <returns>Filtered journal records count.</returns>
 		public int GetJournalsCount(Guid userId, int accountId, IQueryFilter queryFilter)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			if (queryFilter == null)
 			{
 				throw new ArgumentNullException("queryFilter");
@@ -582,7 +536,7 @@ namespace Fab.Server
 
 			// Bug: warning security weakness!
 			// Check User.IsDisabled + Account.IsDeleted also
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				//TODO: remove duplicated code with GetJournals() method
 				var query = from p in mc.Postings
@@ -678,7 +632,7 @@ namespace Fab.Server
 
 			// Bug: warning security weakness!
 			// Check User.IsDisabled + Account.IsDeleted also
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				//TODO: remove duplicated code with GetJournalsCounts() method
 				var query = from p in mc.Postings
@@ -825,8 +779,7 @@ namespace Fab.Server
 		/// <returns>Asset types presented by default or defined by the user.</returns>
 		public IList<AssetTypeDTO> GetAllAssetTypes(Guid userId)
 		{
-			//TODO: use GetPersonalConnection(userId) here
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var assetTypeMapper = ObjectMapperManager.DefaultInstance.GetMapper<AssetType, AssetTypeDTO>();
 
@@ -905,11 +858,6 @@ namespace Fab.Server
 		public void UpdateTransaction(Guid userId, int accountId, int transactionId, bool isDeposit, DateTime date,
 		                              decimal rate, decimal quantity, int? categoryId, string comment)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			// Check comment max length
 			if (comment.Length > 256)
 			{
@@ -928,7 +876,7 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				ModelHelper.UpdateTransaction(mc, accountId, transactionId, isDeposit, date, rate, quantity, categoryId, comment);
 			}
@@ -955,11 +903,6 @@ namespace Fab.Server
 		private int CreateTransaction(Guid userId, int accountId, bool isDeposit, DateTime date, decimal rate,
 		                                     decimal quantity, int? categoryId, string comment)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			// Check comment max length
 			if (comment.Length > 256)
 			{
@@ -978,7 +921,7 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var journal = ModelHelper.CreateTransaction(mc, accountId, isDeposit ? JournalType.Deposit : JournalType.Withdrawal,
 				                                            date, rate, quantity, categoryId, comment);
@@ -1007,11 +950,6 @@ namespace Fab.Server
 		public int Transfer(Guid userId, int fromAccountId, int toAccountId, DateTime date, decimal rate,
 		                    decimal quantity, string comment)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User1 ID must not be empty.");
-			}
-
 			// Check accounts IDs difference
 			if (fromAccountId == toAccountId)
 			{
@@ -1036,7 +974,7 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				var journal = ModelHelper.CreateTransfer(mc, date, fromAccountId, toAccountId, rate, quantity, comment);
 				mc.SaveChanges();
@@ -1065,11 +1003,6 @@ namespace Fab.Server
 		public void UpdateTransfer(Guid userId, int transactionId, int fromAccountId, int toAccountId, DateTime date,
 		                           decimal rate, decimal quantity, string comment)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User1 ID must not be empty.");
-			}
-
 			// Check accounts IDs difference
 			if (fromAccountId == toAccountId)
 			{
@@ -1094,7 +1027,7 @@ namespace Fab.Server
 				throw new Exception("Quantity must not be less then or equal to 0.");
 			}
 
-			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				ModelHelper.UpdateTransfer(mc, transactionId, fromAccountId, toAccountId, date, rate, quantity, comment);
 			}
@@ -1109,16 +1042,16 @@ namespace Fab.Server
 		/// <summary>
 		/// Gets connection string to the user personal database based on user ID.
 		/// </summary>
-		/// <param name="userId">User unique ID.</param>
+		/// <param name="login">User login.</param>
 		/// <returns>Connection string to the user personal database.</returns>
-		private string GetPersonalConnection(Guid userId)
+		private string GetPersonalConnection(string login)
 		{
 			string personalConnection;
 			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
 
 			using (var mc = new MasterEntities(masterConnection))
 			{
-				personalConnection = mc.Users.Where(user => user.Id == userId).Select(user => user.DatabasePath).Single();
+				personalConnection = mc.Users.Where(user => user.Login == login).Select(user => user.DatabasePath).Single();
 			}
 
 			//personalConnection = dbManager.GetPersonalConnection(userId, ?? user.Registered ??, DefaultFolder);

@@ -121,13 +121,7 @@
   <data name="master_001_setup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Sql\master_001_setup.sqlce;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="Sql_Insert_Setting" xml:space="preserve">
-    <value>INSERT INTO [Settings] ([Key], [Value]) VALUES ('{0}', '{1}')</value>
-  </data>
   <data name="personal_001_setup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Sql\personal_001_setup.sqlce;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="DefaultServiceUrl" xml:space="preserve">
-    <value>http://localhost/StagingFab/</value>
   </data>
 </root>

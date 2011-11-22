@@ -24,8 +24,7 @@ namespace Fab.Server.Core
 		/// <returns><c>true</c> if user login name is unique.</returns>
 		internal static bool IsLoginAvailable(MasterEntities mc, string login)
 		{
-			return mc.Users.Where(u => u.Login == login)
-						   .SingleOrDefault() == null;
+			return mc.Users.SingleOrDefault(u => u.Login == login) == null;
 		}
 
 		/// <summary>
@@ -36,12 +35,29 @@ namespace Fab.Server.Core
 		/// <returns>User instance.</returns>
 		internal static User GetUserById(MasterEntities mc, Guid userId)
 		{
-			User user = mc.Users.Where(u => u.Id == userId && !u.IsDisabled)
-								.SingleOrDefault();
+			User user = mc.Users.SingleOrDefault(u => u.Id == userId && !u.IsDisabled);
 
 			if (user == null)
 			{
 				throw new Exception("User with ID " + userId + " not found.");
+			}
+
+			return user;
+		}
+
+		/// <summary>
+		/// Get <see cref="User"/> from model container by unique ID.
+		/// </summary>
+		/// <param name="mc">Entity Framework model container.</param>
+		/// <param name="userName">Unique user name.</param>
+		/// <returns>User instance.</returns>
+		internal static User GetUserByLogin(MasterEntities mc, string userName)
+		{
+			User user = mc.Users.SingleOrDefault(u => u.Login == userName && !u.IsDisabled);
+
+			if (user == null)
+			{
+				throw new Exception("User with name \"" + userName + "\" not found.");
 			}
 
 			return user;

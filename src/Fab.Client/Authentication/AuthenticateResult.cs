@@ -1,6 +1,6 @@
 ﻿using System;
 using Caliburn.Micro;
-using Fab.Client.UserServiceReference;
+using Fab.Client.Shell;
 
 namespace Fab.Client.Authentication
 {
@@ -25,7 +25,12 @@ namespace Fab.Client.Authentication
 		/// <param name="context">The context.</param>
 		public void Execute(ActionExecutionContext context)
 		{
-			var proxy = new UserServiceClient();
+			var proxy = ServiceFactory.CreateUserService();
+
+			// First time client credentials should be initialized "manually";
+			// all subsequent calls proxy will have them already setup by factory.
+			proxy.ClientCredentials.UserName.UserName = Username;
+			proxy.ClientCredentials.UserName.Password = Password;
 
 			proxy.GetUserCompleted += (sender, args) =>
 			                            	{
@@ -36,7 +41,11 @@ namespace Fab.Client.Authentication
 												}
 												else
 												{
-													Credentials = new UserCredentials(args.Result.Id, Username);
+													Credentials = new UserCredentials(args.Result.Id, Username, Password);
+													
+													// Story personal service url for future calls
+													ServiceFactory.PersonalServiceUrl = args.Result.ServiceUrl;
+													
 													Succeeded = true;
 													Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 												}

@@ -5,12 +5,13 @@
 //------------------------------------------------------------
 
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.ServiceModel;
 using EmitMapper;
 using Fab.Server.Core;
 using Fab.Server.Core.DTO;
-using Fab.Server.Properties;
 
 namespace Fab.Server
 {
@@ -19,6 +20,15 @@ namespace Fab.Server
 	/// </summary>
 	public class UserService : IUserService
 	{
+		#region Const
+
+		/// <summary>
+		/// Key in Web.Config "appSettings" section that define default service url for user.
+		/// </summary>
+		private const string DefaultServiceUrlKey = "DefaultServiceUrl";
+
+		#endregion
+
 		#region Dependencies
 
 		/// <summary>
@@ -34,6 +44,25 @@ namespace Fab.Server
 		/// Default root folder for master and personal databases = |DataDirectory|.
 		/// </summary>
 		private string defaultFolder = "|DataDirectory|";
+
+		/// <summary>
+		/// Primary identity name.
+		/// </summary>
+		private string userName;
+
+		/// <summary>
+		/// Gets or sets primary identity name.
+		/// </summary>
+		public string UserName
+		{
+			get
+			{
+				return ServiceSecurityContext.Current == null
+					? userName
+					: ServiceSecurityContext.Current.PrimaryIdentity.Name;
+			}
+			set { userName = value; }
+		}
 
 		/// <summary>
 		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
@@ -166,11 +195,12 @@ namespace Fab.Server
 					Password = password.Hash(),
 					Registered = DateTime.UtcNow,
 					IsDisabled = false,
-					ServiceUrl = Resources.DefaultServiceUrl
+					ServiceUrl = ConfigurationManager.AppSettings[DefaultServiceUrlKey]
 				};
 
 				// Create personal database for user and save path to it
-				user.DatabasePath = dbManager.GetPersonalConnection(user.Id, user.Registered, DefaultFolder);
+				// TODO: use custom password here to encrypt database with
+				user.DatabasePath = dbManager.GetPersonalConnection(user.Id, user.Registered, DefaultFolder /*, password*/);
 
 				mc.Users.AddObject(user);
 				mc.SaveChanges();
@@ -188,11 +218,6 @@ namespace Fab.Server
 		/// <param name="newEmail">User new email.</param>
 		public void Update(Guid userId, string oldPassword, string newPassword, string newEmail)
 		{
-			if (userId == Guid.Empty)
-			{
-				throw new ArgumentException("User ID must not be empty.");
-			}
-
 			if (string.IsNullOrWhiteSpace(oldPassword))
 			{
 				throw new ArgumentException("Old password must not be empty.");
@@ -219,7 +244,7 @@ namespace Fab.Server
 
 			using (var mc = new MasterEntities(masterConnection))
 			{
-				User user = ModelHelper.GetUserById(mc, userId);
+				User user = ModelHelper.GetUserByLogin(mc, UserName);
 
 				if (user.Password != oldPassword.Hash())
 				{
@@ -268,6 +293,10 @@ namespace Fab.Server
 				{
 					user.LastAccess = DateTime.UtcNow;
 					mc.SaveChanges();
+				}
+				else
+				{
+					throw new Exception("User name or password is incorrect.");
 				}
 
 				return usersMapper.Map(user);

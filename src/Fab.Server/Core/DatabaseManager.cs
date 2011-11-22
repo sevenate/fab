@@ -50,6 +50,21 @@ namespace Fab.Server.Core
 		/// </summary>
 		private const string DefaultPassword = "_s#2PDaq[mL>4v%F";
 
+		/// <summary>
+		/// Personal setting key: user-id.
+		/// </summary>
+		private const string UserIdKey = "user-id";
+
+		/// <summary>
+		/// Personal setting key: registration-date.
+		/// </summary>
+		private const string RegistrationDateKey = "registration-date";
+
+		/// <summary>
+		/// Insert setting value into "Settings" table in the user personal database.
+		/// </summary>
+		private const string SqlInsertSettingFormat = "INSERT INTO [Settings] ([Key], [Value]) VALUES ('{0}', '{1}')";
+
 		#endregion
 
 		#region Public Methods
@@ -102,8 +117,8 @@ namespace Fab.Server.Core
 			if (CreateDatabaseFile(connectionString))
 			{
 				ExecuteSqlScript(connectionString, Resources.personal_001_setup);
-				ExecuteSqlScript(connectionString, string.Format(Resources.Sql_Insert_Setting, "user_id", userId));
-				ExecuteSqlScript(connectionString, string.Format(Resources.Sql_Insert_Setting, "registration_date", registrationDate));
+				ExecuteSqlScript(connectionString, string.Format(SqlInsertSettingFormat, UserIdKey, userId));
+				ExecuteSqlScript(connectionString, string.Format(SqlInsertSettingFormat, RegistrationDateKey, registrationDate));
 			}
 
 			return AddEntityMetadata(connectionString, PersonalConnectionName);
