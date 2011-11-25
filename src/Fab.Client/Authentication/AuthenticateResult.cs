@@ -44,7 +44,7 @@ namespace Fab.Client.Authentication
 													Credentials = new UserCredentials(args.Result.Id, Username, Password);
 													
 													// Story personal service url for future calls
-													ServiceFactory.PersonalServiceUrl = args.Result.ServiceUrl;
+													ServiceFactory.PersonalServiceUri = args.Result.ServiceUrl;
 													
 													Succeeded = true;
 													Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));

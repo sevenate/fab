@@ -5,8 +5,11 @@
 //------------------------------------------------------------
 
 using System;
+using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.Windows;
 using Fab.Client.Authentication;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.UserServiceReference;
@@ -21,7 +24,7 @@ namespace Fab.Client.Shell
 		/// <summary>
 		/// Gets or sets personal service address.
 		/// </summary>
-		public static string PersonalServiceUrl { get; set; }
+		public static string PersonalServiceUri { get; set; }
 
 		/// <summary>
 		/// Create UserService client proxy.
@@ -30,6 +33,7 @@ namespace Fab.Client.Shell
 		public static UserServiceClient CreateUserService()
 		{
 			var proxy = new UserServiceClient();
+			SetupServiceUri(proxy.Endpoint);
 			SetupClientCredentials(proxy.ClientCredentials);
 			return proxy;
 		}
@@ -41,9 +45,23 @@ namespace Fab.Client.Shell
 		public static MoneyServiceClient CreateMoneyService()
 		{
 			var proxy = new MoneyServiceClient();
+			SetupServiceUri(proxy.Endpoint);
 			SetupClientCredentials(proxy.ClientCredentials);
-			SetupPersonalServiceHost(proxy);
+			SetupPersonalServiceUri(proxy);
 			return proxy;
+		}
+
+		/// <summary>
+		/// Change debug service url to the relative to the host from where the xap was loaded.
+		/// </summary>
+		/// <param name="serviceEndpoint">Original service endpoint whose address should be updated.</param>
+		private static void SetupServiceUri(ServiceEndpoint serviceEndpoint)
+		{
+			var serviceName = serviceEndpoint.Address.Uri.LocalPath.Split('/').Last();
+// ReSharper disable AssignNullToNotNullAttribute
+			string absoluteUri = new Uri(Application.Current.Host.Source, Path.Combine("..", serviceName)).AbsoluteUri;
+// ReSharper restore AssignNullToNotNullAttribute
+			serviceEndpoint.Address = new EndpointAddress(absoluteUri);
 		}
 
 		/// <summary>
@@ -68,16 +86,16 @@ namespace Fab.Client.Shell
 		/// Use personal service host only if available.
 		/// </summary>
 		/// <param name="proxy">Client proxy instance.</param>
-		private static void SetupPersonalServiceHost(MoneyServiceClient proxy)
+		private static void SetupPersonalServiceUri(MoneyServiceClient proxy)
 		{
 			if (proxy == null)
 			{
 				throw new ArgumentNullException("proxy");
 			}
 
-			if (!string.IsNullOrEmpty(PersonalServiceUrl))
+			if (!string.IsNullOrEmpty(PersonalServiceUri))
 			{
-				proxy.Endpoint.Address = new EndpointAddress(PersonalServiceUrl);
+				proxy.Endpoint.Address = new EndpointAddress(PersonalServiceUri);
 			}
 		}
 	}

@@ -7,6 +7,10 @@
 using System;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using Common.Logging;
+using Fab.Server.Core.DTO;
 
 namespace Fab.Server
 {
@@ -27,13 +31,34 @@ namespace Fab.Server
 			{
 				throw new SecurityTokenException("Username and password should not be empty");
 			}
+			
 			var client = new UserService();
 
-			var user = client.GetUser(userName, password);
+			UserDTO user = null;
+
+			try
+			{
+				user = client.GetUser(userName, password);
+			}
+			catch (Exception e)
+			{
+				var log = LogManager.GetCurrentClassLogger();
+				log.Fatal("Unhandled exception:", e);
+				throw;
+			}
 
 			if (user == null || user.Id == Guid.Empty)
 			{
+				// User name or password is incorrect.
+				var log = LogManager.GetCurrentClassLogger();
+				log.Warn("Authentication failed. Attempt to use username: " + userName);
+				
 				throw new SecurityTokenException("Username or password is incorrect");
+
+				// To provide detailed information about failed validation use FaultException
+				// Note: this is NOT recommended for production by security reason
+
+				//throw new FaultException("Validation failed.");
 			}
 		}
 
