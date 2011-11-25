@@ -8,6 +8,10 @@
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 			 mc:Ignorable="d">
 	<Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 		<sdk:Calendar x:Name="FromDateCalendar"
 					  SelectionMode="SingleRange"
 					  IsTodayHighlighted="True"
@@ -17,5 +21,8 @@
 																SelectedRange="{Binding Path=SelectedRange, Mode=TwoWay}" />
 			</Interactivity:Interaction.Behaviors>
 		</sdk:Calendar>
+		<Button x:Name="Today"
+				Grid.Row="1"
+				Content="Today" />
 	</Grid>
 </UserControl>
