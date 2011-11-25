@@ -59,25 +59,6 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<Copy SourceFiles="@(ServerReleaseFiles)"
 			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
 
-		<Unzip ZipFileName="$(DeployFolder)\ClientBin\SilverFAB.xap"
-			   TargetDirectory="$(DeployFolder)\ClientBin\SilverFAB" />
-
-		<XmlMassUpdate ContentFile="$(DeployFolder)\ClientBin\SilverFAB\ServiceReferences.ClientConfig"
-					   SubstitutionsFile="$(SilverSourceFolder)\ServiceReferences-prod.ClientConfig" />
-
-		<CreateItem Include="$(DeployFolder)\ClientBin\SilverFAB\*.*">
-			<Output TaskParameter="Include"
-					ItemName="SilverReleaseFiles"/>
-		</CreateItem>
-
-		<Zip Files="@(SilverReleaseFiles)"
-			 WorkingDirectory="$(DeployFolder)\ClientBin\SilverFAB"
-			 ZipFileName="$(DeployFolder)\ClientBin\SilverFAB.xap"
-			 ZipLevel="7" /> <!-- default zip level = 6 -->
-
-		<RemoveDir Condition="Exists('$(DeployFolder)\ClientBin\SilverFAB')"
-				   Directories="$(DeployFolder)\ClientBin\SilverFAB" />
-
 	</Target>
 
 	<Target Name="DeployImportTool">
