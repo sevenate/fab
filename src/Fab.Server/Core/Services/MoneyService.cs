@@ -241,7 +241,7 @@ namespace Fab.Server
 		}
 
 		/// <summary>
-		/// Default mapping between <see cref="Account"/> and <see cref="AccountDTO"/>.
+		/// Gets default mapping between <see cref="Account"/> and <see cref="AccountDTO"/>.
 		/// </summary>
 		private static DefaultMapConfig AccountMappingConfigurator
 		{
@@ -1046,16 +1046,15 @@ namespace Fab.Server
 		/// <returns>Connection string to the user personal database.</returns>
 		private string GetPersonalConnection(string login)
 		{
-			string personalConnection;
 			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+			User user;
 
 			using (var mc = new MasterEntities(masterConnection))
 			{
-				personalConnection = mc.Users.Where(user => user.Login == login).Select(user => user.DatabasePath).Single();
+				user = mc.Users.Single(u => u.Login == login);
 			}
 
-			//personalConnection = dbManager.GetPersonalConnection(userId, ?? user.Registered ??, DefaultFolder);
-			return personalConnection;
+			return dbManager.GetPersonalConnection(user.DatabasePath);
 		}
 
 		#endregion
