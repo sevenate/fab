@@ -51,7 +51,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<MakeDir Directories="$(DeployFolder)" />
 
 		<CreateItem Include="$(SourceFolder)\**\*.*"
-					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\App_Data\*.mdf;$(SourceFolder)\App_Data\*_log.ldf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config">
+					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\*.resx;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\**\*.mdf;$(SourceFolder)\**\*_log.ldf;$(SourceFolder)\**\*.sdf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\**\*.sqlce;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config;$(SourceFolder)\**\README_ENU.txt;$(SourceFolder)\**\*.svclog">
 			<Output TaskParameter="Include"
 					ItemName="ServerReleaseFiles"/>
 		</CreateItem>
