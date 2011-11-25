@@ -3,13 +3,13 @@
 		<extensions />
 		<bindings>
 			<basicHttpBinding>
-				<binding name="BasicHttpBinding_IUserService" closeTimeout="01:01:00"
-				 openTimeout="01:01:00" receiveTimeout="01:10:00" sendTimeout="01:01:00"
+				<binding name="BasicHttpBinding_IUserService" closeTimeout="00:01:00"
+				 openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00"
 				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="TransportWithMessageCredential" />
 				</binding>
-				<binding name="BasicHttpBinding_IMoneyService" closeTimeout="01:01:00"
-				 openTimeout="01:01:00" receiveTimeout="01:10:00" sendTimeout="01:01:00"
+				<binding name="BasicHttpBinding_IMoneyService" closeTimeout="00:01:00"
+				 openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00"
 				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="TransportWithMessageCredential" />
 				</binding>
