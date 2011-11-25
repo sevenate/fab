@@ -17,3 +17,4 @@ glob:version.txt
 syntax: glob
 *.sdf
 *.DotSettings.user
+*.log
