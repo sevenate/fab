@@ -5,7 +5,6 @@
 //------------------------------------------------------------
 
 using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
@@ -20,15 +19,6 @@ namespace Fab.Server
 	/// </summary>
 	public class UserService : IUserService
 	{
-		#region Const
-
-		/// <summary>
-		/// Key in Web.Config "appSettings" section that define default service url for user.
-		/// </summary>
-		private const string DefaultServiceUrlKey = "DefaultServiceUrl";
-
-		#endregion
-
 		#region Dependencies
 
 		/// <summary>
@@ -195,7 +185,7 @@ namespace Fab.Server
 					Password = password.Hash(),
 					Registered = DateTime.UtcNow,
 					IsDisabled = false,
-					ServiceUrl = ConfigurationManager.AppSettings[DefaultServiceUrlKey]
+					ServiceUrl = string.Empty	// default service for all users (for now)
 				};
 
 				// Create personal database for user and save path to it
