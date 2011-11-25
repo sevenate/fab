@@ -36,6 +36,11 @@ namespace Fab.Server.Core
 		private const string ConnectionStringTemplate = @"Data Source='{0}\{1}.sdf'; Password='{2}'";
 
 		/// <summary>
+		/// Connection string template to the SQL CE 4.0 database file: Data Source='{0}.sdf'; Password='{1}'
+		/// </summary>
+		private const string ConnectionStringSimpleTemplate = @"Data Source='{0}'; Password='{1}'";
+
+		/// <summary>
 		/// Master database file name.
 		/// </summary>
 		private const string MasterDatabaseName = "master";
@@ -124,6 +129,21 @@ namespace Fab.Server.Core
 			return AddEntityMetadata(connectionString, PersonalConnectionName);
 		}
 
+		/// <summary>
+		/// Return connection string to existed user database file.
+		/// Note, that file should exist at the moment when service try to open returned connection or run-time exception will be thrown.
+		/// </summary>
+		/// <param name="pathToDatabase">Relative path to personal database file.</param>
+		/// <param name="password">Database encryption password.</param>
+		/// <returns>Connection string to the user personal database.</returns>
+		public string GetPersonalConnection(string pathToDatabase = DefaultFolder, string password = DefaultPassword)
+		{
+			var absolutePathToDatabase = ResolveDataDirectory(pathToDatabase);
+			var connectionString = GetPersonalDbConnectionString(absolutePathToDatabase, password);
+			
+			return AddEntityMetadata(connectionString, PersonalConnectionName);
+		}
+
 		#endregion
 
 		#region Private Methods
@@ -149,6 +169,17 @@ namespace Fab.Server.Core
 		private static string GetPersonalDbConnectionString(string folder, Guid userId, string password)
 		{
 			return string.Format(ConnectionStringTemplate, folder, userId.ToString().ToLower(), password);
+		}
+
+		/// <summary>
+		/// Construct connection string to the user personal database.
+		/// </summary>
+		/// <param name="file">Path to the user personal database file.</param>
+		/// <param name="password">Password for the user personal database file.</param>
+		/// <returns>Connection string to the user personal database.</returns>
+		private static string GetPersonalDbConnectionString(string file, string password)
+		{
+			return string.Format(ConnectionStringSimpleTemplate, file, password);
 		}
 
 		/// <summary>
