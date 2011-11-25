@@ -296,7 +296,7 @@ namespace Fab.Server
 				}
 				else
 				{
-					throw new Exception("User name or password is incorrect.");
+					throw new FaultException("User name or password is incorrect.");
 				}
 
 				return usersMapper.Map(user);
