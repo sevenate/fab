@@ -93,7 +93,6 @@
     <None Include="Sql\personal_001_setup.sqlce" />
     <Content Include="favicon.png" />
     <Content Include="index.html" />
-    <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\Silverlight.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
