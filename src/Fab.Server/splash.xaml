@@ -1,0 +1,151 @@
+﻿<Grid x:Name="LayoutRoot"
+	  xmlns="http://schemas.microsoft.com/client/2007"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  Background="White"
+	  d:DesignWidth="640"
+	  d:DesignHeight="480"
+	  mc:Ignorable="d">
+	<Grid.Resources>
+		<LinearGradientBrush x:Key="Brush1"
+							 EndPoint="0.5,1"
+							 StartPoint="0.5,0">
+			<GradientStop Color="#FF96D2FA"
+						  Offset="0" />
+			<GradientStop Color="#FF005E9D"
+						  Offset="1" />
+			<GradientStop Color="#FF0097FC"
+						  Offset="0.5" />
+		</LinearGradientBrush>
+		<SolidColorBrush x:Key="Brush2"
+						 Color="#FF0097FC" />
+	</Grid.Resources>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition />
+		<ColumnDefinition />
+		<ColumnDefinition />
+	</Grid.ColumnDefinitions>
+
+	<Grid.Triggers>
+		<EventTrigger RoutedEvent="Grid.Loaded">
+			<BeginStoryboard>
+				<Storyboard>
+					<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+												   Storyboard.TargetName="satellites"
+												   RepeatBehavior="Forever"
+												   Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+						<SplineDoubleKeyFrame KeyTime="00:00:02"
+											  Value="360" />
+					</DoubleAnimationUsingKeyFrames>
+				</Storyboard>
+			</BeginStoryboard>
+		</EventTrigger>
+	</Grid.Triggers>
+
+	<TextBlock Text="Loading..."
+			   Grid.Column="1"
+			   HorizontalAlignment="Center"
+			   VerticalAlignment="Center"
+			   TextWrapping="Wrap"
+			   Margin="0,0,0,25" />
+
+	<Border Grid.Column="1"
+			VerticalAlignment="Center"
+			Height="8"
+			CornerRadius="3"
+			BorderThickness="1"
+			BorderBrush="Black">
+		<Rectangle Grid.Column="1"
+				   StrokeThickness="0"
+				   RadiusX="2"
+				   RadiusY="2"
+				   RenderTransformOrigin="0,0.5"
+				   Fill="{StaticResource Brush1}">
+			<Rectangle.RenderTransform>
+				<ScaleTransform x:Name="progressBarScale"
+								ScaleX="0" />
+			</Rectangle.RenderTransform>
+		</Rectangle>
+	</Border>
+	
+	<TextBlock HorizontalAlignment="Center"
+			   VerticalAlignment="Bottom"
+			   Text="© 2011 nReez"
+			   TextWrapping="Wrap"
+			   Grid.Column="1"
+			   Foreground="#FF868686" />
+
+	<Grid Grid.Column="2"
+		  HorizontalAlignment="Left"
+		  VerticalAlignment="Center"
+		  Margin="5,0,0,0">
+		
+		<Grid x:Name="satellites"
+			  Height="64"
+			  Width="64"
+			  VerticalAlignment="Center"
+			  HorizontalAlignment="Center"
+			  RenderTransformOrigin="0.5,0.5">
+			<Grid.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform />
+					<SkewTransform />
+					<RotateTransform />
+					<TranslateTransform />
+				</TransformGroup>
+			</Grid.RenderTransform>
+
+			<Ellipse Width="8"
+					 Height="8"
+					 RenderTransformOrigin="-3,0.5"
+					 VerticalAlignment="Center"
+					 Fill="{StaticResource Brush2}"
+					 HorizontalAlignment="Center">
+				<Ellipse.RenderTransform>
+					<TransformGroup>
+						<RotateTransform Angle="-60" />
+						<TranslateTransform X="28" />
+					</TransformGroup>
+				</Ellipse.RenderTransform>
+			</Ellipse>
+
+			<Ellipse Width="8"
+					 Height="8"
+					 RenderTransformOrigin="-3,0.5"
+					 VerticalAlignment="Center"
+					 Fill="{StaticResource Brush2}"
+					 HorizontalAlignment="Center">
+				<Ellipse.RenderTransform>
+					<TransformGroup>
+						<RotateTransform Angle="60" />
+						<TranslateTransform X="28" />
+					</TransformGroup>
+				</Ellipse.RenderTransform>
+			</Ellipse>
+
+			<Ellipse Width="8"
+					 Height="8"
+					 RenderTransformOrigin="-3,0.5"
+					 VerticalAlignment="Center"
+					 HorizontalAlignment="Center"
+					 Fill="{StaticResource Brush2}">
+				<Ellipse.RenderTransform>
+					<TransformGroup>
+						<RotateTransform Angle="180" />
+						<TranslateTransform X="28" />
+					</TransformGroup>
+				</Ellipse.RenderTransform>
+			</Ellipse>
+
+		</Grid>
+		
+		<TextBlock x:Name="loadingProgress"
+				   TextWrapping="Wrap"
+				   FontSize="13.333"
+				   Text="0%"
+				   VerticalAlignment="Center"
+				   FontWeight="Bold"
+				   HorizontalAlignment="Center" />
+	</Grid>
+</Grid>
