@@ -30,6 +30,7 @@
 							<Button cal:Action.Target="{Binding}"
 									cal:Message.Attach="Show"
 									ToolTipService.ToolTip="{Binding Name}"
+									Padding="10"
 									MinWidth="75"
 									MinHeight="23"
 									Content="{Binding Name}" />

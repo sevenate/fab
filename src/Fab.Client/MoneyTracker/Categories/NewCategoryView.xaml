@@ -5,7 +5,6 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
-			 xmlns:Controls="clr-namespace:Fab.Client.Framework.Controls"
 			 mc:Ignorable="d"
 			 Width="200">
 	<Grid>
@@ -16,26 +15,25 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<TextBlock Text="Name:"
+		<TextBlock Text="Category name"
 				   Grid.Row="0"
-				   Margin="5,5,5,0" />
-		<Controls:WatermarkedTextbox Grid.Row="1"
-									 TabIndex="0"
-									 Text="{Binding Path=Name, Mode=TwoWay}"
-									 Watermark=""
-									 MinWidth="75"
-									 Margin="5">
+				   Margin="8,10,8,2" />
+		<TextBox x:Name="Name"
+				 Grid.Row="1"
+				 TabIndex="0"
+				 MinWidth="75"
+				 Margin="5,0">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 				<Behaviors:FocusBehavior HasInitialFocus="True" />
 			</i:Interaction.Behaviors>
-		</Controls:WatermarkedTextbox>
-		<TextBlock Text="Type:"
+		</TextBox>
+		<TextBlock Text="Type"
 				   Grid.Row="2"
-				   Margin="5,0" />
+				   Margin="8,10,8,2" />
 		<ComboBox Grid.Row="3"
 				  MinWidth="150"
-				  Margin="5"
+				  Margin="5,0"
 				  TabIndex="1"
 				  ItemsSource="{Binding Path=CategoryTypes}"
 				  SelectedValue="{Binding Path=SelectedCategoryType, Mode=TwoWay}"
@@ -48,7 +46,8 @@
 		</ComboBox>
 		<StackPanel Grid.Row="4"
 					Orientation="Horizontal"
-					HorizontalAlignment="Right">
+					HorizontalAlignment="Right"
+					Margin="0,10,0,0">
 			<Button x:Name="Save"
 					Content="Save"
 					MinWidth="75"

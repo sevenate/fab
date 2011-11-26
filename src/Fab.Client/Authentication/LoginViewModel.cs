@@ -373,6 +373,8 @@ namespace Fab.Client.Authentication
 		{
 			ShowStatus = false;
 			IsAuthenticated = false;
+			Username = string.Empty;
+			Password = string.Empty;
 		}
 
 		#endregion
