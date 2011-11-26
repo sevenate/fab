@@ -5,6 +5,10 @@
 					 Color="#FF333333" />
 	<SolidColorBrush x:Key="Brush_Foreground"
 					 Color="#FFE5E5E5" />
+	<SolidColorBrush x:Key="Brush_Foreground_TextBox"
+					 Color="Yellow" />
+	<SolidColorBrush x:Key="Brush_Foreground_TextBox_Caret"
+					 Color="Yellow" />
 	<SolidColorBrush x:Key="Brush_Highlight"
 					 Color="White" />
 	<SolidColorBrush x:Key="Brush_Error"

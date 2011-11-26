@@ -10,16 +10,19 @@
 				HorizontalAlignment="Right">
 		<Button x:Name="Logout"
 				MinWidth="75"
-				TabIndex="0">
+				TabIndex="0"
+				Padding="10">
 			<Button.Content>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="Sign out"
+							   
+							   FontSize="16"
 							   VerticalAlignment="Center" />
 					<TextBlock Text="{Binding Username, StringFormat=( \{0\} )}"
 							   VerticalAlignment="Center"
 							   Foreground="Gray"
 							   Margin="5,0,0,0"
-							   FontSize="9" />
+							   FontSize="12" />
 				</StackPanel>
 			</Button.Content>
 		</Button>
