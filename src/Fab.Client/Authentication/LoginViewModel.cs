@@ -77,6 +77,14 @@ namespace Fab.Client.Authentication
 			get { return string.Format(ShortCopyrightTemplate, DateTime.Now.Year); }
 		}
 
+		/// <summary>
+		/// Gets current application version.
+		/// </summary>
+		public string Version
+		{
+			get { return AssemblyExtensions.AppVersion; }
+		}
+
 		#endregion
 
 		#region Ctors
