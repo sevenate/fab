@@ -413,6 +413,8 @@
 				Value="{StaticResource MainFontFamily}" />
 		<Setter Property="FontSize"
 				Value="12" />
+		<Setter Property="CaretBrush"
+				Value="White" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="TextBox">
@@ -3612,6 +3614,8 @@
 				Value="{StaticResource Brush_DarkGradInset}" />
 		<Setter Property="Foreground"
 				Value="{StaticResource Brush_Foreground}" />
+		<Setter Property="CaretBrush"
+				Value="White" />
 		<Setter Property="SelectionBackground"
 				Value="{StaticResource Brush_DarkTextBG}" />
 		<Setter Property="SelectionForeground"

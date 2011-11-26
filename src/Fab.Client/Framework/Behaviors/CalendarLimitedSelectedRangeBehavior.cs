@@ -75,7 +75,6 @@ namespace Fab.Client.Framework.Behaviors
 
 				if (newValue.Item1.Date == newValue.Item2.Date)
 				{
-//					b.AssociatedObject.SelectedDates.Add(newValue.Item1);
 					b.AssociatedObject.SelectedDate = newValue.Item1;
 					b.AssociatedObject.DisplayDate = newValue.Item1;
 				}

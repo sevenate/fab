@@ -18,24 +18,8 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<Controls:DockPanel Visibility="{Binding Path=IsAuthenticated, Converter={StaticResource boolToVisibility}}">
-				<TextBlock x:Name="Version"
-						   Controls:DockPanel.Dock="Right"
-						   ToolTipService.ToolTip="Client version"
-						   Margin="5"
-						   TextWrapping="Wrap"
-						   HorizontalAlignment="Right"
-						   VerticalAlignment="Top"
-						   Foreground="#FF868686" />
-				<ContentControl x:Name="PersonalCorner"
-								Controls:DockPanel.Dock="Right"
-								VerticalContentAlignment="Stretch"
-								HorizontalContentAlignment="Stretch" />
-				<ContentControl x:Name="AsyncProgressIndicator"
-								Controls:DockPanel.Dock="Right"
-								Margin="0,0,10,0"
-								VerticalContentAlignment="Stretch"
-								HorizontalContentAlignment="Stretch" />
-				<ItemsControl x:Name="Items">
+				<ItemsControl x:Name="Items"
+							  Controls:DockPanel.Dock="Left">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
 							<StackPanel Orientation="Horizontal" />
@@ -52,6 +36,22 @@
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
+				<TextBlock x:Name="Version"
+						   Controls:DockPanel.Dock="Right"
+						   ToolTipService.ToolTip="Client version"
+						   Margin="5"
+						   TextWrapping="Wrap"
+						   HorizontalAlignment="Right"
+						   VerticalAlignment="Top"
+						   Foreground="#FF868686" />
+				<ContentControl x:Name="PersonalCorner"
+								Controls:DockPanel.Dock="Right"
+								VerticalContentAlignment="Stretch"
+								HorizontalContentAlignment="Stretch" />
+				<ContentControl x:Name="AsyncProgressIndicator"
+								Margin="20,0,0,0"
+								VerticalContentAlignment="Stretch"
+								HorizontalContentAlignment="Stretch" />
 			</Controls:DockPanel>
 			<ContentControl x:Name="ActiveItem"
 							Grid.Row="1"
