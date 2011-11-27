@@ -34,11 +34,6 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// </summary>
 		private readonly IAssetTypesRepository assetTypes = IoC.Get<IAssetTypesRepository>();
 
-		/// <summary>
-		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
-		/// </summary>
-		private IEventAggregator eventAggregator = IoC.Get<IEventAggregator>();
-
 		#endregion
 
 		#region Id
@@ -53,22 +48,22 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		#region Name
 
 		/// <summary>
-		/// New account name.
+		/// Account name.
 		/// </summary>
-		private string name;
+		private string accountName;
 
 		/// <summary>
-		/// Gets or sets new account name.
+		/// Gets or sets account name.
 		/// </summary>
-		public string Name
+		public string AccountName
 		{
-			get { return name; }
+			get { return accountName; }
 			set
 			{
-				if (name != value)
+				if (accountName != value)
 				{
-					name = value;
-					NotifyOfPropertyChange(() => Name);
+					accountName = value;
+					NotifyOfPropertyChange(() => AccountName);
 				}
 			}
 		}
@@ -174,7 +169,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		{
 			//[Dependencies] can't figure out changes of the Assets property
 			//&& Assets.CurrentItem != null;
-			get { return !string.IsNullOrWhiteSpace(Name); }
+			get { return !string.IsNullOrWhiteSpace(AccountName); }
 		}
 
 		/// <summary>
@@ -188,7 +183,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			{
 				if (AccountId.HasValue)
 				{
-					accounts.Update(AccountId.Value, Name.Trim());
+					accounts.Update(AccountId.Value, AccountName.Trim());
 				}
 				else
 				{
@@ -198,7 +193,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			else
 			{
 				int assetTypeId = ((AssetTypeDTO)Assets.CurrentItem).Id;
-				accounts.Create(Name.Trim(), assetTypeId);
+				accounts.Create(AccountName.Trim(), assetTypeId);
 			}
 
 			Close();
@@ -223,7 +218,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			(Parent as IConductor).CloseItem(this);
 
 			AccountId = null;
-			Name = string.Empty;
+			AccountName = string.Empty;
 			Assets.MoveCurrentToFirst();
 			
 			IsEditMode = false;

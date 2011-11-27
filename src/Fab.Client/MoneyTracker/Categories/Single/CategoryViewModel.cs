@@ -186,7 +186,7 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 			var categoryViewModel = IoC.Get<NewCategoryViewModel>();
 			
 			categoryViewModel.CategoryId = Id;
-			categoryViewModel.Name = Name;
+			categoryViewModel.CategoryName = Name;
 			categoryViewModel.SelectedCategoryType = CategoryTypeWrapper.EnumValue;
 			categoryViewModel.IsEditMode = true;
 			

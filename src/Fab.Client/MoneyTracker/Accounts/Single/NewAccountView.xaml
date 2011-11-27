@@ -17,7 +17,7 @@
 		</Grid.RowDefinitions>
 		<TextBlock Text="Account name"
 				   Margin="8,10,8,2" />
-		<TextBox x:Name="Name"
+		<TextBox x:Name="AccountName"
 				 Grid.Row="1"
 				 TabIndex="0"
 				 MinWidth="75"

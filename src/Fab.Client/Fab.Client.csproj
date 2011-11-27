@@ -145,7 +145,7 @@
     <Compile Include="MoneyTracker\CategoriesDashBoardModel.cs" />
     <Compile Include="MoneyTracker\Categories\CategoryTypeToColorConverter.cs" />
     <Compile Include="MoneyTracker\Categories\CategoryDeletedMessage.cs" />
-    <Compile Include="MoneyTracker\Categories\NewCategoryViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\Single\NewCategoryViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\Single\CategoryViewModel.cs" />
     <Compile Include="Resources\Actions\EditIcon.xaml.cs">
       <DependentUpon>EditIcon.xaml</DependentUpon>
@@ -305,7 +305,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MoneyTracker\Categories\NewCategoryView.xaml">
+    <Page Include="MoneyTracker\Categories\Single\NewCategoryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
