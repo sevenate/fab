@@ -96,12 +96,15 @@ namespace Fab.Client.Framework.Behaviors
 				throw new Exception("Default button is not specified - or - binding to specified property failed.");
 			}
 
-			var peer = new ButtonAutomationPeer(DefaultButton);
-			var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-
-			if (invokeProvider != null)
+			if (DefaultButton.IsEnabled)
 			{
-				invokeProvider.Invoke();
+				var peer = new ButtonAutomationPeer(DefaultButton);
+				var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+
+				if (invokeProvider != null)
+				{
+					invokeProvider.Invoke();
+				}
 			}
 		}
 

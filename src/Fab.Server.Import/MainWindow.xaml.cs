@@ -66,6 +66,11 @@ namespace Fab.Server.Import
 		private int accountId;
 
 		/// <summary>
+		/// Registered user.
+		/// </summary>
+		private UserDTO user;
+
+		/// <summary>
 		/// Registered user ID.
 		/// </summary>
 		private Guid userId;
@@ -154,7 +159,8 @@ namespace Fab.Server.Import
 					new EndpointAddress(ServiceUrlTextBox.Text.Trim() + UserServiceUrlPostfix));
 
 				UpdateStatus("Registering user \"" + UsernameTextBox.Text.Trim() + "\"...");
-				userId = userСlient.Register(UsernameTextBox.Text.Trim(), PasswordTextBox.Text.Trim());
+				user = userСlient.Register(UsernameTextBox.Text.Trim(), PasswordTextBox.Text.Trim());
+				userId = user.Id;
 
 				if (canselPending)
 				{

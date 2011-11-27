@@ -169,6 +169,8 @@
 				<Style TargetType="TextBox">
 					<Setter Property="Foreground"
 							Value="{StaticResource Brush_Foreground}" />
+					<Setter Property="CaretBrush"
+							Value="White" />
 					<Setter Property="FontFamily"
 							Value="{StaticResource MainFontFamily}" />
 					<Setter Property="FontSize"

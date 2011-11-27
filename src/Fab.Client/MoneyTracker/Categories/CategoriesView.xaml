@@ -25,6 +25,8 @@
 		<Button x:Name="CreateCategory"
 				Grid.Row="2"
 				Content="Create New"
-				MinHeight="23" />
+				HorizontalAlignment="Right"
+				MinHeight="23"
+				Padding="10" />
 	</Grid>
 </UserControl>

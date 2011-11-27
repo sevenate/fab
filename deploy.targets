@@ -18,6 +18,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 	<UsingTask TaskName="MSBuild.Community.Tasks.Unzip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
 	<UsingTask TaskName="MSBuild.Community.Tasks.Zip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
 	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
 
 	<PropertyGroup>
 		<SourceRoot>.\src</SourceRoot>
@@ -51,7 +52,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<MakeDir Directories="$(DeployFolder)" />
 
 		<CreateItem Include="$(SourceFolder)\**\*.*"
-					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\App_Data\*.mdf;$(SourceFolder)\App_Data\*_log.ldf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\Web.Debug.config;$(SourceFolder)\Web.Release.config">
+					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\*.resx;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\**\*.mdf;$(SourceFolder)\**\*_log.ldf;$(SourceFolder)\**\*.sdf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\**\*.sqlce;$(SourceFolder)\Web*.config;$(SourceFolder)\**\README_ENU.txt;$(SourceFolder)\**\*.svclog">
 			<Output TaskParameter="Include"
 					ItemName="ServerReleaseFiles"/>
 		</CreateItem>
@@ -59,25 +60,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<Copy SourceFiles="@(ServerReleaseFiles)"
 			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
 
-		<Unzip ZipFileName="$(DeployFolder)\ClientBin\SilverFAB.xap"
-			   TargetDirectory="$(DeployFolder)\ClientBin\SilverFAB" />
-
-		<XmlMassUpdate ContentFile="$(DeployFolder)\ClientBin\SilverFAB\ServiceReferences.ClientConfig"
-					   SubstitutionsFile="$(SilverSourceFolder)\ServiceReferences-prod.ClientConfig" />
-
-		<CreateItem Include="$(DeployFolder)\ClientBin\SilverFAB\*.*">
-			<Output TaskParameter="Include"
-					ItemName="SilverReleaseFiles"/>
-		</CreateItem>
-
-		<Zip Files="@(SilverReleaseFiles)"
-			 WorkingDirectory="$(DeployFolder)\ClientBin\SilverFAB"
-			 ZipFileName="$(DeployFolder)\ClientBin\SilverFAB.xap"
-			 ZipLevel="7" /> <!-- default zip level = 6 -->
-
-		<RemoveDir Condition="Exists('$(DeployFolder)\ClientBin\SilverFAB')"
-				   Directories="$(DeployFolder)\ClientBin\SilverFAB" />
-
+		<TransformXml Source="$(SourceFolder)\Web.Config" Transform="$(SourceFolder)\Web.$(Configuration).config" Destination="$(DeployFolder)\Web.config" StackTrace="true" />
 	</Target>
 
 	<Target Name="DeployImportTool">

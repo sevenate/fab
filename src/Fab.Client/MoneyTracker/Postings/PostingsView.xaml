@@ -215,6 +215,7 @@
 						<DataTemplate>
 							<Button MaxHeight="24"
 									ToolTipService.ToolTip="Edit"
+									Padding="3"
 									cal:Message.Attach="EditPosting($dataContext)">
 								<Button.Content>
 									<Resources:EditIcon />
@@ -230,6 +231,7 @@
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<Button MaxHeight="24"
+									Padding="3"
 									ToolTipService.ToolTip="Delete"
 									cal:Message.Attach="DeleteTransaction($dataContext)">
 								<Button.Content>

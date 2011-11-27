@@ -519,12 +519,14 @@ namespace Fab.Client.MoneyTracker.Postings
 					income = r.Amount; // positive is "TO this account"
 					incomeForPeriod += r.Amount;
 					expense = 0;
+					category = null;
 				}
 				else if (r is OutgoingTransferDTO)
 				{
 					income = 0;
 					expense = -r.Amount; // negative is "FROM this account"
 					expenseForPeriod += r.Amount;
+					category = null;
 				}
 
 				TransactionRecords.Add(new PostingRecord

@@ -1,6 +1,6 @@
 ﻿using System;
 using Caliburn.Micro;
-using Fab.Client.UserServiceReference;
+using Fab.Client.Shell;
 
 namespace Fab.Client.Authentication
 {
@@ -25,23 +25,32 @@ namespace Fab.Client.Authentication
 		/// <param name="context">The context.</param>
 		public void Execute(ActionExecutionContext context)
 		{
-			var proxy = new UserServiceClient();
+			var proxy = ServiceFactory.CreateUserService();
 
-			proxy.GetUserIdCompleted += (sender, args) =>
+			// First time client credentials should be initialized "manually";
+			// all subsequent calls proxy will have them already setup by factory.
+			proxy.ClientCredentials.UserName.UserName = Username;
+			proxy.ClientCredentials.UserName.Password = Password;
+
+			proxy.GetUserCompleted += (sender, args) =>
 			                            	{
-												if (args.Error != null || args.Result == Guid.Empty)
+												if (args.Error != null || args.Result.Id == Guid.Empty)
 												{
 													Caliburn.Micro.Execute.OnUIThread(
 														() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
 												}
 												else
 												{
-													Credentials = new UserCredentials(args.Result, Username);
+													Credentials = new UserCredentials(args.Result.Id, Username, Password);
+													
+													// Story personal service url for future calls
+													ServiceFactory.PersonalServiceUri = args.Result.ServiceUrl;
+													
 													Succeeded = true;
 													Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 												}
 			                            	};
-			proxy.GetUserIdAsync(Username);
+			proxy.GetUserAsync(Username, Password);
 		}
 
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };

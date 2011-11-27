@@ -114,6 +114,18 @@ namespace Fab.Client.MoneyTracker.Filters
 
 		#endregion
 
+		#region Actions
+
+		/// <summary>
+		/// Set current range to current day.
+		/// </summary>
+		public void Today()
+		{
+			ResetToCurrentDate();
+		}
+
+		#endregion
+
 		#region Methods
 
 		/// <summary>

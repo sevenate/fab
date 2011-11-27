@@ -69,7 +69,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// </summary>
 		public override void Download()
 		{
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.GetAllCategoriesCompleted += (s, e) =>
 											   {
 												   if (e.Error == null)
@@ -102,7 +102,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <param name="key">Entity key.</param>
 		public override void Download(int key)
 		{
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.GetCategoryCompleted += (s, e) =>
 			{
 				if (e.Error == null)
@@ -148,7 +148,7 @@ namespace Fab.Client.MoneyTracker.Categories
 				throw new ArgumentNullException("entity");
 			}
 
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.CreateCategoryCompleted += (s, e) =>
 											 {
 												 if (e.Error == null)
@@ -189,7 +189,7 @@ namespace Fab.Client.MoneyTracker.Categories
 				throw new ArgumentNullException("entity");
 			}
 
-			var proxy = new MoneyServiceClient();
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.UpdateCategoryCompleted += (s, e) =>
 			{
 				if (e.Error == null)
@@ -228,8 +228,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// <param name="key">Category ID to delete.</param>
 		public override void Delete(int key)
 		{
-			var proxy = new MoneyServiceClient();
-
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.DeleteCategoryCompleted += (s, e) =>
 			{
 				if (e.Error == null)

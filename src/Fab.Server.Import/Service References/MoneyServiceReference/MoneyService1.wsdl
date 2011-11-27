@@ -4,8 +4,8 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd3" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Filters" />
-      <xsd:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
+      <xsd:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
+      <xsd:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Filters" />
       <xsd:import schemaLocation="http://localhost/StagingFab/MoneyService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" />
     </xsd:schema>
   </wsdl:types>

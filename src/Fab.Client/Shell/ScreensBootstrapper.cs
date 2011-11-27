@@ -94,6 +94,24 @@ namespace Fab.Client.Shell
 			}
 		}
 
+		/// <summary>
+		/// Override this to add custom behavior for unhandled exceptions.
+		/// </summary>
+		/// <param name="sender">The sender.</param><param name="e">The event args.</param>
+		protected override void OnUnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
+		{
+			base.OnUnhandledException(sender, e);
+			var eventAggregator = IoC.Get<IEventAggregator>();
+
+			eventAggregator.Publish(new ApplicationErrorMessage
+			{
+				Error = e.ExceptionObject
+			});
+
+			//TODO: consider "Cancel to reload page" behavior instead of just "handled"
+			e.Handled = true;
+		}
+
 		#endregion
 
 		private void OnMainWindowClosing(object sender, ClosingEventArgs e)

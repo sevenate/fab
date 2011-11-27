@@ -18,6 +18,25 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<Controls:DockPanel Visibility="{Binding Path=IsAuthenticated, Converter={StaticResource boolToVisibility}}">
+				<ItemsControl x:Name="Items"
+							  Controls:DockPanel.Dock="Left">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Button cal:Action.Target="{Binding}"
+									cal:Message.Attach="Show"
+									ToolTipService.ToolTip="{Binding Name}"
+									Padding="10"
+									MinWidth="75"
+									MinHeight="23"
+									Content="{Binding Name}" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
 				<TextBlock x:Name="Version"
 						   Controls:DockPanel.Dock="Right"
 						   ToolTipService.ToolTip="Client version"
@@ -31,27 +50,9 @@
 								VerticalContentAlignment="Stretch"
 								HorizontalContentAlignment="Stretch" />
 				<ContentControl x:Name="AsyncProgressIndicator"
-								Controls:DockPanel.Dock="Right"
-								Margin="0,0,10,0"
+								Margin="20,0,0,0"
 								VerticalContentAlignment="Stretch"
 								HorizontalContentAlignment="Stretch" />
-				<ItemsControl x:Name="Items">
-					<ItemsControl.ItemsPanel>
-						<ItemsPanelTemplate>
-							<StackPanel Orientation="Horizontal" />
-						</ItemsPanelTemplate>
-					</ItemsControl.ItemsPanel>
-					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<Button cal:Action.Target="{Binding}"
-									cal:Message.Attach="Show"
-									ToolTipService.ToolTip="{Binding Name}"
-									MinWidth="75"
-									MinHeight="23"
-									Content="{Binding Name}" />
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
 			</Controls:DockPanel>
 			<ContentControl x:Name="ActiveItem"
 							Grid.Row="1"

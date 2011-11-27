@@ -77,6 +77,14 @@ namespace Fab.Client.Authentication
 			get { return string.Format(ShortCopyrightTemplate, DateTime.Now.Year); }
 		}
 
+		/// <summary>
+		/// Gets current application version.
+		/// </summary>
+		public string Version
+		{
+			get { return AssemblyExtensions.AppVersion; }
+		}
+
 		#endregion
 
 		#region Ctors
@@ -92,8 +100,6 @@ namespace Fab.Client.Authentication
 			EventAggregator.Subscribe(this);
 #if DEBUG
 			ShowCharacters = true;
-			Username = "import";
-			Password = "import";
 #endif
 
 			Status = AuthenticationInProgress;
@@ -367,6 +373,8 @@ namespace Fab.Client.Authentication
 		{
 			ShowStatus = false;
 			IsAuthenticated = false;
+			Username = string.Empty;
+			Password = string.Empty;
 		}
 
 		#endregion
