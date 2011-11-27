@@ -13,7 +13,7 @@ using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
 using Fab.Client.MoneyServiceReference;
 
-namespace Fab.Client.MoneyTracker.Categories
+namespace Fab.Client.MoneyTracker.Categories.Single
 {
 	/// <summary>
 	/// View model for new account dialog.
@@ -42,22 +42,22 @@ namespace Fab.Client.MoneyTracker.Categories
 		#region Name
 
 		/// <summary>
-		/// New category name.
+		/// Category name.
 		/// </summary>
-		private string name;
+		private string categoryName;
 
 		/// <summary>
-		/// Gets or sets new category name.
+		/// Gets or sets category name.
 		/// </summary>
-		public string Name
+		public string CategoryName
 		{
-			get { return name; }
+			get { return categoryName; }
 			set
 			{
-				if (name != value)
+				if (categoryName != value)
 				{
-					name = value;
-					NotifyOfPropertyChange(() => Name);
+					categoryName = value;
+					NotifyOfPropertyChange(() => CategoryName);
 				}
 			}
 		}
@@ -167,7 +167,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// </summary>
 		public bool CanSave
 		{
-			get { return !string.IsNullOrWhiteSpace(Name); }
+			get { return !string.IsNullOrWhiteSpace(CategoryName); }
 		}
 
 		/// <summary>
@@ -182,7 +182,7 @@ namespace Fab.Client.MoneyTracker.Categories
 			{
 				if (CategoryId.HasValue)
 				{
-					repository.Update(CategoryId.Value, Name.Trim(), SelectedCategoryType);
+					repository.Update(CategoryId.Value, CategoryName.Trim(), SelectedCategoryType);
 				}
 				else
 				{
@@ -191,7 +191,7 @@ namespace Fab.Client.MoneyTracker.Categories
 			}
 			else
 			{
-				repository.Create(Name.Trim(), SelectedCategoryType);
+				repository.Create(CategoryName.Trim(), SelectedCategoryType);
 			}
 
 			Close();
@@ -218,7 +218,7 @@ namespace Fab.Client.MoneyTracker.Categories
 			(Parent as IConductor).CloseItem(this);
 
 			CategoryId = null;
-			Name = string.Empty;
+			CategoryName = string.Empty;
 			SelectedCategoryType = CategoryType.Common;
 
 			IsEditMode = false;
