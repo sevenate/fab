@@ -15,3 +15,6 @@ glob:deploy/*
 glob:src/AssemblyInfo.Generated.cs
 glob:version.txt
 syntax: glob
+*.sdf
+*.DotSettings.user
+*.log

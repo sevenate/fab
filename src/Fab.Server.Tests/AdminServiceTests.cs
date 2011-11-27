@@ -1,11 +1,11 @@
-// <copyright file="AdminServiceTests.cs" company="HD">
-// 	Copyright (c) 2009-2010 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="AdminServiceTests.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-02-04" />
-// <summary>Unit tests for AdminService.</summary>
+//------------------------------------------------------------
 
 using System;
-using System.Linq;
+using System.IO;
 using Xunit;
 
 namespace Fab.Server.Tests
@@ -13,8 +13,47 @@ namespace Fab.Server.Tests
 	/// <summary>
 	/// Unit tests for <see cref="AdminService" />.
 	/// </summary>
-	public class AdminServiceTests
+	public class AdminServiceTests : IDisposable
 	{
+		#region Dependencies
+
+		/// <summary>
+		/// Test folder with databases for unit tests - "db".
+		/// </summary>
+		private const string DefaultFolder = "db";
+
+		/// <summary>
+		/// User service dependency.
+		/// </summary>
+		private readonly UserService userService;
+
+		/// <summary>
+		/// Admin service dependency.
+		/// </summary>
+		private readonly AdminService adminService;
+
+		#endregion
+
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AdminServiceTests"/> class.
+		/// </summary>
+		public AdminServiceTests()
+		{
+			Dispose();
+			userService = new UserService
+			          {
+			          	DefaultFolder = DefaultFolder
+			          };
+			adminService = new AdminService
+			               {
+			               	DefaultFolder = DefaultFolder
+			               };
+		}
+
+		#endregion
+
 		#region Admin Service
 
 		/// <summary>
@@ -23,12 +62,14 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void GetAllUsers()
 		{
-			var adminService = new AdminService();
+			string login = "testUser" + Guid.NewGuid();
+			const string password = "testPassword";
+			var userDTO = userService.Register(login, password);
 
 			var users = adminService.GetAllUsers();
 
-			Assert.True(users != null && users.Count > 0);
-			Assert.True(users[0].IsDisabled);
+			Assert.True(users != null && users.Count == 1);
+			Assert.True(users[0].Id == userDTO.Id);
 		}
 
 		/// <summary>
@@ -37,18 +78,31 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void DisableUser()
 		{
-			var service = new UserService();
-			Guid userId = service.Register("testUser" + Guid.NewGuid(), "testPassword");
-			var adminService = new AdminService();
+			var userDTO = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
 
-			adminService.DisableUser(userId);
+			adminService.DisableUser(userDTO.Id);
 
 			var users = adminService.GetAllUsers();
 
-			Assert.True(users != null && users.Count > 1);
+			Assert.True(users != null && users.Count == 1);
+			Assert.True(users[0].Id == userDTO.Id);
+			Assert.True(users[0].IsDisabled);
+		}
 
-			var user = users.Where(u => u.Id == userId).Single();
-			Assert.True(user.IsDisabled);
+		#endregion
+
+		#region Implementation of IDisposable
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		/// <filterpriority>2</filterpriority>
+		public void Dispose()
+		{
+			if (Directory.Exists(DefaultFolder))
+			{
+				Directory.Delete(DefaultFolder, true);
+			}
 		}
 
 		#endregion

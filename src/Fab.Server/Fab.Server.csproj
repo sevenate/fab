@@ -44,43 +44,56 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\ext\.NET 4\Logging\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\..\ext\.NET 4\Logging\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
     <Reference Include="EmitMapper">
       <HintPath>..\..\ext\.NET 4\EmitMapper.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="log4net">
+      <HintPath>..\..\ext\.NET 4\Logging\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Nreez.Utility">
+      <HintPath>..\..\ext\.NET 4\Logging\Nreez.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ext\.NET 4\SQL CE 4.0\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ext\.NET 4\SQL CE 4.0\System.Data.SqlServerCe.Entity\System.Data.SqlServerCe.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Mobile" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdminService.svc" />
     <Content Include="ClientBin\SilverFAB.xap" />
-    <Content Include="Database\Fill Test Data.sql" />
+    <EntityDeploy Include="Core\Master.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Master.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Global.asax" />
+    <Content Include="log4net.config" />
+    <None Include="Sql\master_001_setup.sqlce" />
+    <None Include="Sql\personal_001_setup.sqlce" />
     <Content Include="favicon.png" />
     <Content Include="index.html" />
-    <Content Include="MoneyService.svc" />
-    <None Include="Database\Create.sql" />
-    <None Include="Database\Fill.sql" />
-    <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\Silverlight.js" />
-    <Content Include="UserService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -95,11 +108,11 @@
     <Compile Include="..\AssemblyInfo.Generated.cs">
       <Link>Properties\AssemblyInfo.Generated.cs</Link>
     </Compile>
-    <Compile Include="AdminService.svc.cs">
-      <DependentUpon>AdminService.svc</DependentUpon>
-    </Compile>
+    <Compile Include="Core\Services\AdminService.cs" />
+    <Compile Include="Core\DatabaseManager.cs" />
     <Compile Include="Core\DTO\AccountDTO.cs" />
     <Compile Include="Core\DTO\AssetTypeDTO.cs" />
+    <Compile Include="Core\DTO\UserDTO.cs" />
     <Compile Include="Core\DTO\CategoryDTO.cs" />
     <Compile Include="Core\Enums\CategoryType.cs" />
     <Compile Include="Core\DTO\DepositDTO.cs" />
@@ -108,7 +121,7 @@
     <Compile Include="Core\DTO\OutgoingTransferDTO.cs" />
     <Compile Include="Core\DTO\TransferDTO.cs" />
     <Compile Include="Core\DTO\TransactionDTO.cs" />
-    <Compile Include="Core\DTO\UserDTO.cs" />
+    <Compile Include="Core\DTO\AdminUserDTO.cs" />
     <Compile Include="Core\DTO\WithdrawalDTO.cs" />
     <Compile Include="Core\Filters\CategoryFilter.cs" />
     <Compile Include="Core\Filters\IQueryFilter.cs" />
@@ -116,22 +129,33 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Filters\TextSearchFilter.cs" />
-    <Compile Include="MoneyService.svc.cs">
-      <DependentUpon>MoneyService.svc</DependentUpon>
+    <Compile Include="Core\Master.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Master.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Core\IAdminService.cs" />
-    <Compile Include="Core\IMoneyService.cs" />
+    <Compile Include="Core\StringExtensions.cs" />
+    <Compile Include="Core\CustomUserNameValidator.cs" />
+    <Compile Include="Core\Contracts\IAdminService.cs" />
+    <Compile Include="Core\Contracts\IMoneyService.cs" />
     <Compile Include="Core\Enums\JournalType.cs" />
     <Compile Include="Core\Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Core\IUserService.cs" />
+    <Compile Include="Core\Contracts\IUserService.cs" />
     <Compile Include="Core\ModelHelper.cs" />
+    <Compile Include="Core\Services\MoneyService.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserService.svc.cs">
-      <DependentUpon>UserService.svc</DependentUpon>
+    <Compile Include="Core\Services\UserService.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +164,21 @@
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="splash.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <Import Project="..\..\msbuild.common.targets" />
@@ -152,7 +190,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>33809</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/StagingFab</IISUrl>
+          <IISUrl>https://thor/StagingFab</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -42,13 +42,15 @@
 			<Button x:Name="Edit"
 					ToolTipService.ToolTip="Edit"
 					Width="16"
-					Height="16">
+					Height="16"
+					Padding="3">
 				<Resources:EditIcon />
 			</Button>
 			<Button x:Name="Delete"
 					ToolTipService.ToolTip="Delete"
 					Width="16"
-					Height="16">
+					Height="16"
+					Padding="3">
 				<Resources:DeleteIcon />
 			</Button>
 		</StackPanel>

@@ -219,8 +219,12 @@ namespace Fab.Client.Shell
 		/// <param name="message">The message.</param>
 		public void Handle(ServiceErrorMessage message)
 		{
+			var errorDialog = IoC.Get<ErrorDialogViewModel>();
+			errorDialog.Error = message.Error.ToString();
+			errorDialog.DisplayName = "Service Error";
+
 			//TODO: show desktop "toast" notification here (if possible)
-			Dialogs.ShowMessageBox(message.Error.ToString(), "Service Error");
+			Dialogs.ShowDialog(errorDialog);
 		}
 
 		#endregion
@@ -233,9 +237,13 @@ namespace Fab.Client.Shell
 		/// <param name="message">The message.</param>
 		public void Handle(ApplicationErrorMessage message)
 		{
+			var errorDialog = IoC.Get<ErrorDialogViewModel>();
+			errorDialog.Error = message.Error.ToString();
+			errorDialog.DisplayName = "Application Error";
+
 			//TODO: show desktop "toast" notification here (if possible)
 			//TODO: use TextBox for application error with stack track information
-			Dialogs.ShowMessageBox(message.Error.ToString(), "Application Error");
+			Dialogs.ShowDialog(errorDialog);
 		}
 
 		#endregion

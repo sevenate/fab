@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Caliburn.Micro;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.Shell;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
@@ -24,8 +25,7 @@ namespace Fab.Client.MoneyTracker.Postings
 
 		public void Execute(ActionExecutionContext context)
 		{
-			var proxy = new MoneyServiceClient();
-
+			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.DeleteJournalCompleted += OnDeleteCompleted;
 			proxy.DeleteJournalAsync(userId,
 			                         accountId,

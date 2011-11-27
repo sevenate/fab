@@ -14,11 +14,6 @@ namespace Fab.Server.Core
 	/// </summary>
 	internal static class ModelHelper
 	{
-		/// <summary>
-		/// System user ID.
-		/// </summary>
-		private static readonly Guid SystemUserId = new Guid("6184b6dd-26d0-4d06-ba2c-95c850ccfebe");
-
 		#region Users
 
 		/// <summary>
@@ -27,10 +22,9 @@ namespace Fab.Server.Core
 		/// <param name="mc">Entity Framework model container.</param>
 		/// <param name="login">User login name.</param>
 		/// <returns><c>true</c> if user login name is unique.</returns>
-		internal static bool IsLoginAvailable(ModelContainer mc, string login)
+		internal static bool IsLoginAvailable(MasterEntities mc, string login)
 		{
-			return mc.Users.Where(u => u.Login == login)
-						   .SingleOrDefault() == null;
+			return mc.Users.SingleOrDefault(u => u.Login == login) == null;
 		}
 
 		/// <summary>
@@ -39,14 +33,31 @@ namespace Fab.Server.Core
 		/// <param name="mc">Entity Framework model container.</param>
 		/// <param name="userId">Unique user ID.</param>
 		/// <returns>User instance.</returns>
-		internal static User GetUserById(ModelContainer mc, Guid userId)
+		internal static User GetUserById(MasterEntities mc, Guid userId)
 		{
-			User user = mc.Users.Where(u => u.Id == userId && !u.IsDisabled)
-								.SingleOrDefault();
+			User user = mc.Users.SingleOrDefault(u => u.Id == userId && !u.IsDisabled);
 
 			if (user == null)
 			{
 				throw new Exception("User with ID " + userId + " not found.");
+			}
+
+			return user;
+		}
+
+		/// <summary>
+		/// Get <see cref="User"/> from model container by unique ID.
+		/// </summary>
+		/// <param name="mc">Entity Framework model container.</param>
+		/// <param name="userName">Unique user name.</param>
+		/// <returns>User instance.</returns>
+		internal static User GetUserByLogin(MasterEntities mc, string userName)
+		{
+			User user = mc.Users.SingleOrDefault(u => u.Login == userName && !u.IsDisabled);
+
+			if (user == null)
+			{
+				throw new Exception("User with name \"" + userName + "\" not found.");
 			}
 
 			return user;
@@ -85,7 +96,7 @@ namespace Fab.Server.Core
 		private static Account GetSystemAccount(ModelContainer mc, int assetTypeId)
 		{
 			Account account = mc.Accounts.Include("AssetType")
-								.Where(a => a.AssetType.Id == assetTypeId && a.User.Id == SystemUserId)
+								.Where(a => a.AssetType.Id == assetTypeId && a.IsSystem)
 								.SingleOrDefault();
 
 			if (account == null)
@@ -152,7 +163,7 @@ namespace Fab.Server.Core
 
 				account.LastPostingDate = lastDate.Length > 0
 														? lastDate[0]
-														: (DateTime?)null;;
+														: (DateTime?)null;
 			}
 		}
 

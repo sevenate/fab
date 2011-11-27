@@ -384,7 +384,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			var newAccountViewModel = IoC.Get<NewAccountViewModel>();
 
 			newAccountViewModel.AccountId = Id;
-			newAccountViewModel.Name = Name;
+			newAccountViewModel.AccountName = Name;
 			var assetType = newAccountViewModel.Assets.Cast<AssetTypeDTO>().Where<AssetTypeDTO>(a => a.Id == AssetTypeId).Single();
 			newAccountViewModel.Assets.MoveCurrentTo(assetType);
 

@@ -18,17 +18,15 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("Model", "FK_AccountPosting", "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.Account), "Posting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Posting))]
-[assembly: EdmRelationshipAttribute("Model", "FK_UserAccount", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.User), "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Account))]
-[assembly: EdmRelationshipAttribute("Model", "FK_PostingAssetType", "AssetType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.AssetType), "Posting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Posting))]
-[assembly: EdmRelationshipAttribute("Model", "FK_CategoryUser", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.User), "Category", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Category))]
-[assembly: EdmRelationshipAttribute("Model", "FK_JournalPosting", "Journal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.Journal), "Posting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Posting))]
 [assembly: EdmRelationshipAttribute("Model", "FK_AccountAssetType", "AssetType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.AssetType), "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Account))]
-[assembly: EdmRelationshipAttribute("Model", "FK_CategoryJournal", "Category", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Fab.Server.Core.Category), "Journal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Journal))]
 [assembly: EdmRelationshipAttribute("Model", "FK_AccountDeletedPosting", "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.Account), "DeletedPosting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.DeletedPosting))]
+[assembly: EdmRelationshipAttribute("Model", "FK_AccountPosting", "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.Account), "Posting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Posting))]
 [assembly: EdmRelationshipAttribute("Model", "FK_DeletedPostingAssetType", "AssetType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.AssetType), "DeletedPosting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.DeletedPosting))]
-[assembly: EdmRelationshipAttribute("Model", "FK_DeletedJournalDeletedPosting", "DeletedJournal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.DeletedJournal), "DeletedPosting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.DeletedPosting))]
+[assembly: EdmRelationshipAttribute("Model", "FK_PostingAssetType", "AssetType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.AssetType), "Posting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Posting))]
 [assembly: EdmRelationshipAttribute("Model", "FK_CategoryDeletedJournal", "Category", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Fab.Server.Core.Category), "DeletedJournal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.DeletedJournal))]
+[assembly: EdmRelationshipAttribute("Model", "FK_CategoryJournal", "Category", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Fab.Server.Core.Category), "Journal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Journal))]
+[assembly: EdmRelationshipAttribute("Model", "FK_DeletedJournalDeletedPosting", "DeletedJournal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.DeletedJournal), "DeletedPosting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.DeletedPosting))]
+[assembly: EdmRelationshipAttribute("Model", "FK_JournalPosting", "Journal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Fab.Server.Core.Journal), "Posting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Fab.Server.Core.Posting))]
 
 #endregion
 
@@ -128,6 +126,38 @@ namespace Fab.Server.Core
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<DeletedJournal> DeletedJournals
+        {
+            get
+            {
+                if ((_DeletedJournals == null))
+                {
+                    _DeletedJournals = base.CreateObjectSet<DeletedJournal>("DeletedJournals");
+                }
+                return _DeletedJournals;
+            }
+        }
+        private ObjectSet<DeletedJournal> _DeletedJournals;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DeletedPosting> DeletedPostings
+        {
+            get
+            {
+                if ((_DeletedPostings == null))
+                {
+                    _DeletedPostings = base.CreateObjectSet<DeletedPosting>("DeletedPostings");
+                }
+                return _DeletedPostings;
+            }
+        }
+        private ObjectSet<DeletedPosting> _DeletedPostings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Journal> Journals
         {
             get
@@ -160,50 +190,18 @@ namespace Fab.Server.Core
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<User> Users
+        public ObjectSet<Setting> Settings
         {
             get
             {
-                if ((_Users == null))
+                if ((_Settings == null))
                 {
-                    _Users = base.CreateObjectSet<User>("Users");
+                    _Settings = base.CreateObjectSet<Setting>("Settings");
                 }
-                return _Users;
+                return _Settings;
             }
         }
-        private ObjectSet<User> _Users;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DeletedPosting> DeletedPostings
-        {
-            get
-            {
-                if ((_DeletedPostings == null))
-                {
-                    _DeletedPostings = base.CreateObjectSet<DeletedPosting>("DeletedPostings");
-                }
-                return _DeletedPostings;
-            }
-        }
-        private ObjectSet<DeletedPosting> _DeletedPostings;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DeletedJournal> DeletedJournals
-        {
-            get
-            {
-                if ((_DeletedJournals == null))
-                {
-                    _DeletedJournals = base.CreateObjectSet<DeletedJournal>("DeletedJournals");
-                }
-                return _DeletedJournals;
-            }
-        }
-        private ObjectSet<DeletedJournal> _DeletedJournals;
+        private ObjectSet<Setting> _Settings;
 
         #endregion
         #region AddTo Methods
@@ -233,6 +231,22 @@ namespace Fab.Server.Core
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the DeletedJournals EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDeletedJournals(DeletedJournal deletedJournal)
+        {
+            base.AddObject("DeletedJournals", deletedJournal);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DeletedPostings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDeletedPostings(DeletedPosting deletedPosting)
+        {
+            base.AddObject("DeletedPostings", deletedPosting);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Journals EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToJournals(Journal journal)
@@ -249,27 +263,11 @@ namespace Fab.Server.Core
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Users EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Settings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToUsers(User user)
+        public void AddToSettings(Setting setting)
         {
-            base.AddObject("Users", user);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DeletedPostings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDeletedPostings(DeletedPosting deletedPosting)
-        {
-            base.AddObject("DeletedPostings", deletedPosting);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DeletedJournals EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDeletedJournals(DeletedJournal deletedJournal)
-        {
-            base.AddObject("DeletedJournals", deletedJournal);
+            base.AddObject("Settings", setting);
         }
 
         #endregion
@@ -296,14 +294,20 @@ namespace Fab.Server.Core
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="created">Initial value of the Created property.</param>
+        /// <param name="balance">Initial value of the Balance property.</param>
+        /// <param name="isSystem">Initial value of the IsSystem property.</param>
         /// <param name="isClosed">Initial value of the IsClosed property.</param>
-        public static Account CreateAccount(global::System.Int32 id, global::System.String name, global::System.DateTime created, global::System.Boolean isClosed)
+        /// <param name="postingsCount">Initial value of the PostingsCount property.</param>
+        public static Account CreateAccount(global::System.Int32 id, global::System.String name, global::System.DateTime created, global::System.Decimal balance, global::System.Boolean isSystem, global::System.Boolean isClosed, global::System.Int32 postingsCount)
         {
             Account account = new Account();
             account.Id = id;
             account.Name = name;
             account.Created = created;
+            account.Balance = balance;
+            account.IsSystem = isSystem;
             account.IsClosed = isClosed;
+            account.PostingsCount = postingsCount;
             return account;
         }
 
@@ -405,9 +409,33 @@ namespace Fab.Server.Core
                 OnBalanceChanged();
             }
         }
-        private global::System.Decimal _Balance = 0m;
+        private global::System.Decimal _Balance;
         partial void OnBalanceChanging(global::System.Decimal value);
         partial void OnBalanceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsSystem
+        {
+            get
+            {
+                return _IsSystem;
+            }
+            set
+            {
+                OnIsSystemChanging(value);
+                ReportPropertyChanging("IsSystem");
+                _IsSystem = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSystem");
+                OnIsSystemChanged();
+            }
+        }
+        private global::System.Boolean _IsSystem;
+        partial void OnIsSystemChanging(global::System.Boolean value);
+        partial void OnIsSystemChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -477,7 +505,7 @@ namespace Fab.Server.Core
                 OnPostingsCountChanged();
             }
         }
-        private global::System.Int32 _PostingsCount = 0;
+        private global::System.Int32 _PostingsCount;
         partial void OnPostingsCountChanging(global::System.Int32 value);
         partial void OnPostingsCountChanged();
     
@@ -539,66 +567,6 @@ namespace Fab.Server.Core
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_AccountPosting", "Posting")]
-        public EntityCollection<Posting> Postings
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Posting>("Model.FK_AccountPosting", "Posting");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Posting>("Model.FK_AccountPosting", "Posting", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_UserAccount", "User")]
-        public User User
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("Model.FK_UserAccount", "User").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("Model.FK_UserAccount", "User").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<User> UserReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("Model.FK_UserAccount", "User");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("Model.FK_UserAccount", "User", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Model", "FK_AccountAssetType", "AssetType")]
         public AssetType AssetType
         {
@@ -649,6 +617,28 @@ namespace Fab.Server.Core
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DeletedPosting>("Model.FK_AccountDeletedPosting", "DeletedPosting", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_AccountPosting", "Posting")]
+        public EntityCollection<Posting> Postings
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Posting>("Model.FK_AccountPosting", "Posting");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Posting>("Model.FK_AccountPosting", "Posting", value);
                 }
             }
         }
@@ -743,28 +733,6 @@ namespace Fab.Server.Core
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_PostingAssetType", "Posting")]
-        public EntityCollection<Posting> Postings
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Posting>("Model.FK_PostingAssetType", "Posting");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Posting>("Model.FK_PostingAssetType", "Posting", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Model", "FK_AccountAssetType", "Account")]
         public EntityCollection<Account> Accounts
         {
@@ -802,6 +770,28 @@ namespace Fab.Server.Core
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_PostingAssetType", "Posting")]
+        public EntityCollection<Posting> Postings
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Posting>("Model.FK_PostingAssetType", "Posting");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Posting>("Model.FK_PostingAssetType", "Posting", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -822,12 +812,14 @@ namespace Fab.Server.Core
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="categoryType">Initial value of the CategoryType property.</param>
-        public static Category CreateCategory(global::System.Int32 id, global::System.String name, global::System.Byte categoryType)
+        /// <param name="popularity">Initial value of the Popularity property.</param>
+        public static Category CreateCategory(global::System.Int32 id, global::System.String name, global::System.Byte categoryType, global::System.Int32 popularity)
         {
             Category category = new Category();
             category.Id = id;
             category.Name = name;
             category.CategoryType = categoryType;
+            category.Popularity = popularity;
             return category;
         }
 
@@ -929,7 +921,7 @@ namespace Fab.Server.Core
                 OnPopularityChanged();
             }
         }
-        private global::System.Int32 _Popularity = 0;
+        private global::System.Int32 _Popularity;
         partial void OnPopularityChanging(global::System.Int32 value);
         partial void OnPopularityChanged();
     
@@ -967,34 +959,18 @@ namespace Fab.Server.Core
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_CategoryUser", "User")]
-        public User User
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_CategoryDeletedJournal", "DeletedJournal")]
+        public EntityCollection<DeletedJournal> DeletedJournals
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("Model.FK_CategoryUser", "User").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("Model.FK_CategoryUser", "User").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<User> UserReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("Model.FK_CategoryUser", "User");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DeletedJournal>("Model.FK_CategoryDeletedJournal", "DeletedJournal");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("Model.FK_CategoryUser", "User", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DeletedJournal>("Model.FK_CategoryDeletedJournal", "DeletedJournal", value);
                 }
             }
         }
@@ -1017,28 +993,6 @@ namespace Fab.Server.Core
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Journal>("Model.FK_CategoryJournal", "Journal", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_CategoryDeletedJournal", "DeletedJournal")]
-        public EntityCollection<DeletedJournal> DeletedJournals
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DeletedJournal>("Model.FK_CategoryDeletedJournal", "DeletedJournal");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DeletedJournal>("Model.FK_CategoryDeletedJournal", "DeletedJournal", value);
                 }
             }
         }
@@ -1209,28 +1163,6 @@ namespace Fab.Server.Core
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_DeletedJournalDeletedPosting", "DeletedPosting")]
-        public EntityCollection<DeletedPosting> DeletedPostings
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DeletedPosting>("Model.FK_DeletedJournalDeletedPosting", "DeletedPosting");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DeletedPosting>("Model.FK_DeletedJournalDeletedPosting", "DeletedPosting", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Model", "FK_CategoryDeletedJournal", "Category")]
         public Category Category
         {
@@ -1259,6 +1191,28 @@ namespace Fab.Server.Core
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Category>("Model.FK_CategoryDeletedJournal", "Category", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_DeletedJournalDeletedPosting", "DeletedPosting")]
+        public EntityCollection<DeletedPosting> DeletedPostings
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DeletedPosting>("Model.FK_DeletedJournalDeletedPosting", "DeletedPosting");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DeletedPosting>("Model.FK_DeletedJournalDeletedPosting", "DeletedPosting", value);
                 }
             }
         }
@@ -1679,28 +1633,6 @@ namespace Fab.Server.Core
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_JournalPosting", "Posting")]
-        public EntityCollection<Posting> Postings
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Posting>("Model.FK_JournalPosting", "Posting");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Posting>("Model.FK_JournalPosting", "Posting", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Model", "FK_CategoryJournal", "Category")]
         public Category Category
         {
@@ -1729,6 +1661,28 @@ namespace Fab.Server.Core
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Category>("Model.FK_CategoryJournal", "Category", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_JournalPosting", "Posting")]
+        public EntityCollection<Posting> Postings
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Posting>("Model.FK_JournalPosting", "Posting");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Posting>("Model.FK_JournalPosting", "Posting", value);
                 }
             }
         }
@@ -1963,30 +1917,24 @@ namespace Fab.Server.Core
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="Model", Name="User")]
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="Setting")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class User : EntityObject
+    public partial class Setting : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new User object.
+        /// Create a new Setting object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="login">Initial value of the Login property.</param>
-        /// <param name="password">Initial value of the Password property.</param>
-        /// <param name="registered">Initial value of the Registered property.</param>
-        /// <param name="isDisabled">Initial value of the IsDisabled property.</param>
-        public static User CreateUser(global::System.Guid id, global::System.String login, global::System.String password, global::System.DateTime registered, global::System.Boolean isDisabled)
+        /// <param name="key">Initial value of the Key property.</param>
+        public static Setting CreateSetting(global::System.Int32 id, global::System.String key)
         {
-            User user = new User();
-            user.Id = id;
-            user.Login = login;
-            user.Password = password;
-            user.Registered = registered;
-            user.IsDisabled = isDisabled;
-            return user;
+            Setting setting = new Setting();
+            setting.Id = id;
+            setting.Key = key;
+            return setting;
         }
 
         #endregion
@@ -1997,7 +1945,7 @@ namespace Fab.Server.Core
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid Id
+        public global::System.Int32 Id
         {
             get
             {
@@ -2015,8 +1963,8 @@ namespace Fab.Server.Core
                 }
             }
         }
-        private global::System.Guid _Id;
-        partial void OnIdChanging(global::System.Guid value);
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
         partial void OnIdChanged();
     
         /// <summary>
@@ -2024,218 +1972,51 @@ namespace Fab.Server.Core
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Login
+        public global::System.String Key
         {
             get
             {
-                return _Login;
+                return _Key;
             }
             set
             {
-                OnLoginChanging(value);
-                ReportPropertyChanging("Login");
-                _Login = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Login");
-                OnLoginChanged();
+                OnKeyChanging(value);
+                ReportPropertyChanging("Key");
+                _Key = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Key");
+                OnKeyChanged();
             }
         }
-        private global::System.String _Login;
-        partial void OnLoginChanging(global::System.String value);
-        partial void OnLoginChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Password
-        {
-            get
-            {
-                return _Password;
-            }
-            set
-            {
-                OnPasswordChanging(value);
-                ReportPropertyChanging("Password");
-                _Password = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Password");
-                OnPasswordChanged();
-            }
-        }
-        private global::System.String _Password;
-        partial void OnPasswordChanging(global::System.String value);
-        partial void OnPasswordChanged();
+        private global::System.String _Key;
+        partial void OnKeyChanging(global::System.String value);
+        partial void OnKeyChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Email
+        public global::System.String Value
         {
             get
             {
-                return _Email;
+                return _Value;
             }
             set
             {
-                OnEmailChanging(value);
-                ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Email");
-                OnEmailChanged();
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
             }
         }
-        private global::System.String _Email;
-        partial void OnEmailChanging(global::System.String value);
-        partial void OnEmailChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime Registered
-        {
-            get
-            {
-                return _Registered;
-            }
-            set
-            {
-                OnRegisteredChanging(value);
-                ReportPropertyChanging("Registered");
-                _Registered = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Registered");
-                OnRegisteredChanged();
-            }
-        }
-        private global::System.DateTime _Registered;
-        partial void OnRegisteredChanging(global::System.DateTime value);
-        partial void OnRegisteredChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastAccess
-        {
-            get
-            {
-                return _LastAccess;
-            }
-            set
-            {
-                OnLastAccessChanging(value);
-                ReportPropertyChanging("LastAccess");
-                _LastAccess = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastAccess");
-                OnLastAccessChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _LastAccess;
-        partial void OnLastAccessChanging(Nullable<global::System.DateTime> value);
-        partial void OnLastAccessChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsDisabled
-        {
-            get
-            {
-                return _IsDisabled;
-            }
-            set
-            {
-                OnIsDisabledChanging(value);
-                ReportPropertyChanging("IsDisabled");
-                _IsDisabled = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsDisabled");
-                OnIsDisabledChanged();
-            }
-        }
-        private global::System.Boolean _IsDisabled;
-        partial void OnIsDisabledChanging(global::System.Boolean value);
-        partial void OnIsDisabledChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> DisabledChanged
-        {
-            get
-            {
-                return _DisabledChanged;
-            }
-            set
-            {
-                OnDisabledChangedChanging(value);
-                ReportPropertyChanging("DisabledChanged");
-                _DisabledChanged = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DisabledChanged");
-                OnDisabledChangedChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _DisabledChanged;
-        partial void OnDisabledChangedChanging(Nullable<global::System.DateTime> value);
-        partial void OnDisabledChangedChanged();
+        private global::System.String _Value;
+        partial void OnValueChanging(global::System.String value);
+        partial void OnValueChanged();
 
         #endregion
     
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_UserAccount", "Account")]
-        public EntityCollection<Account> Accounts
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Account>("Model.FK_UserAccount", "Account");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Account>("Model.FK_UserAccount", "Account", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_CategoryUser", "Category")]
-        public EntityCollection<Category> Categories
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Category>("Model.FK_CategoryUser", "Category");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Category>("Model.FK_CategoryUser", "Category", value);
-                }
-            }
-        }
-
-        #endregion
     }
 
     #endregion
