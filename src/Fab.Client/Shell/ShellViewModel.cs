@@ -93,14 +93,6 @@ namespace Fab.Client.Shell
 		#region Properties
 
 		/// <summary>
-		/// Gets current application version.
-		/// </summary>
-		public string Version
-		{
-			get { return AssemblyExtensions.AppVersion; }
-		}
-
-		/// <summary>
 		/// Gets start login screen model for not authenticate users.
 		/// </summary>
 		public ILoginViewModel LoginScreen { get; private set; }

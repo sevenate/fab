@@ -5,6 +5,7 @@
 
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using Fab.Client.Framework;
 
 namespace Fab.Client.Authentication
 {
@@ -15,10 +16,26 @@ namespace Fab.Client.Authentication
 	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public class PersonalCornerViewModel : Screen, IHandle<LoggedInMessage>
 	{
+		#region Private
+
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets current application version.
+		/// </summary>
+		public string Version
+		{
+			get { return AssemblyExtensions.AppVersion; }
+		}
+
+		#endregion
 
 		#region Username DP
 
