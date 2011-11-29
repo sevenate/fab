@@ -39,7 +39,7 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 
 		#endregion
 
-		#region Name
+		#region Category name
 
 		/// <summary>
 		/// Category name.
@@ -175,7 +175,7 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 		/// </summary>
 		/// <returns>Async operation result.</returns>
 		[SetBusy]
-		[Dependencies("Name")]
+		[Dependencies("CategoryName")]
 		public IEnumerable<IResult> Save()
 		{
 			if (IsEditMode)

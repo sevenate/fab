@@ -45,7 +45,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 		#endregion
 
-		#region Name
+		#region Account name
 
 		/// <summary>
 		/// Account name.
@@ -176,7 +176,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// Create new account on server or update existing.
 		/// </summary>
 		[SetBusy]
-		[Dependencies("Name")]
+		[Dependencies("AccountName")]
 		public IEnumerable<IResult> Save()
 		{
 			if (IsEditMode)
