@@ -271,13 +271,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		#region Methods
 
-		public void Create(int accountId)
+		public void Create(int accountId, DateTime date)
 		{
 			InitCategories();
 
 			transactionId = null;
 			AccountId = accountId;
-			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+			OperationDate = date;
 			CurrentCategory = null;
 			Price = string.Empty;
 			Quantity = "1";

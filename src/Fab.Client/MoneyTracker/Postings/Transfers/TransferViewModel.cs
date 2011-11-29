@@ -149,7 +149,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 		#region Methods
 
-		public void Create(int accountId)
+		public void Create(int accountId, DateTime date)
 		{
 			DisplayName = "New Transfer";
 
@@ -163,7 +163,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			prevSourceAccont = (AccountDTO)SourceAccounts.CurrentItem;
 			prevTargetAccont = (AccountDTO)TargetAccounts.CurrentItem;
 
-			OperationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+			OperationDate = date;
 			Amount = string.Empty;
 			Comment = string.Empty;
 
