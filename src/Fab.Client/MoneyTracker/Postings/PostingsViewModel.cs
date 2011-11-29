@@ -303,7 +303,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		public void NewIncome()
 		{
 			TransactionDetails.IsDeposite = true;
-			TransactionDetails.Create(AccountId);
+			TransactionDetails.Create(AccountId, fromDate.Date);
 			ActivateItem(TransactionDetails);
 		}
 
@@ -313,7 +313,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		public void NewExpense()
 		{
 			TransactionDetails.IsDeposite = false;
-			TransactionDetails.Create(AccountId);
+			TransactionDetails.Create(AccountId, fromDate.Date);
 			ActivateItem(TransactionDetails);
 		}
 
@@ -322,7 +322,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// </summary>
 		public void NewTransfer()
 		{
-			TransferDetails.Create(AccountId);
+			TransferDetails.Create(AccountId, fromDate.Date);
 			ActivateItem(TransferDetails);
 		}
 
