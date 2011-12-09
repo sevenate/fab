@@ -22,6 +22,8 @@
 	</style>
 	<script type="text/javascript" src="Scripts/Silverlight.js"></script>
 	<script type="text/javascript">
+		var fileSize = null;
+
 		function onSilverlightError(sender, args) {
 			var appSource = "";
 			if (sender != null && sender != 0) {
@@ -56,13 +58,55 @@
 
 			throw new Error(errMsg);
 		}
+		function addSeparatorsNF(nStr, inD, outD, sep) {
+			nStr += '';
+			var dpos = nStr.indexOf(inD);
+			var nStrEnd = '';
+			if (dpos != -1) {
+				nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
+				nStr = nStr.substring(0, dpos);
+			}
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(nStr)) {
+				nStr = nStr.replace(rgx, '$1' + sep + '$2');
+			}
+			return nStr + nStrEnd;
+		}
+		function getXapSize(url) {
+			var xmlHttpReq = false;
+			var self = this;
+
+			// Mozilla/Safari
+			if (window.XMLHttpRequest) {
+				self.xmlHttpReq = new XMLHttpRequest();
+			}
+			// IE
+			else if (window.ActiveXObject) {
+				self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			self.xmlHttpReq.open('HEAD', url, true);
+			self.xmlHttpReq.onreadystatechange = function() {
+				if (self.xmlHttpReq.readyState == 4) {
+					fileSize = self.xmlHttpReq.getResponseHeader('Content-Length');
+				}
+			};
+
+			self.xmlHttpReq.send(null);
+		}
 		function downloadProgress(sender, eventArgs) {
 			sender.findName("loadingProgress").Text = Math.round(eventArgs.progress * 100) + "%";
 			sender.findName("progressBarScale").ScaleX = eventArgs.progress;
+			if (fileSize != null) {
+				sender.findName("loadingText").Text = "Downloaded ";
+				sender.findName("downloadedBytes").Text = addSeparatorsNF((eventArgs.progress * fileSize).toFixed(0), ',', ',', ' ');
+				sender.findName("totalBytes").Text = addSeparatorsNF((fileSize / 1).toFixed(0), ',', ',', ' ');
+				sender.findName("downloadDetails").Visibility = 'Visible';
+			}
 		}
 	</script>
 </head>
-<body>
+<body onload="getXapSize('ClientBin/SilverFAB.xap')">
 	<form id="form1" runat="server" style="height: 100%">
 	<div id="silverlightControlHost">
 		<object data="data:application/x-silverlight-2," type="application/x-silverlight-2"

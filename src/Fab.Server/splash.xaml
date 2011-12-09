@@ -23,7 +23,7 @@
 	</Grid.Resources>
 	<Grid.ColumnDefinitions>
 		<ColumnDefinition />
-		<ColumnDefinition />
+		<ColumnDefinition MinWidth="250" />
 		<ColumnDefinition />
 	</Grid.ColumnDefinitions>
 
@@ -42,13 +42,27 @@
 			</BeginStoryboard>
 		</EventTrigger>
 	</Grid.Triggers>
-
-	<TextBlock Text="Loading..."
-			   Grid.Column="1"
-			   HorizontalAlignment="Center"
-			   VerticalAlignment="Center"
-			   TextWrapping="Wrap"
-			   Margin="0,0,0,25" />
+	
+	<StackPanel Grid.Column="1"
+				Orientation="Horizontal"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Margin="0,0,0,25">
+		<TextBlock x:Name="loadingText"
+				   Text="Loading..." />
+		<StackPanel x:Name="downloadDetails"
+					Orientation="Horizontal"
+					Visibility="Collapsed">
+			<TextBlock x:Name="downloadedBytes"
+					   Text="0"
+					   FontWeight="Bold" />
+			<TextBlock Text=" of " />
+			<TextBlock x:Name="totalBytes"
+					   Text="0"
+					   FontWeight="Bold" />
+			<TextBlock Text=" bytes" />
+		</StackPanel>
+	</StackPanel>
 
 	<Border Grid.Column="1"
 			VerticalAlignment="Center"
@@ -71,6 +85,7 @@
 	
 	<TextBlock HorizontalAlignment="Center"
 			   VerticalAlignment="Bottom"
+			   Margin="0,0,0,5"
 			   Text="© 2011 nReez"
 			   TextWrapping="Wrap"
 			   Grid.Column="1"
