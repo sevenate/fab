@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using Fab.Server.Core.Services;
 using Xunit;
 
 namespace Fab.Server.Tests
@@ -23,9 +24,9 @@ namespace Fab.Server.Tests
 		private const string DefaultFolder = "db";
 
 		/// <summary>
-		/// User service dependency.
+		/// User registration service dependency.
 		/// </summary>
-		private readonly UserService userService;
+		private readonly RegistrationService registrationService;
 
 		/// <summary>
 		/// Admin service dependency.
@@ -42,7 +43,7 @@ namespace Fab.Server.Tests
 		public AdminServiceTests()
 		{
 			Dispose();
-			userService = new UserService
+			registrationService = new RegistrationService
 			          {
 			          	DefaultFolder = DefaultFolder
 			          };
@@ -63,8 +64,7 @@ namespace Fab.Server.Tests
 		public void GetAllUsers()
 		{
 			string login = "testUser" + Guid.NewGuid();
-			const string password = "testPassword";
-			var userDTO = userService.Register(login, password);
+			var userDTO = registrationService.Register(login, "testPassword");
 
 			var users = adminService.GetAllUsers();
 
@@ -78,7 +78,7 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void DisableUser()
 		{
-			var userDTO = userService.Register("testUser" + Guid.NewGuid(), "testPassword");
+			var userDTO = registrationService.Register("testUser" + Guid.NewGuid(), "testPassword");
 
 			adminService.DisableUser(userDTO.Id);
 

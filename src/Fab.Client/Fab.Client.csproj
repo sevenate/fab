@@ -153,6 +153,11 @@
     <Compile Include="Resources\Actions\DeleteIcon.xaml.cs">
       <DependentUpon>DeleteIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Service References\RegistrationServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Shell\ApplicationErrorMessage.cs" />
     <Compile Include="Shell\ErrorDialogViewModel.cs" />
     <Compile Include="Shell\ServiceErrorMessage.cs" />
@@ -445,6 +450,19 @@
     <None Include="Service References\MoneyServiceReference\MoneyService44.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\RegistrationServiceReference\Fab.Client.RegistrationServiceReference.UserDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.wsdl" />
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\UserServiceReference\Fab.Client.UserServiceReference.UserDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -485,6 +503,13 @@
     <Content Include="Resources\AppIcon_48x48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.disco" />
+    <None Include="Service References\RegistrationServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\RegistrationServiceReference\configuration.svcinfo" />
+    <None Include="Service References\RegistrationServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -511,6 +536,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\MoneyServiceReference\" />
+    <WCFMetadataStorage Include="Service References\RegistrationServiceReference\" />
     <WCFMetadataStorage Include="Service References\UserServiceReference\" />
   </ItemGroup>
   <ItemGroup />

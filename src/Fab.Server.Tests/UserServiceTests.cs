@@ -6,6 +6,8 @@
 
 using System;
 using System.IO;
+using Fab.Server.Core.DTO;
+using Fab.Server.Core.Services;
 using Xunit;
 
 namespace Fab.Server.Tests
@@ -15,17 +17,31 @@ namespace Fab.Server.Tests
 	/// </summary>
 	public class UserServiceTests : IDisposable
 	{
-		#region Dependencies
+		#region Constants
 
 		/// <summary>
 		/// Test folder with databases for unit tests - "db".
 		/// </summary>
 		private const string DefaultFolder = "db";
 
+		#endregion
+
+		#region Dependencies
+
 		/// <summary>
 		/// User service dependency.
 		/// </summary>
 		private readonly UserService service;
+
+		/// <summary>
+		/// User registration service dependency.
+		/// </summary>
+		private readonly RegistrationService registrationService;
+
+		/// <summary>
+		/// Current user.
+		/// </summary>
+		private UserDTO currentUser;
 
 		#endregion
 
@@ -42,6 +58,16 @@ namespace Fab.Server.Tests
 			{
 				DefaultFolder = DefaultFolder
 			};
+
+			string login = "testUser" + Guid.NewGuid();
+			service.UserName = login;
+
+			registrationService = new RegistrationService
+			{
+				DefaultFolder = DefaultFolder
+			};
+
+			currentUser = registrationService.Register(login, "testPassword");
 		}
 
 		#endregion
@@ -49,49 +75,16 @@ namespace Fab.Server.Tests
 		#region User Service
 
 		/// <summary>
-		/// Test <see cref="UserService.Register"/> method.
+		/// Test <see cref="UserService.GetUser"/> method.
 		/// </summary>
 		[Fact]
-		public void RegisterNewUser()
+		public void GetUserId()
 		{
-			var userId = service.Register("testUser" + Guid.NewGuid(), "testPassword");
-			Assert.NotNull(userId);
-		}
+			var userDTO = service.GetUser();
 
-		/// <summary>
-		/// Test <see cref="UserService.IsLoginAvailable"/> method.
-		/// </summary>
-		[Fact]
-		public void CheckIsLoginAvailable()
-		{
-			bool isAvailable = service.IsLoginAvailable("testUser" + Guid.NewGuid());
-			Assert.True(isAvailable);
-		}
-
-		/// <summary>
-		/// Test <see cref="UserService.IsLoginAvailable"/> method.
-		/// </summary>
-		[Fact]
-		public void CheckIsLoginNotAvailable()
-		{
-			string login = "testUser" + Guid.NewGuid();
-			service.Register(login, "testPassword");
-
-			bool isAvailable = service.IsLoginAvailable(login);
-
-			Assert.False(isAvailable);
-		}
-
-		/// <summary>
-		/// Test <see cref="UserService.GenerateUniqueLogin"/> method.
-		/// </summary>
-		[Fact]
-		public void GenerateUniqueUserLogin()
-		{
-			string uniqueLogin = service.GenerateUniqueLogin();
-
-			bool isAvailable = service.IsLoginAvailable(uniqueLogin);
-			Assert.True(isAvailable);
+			Assert.NotNull(userDTO);
+			Assert.Equal(currentUser.Id, userDTO.Id);
+			Assert.Equal(string.Empty, userDTO.ServiceUrl);
 		}
 
 		/// <summary>
@@ -100,37 +93,7 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void UpdateUser()
 		{
-			var userId = service.Register("testUser" + Guid.NewGuid(), "testPassword");
-			service.Update(userId.Id, "testPassword", "newTestPassword", "new@email");
-		}
-
-		/// <summary>
-		/// Test <see cref="UserService.GetUser"/> method.
-		/// </summary>
-		[Fact]
-		public void GetUserId()
-		{
-			string login = "testUser" + Guid.NewGuid();
-			const string password = "testPassword";
-			var userId = service.Register(login, password);
-
-			var userDTO = service.GetUser(login, password);
-
-			Assert.NotNull(userDTO);
-			Assert.Equal(userId.Id, userDTO.Id);
-		}
-
-		/// <summary>
-		/// Test <see cref="UserService.ResetPassword"/> method.
-		/// </summary>
-		[Fact(Skip = "not implemented")]
-		public void ResetPassword()
-		{
-			string login = "testUser" + Guid.NewGuid();
-			var userId = service.Register(login, "testPassword");
-			service.Update(userId.Id, "testPassword", "newTestPassword", "new@email");
-
-			service.ResetPassword(login, "new@email");
+			service.Update("testPassword", "newTestPassword", "new@email");
 		}
 
 		#endregion

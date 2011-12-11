@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using Fab.Server.Core.DTO;
 
-namespace Fab.Server.Core
+namespace Fab.Server.Core.Contracts
 {
 	/// <summary>
 	/// Administrative service contract.

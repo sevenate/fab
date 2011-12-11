@@ -47,32 +47,37 @@ namespace Fab.Server.Tests
 		#region Tests
 
 		/// <summary>
-		/// Test <see cref="DatabaseManager.GetPersonalConnection"/> method.
-		/// </summary>
-		[Fact]
-		public void CreatePersonalDb()
-		{
-			var userGuid = userId.ToString();
-			var expectedConnectoinString =
-				string.Format(@"metadata=res://*/Core.Model.csdl|res://*/Core.Model.ssdl|res://*/Core.Model.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=""Data Source='{0}\2011\09\05\{1}\{1}.sdf'; Password='{2}'""", DefaultFolder.ToLower(), userGuid.ToLower(), Password);
-			
-			var manager = new DatabaseManager();
-			var connectionString = manager.GetPersonalConnection(userId, registrationDate, DefaultFolder, Password);
-
-			Assert.True(connectionString == expectedConnectoinString);
-		}
-
-		/// <summary>
 		/// Test <see cref="DatabaseManager.GetMasterConnection"/> method.
 		/// </summary>
 		[Fact]
-		public void CreateMasterDb()
+// ReSharper disable InconsistentNaming
+		public void Create_Master_Database()
+// ReSharper restore InconsistentNaming
 		{
 			var expectedConnectoinString =
 				string.Format(@"metadata=res://*/Core.Master.csdl|res://*/Core.Master.ssdl|res://*/Core.Master.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=""Data Source='{0}\master.sdf'; Password='{1}'""", DefaultFolder.ToLower(), Password);
 
 			var manager = new DatabaseManager();
 			var connectionString = manager.GetMasterConnection(DefaultFolder, Password);
+
+			Assert.True(connectionString == expectedConnectoinString);
+		}
+
+		/// <summary>
+		/// Test <see cref="DatabaseManager.GetPersonalConnection"/> method.
+		/// </summary>
+		[Fact]
+// ReSharper disable InconsistentNaming
+		public void Create_Personal_Database()
+// ReSharper restore InconsistentNaming
+		{
+			var userGuid = userId.ToString();
+			var expectedConnectoinString =
+				string.Format(@"metadata=res://*/Core.Model.csdl|res://*/Core.Model.ssdl|res://*/Core.Model.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=""Data Source='{0}\2011\09\05\{1}\{1}.sdf'; Password='{2}'""", DefaultFolder.ToLower(), userGuid.ToLower(), Password);
+
+			var manager = new DatabaseManager();
+			var databasePath = manager.CreatePersonalDatabase(userId, registrationDate, DefaultFolder, Password);
+			var connectionString = manager.GetPersonalConnection(databasePath, Password);
 
 			Assert.True(connectionString == expectedConnectoinString);
 		}

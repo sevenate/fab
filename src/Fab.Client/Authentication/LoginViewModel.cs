@@ -1,7 +1,8 @@
+//------------------------------------------------------------
 // <copyright file="LoginViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2010-11-17" />
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -294,7 +295,7 @@ namespace Fab.Client.Authentication
 
 			if (!authenticateResult.Succeeded)
 			{
-				Status = AuthenticationFailed;
+				Status = authenticateResult.Status;// AuthenticationFailed;
 				UsernameIsFocused = true;
 				yield break;
 			}

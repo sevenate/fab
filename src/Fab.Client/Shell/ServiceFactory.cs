@@ -5,13 +5,11 @@
 //------------------------------------------------------------
 
 using System;
-using System.IO;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Windows;
 using Fab.Client.Authentication;
 using Fab.Client.MoneyServiceReference;
+using Fab.Client.RegistrationServiceReference;
 using Fab.Client.UserServiceReference;
 
 namespace Fab.Client.Shell
@@ -52,16 +50,29 @@ namespace Fab.Client.Shell
 		}
 
 		/// <summary>
-		/// Change debug service url to the relative to the host from where the xap was loaded.
+		/// Create RegistrationService client proxy.
+		/// </summary>
+		/// <returns>New RegistrationService client proxy.</returns>
+		public static RegistrationServiceClient CreateRegistrationService()
+		{
+			var proxy = new RegistrationServiceClient();
+			SetupServiceUri(proxy.Endpoint);
+			return proxy;
+		}
+
+		/// <summary>
+		/// Change development service url to the relative to host from where the xap was loaded.
 		/// </summary>
 		/// <param name="serviceEndpoint">Original service endpoint whose address should be updated.</param>
 		private static void SetupServiceUri(ServiceEndpoint serviceEndpoint)
 		{
+#if !DEBUG
 			var serviceName = serviceEndpoint.Address.Uri.LocalPath.Split('/').Last();
 // ReSharper disable AssignNullToNotNullAttribute
 			string absoluteUri = new Uri(Application.Current.Host.Source, Path.Combine("..", serviceName)).AbsoluteUri;
 // ReSharper restore AssignNullToNotNullAttribute
 			serviceEndpoint.Address = new EndpointAddress(absoluteUri);
+#endif
 		}
 
 		/// <summary>

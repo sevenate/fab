@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using Caliburn.Micro;
 using Fab.Client.Shell;
 
@@ -9,7 +10,8 @@ namespace Fab.Client.Authentication
 		public string Username { get; private set; }
 		public string Password { get; private set; }
 		public UserCredentials Credentials { get; private set; }
-		public bool Succeeded { get; set; }
+		public bool Succeeded { get; private set; }
+		public string Status { get; private set; }
 
 		public AuthenticateResult(string username, string password)
 		{
@@ -34,10 +36,19 @@ namespace Fab.Client.Authentication
 
 			proxy.GetUserCompleted += (sender, args) =>
 			                            	{
-												if (args.Error != null || args.Result.Id == Guid.Empty)
+												if (args.Error != null)
 												{
-													Caliburn.Micro.Execute.OnUIThread(
-														() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
+													if (args.Error.InnerException is FaultException)
+													{
+														Status = ((FaultException) args.Error.InnerException).Message;
+														Caliburn.Micro.Execute.OnUIThread(
+															() => Completed(this, new ResultCompletionEventArgs()));
+													}
+													else
+													{
+														Caliburn.Micro.Execute.OnUIThread(
+															() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
+													}
 												}
 												else
 												{
@@ -50,7 +61,7 @@ namespace Fab.Client.Authentication
 													Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 												}
 			                            	};
-			proxy.GetUserAsync(Username, Password);
+			proxy.GetUserAsync();
 		}
 
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };

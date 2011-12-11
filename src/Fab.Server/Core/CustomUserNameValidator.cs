@@ -8,11 +8,10 @@ using System;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using Common.Logging;
-using Fab.Server.Core.DTO;
+using Fab.Server.Core.Services;
 
-namespace Fab.Server
+namespace Fab.Server.Core
 {
 	/// <summary>
 	/// Validate each WCF service call with username and password.
@@ -34,11 +33,11 @@ namespace Fab.Server
 			
 			var client = new UserService();
 
-			UserDTO user = null;
+			bool isAuthenticated;
 
 			try
 			{
-				user = client.GetUser(userName, password);
+				isAuthenticated = client.Authenticate(userName, password);
 			}
 			catch (Exception e)
 			{
@@ -47,18 +46,27 @@ namespace Fab.Server
 				throw;
 			}
 
-			if (user == null || user.Id == Guid.Empty)
+			if (!isAuthenticated)
 			{
-				// User name or password is incorrect.
 				var log = LogManager.GetCurrentClassLogger();
 				log.Warn("Authentication failed. Attempt to use username: " + userName);
 				
-				throw new SecurityTokenException("Username or password is incorrect");
+//				throw new SecurityTokenException("Username or password is incorrect");
 
 				// To provide detailed information about failed validation use FaultException
 				// Note: this is NOT recommended for production by security reason
 
-				//throw new FaultException("Validation failed.");
+				var faultDetail = new FaultDetail
+				                  {
+				                  	ErrorCode = "AUTH",
+				                  	ErrorMessage = "Authentication failed.",
+				                  	Description = "Username or password is incorrect."
+				                  };
+
+				throw new FaultException<FaultDetail>(
+					faultDetail,
+					new FaultReason(faultDetail.ErrorMessage),
+					new FaultCode("Receiver"));
 			}
 		}
 

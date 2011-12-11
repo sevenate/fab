@@ -313,8 +313,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			AccountId = accountId;
 			OperationDate = transaction.Date.ToLocalTime();
 			CurrentCategory = Categories.Cast<CategoryDTO>().Where(c => c.Id == transaction.CategoryId).SingleOrDefault();
-			Price = transaction.Rate.ToString();
-			Quantity = transaction.Quantity.ToString();
+			Price = transaction.Rate.ToString("n");
+			Quantity = transaction.Quantity.ToString("0.####");
 			Comment = transaction.Comment;
 
 			IsEditMode = true;

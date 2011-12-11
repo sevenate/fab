@@ -79,96 +79,19 @@ namespace Fab.Client.UserServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserServiceReference.IUserService")]
     public interface IUserService {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/GenerateUniqueLogin", ReplyAction="http://tempuri.org/IUserService/GenerateUniqueLoginResponse")]
-        System.IAsyncResult BeginGenerateUniqueLogin(System.AsyncCallback callback, object asyncState);
-        
-        string EndGenerateUniqueLogin(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/IsLoginAvailable", ReplyAction="http://tempuri.org/IUserService/IsLoginAvailableResponse")]
-        System.IAsyncResult BeginIsLoginAvailable(string login, System.AsyncCallback callback, object asyncState);
-        
-        bool EndIsLoginAvailable(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/Register", ReplyAction="http://tempuri.org/IUserService/RegisterResponse")]
-        System.IAsyncResult BeginRegister(string login, string password, System.AsyncCallback callback, object asyncState);
-        
-        Fab.Client.UserServiceReference.UserDTO EndRegister(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/Update", ReplyAction="http://tempuri.org/IUserService/UpdateResponse")]
-        System.IAsyncResult BeginUpdate(System.Guid userId, string oldPassword, string newPassword, string newEmail, System.AsyncCallback callback, object asyncState);
-        
-        void EndUpdate(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/GetUser", ReplyAction="http://tempuri.org/IUserService/GetUserResponse")]
-        System.IAsyncResult BeginGetUser(string login, string password, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetUser(System.AsyncCallback callback, object asyncState);
         
         Fab.Client.UserServiceReference.UserDTO EndGetUser(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/ResetPassword", ReplyAction="http://tempuri.org/IUserService/ResetPasswordResponse")]
-        System.IAsyncResult BeginResetPassword(string login, string email, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/Update", ReplyAction="http://tempuri.org/IUserService/UpdateResponse")]
+        System.IAsyncResult BeginUpdate(string oldPassword, string newPassword, string newEmail, System.AsyncCallback callback, object asyncState);
         
-        void EndResetPassword(System.IAsyncResult result);
+        void EndUpdate(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IUserServiceChannel : Fab.Client.UserServiceReference.IUserService, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GenerateUniqueLoginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public GenerateUniqueLoginCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class IsLoginAvailableCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public IsLoginAvailableCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public bool Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RegisterCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RegisterCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public Fab.Client.UserServiceReference.UserDTO Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((Fab.Client.UserServiceReference.UserDTO)(this.results[0]));
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -194,41 +117,17 @@ namespace Fab.Client.UserServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class UserServiceClient : System.ServiceModel.ClientBase<Fab.Client.UserServiceReference.IUserService>, Fab.Client.UserServiceReference.IUserService {
         
-        private BeginOperationDelegate onBeginGenerateUniqueLoginDelegate;
-        
-        private EndOperationDelegate onEndGenerateUniqueLoginDelegate;
-        
-        private System.Threading.SendOrPostCallback onGenerateUniqueLoginCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginIsLoginAvailableDelegate;
-        
-        private EndOperationDelegate onEndIsLoginAvailableDelegate;
-        
-        private System.Threading.SendOrPostCallback onIsLoginAvailableCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginRegisterDelegate;
-        
-        private EndOperationDelegate onEndRegisterDelegate;
-        
-        private System.Threading.SendOrPostCallback onRegisterCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginUpdateDelegate;
-        
-        private EndOperationDelegate onEndUpdateDelegate;
-        
-        private System.Threading.SendOrPostCallback onUpdateCompletedDelegate;
-        
         private BeginOperationDelegate onBeginGetUserDelegate;
         
         private EndOperationDelegate onEndGetUserDelegate;
         
         private System.Threading.SendOrPostCallback onGetUserCompletedDelegate;
         
-        private BeginOperationDelegate onBeginResetPasswordDelegate;
+        private BeginOperationDelegate onBeginUpdateDelegate;
         
-        private EndOperationDelegate onEndResetPasswordDelegate;
+        private EndOperationDelegate onEndUpdateDelegate;
         
-        private System.Threading.SendOrPostCallback onResetPasswordCompletedDelegate;
+        private System.Threading.SendOrPostCallback onUpdateCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -283,214 +182,17 @@ namespace Fab.Client.UserServiceReference {
             }
         }
         
-        public event System.EventHandler<GenerateUniqueLoginCompletedEventArgs> GenerateUniqueLoginCompleted;
-        
-        public event System.EventHandler<IsLoginAvailableCompletedEventArgs> IsLoginAvailableCompleted;
-        
-        public event System.EventHandler<RegisterCompletedEventArgs> RegisterCompleted;
-        
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> UpdateCompleted;
-        
         public event System.EventHandler<GetUserCompletedEventArgs> GetUserCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ResetPasswordCompleted;
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> UpdateCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginGenerateUniqueLogin(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGenerateUniqueLogin(callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string Fab.Client.UserServiceReference.IUserService.EndGenerateUniqueLogin(System.IAsyncResult result) {
-            return base.Channel.EndGenerateUniqueLogin(result);
-        }
-        
-        private System.IAsyncResult OnBeginGenerateUniqueLogin(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginGenerateUniqueLogin(callback, asyncState);
-        }
-        
-        private object[] OnEndGenerateUniqueLogin(System.IAsyncResult result) {
-            string retVal = ((Fab.Client.UserServiceReference.IUserService)(this)).EndGenerateUniqueLogin(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnGenerateUniqueLoginCompleted(object state) {
-            if ((this.GenerateUniqueLoginCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GenerateUniqueLoginCompleted(this, new GenerateUniqueLoginCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void GenerateUniqueLoginAsync() {
-            this.GenerateUniqueLoginAsync(null);
-        }
-        
-        public void GenerateUniqueLoginAsync(object userState) {
-            if ((this.onBeginGenerateUniqueLoginDelegate == null)) {
-                this.onBeginGenerateUniqueLoginDelegate = new BeginOperationDelegate(this.OnBeginGenerateUniqueLogin);
-            }
-            if ((this.onEndGenerateUniqueLoginDelegate == null)) {
-                this.onEndGenerateUniqueLoginDelegate = new EndOperationDelegate(this.OnEndGenerateUniqueLogin);
-            }
-            if ((this.onGenerateUniqueLoginCompletedDelegate == null)) {
-                this.onGenerateUniqueLoginCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGenerateUniqueLoginCompleted);
-            }
-            base.InvokeAsync(this.onBeginGenerateUniqueLoginDelegate, null, this.onEndGenerateUniqueLoginDelegate, this.onGenerateUniqueLoginCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginIsLoginAvailable(string login, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginIsLoginAvailable(login, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool Fab.Client.UserServiceReference.IUserService.EndIsLoginAvailable(System.IAsyncResult result) {
-            return base.Channel.EndIsLoginAvailable(result);
-        }
-        
-        private System.IAsyncResult OnBeginIsLoginAvailable(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string login = ((string)(inValues[0]));
-            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginIsLoginAvailable(login, callback, asyncState);
-        }
-        
-        private object[] OnEndIsLoginAvailable(System.IAsyncResult result) {
-            bool retVal = ((Fab.Client.UserServiceReference.IUserService)(this)).EndIsLoginAvailable(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnIsLoginAvailableCompleted(object state) {
-            if ((this.IsLoginAvailableCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.IsLoginAvailableCompleted(this, new IsLoginAvailableCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void IsLoginAvailableAsync(string login) {
-            this.IsLoginAvailableAsync(login, null);
-        }
-        
-        public void IsLoginAvailableAsync(string login, object userState) {
-            if ((this.onBeginIsLoginAvailableDelegate == null)) {
-                this.onBeginIsLoginAvailableDelegate = new BeginOperationDelegate(this.OnBeginIsLoginAvailable);
-            }
-            if ((this.onEndIsLoginAvailableDelegate == null)) {
-                this.onEndIsLoginAvailableDelegate = new EndOperationDelegate(this.OnEndIsLoginAvailable);
-            }
-            if ((this.onIsLoginAvailableCompletedDelegate == null)) {
-                this.onIsLoginAvailableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnIsLoginAvailableCompleted);
-            }
-            base.InvokeAsync(this.onBeginIsLoginAvailableDelegate, new object[] {
-                        login}, this.onEndIsLoginAvailableDelegate, this.onIsLoginAvailableCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginRegister(string login, string password, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRegister(login, password, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Fab.Client.UserServiceReference.UserDTO Fab.Client.UserServiceReference.IUserService.EndRegister(System.IAsyncResult result) {
-            return base.Channel.EndRegister(result);
-        }
-        
-        private System.IAsyncResult OnBeginRegister(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string login = ((string)(inValues[0]));
-            string password = ((string)(inValues[1]));
-            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginRegister(login, password, callback, asyncState);
-        }
-        
-        private object[] OnEndRegister(System.IAsyncResult result) {
-            Fab.Client.UserServiceReference.UserDTO retVal = ((Fab.Client.UserServiceReference.IUserService)(this)).EndRegister(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRegisterCompleted(object state) {
-            if ((this.RegisterCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RegisterCompleted(this, new RegisterCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RegisterAsync(string login, string password) {
-            this.RegisterAsync(login, password, null);
-        }
-        
-        public void RegisterAsync(string login, string password, object userState) {
-            if ((this.onBeginRegisterDelegate == null)) {
-                this.onBeginRegisterDelegate = new BeginOperationDelegate(this.OnBeginRegister);
-            }
-            if ((this.onEndRegisterDelegate == null)) {
-                this.onEndRegisterDelegate = new EndOperationDelegate(this.OnEndRegister);
-            }
-            if ((this.onRegisterCompletedDelegate == null)) {
-                this.onRegisterCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRegisterCompleted);
-            }
-            base.InvokeAsync(this.onBeginRegisterDelegate, new object[] {
-                        login,
-                        password}, this.onEndRegisterDelegate, this.onRegisterCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginUpdate(System.Guid userId, string oldPassword, string newPassword, string newEmail, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginUpdate(userId, oldPassword, newPassword, newEmail, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void Fab.Client.UserServiceReference.IUserService.EndUpdate(System.IAsyncResult result) {
-            base.Channel.EndUpdate(result);
-        }
-        
-        private System.IAsyncResult OnBeginUpdate(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Guid userId = ((System.Guid)(inValues[0]));
-            string oldPassword = ((string)(inValues[1]));
-            string newPassword = ((string)(inValues[2]));
-            string newEmail = ((string)(inValues[3]));
-            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginUpdate(userId, oldPassword, newPassword, newEmail, callback, asyncState);
-        }
-        
-        private object[] OnEndUpdate(System.IAsyncResult result) {
-            ((Fab.Client.UserServiceReference.IUserService)(this)).EndUpdate(result);
-            return null;
-        }
-        
-        private void OnUpdateCompleted(object state) {
-            if ((this.UpdateCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.UpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void UpdateAsync(System.Guid userId, string oldPassword, string newPassword, string newEmail) {
-            this.UpdateAsync(userId, oldPassword, newPassword, newEmail, null);
-        }
-        
-        public void UpdateAsync(System.Guid userId, string oldPassword, string newPassword, string newEmail, object userState) {
-            if ((this.onBeginUpdateDelegate == null)) {
-                this.onBeginUpdateDelegate = new BeginOperationDelegate(this.OnBeginUpdate);
-            }
-            if ((this.onEndUpdateDelegate == null)) {
-                this.onEndUpdateDelegate = new EndOperationDelegate(this.OnEndUpdate);
-            }
-            if ((this.onUpdateCompletedDelegate == null)) {
-                this.onUpdateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateCompleted);
-            }
-            base.InvokeAsync(this.onBeginUpdateDelegate, new object[] {
-                        userId,
-                        oldPassword,
-                        newPassword,
-                        newEmail}, this.onEndUpdateDelegate, this.onUpdateCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginGetUser(string login, string password, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetUser(login, password, callback, asyncState);
+        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginGetUser(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetUser(callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -499,9 +201,7 @@ namespace Fab.Client.UserServiceReference {
         }
         
         private System.IAsyncResult OnBeginGetUser(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string login = ((string)(inValues[0]));
-            string password = ((string)(inValues[1]));
-            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginGetUser(login, password, callback, asyncState);
+            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginGetUser(callback, asyncState);
         }
         
         private object[] OnEndGetUser(System.IAsyncResult result) {
@@ -517,11 +217,11 @@ namespace Fab.Client.UserServiceReference {
             }
         }
         
-        public void GetUserAsync(string login, string password) {
-            this.GetUserAsync(login, password, null);
+        public void GetUserAsync() {
+            this.GetUserAsync(null);
         }
         
-        public void GetUserAsync(string login, string password, object userState) {
+        public void GetUserAsync(object userState) {
             if ((this.onBeginGetUserDelegate == null)) {
                 this.onBeginGetUserDelegate = new BeginOperationDelegate(this.OnBeginGetUser);
             }
@@ -531,56 +231,56 @@ namespace Fab.Client.UserServiceReference {
             if ((this.onGetUserCompletedDelegate == null)) {
                 this.onGetUserCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetUserCompleted);
             }
-            base.InvokeAsync(this.onBeginGetUserDelegate, new object[] {
-                        login,
-                        password}, this.onEndGetUserDelegate, this.onGetUserCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetUserDelegate, null, this.onEndGetUserDelegate, this.onGetUserCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginResetPassword(string login, string email, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginResetPassword(login, email, callback, asyncState);
+        System.IAsyncResult Fab.Client.UserServiceReference.IUserService.BeginUpdate(string oldPassword, string newPassword, string newEmail, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdate(oldPassword, newPassword, newEmail, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void Fab.Client.UserServiceReference.IUserService.EndResetPassword(System.IAsyncResult result) {
-            base.Channel.EndResetPassword(result);
+        void Fab.Client.UserServiceReference.IUserService.EndUpdate(System.IAsyncResult result) {
+            base.Channel.EndUpdate(result);
         }
         
-        private System.IAsyncResult OnBeginResetPassword(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string login = ((string)(inValues[0]));
-            string email = ((string)(inValues[1]));
-            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginResetPassword(login, email, callback, asyncState);
+        private System.IAsyncResult OnBeginUpdate(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string oldPassword = ((string)(inValues[0]));
+            string newPassword = ((string)(inValues[1]));
+            string newEmail = ((string)(inValues[2]));
+            return ((Fab.Client.UserServiceReference.IUserService)(this)).BeginUpdate(oldPassword, newPassword, newEmail, callback, asyncState);
         }
         
-        private object[] OnEndResetPassword(System.IAsyncResult result) {
-            ((Fab.Client.UserServiceReference.IUserService)(this)).EndResetPassword(result);
+        private object[] OnEndUpdate(System.IAsyncResult result) {
+            ((Fab.Client.UserServiceReference.IUserService)(this)).EndUpdate(result);
             return null;
         }
         
-        private void OnResetPasswordCompleted(object state) {
-            if ((this.ResetPasswordCompleted != null)) {
+        private void OnUpdateCompleted(object state) {
+            if ((this.UpdateCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.ResetPasswordCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.UpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void ResetPasswordAsync(string login, string email) {
-            this.ResetPasswordAsync(login, email, null);
+        public void UpdateAsync(string oldPassword, string newPassword, string newEmail) {
+            this.UpdateAsync(oldPassword, newPassword, newEmail, null);
         }
         
-        public void ResetPasswordAsync(string login, string email, object userState) {
-            if ((this.onBeginResetPasswordDelegate == null)) {
-                this.onBeginResetPasswordDelegate = new BeginOperationDelegate(this.OnBeginResetPassword);
+        public void UpdateAsync(string oldPassword, string newPassword, string newEmail, object userState) {
+            if ((this.onBeginUpdateDelegate == null)) {
+                this.onBeginUpdateDelegate = new BeginOperationDelegate(this.OnBeginUpdate);
             }
-            if ((this.onEndResetPasswordDelegate == null)) {
-                this.onEndResetPasswordDelegate = new EndOperationDelegate(this.OnEndResetPassword);
+            if ((this.onEndUpdateDelegate == null)) {
+                this.onEndUpdateDelegate = new EndOperationDelegate(this.OnEndUpdate);
             }
-            if ((this.onResetPasswordCompletedDelegate == null)) {
-                this.onResetPasswordCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnResetPasswordCompleted);
+            if ((this.onUpdateCompletedDelegate == null)) {
+                this.onUpdateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateCompleted);
             }
-            base.InvokeAsync(this.onBeginResetPasswordDelegate, new object[] {
-                        login,
-                        email}, this.onEndResetPasswordDelegate, this.onResetPasswordCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginUpdateDelegate, new object[] {
+                        oldPassword,
+                        newPassword,
+                        newEmail}, this.onEndUpdateDelegate, this.onUpdateCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -659,64 +359,8 @@ namespace Fab.Client.UserServiceReference {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginGenerateUniqueLogin(System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginGetUser(System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[0];
-                System.IAsyncResult _result = base.BeginInvoke("GenerateUniqueLogin", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndGenerateUniqueLogin(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("GenerateUniqueLogin", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginIsLoginAvailable(string login, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = login;
-                System.IAsyncResult _result = base.BeginInvoke("IsLoginAvailable", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public bool EndIsLoginAvailable(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("IsLoginAvailable", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginRegister(string login, string password, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = login;
-                _args[1] = password;
-                System.IAsyncResult _result = base.BeginInvoke("Register", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public Fab.Client.UserServiceReference.UserDTO EndRegister(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                Fab.Client.UserServiceReference.UserDTO _result = ((Fab.Client.UserServiceReference.UserDTO)(base.EndInvoke("Register", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginUpdate(System.Guid userId, string oldPassword, string newPassword, string newEmail, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[4];
-                _args[0] = userId;
-                _args[1] = oldPassword;
-                _args[2] = newPassword;
-                _args[3] = newEmail;
-                System.IAsyncResult _result = base.BeginInvoke("Update", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public void EndUpdate(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                base.EndInvoke("Update", _args, result);
-            }
-            
-            public System.IAsyncResult BeginGetUser(string login, string password, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = login;
-                _args[1] = password;
                 System.IAsyncResult _result = base.BeginInvoke("GetUser", _args, callback, asyncState);
                 return _result;
             }
@@ -727,17 +371,18 @@ namespace Fab.Client.UserServiceReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginResetPassword(string login, string email, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = login;
-                _args[1] = email;
-                System.IAsyncResult _result = base.BeginInvoke("ResetPassword", _args, callback, asyncState);
+            public System.IAsyncResult BeginUpdate(string oldPassword, string newPassword, string newEmail, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = oldPassword;
+                _args[1] = newPassword;
+                _args[2] = newEmail;
+                System.IAsyncResult _result = base.BeginInvoke("Update", _args, callback, asyncState);
                 return _result;
             }
             
-            public void EndResetPassword(System.IAsyncResult result) {
+            public void EndUpdate(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("ResetPassword", _args, result);
+                base.EndInvoke("Update", _args, result);
             }
         }
     }

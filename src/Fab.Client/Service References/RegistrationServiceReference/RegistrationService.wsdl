@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RegistrationService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_IRegistrationService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Lax />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss10>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://thor/StagingFab/RegistrationService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://thor/StagingFab/RegistrationService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://thor/StagingFab/RegistrationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IRegistrationService_GenerateUniqueLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateUniqueLogin" />
+  </wsdl:message>
+  <wsdl:message name="IRegistrationService_GenerateUniqueLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateUniqueLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistrationService_IsLoginAvailable_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsLoginAvailable" />
+  </wsdl:message>
+  <wsdl:message name="IRegistrationService_IsLoginAvailable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsLoginAvailableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistrationService_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="IRegistrationService_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistrationService_ResetPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPassword" />
+  </wsdl:message>
+  <wsdl:message name="IRegistrationService_ResetPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPasswordResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IRegistrationService">
+    <wsdl:operation name="GenerateUniqueLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistrationService/GenerateUniqueLogin" message="tns:IRegistrationService_GenerateUniqueLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistrationService/GenerateUniqueLoginResponse" message="tns:IRegistrationService_GenerateUniqueLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsLoginAvailable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistrationService/IsLoginAvailable" message="tns:IRegistrationService_IsLoginAvailable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistrationService/IsLoginAvailableResponse" message="tns:IRegistrationService_IsLoginAvailable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistrationService/Register" message="tns:IRegistrationService_Register_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistrationService/RegisterResponse" message="tns:IRegistrationService_Register_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistrationService/ResetPassword" message="tns:IRegistrationService_ResetPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistrationService/ResetPasswordResponse" message="tns:IRegistrationService_ResetPassword_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IRegistrationService" type="tns:IRegistrationService">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IRegistrationService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GenerateUniqueLogin">
+      <soap:operation soapAction="http://tempuri.org/IRegistrationService/GenerateUniqueLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsLoginAvailable">
+      <soap:operation soapAction="http://tempuri.org/IRegistrationService/IsLoginAvailable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/IRegistrationService/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <soap:operation soapAction="http://tempuri.org/IRegistrationService/ResetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RegistrationService">
+    <wsdl:port name="BasicHttpBinding_IRegistrationService" binding="tns:BasicHttpBinding_IRegistrationService">
+      <soap:address location="https://thor/StagingFab/RegistrationService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
