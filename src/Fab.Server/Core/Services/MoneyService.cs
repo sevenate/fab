@@ -6,17 +6,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using EmitMapper;
 using EmitMapper.MappingConfiguration;
-using Fab.Server.Core;
+using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
 using Fab.Server.Core.Enums;
 using Fab.Server.Core.Filters;
 
-namespace Fab.Server
+namespace Fab.Server.Core.Services
 {
 	/// <summary>
 	/// Money service.
@@ -35,9 +34,13 @@ namespace Fab.Server
 		#region Default folder
 
 		/// <summary>
-		/// Default root folder for master and personal databases = |DataDirectory|.
+		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
 		/// </summary>
-		private string defaultFolder = "|DataDirectory|";
+		public string DefaultFolder { get; set; }
+
+		#endregion
+
+		#region Current user
 
 		/// <summary>
 		/// Primary identity name.
@@ -52,22 +55,10 @@ namespace Fab.Server
 			get
 			{
 				return ServiceSecurityContext.Current == null
-					? userName
-					: ServiceSecurityContext.Current.PrimaryIdentity.Name;
+				       	? userName
+				       	: ServiceSecurityContext.Current.PrimaryIdentity.Name;
 			}
 			set { userName = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
-		/// </summary>
-		public string DefaultFolder
-		{
-			[DebuggerStepThrough]
-			get { return defaultFolder; }
-
-			[DebuggerStepThrough]
-			set { defaultFolder = value; }
 		}
 
 		#endregion
@@ -79,6 +70,7 @@ namespace Fab.Server
 		/// </summary>
 		public MoneyService()
 		{
+			DefaultFolder = "|DataDirectory|";
 			dbManager = new DatabaseManager();
 		}
 

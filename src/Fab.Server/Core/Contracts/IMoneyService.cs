@@ -1,8 +1,8 @@
-// <copyright file="IMoneyService.cs" company="HD">
-//  Copyright (c) 2009-2010 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="IMoneyService.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-01-28" />
-// <summary>Money service contract.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using Fab.Server.Core.DTO;
 using Fab.Server.Core.Enums;
 using Fab.Server.Core.Filters;
 
-namespace Fab.Server.Core
+namespace Fab.Server.Core.Contracts
 {
 	/// <summary>
 	/// Money service contract.

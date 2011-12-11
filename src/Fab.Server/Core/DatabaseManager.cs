@@ -14,39 +14,35 @@ using Fab.Server.Properties;
 namespace Fab.Server.Core
 {
 	/// <summary>
-	/// Create and delete users database in the file system.
+	/// Create master and users personal databases and provide connection strings
+	/// to them for EF's <see cref="System.Data.Objects.ObjectContext"/>.
 	/// </summary>
 	public class DatabaseManager
 	{
 		#region Constants
 
 		/// <summary>
-		/// Name of the default connection to the master database - 'MasterEntities'.
+		/// Name of the default connection to the master database - "MasterEntities".
 		/// </summary>
 		private const string MasterConnectionName = "MasterEntities";
 
 		/// <summary>
-		/// Name of the default connection to the user personal database - 'ModelContainer'.
+		/// Name of the default connection to the user personal database - "ModelContainer".
 		/// </summary>
 		private const string PersonalConnectionName = "ModelContainer";
 
 		/// <summary>
-		/// Connection string template to the SQL CE 4.0 database file: Data Source='{0}\{1}.sdf'; Password='{2}'
+		/// Connection string template to the SQL CE 4.0 database file - "Data Source='{0}'; Password='{1}'"
 		/// </summary>
-		private const string ConnectionStringTemplate = @"Data Source='{0}\{1}.sdf'; Password='{2}'";
+		private const string ConnectionStringTemplate = @"Data Source='{0}'; Password='{1}'";
 
 		/// <summary>
-		/// Connection string template to the SQL CE 4.0 database file: Data Source='{0}.sdf'; Password='{1}'
+		/// Master database file name - "master.sdf".
 		/// </summary>
-		private const string ConnectionStringSimpleTemplate = @"Data Source='{0}'; Password='{1}'";
+		private const string MasterDatabaseName = "master.sdf";
 
 		/// <summary>
-		/// Master database file name.
-		/// </summary>
-		private const string MasterDatabaseName = "master";
-
-		/// <summary>
-		/// Default root folder for master and personal databases = |DataDirectory|.
+		/// Default root folder for master and personal databases = "|DataDirectory|".
 		/// </summary>
 		private const string DefaultFolder = "|DataDirectory|";
 
@@ -56,17 +52,17 @@ namespace Fab.Server.Core
 		private const string DefaultPassword = "_s#2PDaq[mL>4v%F";
 
 		/// <summary>
-		/// Personal setting key: user-id.
+		/// Personal setting key - "user-id".
 		/// </summary>
-		private const string UserIdKey = "user-id";
+		private const string SettingsUserIdKey = "user-id";
 
 		/// <summary>
-		/// Personal setting key: registration-date.
+		/// Personal setting key - "registration-date".
 		/// </summary>
-		private const string RegistrationDateKey = "registration-date";
+		private const string SettingsRegistrationDateKey = "registration-date";
 
 		/// <summary>
-		/// Insert setting value into "Settings" table in the user personal database.
+		/// String template for inserting setting value into "Settings" table in the user personal database.
 		/// </summary>
 		private const string SqlInsertSettingFormat = "INSERT INTO [Settings] ([Key], [Value]) VALUES ('{0}', '{1}')";
 
@@ -77,18 +73,19 @@ namespace Fab.Server.Core
 		/// <summary>
 		/// Ensure that master database file exist and return connection string to it.
 		/// </summary>
-		/// <param name="folder">Root folder for database. Usually should be "|DataDirectory|".</param>
+		/// <param name="rootFolder">Root folder for database. Usually should be "|DataDirectory|".</param>
 		/// <param name="password">Password for database encryption.</param>
 		/// <returns>Connection string to the master database.</returns>
-		public string GetMasterConnection(string folder = DefaultFolder, string password = DefaultPassword)
+		public string GetMasterConnection(string rootFolder = DefaultFolder, string password = DefaultPassword)
 		{
-			var dataDirectory = ResolveDataDirectory(folder);
-			var connectionString = GetMasterDbConnectionString(dataDirectory, password);
+			var dataDirectory = ResolveDataDirectory(rootFolder);
 
 			if (!Directory.Exists(dataDirectory))
 			{
 				Directory.CreateDirectory(dataDirectory);
 			}
+
+			var connectionString = GetConnectionString(Path.Combine(dataDirectory, MasterDatabaseName), password);
 
 			// Execute SQL scripts only once right after database file was created
 			if (CreateDatabaseFile(connectionString))
@@ -100,33 +97,36 @@ namespace Fab.Server.Core
 		}
 
 		/// <summary>
-		/// Ensure that user personal database file exist and return connection string to it.
+		/// Create user personal database file and return path to it.
 		/// </summary>
 		/// <param name="userId">User ID for whom the personal database should be created.</param>
 		/// <param name="registrationDate">Date when the user has been registered.</param>
 		/// <param name="rootFolder">Root folder where all users personal databases located. Usually should be "|DataDirectory|".</param>
 		/// <param name="password">Password for database encryption.</param>
-		/// <returns>Connection string to the user personal database.</returns>
-		public string GetPersonalConnection(Guid userId, DateTime registrationDate, string rootFolder = DefaultFolder, string password = DefaultPassword)
+		/// <returns>Path to user personal database file.</returns>
+		public string CreatePersonalDatabase(Guid userId, DateTime registrationDate, string rootFolder = DefaultFolder, string password = DefaultPassword)
 		{
 			var dataDirectory = ResolveDataDirectory(rootFolder);
 			var folder = GetFolderForPersonalDb(userId, registrationDate, dataDirectory);
-			var connectionString = GetPersonalDbConnectionString(folder, userId, password);
 
 			if (!Directory.Exists(folder))
 			{
 				Directory.CreateDirectory(folder);
 			}
 
+			var databasePath = Path.Combine(folder, userId.ToString().ToLower() + ".sdf");
+
+			var connectionString = GetConnectionString(databasePath, password);
+
 			// Execute SQL scripts only once right after database file was created
 			if (CreateDatabaseFile(connectionString))
 			{
 				ExecuteSqlScript(connectionString, Resources.personal_001_setup);
-				ExecuteSqlScript(connectionString, string.Format(SqlInsertSettingFormat, UserIdKey, userId));
-				ExecuteSqlScript(connectionString, string.Format(SqlInsertSettingFormat, RegistrationDateKey, registrationDate));
+				ExecuteSqlScript(connectionString, string.Format(SqlInsertSettingFormat, SettingsUserIdKey, userId));
+				ExecuteSqlScript(connectionString, string.Format(SqlInsertSettingFormat, SettingsRegistrationDateKey, registrationDate));
 			}
 
-			return AddEntityMetadata(connectionString, PersonalConnectionName);
+			return databasePath;
 		}
 
 		/// <summary>
@@ -139,7 +139,7 @@ namespace Fab.Server.Core
 		public string GetPersonalConnection(string pathToDatabase = DefaultFolder, string password = DefaultPassword)
 		{
 			var absolutePathToDatabase = ResolveDataDirectory(pathToDatabase);
-			var connectionString = GetPersonalDbConnectionString(absolutePathToDatabase, password);
+			var connectionString = GetConnectionString(absolutePathToDatabase, password);
 			
 			return AddEntityMetadata(connectionString, PersonalConnectionName);
 		}
@@ -149,37 +149,14 @@ namespace Fab.Server.Core
 		#region Private Methods
 
 		/// <summary>
-		/// Construct connection string to the master database.
+		/// Construct connection string to the SQL CE database.
 		/// </summary>
-		/// <param name="folder">Path to the master database file.</param>
-		/// <param name="password">Password for the master database file.</param>
-		/// <returns>Connection string to the master database.</returns>
-		private static string GetMasterDbConnectionString(string folder, string password)
+		/// <param name="file">Path to the database file.</param>
+		/// <param name="password">Password for the database file.</param>
+		/// <returns>Connection string to the SQL CE database.</returns>
+		private static string GetConnectionString(string file, string password)
 		{
-			return string.Format(ConnectionStringTemplate, folder, MasterDatabaseName, password);
-		}
-
-		/// <summary>
-		/// Construct connection string to the user personal database.
-		/// </summary>
-		/// <param name="folder">Path to the user personal database file.</param>
-		/// <param name="userId">Unique user ID.</param>
-		/// <param name="password">Password for the user personal database file.</param>
-		/// <returns>Connection string to the user personal database.</returns>
-		private static string GetPersonalDbConnectionString(string folder, Guid userId, string password)
-		{
-			return string.Format(ConnectionStringTemplate, folder, userId.ToString().ToLower(), password);
-		}
-
-		/// <summary>
-		/// Construct connection string to the user personal database.
-		/// </summary>
-		/// <param name="file">Path to the user personal database file.</param>
-		/// <param name="password">Password for the user personal database file.</param>
-		/// <returns>Connection string to the user personal database.</returns>
-		private static string GetPersonalDbConnectionString(string file, string password)
-		{
-			return string.Format(ConnectionStringSimpleTemplate, file, password);
+			return string.Format(ConnectionStringTemplate, file, password);
 		}
 
 		/// <summary>
@@ -218,6 +195,13 @@ namespace Fab.Server.Core
 		/// <returns>Absolute path to the original directory.</returns>
 		private static string ResolveDataDirectory(string path)
 		{
+			var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
+
+			if (dataDirectory == null)
+			{
+				AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data"));
+			}
+
 			return path.Replace("|DataDirectory|", AppDomain.CurrentDomain.GetData("DataDirectory").ToString());
 		}
 
@@ -226,7 +210,7 @@ namespace Fab.Server.Core
 		/// </summary>
 		/// <param name="connectionString">Connection string to the database file that should be created.</param>
 		/// <returns>True if the database file was created.</returns>
-		private bool CreateDatabaseFile(string connectionString)
+		private static bool CreateDatabaseFile(string connectionString)
 		{
 			using (var connection = new SqlCeConnection(connectionString))
 			{ 
@@ -248,7 +232,7 @@ namespace Fab.Server.Core
 		/// </summary>
 		/// <param name="connectionString">Connection string to the database file.</param>
 		/// <param name="sqlScriptText">SQL CE script for execution. Every SQL command should be confirmed by following "GO" command.</param>
-		private void ExecuteSqlScript(string connectionString, string sqlScriptText)
+		private static void ExecuteSqlScript(string connectionString, string sqlScriptText)
 		{
 			using (var connection = new SqlCeConnection(connectionString))
 			{

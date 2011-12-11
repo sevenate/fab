@@ -13,15 +13,23 @@
 				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="TransportWithMessageCredential" />
 				</binding>
+				<binding name="BasicHttpBinding_IRegistrationService" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
+					<security mode="Transport" />
+				</binding>
 			</basicHttpBinding>
 		</bindings>
 		<client>
 			<endpoint address="https://thor/StagingFab/UserService.svc" binding="basicHttpBinding"
 			 bindingConfiguration="BasicHttpBinding_IUserService" contract="UserServiceReference.IUserService"
 			 name="BasicHttpBinding_IUserService" />
-			<endpoint address="https://thor/StagingFab/MoneyService.svc" binding="basicHttpBinding"
-			 bindingConfiguration="BasicHttpBinding_IMoneyService" contract="MoneyServiceReference.IMoneyService"
-			 name="BasicHttpBinding_IMoneyService" />
+			<endpoint address="https://thor/StagingFab/MoneyService.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IMoneyService"
+			 contract="MoneyServiceReference.IMoneyService" name="BasicHttpBinding_IMoneyService" />
+			<endpoint address="https://thor/StagingFab/RegistrationService.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IRegistrationService"
+			 contract="RegistrationServiceReference.IRegistrationService"
+			 name="BasicHttpBinding_IRegistrationService" />
 		</client>
 	</system.serviceModel>
 </configuration>

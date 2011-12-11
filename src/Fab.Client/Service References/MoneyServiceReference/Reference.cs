@@ -242,12 +242,12 @@ namespace Fab.Client.MoneyServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="JournalDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransferDTO))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.IncomingTransferDTO))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.OutgoingTransferDTO))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
     public partial class JournalDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
         private decimal AmountField;
@@ -352,41 +352,6 @@ namespace Fab.Client.MoneyServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TransactionDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
-    public partial class TransactionDTO : Fab.Client.MoneyServiceReference.JournalDTO {
-        
-        private System.Nullable<int> CategoryIdField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> CategoryId {
-            get {
-                return this.CategoryIdField;
-            }
-            set {
-                if ((this.CategoryIdField.Equals(value) != true)) {
-                    this.CategoryIdField = value;
-                    this.RaisePropertyChanged("CategoryId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DepositDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
-    public partial class DepositDTO : Fab.Client.MoneyServiceReference.TransactionDTO {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="WithdrawalDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
-    public partial class WithdrawalDTO : Fab.Client.MoneyServiceReference.TransactionDTO {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TransferDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.IncomingTransferDTO))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.OutgoingTransferDTO))]
@@ -418,6 +383,41 @@ namespace Fab.Client.MoneyServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OutgoingTransferDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
     public partial class OutgoingTransferDTO : Fab.Client.MoneyServiceReference.TransferDTO {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TransactionDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
+    public partial class TransactionDTO : Fab.Client.MoneyServiceReference.JournalDTO {
+        
+        private System.Nullable<int> CategoryIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> CategoryId {
+            get {
+                return this.CategoryIdField;
+            }
+            set {
+                if ((this.CategoryIdField.Equals(value) != true)) {
+                    this.CategoryIdField = value;
+                    this.RaisePropertyChanged("CategoryId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DepositDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+    public partial class DepositDTO : Fab.Client.MoneyServiceReference.TransactionDTO {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WithdrawalDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+    public partial class WithdrawalDTO : Fab.Client.MoneyServiceReference.TransactionDTO {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -655,12 +655,12 @@ namespace Fab.Client.MoneyServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMoneyService/GetJournalsCount", ReplyAction="http://tempuri.org/IMoneyService/GetJournalsCountResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryType))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.IncomingTransferDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransferDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.OutgoingTransferDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO[]))]
@@ -669,21 +669,21 @@ namespace Fab.Client.MoneyServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AssetTypeDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AssetTypeDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TextSearchFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryFilter))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TextSearchFilter))]
         System.IAsyncResult BeginGetJournalsCount(System.Guid userId, int accountId, object queryFilter, System.AsyncCallback callback, object asyncState);
         
         int EndGetJournalsCount(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMoneyService/GetJournals", ReplyAction="http://tempuri.org/IMoneyService/GetJournalsResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryType))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.IncomingTransferDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransferDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.DepositDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TransactionDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.WithdrawalDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.OutgoingTransferDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AccountDTO[]))]
@@ -692,9 +692,9 @@ namespace Fab.Client.MoneyServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.JournalDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AssetTypeDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.AssetTypeDTO))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TextSearchFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.CategoryFilter))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Client.MoneyServiceReference.TextSearchFilter))]
         System.IAsyncResult BeginGetJournals(System.Guid userId, int accountId, object queryFilter, System.AsyncCallback callback, object asyncState);
         
         Fab.Client.MoneyServiceReference.JournalDTO[] EndGetJournals(System.IAsyncResult result);

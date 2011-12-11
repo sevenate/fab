@@ -24,6 +24,7 @@
 					   Margin="3,10,0,2" />
 			<TextBox x:Name="Username"
 					 TabIndex="0"
+					 CaretBrush="Yellow"
 					 MaxLength="50">
 				<Interactivity:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
@@ -35,6 +36,7 @@
 			<TextBox x:Name="Password"
 					 TabIndex="1"
 					 MaxLength="256"
+					 CaretBrush="Yellow"
 					 Visibility="{Binding ElementName=ShowCharacters, Path=IsChecked, Converter={StaticResource boolToVisibility}}">
 				<Interactivity:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
@@ -43,6 +45,8 @@
 			</TextBox>
 			<PasswordBox x:Name="PasswordHiden"
 						 TabIndex="1"
+						 Foreground="Yellow"
+						 CaretBrush="Yellow"
 						 Visibility="{Binding ElementName=ShowCharacters, Path=IsChecked, Converter={StaticResource boolToVisibilityInvert}}"
 						 MaxLength="256">
 				<Interactivity:Interaction.Behaviors>

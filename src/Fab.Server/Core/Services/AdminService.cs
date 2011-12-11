@@ -6,13 +6,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using EmitMapper;
-using Fab.Server.Core;
+using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
 
-namespace Fab.Server
+namespace Fab.Server.Core.Services
 {
 	/// <summary>
 	/// Administrative service.
@@ -31,21 +30,9 @@ namespace Fab.Server
 		#region Default folder
 
 		/// <summary>
-		/// Default root folder for master and personal databases = |DataDirectory|.
-		/// </summary>
-		private string defaultFolder = "|DataDirectory|";
-
-		/// <summary>
 		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
 		/// </summary>
-		public string DefaultFolder
-		{
-			[DebuggerStepThrough]
-			get { return defaultFolder; }
-
-			[DebuggerStepThrough]
-			set { defaultFolder = value; }
-		}
+		public string DefaultFolder { get; set; }
 
 		#endregion
 
@@ -56,6 +43,7 @@ namespace Fab.Server
 		/// </summary>
 		public AdminService()
 		{
+			DefaultFolder = "|DataDirectory|";
 			dbManager = new DatabaseManager();
 		}
 

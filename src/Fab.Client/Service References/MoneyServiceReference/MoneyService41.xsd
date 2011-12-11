@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="https://thor/StagingFab/MoneyService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" />
-  <xs:complexType name="DepositDTO">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:TransactionDTO">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="DepositDTO" nillable="true" type="tns:DepositDTO" />
-  <xs:complexType name="TransactionDTO">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:JournalDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="CategoryId" nillable="true" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="TransactionDTO" nillable="true" type="tns:TransactionDTO" />
-  <xs:complexType name="JournalDTO">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Quantity" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Rate" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="JournalDTO" nillable="true" type="tns:JournalDTO" />
-  <xs:complexType name="WithdrawalDTO">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:TransactionDTO">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="WithdrawalDTO" nillable="true" type="tns:WithdrawalDTO" />
   <xs:complexType name="IncomingTransferDTO">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:TransferDTO">
@@ -56,6 +19,43 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="TransferDTO" nillable="true" type="tns:TransferDTO" />
+  <xs:complexType name="JournalDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Rate" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="JournalDTO" nillable="true" type="tns:JournalDTO" />
+  <xs:complexType name="DepositDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:TransactionDTO">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DepositDTO" nillable="true" type="tns:DepositDTO" />
+  <xs:complexType name="TransactionDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:JournalDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CategoryId" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TransactionDTO" nillable="true" type="tns:TransactionDTO" />
+  <xs:complexType name="WithdrawalDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:TransactionDTO">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WithdrawalDTO" nillable="true" type="tns:WithdrawalDTO" />
   <xs:complexType name="OutgoingTransferDTO">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:TransferDTO">
