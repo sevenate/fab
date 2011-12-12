@@ -9,4 +9,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserDTO" nillable="true" type="tns:UserDTO" />
+  <xs:complexType name="FaultDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FaultDetail" nillable="true" type="tns:FaultDetail" />
 </xs:schema>

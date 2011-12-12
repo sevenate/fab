@@ -20,6 +20,8 @@ namespace Fab.Server.Core.Contracts
 		/// </summary>
 		/// <returns>Unique login name.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+
 		string GenerateUniqueLogin();
 
 		/// <summary>
@@ -28,6 +30,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="login">User login.</param>
 		/// <returns><c>True</c> if user login name is unique.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		bool IsLoginAvailable(string login);
 
 		/// <summary>
@@ -37,6 +40,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="password">User password.</param>
 		/// <returns>Created user object.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		UserDTO Register(string login, string password);
 
 		/// <summary>
@@ -47,6 +51,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="login">User login name.</param>
 		/// <param name="email">User email.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void ResetPassword(string login, string email);
 	}
 }

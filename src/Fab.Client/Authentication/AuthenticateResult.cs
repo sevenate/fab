@@ -40,7 +40,7 @@ namespace Fab.Client.Authentication
 												{
 													if (args.Error.InnerException is FaultException)
 													{
-														Status = ((FaultException) args.Error.InnerException).Message;
+														Status = args.Error.InnerException.Message;
 														Caliburn.Micro.Execute.OnUIThread(
 															() => Completed(this, new ResultCompletionEventArgs()));
 													}

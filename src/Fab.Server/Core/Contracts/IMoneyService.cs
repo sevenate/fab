@@ -38,6 +38,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="assetTypeId">The asset type ID.</param>
 		/// <returns>Created account ID.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		int CreateAccount(Guid userId, string name, int assetTypeId);
 
 		/// <summary>
@@ -47,6 +48,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="accountId">Account ID to retrieve.</param>
 		/// <returns>Account data transfer object.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		AccountDTO GetAccount(Guid userId, int accountId);
 
 		/// <summary>
@@ -56,6 +58,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="accountId">Account ID.</param>
 		/// <param name="name">Account new name.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void UpdateAccount(Guid userId, int accountId, string name);
 
 		/// <summary>
@@ -64,6 +67,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID to mark as deleted.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void DeleteAccount(Guid userId, int accountId);
 
 		/// <summary>
@@ -72,6 +76,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="userId">User unique ID.</param>
 		/// <returns>All accounts.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		IList<AccountDTO> GetAllAccounts(Guid userId);
 
 		/// <summary>
@@ -82,6 +87,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="dateTime">Specific date.</param>
 		/// <returns>Account balance at the specific date.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		decimal GetAccountBalance(Guid userId, int accountId, DateTime dateTime);
 
 		#endregion
@@ -96,6 +102,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="categoryType">Category type.</param>
 		/// <returns>Created category ID.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		int CreateCategory(Guid userId, string name, CategoryType categoryType);
 
 		/// <summary>
@@ -105,6 +112,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="categoryId">Category ID to retrieve.</param>
 		/// <returns>Category data transfer object.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		CategoryDTO GetCategory(Guid userId, int categoryId);
 
 		/// <summary>
@@ -115,6 +123,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="name">Category new name.</param>
 		/// <param name="categoryType">Category new type.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void UpdateCategory(Guid userId, int categoryId, string name, CategoryType categoryType);
 
 		/// <summary>
@@ -123,6 +132,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="userId">User unique ID.</param>
 		/// <param name="categoryId">Category ID to mark as deleted.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void DeleteCategory(Guid userId, int categoryId);
 
 		/// <summary>
@@ -131,6 +141,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="userId">User unique ID.</param>
 		/// <returns>All categories.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		IList<CategoryDTO> GetAllCategories(Guid userId);
 
 		#endregion
@@ -144,6 +155,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="accountId">The account ID.</param>
 		/// <param name="journalId">Journal ID.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void DeleteJournal(Guid userId, int accountId, int journalId);
 
 		/// <summary>
@@ -154,6 +166,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="journalId">Journal ID.</param>
 		/// <returns>Journal record details.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		JournalDTO GetJournal(Guid userId, int accountId, int journalId);
 
 		/// <summary>
@@ -164,6 +177,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="queryFilter">Specify conditions for filtering journal records.</param>
 		/// <returns>Filtered journal records count.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		int GetJournalsCount(Guid userId, int accountId, IQueryFilter queryFilter);
 
 		/// <summary>
@@ -174,6 +188,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="queryFilter">Specify conditions for filtering journal records.</param>
 		/// <returns>List of journal records.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		IList<JournalDTO> GetJournals(Guid userId, int accountId, IQueryFilter queryFilter);
 
 		/// <summary>
@@ -182,6 +197,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="userId">The user unique ID.</param>
 		/// <returns>Asset types presented by default or defined by the user.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		IList<AssetTypeDTO> GetAllAssetTypes(Guid userId);
 
 		#endregion
@@ -202,6 +218,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="comment">Comment notes.</param>
 		/// <returns>Created deposit transaction ID.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		int Deposit(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment);
 		
 		/// <summary>
@@ -218,6 +235,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="comment">Comment notes.</param>
 		/// <returns>Created withdrawal transaction ID.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		int Withdrawal(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment);
 
 		/// <summary>
@@ -240,6 +258,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="categoryId">The category Id.</param>
 		/// <param name="comment">Comment notes.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void UpdateTransaction(Guid userId, int accountId, int transactionId, bool isDeposit, DateTime date, decimal rate, decimal quantity, int? categoryId, string comment);
 
 		#endregion
@@ -260,6 +279,7 @@ namespace Fab.Server.Core.Contracts
 		/// <returns>Created transfer ID.</returns>
 		/// <remarks> <paramref name="toAccountId"/> could be from another user.</remarks>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		int Transfer(Guid userId, int fromAccountId, int toAccountId, DateTime date, decimal rate, decimal quantity, string comment);
 
 		/// <summary>
@@ -278,6 +298,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="quantity">Quantity of the item.</param>
 		/// <param name="comment">Comment notes.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void UpdateTransfer(Guid userId, int transactionId, int fromAccountId, int toAccountId, DateTime date, decimal rate, decimal quantity, string comment);
 
 		#endregion

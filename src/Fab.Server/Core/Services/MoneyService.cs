@@ -20,6 +20,7 @@ namespace Fab.Server.Core.Services
 	/// <summary>
 	/// Money service.
 	/// </summary>
+	[ErrorHandlingBehavior]
 	public class MoneyService : IMoneyService
 	{
 		#region Dependencies

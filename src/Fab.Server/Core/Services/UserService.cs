@@ -16,6 +16,7 @@ namespace Fab.Server.Core.Services
 	/// <summary>
 	/// User service.
 	/// </summary>
+	[ErrorHandlingBehavior]
 	public class UserService : IUserService
 	{
 		#region Dependencies

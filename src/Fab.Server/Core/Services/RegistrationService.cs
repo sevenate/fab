@@ -14,6 +14,7 @@ namespace Fab.Server.Core.Services
 	/// <summary>
 	/// User registration service.
 	/// </summary>
+	[ErrorHandlingBehavior]
 	public class RegistrationService : IRegistrationService
 	{
 		#region Dependencies

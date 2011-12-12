@@ -22,6 +22,7 @@ namespace Fab.Server.Core.Contracts
 		/// </summary>
 		/// <returns>All users.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		IList<AdminUserDTO> GetAllUsers();
 
 		/// <summary>
@@ -29,6 +30,7 @@ namespace Fab.Server.Core.Contracts
 		/// </summary>
 		/// <param name="userId">User ID to disable.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void DisableUser(Guid userId);
 	}
 }

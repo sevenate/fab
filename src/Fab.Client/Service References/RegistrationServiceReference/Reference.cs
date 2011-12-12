@@ -17,6 +17,66 @@ namespace Fab.Client.RegistrationServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+    public partial class FaultDetail : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string ErrorCodeField;
+        
+        private string ErrorMessageField;
+        
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorCode {
+            get {
+                return this.ErrorCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorCodeField, value) != true)) {
+                    this.ErrorCodeField = value;
+                    this.RaisePropertyChanged("ErrorCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorMessage {
+            get {
+                return this.ErrorMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
+                    this.ErrorMessageField = value;
+                    this.RaisePropertyChanged("ErrorMessage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
     public partial class UserDTO : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -80,21 +140,25 @@ namespace Fab.Client.RegistrationServiceReference {
     public interface IRegistrationService {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRegistrationService/GenerateUniqueLogin", ReplyAction="http://tempuri.org/IRegistrationService/GenerateUniqueLoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Client.RegistrationServiceReference.FaultDetail), Action="http://tempuri.org/IRegistrationService/GenerateUniqueLoginFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
         System.IAsyncResult BeginGenerateUniqueLogin(System.AsyncCallback callback, object asyncState);
         
         string EndGenerateUniqueLogin(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRegistrationService/IsLoginAvailable", ReplyAction="http://tempuri.org/IRegistrationService/IsLoginAvailableResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Client.RegistrationServiceReference.FaultDetail), Action="http://tempuri.org/IRegistrationService/IsLoginAvailableFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
         System.IAsyncResult BeginIsLoginAvailable(string login, System.AsyncCallback callback, object asyncState);
         
         bool EndIsLoginAvailable(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRegistrationService/Register", ReplyAction="http://tempuri.org/IRegistrationService/RegisterResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Client.RegistrationServiceReference.FaultDetail), Action="http://tempuri.org/IRegistrationService/RegisterFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
         System.IAsyncResult BeginRegister(string login, string password, System.AsyncCallback callback, object asyncState);
         
         Fab.Client.RegistrationServiceReference.UserDTO EndRegister(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRegistrationService/ResetPassword", ReplyAction="http://tempuri.org/IRegistrationService/ResetPasswordResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Client.RegistrationServiceReference.FaultDetail), Action="http://tempuri.org/IRegistrationService/ResetPasswordFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
         System.IAsyncResult BeginResetPassword(string login, string email, System.AsyncCallback callback, object asyncState);
         
         void EndResetPassword(System.IAsyncResult result);
