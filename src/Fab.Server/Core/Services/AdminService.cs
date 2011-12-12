@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Logging;
 using EmitMapper;
 using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
@@ -16,6 +17,7 @@ namespace Fab.Server.Core.Services
 	/// <summary>
 	/// Administrative service.
 	/// </summary>
+	[ErrorHandlingBehavior]
 	public class AdminService : IAdminService
 	{
 		#region Dependencies
@@ -57,6 +59,7 @@ namespace Fab.Server.Core.Services
 		/// <returns>All users.</returns>
 		public IList<AdminUserDTO> GetAllUsers()
 		{
+			LogManager.GetCurrentClassLogger().LogClientIP("GetAllUsers");
 			var masterConnectioString = dbManager.GetMasterConnection(DefaultFolder);
 
 			using (var mc = new MasterEntities(masterConnectioString))
@@ -76,6 +79,7 @@ namespace Fab.Server.Core.Services
 		/// <param name="userId">User ID to disable.</param>
 		public void DisableUser(Guid userId)
 		{
+			LogManager.GetCurrentClassLogger().LogClientIP("DisableUser");
 			var masterConnectioString = dbManager.GetMasterConnection(DefaultFolder);
 
 			using (var mc = new MasterEntities(masterConnectioString))
