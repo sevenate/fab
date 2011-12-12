@@ -75,16 +75,78 @@ namespace Fab.Client.UserServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+    public partial class FaultDetail : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string ErrorCodeField;
+        
+        private string ErrorMessageField;
+        
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorCode {
+            get {
+                return this.ErrorCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorCodeField, value) != true)) {
+                    this.ErrorCodeField = value;
+                    this.RaisePropertyChanged("ErrorCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorMessage {
+            get {
+                return this.ErrorMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
+                    this.ErrorMessageField = value;
+                    this.RaisePropertyChanged("ErrorMessage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserServiceReference.IUserService")]
     public interface IUserService {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/GetUser", ReplyAction="http://tempuri.org/IUserService/GetUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Client.UserServiceReference.FaultDetail), Action="http://tempuri.org/IUserService/GetUserFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
         System.IAsyncResult BeginGetUser(System.AsyncCallback callback, object asyncState);
         
         Fab.Client.UserServiceReference.UserDTO EndGetUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserService/Update", ReplyAction="http://tempuri.org/IUserService/UpdateResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Client.UserServiceReference.FaultDetail), Action="http://tempuri.org/IUserService/UpdateFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
         System.IAsyncResult BeginUpdate(string oldPassword, string newPassword, string newEmail, System.AsyncCallback callback, object asyncState);
         
         void EndUpdate(System.IAsyncResult result);

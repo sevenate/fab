@@ -109,6 +109,7 @@
       <Link>Properties\AssemblyInfo.Generated.cs</Link>
     </Compile>
     <Compile Include="Core\Contracts\IRegistrationService.cs" />
+    <Compile Include="Core\LogExtensions.cs" />
     <Compile Include="Core\Services\AdminService.cs" />
     <Compile Include="Core\DatabaseManager.cs" />
     <Compile Include="Core\DTO\AccountDTO.cs" />
@@ -135,7 +136,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Master.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Core\Services\FaultDetail.cs" />
+    <Compile Include="Core\Services\ErrorHandler.cs" />
+    <Compile Include="Core\Services\ErrorHandlingBehaviorAttribute.cs" />
+    <Compile Include="Core\DTO\FaultDetail.cs" />
     <Compile Include="Core\Services\RegistrationService.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Core\CustomUserNameValidator.cs" />

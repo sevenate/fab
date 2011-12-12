@@ -20,6 +20,7 @@ namespace Fab.Server.Core.Contracts
 		/// </summary>
 		/// <returns>User info.</returns>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		UserDTO GetUser();
 
 		/// <summary>
@@ -29,6 +30,7 @@ namespace Fab.Server.Core.Contracts
 		/// <param name="newPassword">User new password.</param>
 		/// <param name="newEmail">User new email.</param>
 		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
 		void Update(string oldPassword, string newPassword, string newEmail);
 	}
 }

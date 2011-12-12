@@ -6,7 +6,7 @@
 
 using System.Runtime.Serialization;
 
-namespace Fab.Server.Core.Services
+namespace Fab.Server.Core.DTO
 {
 	/// <summary>
 	/// Represent common public fault message.
@@ -43,7 +43,7 @@ namespace Fab.Server.Core.Services
 		/// </summary>
 		public FaultDetail()
 		{
-			ErrorCode = "UNKN";
+			ErrorCode = "UNKN-0";
 			ErrorMessage = "Service encountered an error.";
 			Description = "Internal service error. Please, try again later.";
 		}

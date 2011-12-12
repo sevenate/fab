@@ -9,6 +9,7 @@ using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
 using System.ServiceModel;
 using Common.Logging;
+using Fab.Server.Core.DTO;
 using Fab.Server.Core.Services;
 
 namespace Fab.Server.Core
@@ -58,14 +59,14 @@ namespace Fab.Server.Core
 
 				var faultDetail = new FaultDetail
 				                  {
-				                  	ErrorCode = "AUTH",
+				                  	ErrorCode = "AUTH-1",
 				                  	ErrorMessage = "Authentication failed.",
 				                  	Description = "Username or password is incorrect."
 				                  };
 
 				throw new FaultException<FaultDetail>(
 					faultDetail,
-					new FaultReason(faultDetail.ErrorMessage),
+					new FaultReason(faultDetail.Description),
 					new FaultCode("Receiver"));
 			}
 		}

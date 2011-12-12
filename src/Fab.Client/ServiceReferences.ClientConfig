@@ -2,34 +2,34 @@
 	<system.serviceModel>
 		<extensions />
 		<bindings>
-			<basicHttpBinding>
-				<binding name="BasicHttpBinding_IUserService" closeTimeout="00:01:00"
-				 openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="TransportWithMessageCredential" />
-				</binding>
-				<binding name="BasicHttpBinding_IMoneyService" closeTimeout="00:01:00"
-				 openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="TransportWithMessageCredential" />
-				</binding>
-				<binding name="BasicHttpBinding_IRegistrationService" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="Transport" />
-				</binding>
-			</basicHttpBinding>
-		</bindings>
+   <basicHttpBinding>
+    <binding name="UserServiceBasic" closeTimeout="00:01:00" openTimeout="00:01:00"
+     receiveTimeout="00:10:00" sendTimeout="00:01:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="TransportWithMessageCredential" />
+    </binding>
+    <binding name="RegistrationServiceBasic" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="Transport" />
+    </binding>
+    <binding name="MoneyServiceBasic" closeTimeout="00:01:00" openTimeout="00:01:00"
+     receiveTimeout="00:10:00" sendTimeout="00:01:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="TransportWithMessageCredential" />
+    </binding>
+   </basicHttpBinding>
+  </bindings>
 		<client>
-			<endpoint address="https://thor/StagingFab/UserService.svc" binding="basicHttpBinding"
-			 bindingConfiguration="BasicHttpBinding_IUserService" contract="UserServiceReference.IUserService"
-			 name="BasicHttpBinding_IUserService" />
-			<endpoint address="https://thor/StagingFab/MoneyService.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IMoneyService"
-			 contract="MoneyServiceReference.IMoneyService" name="BasicHttpBinding_IMoneyService" />
-			<endpoint address="https://thor/StagingFab/RegistrationService.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IRegistrationService"
-			 contract="RegistrationServiceReference.IRegistrationService"
-			 name="BasicHttpBinding_IRegistrationService" />
-		</client>
+   <endpoint address="https://thor/StagingFab/UserService.svc" binding="basicHttpBinding"
+    bindingConfiguration="UserServiceBasic" contract="UserServiceReference.IUserService"
+    name="UserServiceBasic" />
+   <endpoint address="https://thor/StagingFab/RegistrationService.svc"
+    binding="basicHttpBinding" bindingConfiguration="RegistrationServiceBasic"
+    contract="RegistrationServiceReference.IRegistrationService"
+    name="RegistrationServiceBasic" />
+   <endpoint address="https://thor/StagingFab/MoneyService.svc"
+    binding="basicHttpBinding" bindingConfiguration="MoneyServiceBasic"
+    contract="MoneyServiceReference.IMoneyService" name="MoneyServiceBasic" />
+  </client>
 	</system.serviceModel>
 </configuration>
