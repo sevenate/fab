@@ -153,6 +153,8 @@
     <Compile Include="Authentication\LoggedInMessage.cs" />
     <Compile Include="Authentication\LoggedOutMessage.cs" />
     <Compile Include="Authentication\PersonalCornerViewModel.cs" />
+    <Compile Include="Authentication\RegisterationResult.cs" />
+    <Compile Include="Authentication\RegistrationViewModel.cs" />
     <Compile Include="Authentication\UserCredentials.cs" />
     <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="MoneyTracker\Categories\CategoryDeletedMessage.cs" />
     <Compile Include="MoneyTracker\Categories\Single\NewCategoryViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\Single\CategoryViewModel.cs" />
+    <Compile Include="Authentication\StartViewModel.cs" />
     <Compile Include="Resources\Actions\EditIcon.xaml.cs">
       <DependentUpon>EditIcon.xaml</DependentUpon>
     </Compile>
@@ -289,7 +292,7 @@
     <Compile Include="Shell\OpenMessageBoxMessage.cs" />
     <Compile Include="Shell\ScreensBootstrapper.cs" />
     <Compile Include="Authentication\AuthenticateResult.cs" />
-    <Compile Include="Authentication\ILoginViewModel.cs" />
+    <Compile Include="Authentication\IStartViewModel.cs" />
     <Compile Include="Authentication\LoginViewModel.cs" />
     <Compile Include="Shell\ServiceFactory.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
@@ -305,10 +308,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <DesignData Include="Authentication\SampleData\PersonalCorner.xaml">
+    <DesignData Include="Authentication\SampleData\PersonalData.xaml">
       <SubType>Designer</SubType>
     </DesignData>
-    <DesignData Include="Authentication\SampleData\LoginScreen.xaml">
+    <DesignData Include="Authentication\SampleData\LoginData.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="Authentication\RegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <DesignData Include="Authentication\SampleData\RegistrationData.xaml">
       <SubType>Designer</SubType>
     </DesignData>
     <Page Include="Framework\Controls\WatermarkedTextbox.xaml">
@@ -355,6 +365,10 @@
     <DesignData Include="MoneyTracker\Postings\SampleData\Postings.xaml">
       <SubType>Designer</SubType>
     </DesignData>
+    <Page Include="Authentication\StartView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MoneyTracker\Postings\Transactions\TransactionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

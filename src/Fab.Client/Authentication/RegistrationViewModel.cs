@@ -1,5 +1,5 @@
-//------------------------------------------------------------
-// <copyright file="LoginViewModel.cs" company="nReez">
+﻿//------------------------------------------------------------
+// <copyright file="RegistrationViewModel.cs" company="nReez">
 // 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
@@ -13,11 +13,11 @@ using Fab.Client.Framework.Filters;
 namespace Fab.Client.Authentication
 {
 	/// <summary>
-	/// View-model for <see cref="LoginView"/> dialog.
+	/// View model for registration screen.
 	/// </summary>
-	[Export(typeof(LoginViewModel))]
+	[Export(typeof(RegistrationViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class LoginViewModel : Screen, ICanBeBusy, IHandle<LoggedOutMessage>
+	public class RegistrationViewModel : Screen, ICanBeBusy, IHandle<LoggedOutMessage>
 	{
 		#region Constants
 
@@ -34,12 +34,7 @@ namespace Fab.Client.Authentication
 		/// <summary>
 		/// Authorization in progress message.
 		/// </summary>
-		private const string AuthenticationInProgress = "Authenticating...";
-
-		/// <summary>
-		/// Authorization failed message.
-		/// </summary>
-		private const string AuthenticationFailed = "The username or password provided is incorrect.";
+		private const string RegistrationInProgress = "Signing up...";
 
 		#endregion
 
@@ -55,17 +50,14 @@ namespace Fab.Client.Authentication
 		#region Ctors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="LoginViewModel"/> class.
+		/// Initializes a new instance of the <see cref="RegistrationViewModel"/> class.
 		/// </summary>
 		/// <param name="eventAggregator">Events exchange entry point.</param>
 		[ImportingConstructor]
-		public LoginViewModel(IEventAggregator eventAggregator)
+		public RegistrationViewModel(IEventAggregator eventAggregator)
 		{
 			EventAggregator = eventAggregator;
 			EventAggregator.Subscribe(this);
-#if DEBUG
-			ShowCharacters = true;
-#endif
 		}
 
 		#endregion
@@ -77,12 +69,10 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		public override string DisplayName
 		{
-			get { return "Login"; }
+			get { return "Register"; }
 		}
 
 		#endregion
-
-		#region Implementation of ILoginViewModel
 
 		#region Username DP
 
@@ -123,6 +113,28 @@ namespace Fab.Client.Authentication
 			{
 				password = value;
 				NotifyOfPropertyChange(() => Password);
+			}
+		}
+
+		#endregion
+
+		#region Password confirmation DP
+
+		/// <summary>
+		/// User password confirmation.
+		/// </summary>
+		private string passwordConfirmation;
+
+		/// <summary>
+		/// Gets or sets user password confirmation.
+		/// </summary>
+		public string PasswordConfirmation
+		{
+			get { return passwordConfirmation; }
+			set
+			{
+				passwordConfirmation = value;
+				NotifyOfPropertyChange(() => PasswordConfirmation);
 			}
 		}
 
@@ -170,90 +182,27 @@ namespace Fab.Client.Authentication
 			}
 		}
 
-		#endregion
-
-		#region Show characters DP
+		#region Agree to terms DP
 
 		/// <summary>
-		/// Specify if status message should be visible.
+		/// Specify if user is "agree to terms"
 		/// </summary>
-		private bool showCharacters;
+		private bool agreeToTerms;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a password characters should be visible to user.
+		/// Gets a value indicating whether a user "agree to terms".
 		/// </summary>
-		public bool ShowCharacters
+		public bool AgreeToTerms
 		{
-			get { return showCharacters; }
+			get { return agreeToTerms; }
 			set
 			{
-				showCharacters = value;
-				NotifyOfPropertyChange(() => ShowCharacters);
+				agreeToTerms = value;
+				NotifyOfPropertyChange(() => AgreeToTerms);
 			}
 		}
 
 		#endregion
-
-		#region Remember me DP
-
-		/// <summary>
-		/// Specify if user credentials will be stored in the local storage after successful login.
-		/// </summary>
-		private bool rememberMe;
-
-		/// <summary>
-		/// Gets or sets a value indicating whether user credentials should be stored in the local storage.
-		/// </summary>
-		public bool RememberMe
-		{
-			get { return rememberMe; }
-			set
-			{
-				rememberMe = value;
-				NotifyOfPropertyChange(() => RememberMe);
-			}
-		}
-
-		#endregion
-
-		/// <summary>
-		/// Authorize the user with specified credentials.
-		/// </summary>
-		/// <returns>Common co-routine results.</returns>
-		[SetBusy]
-		//[Async]
-		[Dependencies("Username", "Password")]
-		public IEnumerable<IResult> Login()
-		{
-			Status = AuthenticationInProgress;
-			ShowStatus = true;
-
-			var authenticateResult = new AuthenticateResult(Username, Password);
-			yield return authenticateResult;
-
-			if (!authenticateResult.Succeeded)
-			{
-				Status = authenticateResult.Status;// AuthenticationFailed;
-				UsernameIsFocused = true;
-				yield break;
-			}
-
-			UserCredentials.Current = authenticateResult.Credentials;
-			EventAggregator.Publish(new LoggedInMessage(UserCredentials.Current));
-			ClearForm();
-		}
-
-		/// <summary>
-		/// Check if the credentials meets the security requirements.
-		/// </summary>
-		/// <returns><c>true</c> if the username and password meets the security requirements.</returns>
-		public bool CanLogin()
-		{
-			return !string.IsNullOrWhiteSpace(Username)
-			       && !string.IsNullOrWhiteSpace(Password)
-			       && Username.Length >= MinimumUsernameLength
-			       && Password.Length >= MinimumPasswordLength;
-		}
 
 		#endregion
 
@@ -301,6 +250,49 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		/// <summary>
+		/// Authorize the user with specified credentials.
+		/// </summary>
+		/// <returns>Common co-routine results.</returns>
+		[SetBusy]
+		[Dependencies("Username", "Password", "PasswordConfirmation", "AgreeToTerms")]
+		public IEnumerable<IResult> Register()
+		{
+			Status = RegistrationInProgress;
+			ShowStatus = true;
+
+			var registerationResult = new RegisterationResult(Username, Password);
+			yield return registerationResult;
+
+			if (!registerationResult.Succeeded)
+			{
+				Status = registerationResult.Status;
+				UsernameIsFocused = true;
+				yield break;
+			}
+
+			//Registration ends with login
+			UserCredentials.Current = registerationResult.Credentials;
+			EventAggregator.Publish(new LoggedInMessage(UserCredentials.Current));
+			ClearForm();
+		}
+
+		/// <summary>
+		/// Check if the credentials meets the security requirements.
+		/// </summary>
+		/// <returns><c>true</c> if the username and password meets the security requirements.</returns>
+		public bool CanRegister()
+		{
+			return AgreeToTerms
+				   && !string.IsNullOrWhiteSpace(Username)
+				   && !string.IsNullOrWhiteSpace(Password)
+				   && !string.IsNullOrWhiteSpace(PasswordConfirmation)
+				   && Username.Length >= MinimumUsernameLength
+				   && Password.Length >= MinimumPasswordLength
+				   && PasswordConfirmation.Length >= MinimumPasswordLength
+				   && Password == PasswordConfirmation;
+		}
+
 		#region Implementation of IHandle<in LoggedOutMessage>
 
 		/// <summary>
@@ -322,9 +314,11 @@ namespace Fab.Client.Authentication
 		private void ClearForm()
 		{
 			ShowStatus = false;
+			AgreeToTerms = false;
 			UsernameIsFocused = true;
 			Username = string.Empty;
 			Password = string.Empty;
+			PasswordConfirmation = string.Empty;
 		}
 
 		#endregion

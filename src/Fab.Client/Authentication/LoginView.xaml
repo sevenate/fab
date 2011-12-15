@@ -6,108 +6,89 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 			 xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
-			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignData Source=./SampleData/LoginScreen.xaml}"
 			 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
-			 TabNavigation="Cycle">
-	<Grid Background="{StaticResource Brush_WindowBackground}">
-		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<StackPanel MinWidth="260"
-					Margin="50, 10"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center">
-			<TextBlock Text="Username"
-					   Margin="3,10,0,2" />
-			<TextBox x:Name="Username"
-					 TabIndex="0"
-					 CaretBrush="Yellow"
-					 MaxLength="50">
+			 TabNavigation="Cycle"
+			 mc:Ignorable="d"
+			 d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}">
+	<StackPanel MinWidth="260"
+	            Margin="50, 10"
+	            HorizontalAlignment="Center"
+	            VerticalAlignment="Center"
+	            Background="{StaticResource Brush_WindowBackground}">
+		<TextBlock TextWrapping="Wrap"
+		           Text="Sign In"
+		           FontSize="21.333"
+		           Margin="2,10,2,2" />
+		<TextBlock Text="Username"
+		           Margin="3,10,0,2" />
+		<TextBox x:Name="Username"
+		         TabIndex="0"
+		         CaretBrush="Yellow"
+		         MaxLength="50">
+			<Interactivity:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+				<Behaviors:FocusBehavior HasInitialFocus="True" />
+			</Interactivity:Interaction.Behaviors>
+		</TextBox>
+		<TextBlock Text="Password"
+		           Margin="3,10,0,2" />
+		<TextBox x:Name="Password"
+		         TabIndex="1"
+		         MaxLength="256"
+		         CaretBrush="Yellow"
+		         Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibility}, ElementName=ShowCharacters}">
+			<Interactivity:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+				<Behaviors:FocusBehavior IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
+			</Interactivity:Interaction.Behaviors>
+		</TextBox>
+		<PasswordBox x:Name="PasswordHiden"
+		             TabIndex="1"
+		             Foreground="Yellow"
+		             CaretBrush="Yellow"
+		             Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibilityInvert}, ElementName=ShowCharacters}"
+		             MaxLength="256">
+			<Interactivity:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
+			</Interactivity:Interaction.Behaviors>
+		</PasswordBox>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<CheckBox x:Name="ShowCharacters"
+			          IsChecked="{Binding ShowCharacters, Mode=TwoWay}"
+			          Content="Show characters"
+			          Margin="0, 10"
+			          HorizontalAlignment="Left"
+			          TabIndex="2">
 				<Interactivity:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-					<Behaviors:FocusBehavior HasInitialFocus="True" />
 				</Interactivity:Interaction.Behaviors>
-			</TextBox>
-			<TextBlock Text="Password"
-					   Margin="3,10,0,2" />
-			<TextBox x:Name="Password"
-					 TabIndex="1"
-					 MaxLength="256"
-					 CaretBrush="Yellow"
-					 Visibility="{Binding ElementName=ShowCharacters, Path=IsChecked, Converter={StaticResource boolToVisibility}}">
+			</CheckBox>
+			<CheckBox IsChecked="{Binding RememberMe, Mode=TwoWay}"
+			          Grid.Column="1"
+			          Content="Remember me"
+			          Margin="0,10"
+			          HorizontalAlignment="Right"
+			          TabIndex="3"
+			          IsEnabled="False"
+			          ToolTipService.ToolTip="Not implemented yet">
 				<Interactivity:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-					<Behaviors:FocusBehavior IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
 				</Interactivity:Interaction.Behaviors>
-			</TextBox>
-			<PasswordBox x:Name="PasswordHiden"
-						 TabIndex="1"
-						 Foreground="Yellow"
-						 CaretBrush="Yellow"
-						 Visibility="{Binding ElementName=ShowCharacters, Path=IsChecked, Converter={StaticResource boolToVisibilityInvert}}"
-						 MaxLength="256">
-				<Interactivity:Interaction.Behaviors>
-					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-					<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
-				</Interactivity:Interaction.Behaviors>
-			</PasswordBox>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<CheckBox x:Name="ShowCharacters"
-						  IsChecked="{Binding ShowCharacters, Mode=TwoWay}"
-						  Content="Show characters"
-						  Margin="0, 10"
-						  HorizontalAlignment="Left"
-						  TabIndex="2">
-					<Interactivity:Interaction.Behaviors>
-						<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-					</Interactivity:Interaction.Behaviors>
-				</CheckBox>
-				<CheckBox IsChecked="{Binding RememberMe, Mode=TwoWay}"
-						  Grid.Column="1"
-						  Content="Remember me"
-						  Margin="0,10"
-						  HorizontalAlignment="Right"
-						  TabIndex="3"
-						  IsEnabled="False"
-						  ToolTipService.ToolTip="Not implemented yet">
-					<Interactivity:Interaction.Behaviors>
-						<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-					</Interactivity:Interaction.Behaviors>
-				</CheckBox>
-			</Grid>
-			<TextBlock Foreground="Red"
-					   Text="{Binding Status}"
-					   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" />
-			<Button x:Name="Login"
-					Content="Sign in"
-					MinWidth="75"
-					Margin="0, 10"
-					HorizontalAlignment="Center"
-					TabIndex="4" />
-		</StackPanel>
-		<StackPanel Grid.Row="1"
-					Orientation="Horizontal"
-					HorizontalAlignment="Center"
-					Margin="0,0,0,5">
-			<TextBlock x:Name="Copyright"
-					   TextWrapping="Wrap"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Bottom"
-					   Foreground="#FF868686" />
-			<TextBlock x:Name="Version"
-					   Margin="10,0,0,0"
-					   ToolTipService.ToolTip="Client version"
-					   TextWrapping="Wrap"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Bottom"
-					   Foreground="#FF868686" />
-		</StackPanel>
-	</Grid>
+			</CheckBox>
+		</Grid>
+		<TextBlock Foreground="Red"
+		           Text="{Binding Status}"
+		           Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" MinHeight="14" />
+		<Button x:Name="Login"
+		        Content="Sign in"
+		        MinWidth="75"
+		        Margin="0, 10"
+		        HorizontalAlignment="Center"
+		        TabIndex="4" />
+	</StackPanel>
 </UserControl>

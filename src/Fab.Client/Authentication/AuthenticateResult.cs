@@ -1,4 +1,10 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// <copyright file="AuthenticateResult.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
+// </copyright>
+//------------------------------------------------------------
+
+using System;
 using System.ServiceModel;
 using Caliburn.Micro;
 using Fab.Client.Shell;

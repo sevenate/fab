@@ -5,6 +5,7 @@
 //------------------------------------------------------------
 
 using System;
+using System.ServiceModel;
 using EmitMapper;
 using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
@@ -143,7 +144,17 @@ namespace Fab.Server.Core.Services
 				// Check login uniqueness
 				if (!ModelHelper.IsLoginAvailable(mc, newLogin))
 				{
-					throw new Exception(string.Format("Login name \"{0}\" is already used. Please use another one.", newLogin));
+					var faultDetail = new FaultDetail
+					{
+						ErrorCode = "AUTH-2",
+						ErrorMessage = "Registration failed.",
+						Description = string.Format("Login name \"{0}\" is already used. Please use another one.", newLogin)
+					};
+
+					throw new FaultException<FaultDetail>(
+						faultDetail,
+						new FaultReason(faultDetail.Description),
+						new FaultCode("Receiver"));
 				}
 
 				var user = new User
