@@ -8,8 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Client", "src\Fab.Clien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Build", "src\Fab.Build\Fab.Build.csproj", "{F5496901-5CD1-4604-833E-761604ACDDFB}"
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Fab.Modeling", "src\Fab.Modeling\Fab.Modeling.modelproj", "{7E4EAF3E-6526-4010-9AA1-870C1EF027C0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,10 +22,6 @@ Global
 		{F5496901-5CD1-4604-833E-761604ACDDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5496901-5CD1-4604-833E-761604ACDDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5496901-5CD1-4604-833E-761604ACDDFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E4EAF3E-6526-4010-9AA1-870C1EF027C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E4EAF3E-6526-4010-9AA1-870C1EF027C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E4EAF3E-6526-4010-9AA1-870C1EF027C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E4EAF3E-6526-4010-9AA1-870C1EF027C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

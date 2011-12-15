@@ -89,6 +89,7 @@
     </EntityDeploy>
     <Content Include="Global.asax" />
     <Content Include="log4net.config" />
+    <Content Include="ClientBin\web.config" />
     <None Include="Sql\master_001_setup.sqlce" />
     <None Include="Sql\personal_001_setup.sqlce" />
     <Content Include="favicon.png" />

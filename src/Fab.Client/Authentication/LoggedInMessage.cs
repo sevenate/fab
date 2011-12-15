@@ -6,7 +6,7 @@
 namespace Fab.Client.Authentication
 {
 	/// <summary>
-	/// Send by <see cref="ILoginViewModel"/> after successful login.
+	/// Send by <see cref="LoginViewModel"/> or <see cref="RegistrationViewModel"/> after successful login.
 	/// </summary>
 	public class LoggedInMessage
 	{

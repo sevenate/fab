@@ -6,5 +6,4 @@
 					  ShowCharacters="True"
 					  RememberMe="True"
 					  UsernameIsFocused="True"
-					  IsBusy="False"
-					  IsAuthenticated="False" />
+					  IsBusy="False" />

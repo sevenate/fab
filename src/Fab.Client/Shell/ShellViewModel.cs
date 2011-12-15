@@ -78,11 +78,11 @@ namespace Fab.Client.Shell
 			Dialogs = dialogs;
 
 			// find login module
-			LoginScreen = modules.OfType<ILoginViewModel>().Single();
+			StartScreen = modules.OfType<IStartViewModel>().Single();
 
 			// exclude login module from other modules
 			Items.AddRange(modules.OrderBy(module => module.Name)
-								  .Except(Enumerable.Repeat<IModule>(LoginScreen, 1)));
+								  .Except(Enumerable.Repeat<IModule>(StartScreen, 1)));
 			PersonalCorner = corner;
 			AsyncProgressIndicator = asyncProgressIndicator;
 			CloseStrategy = new ApplicationCloseStrategy();
@@ -93,9 +93,9 @@ namespace Fab.Client.Shell
 		#region Properties
 
 		/// <summary>
-		/// Gets start login screen model for not authenticate users.
+		/// Gets start screen view model for not authenticate users.
 		/// </summary>
-		public ILoginViewModel LoginScreen { get; private set; }
+		public IStartViewModel StartScreen { get; private set; }
 
 		/// <summary>
 		/// Gets personal corner view model that allow user to logout.
@@ -137,7 +137,7 @@ namespace Fab.Client.Shell
 		/// </summary>
 		protected override void OnInitialize()
 		{
-			ActivateItem(LoginScreen);
+			ActivateItem(StartScreen);
 		}
 
 		#endregion
@@ -156,7 +156,7 @@ namespace Fab.Client.Shell
 		/// <param name="message">The <see cref="LoggedInMessage"/>.</param>
 		public void Handle(LoggedInMessage message)
 		{
-			this.CloseItem(LoginScreen);
+			this.CloseItem(StartScreen);
 			ActivateItem(Items.First());
 			IsAuthenticated = true;
 		}
@@ -172,7 +172,7 @@ namespace Fab.Client.Shell
 		public void Handle(LoggedOutMessage message)
 		{
 			IsAuthenticated = false;
-			ActivateItem(LoginScreen);
+			ActivateItem(StartScreen);
 		}
 
 		#endregion
