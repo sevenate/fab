@@ -366,9 +366,6 @@
 							Value="{StaticResource Brush_WindowBackground}" />
 				</Style>
 			</Controls:WatermarkedTextbox.TextBoxStyle>
-			<i:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
-			</i:Interaction.Behaviors>
 		</Controls:WatermarkedTextbox>
 		<Button x:Name="Save"
 				Grid.Column="8"

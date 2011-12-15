@@ -33,7 +33,7 @@
 					 HorizontalContentAlignment="Stretch"></ListBox>
 			<Button x:Name="CreateAccount"
 					Grid.Row="1"
-					Content="Create New"
+					Content="+ Account"
 					MinHeight="23" />
 		</Grid>
 		<sdk:GridSplitter Grid.Column="1"
