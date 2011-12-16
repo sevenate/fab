@@ -446,17 +446,8 @@ namespace Fab.Server.Core
 			var cashAccountPosting = journal.Postings.Where(p => p.Account.Id == cashAccount.Id).Single();
 
 			// Decrement cached account balance by the previous transaction amount
-			if (journal.JournalType == (byte) JournalType.Deposit)
-			{
-				targetAccount.Balance -= targetAccountPosting.Amount;
-				cashAccount.Balance += cashAccountPosting.Amount;
-			}
-			else
-			{
-				// JournalType.Withdrawal
-				targetAccount.Balance += targetAccountPosting.Amount;
-				cashAccount.Balance -= cashAccountPosting.Amount;
-			}
+			targetAccount.Balance -= targetAccountPosting.Amount;
+			cashAccount.Balance += cashAccountPosting.Amount;
 
 			// Note: cached postings count will be the same after update transaction operation
 
