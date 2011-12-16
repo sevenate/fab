@@ -1052,6 +1052,79 @@ namespace Fab.Server.Tests
 		}
 
 		/// <summary>
+		/// Test <see cref="MoneyService.UpdateTransaction"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Update_Withdrawal_Transaction()
+		// ReSharper restore InconsistentNaming
+		{
+			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+
+			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
+			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
+			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
+
+			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Income comment");
+			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Expense comment");
+			moneyService.Deposit(currentUser.Id, accountId, date3, 35, 1, categoryDepositId, "Income 2 comment");
+
+			var balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			Assert.Equal(235, balance);
+
+			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			Assert.Equal(235, account.Balance);
+
+			var depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
+			var withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+
+			Assert.Equal(2, depositCategory.Popularity);
+			Assert.Equal(1, withdrawalCategory.Popularity);
+
+			var journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+
+			Assert.NotNull(journals);
+			Assert.Equal(3, journals.Count);
+			Assert.Equal("Expense comment", journals[1].Comment);
+			Assert.Equal(10, journals[1].Rate);
+			Assert.Equal(5, journals[1].Quantity);
+			Assert.Equal(-50, journals[1].Amount);
+			Assert.Equal(date2, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
+			Assert.Equal(categoryWithdrawalId, ((WithdrawalDTO)journals[1]).CategoryId);
+
+			var journalId = journals[1].Id;
+
+			moneyService.UpdateTransaction(currentUser.Id, accountId, journalId, false, date3, 10, 17, categoryWithdrawalId, "This is updated expense");
+
+			balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			Assert.Equal(115, balance);
+
+			account = moneyService.GetAccount(currentUser.Id, accountId);
+			Assert.Equal(115, account.Balance);
+
+			depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
+			withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+
+			Assert.Equal(2, depositCategory.Popularity);
+			Assert.Equal(1, withdrawalCategory.Popularity);
+
+			journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+
+			Assert.NotNull(journals);
+			Assert.Equal(3, journals.Count);
+			Assert.Equal("This is updated expense", journals[1].Comment);
+			Assert.Equal(10, journals[1].Rate);
+			Assert.Equal(17, journals[1].Quantity);
+			Assert.Equal(-170, journals[1].Amount);
+			Assert.Equal(date3, journals[1].Date);
+			Assert.True(journals[1] is WithdrawalDTO);
+			Assert.Equal(categoryWithdrawalId, ((WithdrawalDTO)journals[1]).CategoryId);
+		}
+
+		/// <summary>
 		/// Test <see cref="MoneyService.UpdateTransfer"/> method.
 		/// </summary>
 		[Fact]
