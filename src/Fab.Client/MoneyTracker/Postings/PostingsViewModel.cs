@@ -451,7 +451,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// </summary>
 		public void Update()
 		{
-			if (isOutdated)
+			if (IsOutdated)
 			{
 				Coroutine.BeginExecute(DownloadAllTransactions().GetEnumerator());
 			}
