@@ -5,8 +5,11 @@
 //------------------------------------------------------------
 
 using System;
+using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.Windows;
 using Fab.Client.Authentication;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.RegistrationServiceReference;

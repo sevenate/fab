@@ -1,10 +1,10 @@
 Introduction
 ------------
 
-FAB is a client server application for tracking and planning family assets.
+**FAB** is a client-server application for tracking and planning family assets.
 
-* Front end is a **Silverlight 4** application.
-* Back end is a bunch of **WCF** services, based on **.NET 4**.
+* Front end is a **Silverlight 5** application that works both in browser and on the desktop.
+* Back end represented by the group of **WCF** services, based on **.NET 4**.
 * Data storage powered by **MS SQL CE 4.0**.
 
 Links
