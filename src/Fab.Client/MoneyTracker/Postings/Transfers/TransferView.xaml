@@ -211,7 +211,8 @@
 							ValidatesOnNotifyDataErrors=True,
 							NotifyOnValidationError=True}"
 				 VerticalAlignment="Center"
-				 TabIndex="4">
+				 TabIndex="4"
+				 CaretBrush="Yellow">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 			</i:Interaction.Behaviors>
@@ -225,7 +226,7 @@
 					MinHeight="23"
 					HorizontalAlignment="Right"
 					VerticalAlignment="Center"
-					TabIndex="4" />
+					TabIndex="7" />
 			<Button x:Name="Save"
 					toolkit:DockPanel.Dock="Right"
 					Content="Save"
@@ -234,13 +235,13 @@
 					Margin="5,0"
 					HorizontalAlignment="Right"
 					VerticalAlignment="Center"
-					TabIndex="3" />
+					TabIndex="6" />
 			<Controls:WatermarkedTextbox x:Name="Comment"
-										 Watermark="Enter optional comment here..."
+										 Watermark="Optional comment..."
 										 Text="{Binding Path=Comment, Mode=TwoWay}"
 										 VerticalAlignment="Center"
 										 IsTabStop="True"
-										 TabIndex="2">
+										 TabIndex="5">
 				<Controls:WatermarkedTextbox.TextBoxStyle>
 					<Style TargetType="TextBox">
 						<Setter Property="MaxLength"
@@ -252,6 +253,8 @@
 						<Setter Property="AcceptsReturn"
 								Value="True" />
 						<Setter Property="Foreground"
+								Value="White" />
+						<Setter Property="CaretBrush"
 								Value="White" />
 						<Setter Property="Background"
 								Value="{StaticResource Brush_WindowBackground}" />
