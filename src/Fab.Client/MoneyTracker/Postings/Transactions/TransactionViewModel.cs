@@ -89,6 +89,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			}
 		}
 
+		private CategoryDTO previousCategory;
+
 		public CategoryDTO CurrentCategory
 		{
 			get
@@ -107,9 +109,10 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			{
 				if (value == null/* && !Categories.IsEmpty*/)
 				{
+					previousCategory = (CategoryDTO)(Categories.CurrentItem);
 					Categories.MoveCurrentTo(null);
 					NotifyOfPropertyChange(() => CurrentCategory);
-				NotifyOfPropertyChange(() => CanSave);
+					NotifyOfPropertyChange(() => CanSave);
 					return;
 				}
 
@@ -117,6 +120,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 				{
 					if (((CategoryDTO)category).Id == value.Id)
 					{
+						previousCategory = (CategoryDTO)(Categories.CurrentItem);
 						if (Categories.MoveCurrentTo(category))
 						{
 							NotifyOfPropertyChange(() => CurrentCategory);
@@ -127,6 +131,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 					}
 				}
 
+				previousCategory = (CategoryDTO)(Categories.CurrentItem);
 				Categories.MoveCurrentTo(null);
 				NotifyOfPropertyChange(() => CurrentCategory);
 				NotifyOfPropertyChange(() => CanSave);
@@ -380,6 +385,11 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			if (CurrentCategory != null)
 			{
 				categoryRepository.Download(CurrentCategory.Id);
+			}
+
+			if (previousCategory != null && CurrentCategory != null && CurrentCategory.Id != previousCategory.Id)
+			{
+				categoryRepository.Download(previousCategory.Id);
 			}
 
 			Cancel();
