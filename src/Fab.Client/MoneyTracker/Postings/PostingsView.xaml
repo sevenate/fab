@@ -178,7 +178,9 @@
 							<TextBlock VerticalAlignment="Center"
 									   Text="{Binding Path=Comment}"
 									   Margin="3,0"
-									   TextTrimming="WordEllipsis" />
+									   TextTrimming="WordEllipsis"
+									   ToolTipService.ToolTip="{Binding Path=Comment}">
+							</TextBlock>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
