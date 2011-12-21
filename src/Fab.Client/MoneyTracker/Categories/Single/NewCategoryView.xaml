@@ -23,7 +23,8 @@
 				 TabIndex="0"
 				 MinWidth="75"
 				 MaxLength="50"
-				 Margin="5,0">
+				 Margin="5,0"
+				 CaretBrush="Yellow">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 				<Behaviors:FocusBehavior HasInitialFocus="True" />

@@ -361,7 +361,7 @@
 					<Setter Property="Foreground"
 							Value="White" />
 					<Setter Property="CaretBrush"
-							Value="Yellow" />
+							Value="White" />
 					<Setter Property="Background"
 							Value="{StaticResource Brush_WindowBackground}" />
 				</Style>
