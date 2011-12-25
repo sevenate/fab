@@ -295,6 +295,7 @@
 				 Margin="5,0">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>
 		<TextBlock Grid.Row="1"
@@ -323,6 +324,7 @@
 				 Margin="5,0">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>
 		<TextBlock Grid.Row="1"

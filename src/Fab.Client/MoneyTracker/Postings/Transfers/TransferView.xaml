@@ -215,6 +215,7 @@
 				 CaretBrush="Yellow">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>
 		<toolkit:DockPanel Grid.ColumnSpan="5"

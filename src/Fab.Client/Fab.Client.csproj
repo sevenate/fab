@@ -156,6 +156,8 @@
     <Compile Include="Authentication\RegisterationResult.cs" />
     <Compile Include="Authentication\RegistrationViewModel.cs" />
     <Compile Include="Authentication\UserCredentials.cs" />
+    <Compile Include="Framework\Behaviors\SelectPasswordOnFocusBehavior.cs" />
+    <Compile Include="Framework\Behaviors\SelectTextOnFocusBehavior.cs" />
     <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
     <Compile Include="Framework\Converters\DebugConverter.cs" />

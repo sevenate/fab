@@ -27,6 +27,7 @@
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 				<Behaviors:FocusBehavior HasInitialFocus="True" />
+				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>
 		<TextBlock Text="Asset type"
