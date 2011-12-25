@@ -133,7 +133,7 @@ namespace Fab.Client.MoneyTracker.Filters
 		/// </summary>
 		private void ResetToCurrentDate()
 		{
-			var initDate = DateTime.Now;
+			var initDate = DateTime.Now.Date;
 			SelectedRange = Tuple.Create(initDate, initDate);
 		}
 

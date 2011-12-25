@@ -182,6 +182,9 @@ namespace Fab.Client.Framework.Behaviors
 			if (!isUpdating)
 			{
 				SelectedRange = Tuple.Create(firstDate, maxEndDate);
+				
+				//TODO: Check if code line below should be uncommented
+				//isUpdating = false;
 			}
 		}
 
