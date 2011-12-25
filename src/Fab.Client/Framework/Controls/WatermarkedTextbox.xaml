@@ -3,7 +3,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 d:DesignWidth="200"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors" d:DesignWidth="200"
 			 d:DesignHeight="24"
 			 mc:Ignorable="d">
 	<UserControl.Resources>
@@ -259,6 +260,9 @@
 							Value="0" />
 				</Style>
 			</TextBox.Style>
+			<i:Interaction.Behaviors>
+				<Behaviors:SelectTextOnFocusBehavior />
+			</i:Interaction.Behaviors>
 		</TextBox>
 		<!-- Watermark Foreground="#FF868686" -->
 		<TextBlock x:Name="WatermarkText"

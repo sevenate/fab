@@ -26,7 +26,7 @@
 				 CaretBrush="Yellow">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
-<!--				<Behaviors:FocusBehavior HasInitialFocus="True" />-->
+				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>
 		<sdk:Label Content="Password"
@@ -39,6 +39,7 @@
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
+				<Behaviors:SelectPasswordOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</PasswordBox>
 		<sdk:Label Content="Password (again)"
@@ -51,6 +52,7 @@
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding PasswordConfirmation, Mode=TwoWay}" />
+				<Behaviors:SelectPasswordOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</PasswordBox>
 		<CheckBox x:Name="AgreeToTerms"

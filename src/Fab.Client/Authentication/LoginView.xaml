@@ -28,6 +28,7 @@
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 				<Behaviors:FocusBehavior HasInitialFocus="True" />
+				<Behaviors:SelectTextOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</TextBox>
 		<TextBlock Text="Password"
@@ -40,6 +41,7 @@
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 				<Behaviors:FocusBehavior IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
+				<Behaviors:SelectTextOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</TextBox>
 		<PasswordBox x:Name="PasswordHiden"
@@ -51,6 +53,7 @@
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
+				<Behaviors:SelectPasswordOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</PasswordBox>
 		<Grid>
