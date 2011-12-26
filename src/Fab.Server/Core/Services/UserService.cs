@@ -5,6 +5,7 @@
 //------------------------------------------------------------
 
 using System;
+using System.Configuration;
 using System.Linq;
 using System.ServiceModel;
 using EmitMapper;
@@ -67,7 +68,7 @@ namespace Fab.Server.Core.Services
 		/// </summary>
 		public UserService()
 		{
-			DefaultFolder = "|DataDirectory|";
+			DefaultFolder = ConfigurationManager.AppSettings["DefaultFolder"];
 			dbManager = new DatabaseManager();
 		}
 
