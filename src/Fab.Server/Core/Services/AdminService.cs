@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Common.Logging;
 using EmitMapper;
@@ -45,7 +46,7 @@ namespace Fab.Server.Core.Services
 		/// </summary>
 		public AdminService()
 		{
-			DefaultFolder = "|DataDirectory|";
+			DefaultFolder = ConfigurationManager.AppSettings["DefaultFolder"];
 			dbManager = new DatabaseManager();
 		}
 

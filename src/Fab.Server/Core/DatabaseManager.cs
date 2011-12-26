@@ -202,6 +202,9 @@ namespace Fab.Server.Core
 				AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data"));
 			}
 
+			//Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+			Directory.SetCurrentDirectory(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath);
+
 			return path.Replace("|DataDirectory|", AppDomain.CurrentDomain.GetData("DataDirectory").ToString());
 		}
 
