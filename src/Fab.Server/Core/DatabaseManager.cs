@@ -5,6 +5,7 @@
 //------------------------------------------------------------
 
 using System;
+using System.Configuration;
 using System.Data.SqlServerCe;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -106,17 +107,21 @@ namespace Fab.Server.Core
 		/// <returns>Path to user personal database file.</returns>
 		public string CreatePersonalDatabase(Guid userId, DateTime registrationDate, string rootFolder = DefaultFolder, string password = DefaultPassword)
 		{
-			var dataDirectory = ResolveDataDirectory(rootFolder);
-			var folder = GetFolderForPersonalDb(userId, registrationDate, dataDirectory);
+			var folderForPersonalDb = GetFolderForPersonalDb(userId, registrationDate);
+			var relativeDatabasePath = Path.Combine(folderForPersonalDb, userId.ToString().ToLower() + ".sdf");
+			var absoluteFolderPathTemplate = rootFolder + "\\" + folderForPersonalDb;
+			var absoluteFilePathTemplate = rootFolder + "\\" + relativeDatabasePath;
 
-			if (!Directory.Exists(folder))
+			var dataDirectory = ResolveDataDirectory(absoluteFolderPathTemplate);
+
+			if (!Directory.Exists(dataDirectory))
 			{
-				Directory.CreateDirectory(folder);
+				Directory.CreateDirectory(dataDirectory);
 			}
 
-			var databasePath = Path.Combine(folder, userId.ToString().ToLower() + ".sdf");
 
-			var connectionString = GetConnectionString(databasePath, password);
+			var absolutePathToDatabase = ResolveDataDirectory(absoluteFilePathTemplate);
+			var connectionString = GetConnectionString(absolutePathToDatabase, password);
 
 			// Execute SQL scripts only once right after database file was created
 			if (CreateDatabaseFile(connectionString))
@@ -126,7 +131,7 @@ namespace Fab.Server.Core
 				ExecuteSqlScript(connectionString, string.Format(SqlInsertSettingFormat, SettingsRegistrationDateKey, registrationDate));
 			}
 
-			return databasePath;
+			return absoluteFilePathTemplate;
 		}
 
 		/// <summary>
@@ -176,12 +181,10 @@ namespace Fab.Server.Core
 		/// </summary>
 		/// <param name="userId">Unique user ID.</param>
 		/// <param name="registrationDate">User registration date.</param>
-		/// <param name="rootFolder">Root folder for all users personal databases.</param>
 		/// <returns>Path to the user personal database file (without file name itself).</returns>
-		private static string GetFolderForPersonalDb(Guid userId, DateTime registrationDate, string rootFolder)
+		private static string GetFolderForPersonalDb(Guid userId, DateTime registrationDate)
 		{
-			var folderPath = Path.Combine(rootFolder,
-										  registrationDate.ToString("yyyy"),
+			var folderPath = Path.Combine(registrationDate.ToString("yyyy"),
 										  registrationDate.ToString("MM"),
 										  registrationDate.ToString("dd"),
 										  userId.ToString().ToLower());
@@ -195,17 +198,20 @@ namespace Fab.Server.Core
 		/// <returns>Absolute path to the original directory.</returns>
 		private static string ResolveDataDirectory(string path)
 		{
-			var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
+//			var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
 
-			if (dataDirectory == null)
+			var dataDirectory = ConfigurationManager.AppSettings["DataDirectory"];
+				
+			if (!Path.IsPathRooted(dataDirectory))
 			{
-				AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data"));
+				var root = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath;
+				dataDirectory = Path.Combine(root, dataDirectory);
 			}
 
-			//Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			Directory.SetCurrentDirectory(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath);
+//			AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
+//			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
-			return path.Replace("|DataDirectory|", AppDomain.CurrentDomain.GetData("DataDirectory").ToString());
+			return path.Replace("|DataDirectory|", dataDirectory);
 		}
 
 		/// <summary>

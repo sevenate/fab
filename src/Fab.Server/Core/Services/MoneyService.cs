@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.ServiceModel;
 using EmitMapper;
@@ -72,7 +71,7 @@ namespace Fab.Server.Core.Services
 		/// </summary>
 		public MoneyService()
 		{
-			DefaultFolder = ConfigurationManager.AppSettings["DefaultFolder"];
+			DefaultFolder = "|DataDirectory|";
 			dbManager = new DatabaseManager();
 		}
 
