@@ -5,7 +5,6 @@
 //------------------------------------------------------------
 
 using System;
-using System.Configuration;
 using System.ServiceModel;
 using EmitMapper;
 using Fab.Server.Core.Contracts;
@@ -44,7 +43,7 @@ namespace Fab.Server.Core.Services
 		/// </summary>
 		public RegistrationService()
 		{
-			DefaultFolder = ConfigurationManager.AppSettings["DefaultFolder"];
+			DefaultFolder = "|DataDirectory|";
 			dbManager = new DatabaseManager();
 		}
 
