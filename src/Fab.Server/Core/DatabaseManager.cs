@@ -198,18 +198,16 @@ namespace Fab.Server.Core
 		/// <returns>Absolute path to the original directory.</returns>
 		private static string ResolveDataDirectory(string path)
 		{
-//			var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
+			//var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
+			//AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
 
 			var dataDirectory = ConfigurationManager.AppSettings["DataDirectory"];
 				
 			if (!Path.IsPathRooted(dataDirectory))
 			{
-				var root = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath;
+				var root = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
 				dataDirectory = Path.Combine(root, dataDirectory);
 			}
-
-//			AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
-//			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
 			return path.Replace("|DataDirectory|", dataDirectory);
 		}
