@@ -14,7 +14,7 @@
 	<!-- Common projects assembly information -->
 	<PropertyGroup>
 		<MajorVersion>0</MajorVersion>
-		<MinorVersion>3</MinorVersion>
+		<MinorVersion>4</MinorVersion>
 		<VersionString>Alpha</VersionString>
 		<ProductName>FAB</ProductName>
 		<CompanyName>nReez, LLC</CompanyName>
