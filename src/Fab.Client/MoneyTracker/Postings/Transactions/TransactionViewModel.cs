@@ -34,6 +34,11 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		#region Dependencies
 
+		/// <summary>
+		/// Enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private readonly IEventAggregator eventAggregator = IoC.Get<IEventAggregator>();
+
 		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
 		private readonly ICategoriesRepository categoryRepository = IoC.Get<ICategoriesRepository>();
 
@@ -354,7 +359,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 					CurrentCategory != null
 						? CurrentCategory.Id
 						: (int?) null,
-					IsDeposite
+					IsDeposite,
+					eventAggregator
 					);
 
 
@@ -377,7 +383,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 					CurrentCategory != null
 						? CurrentCategory.Id
 						: (int?) null,
-					IsDeposite
+					IsDeposite,
+					eventAggregator
 					);
 
 				yield return request;

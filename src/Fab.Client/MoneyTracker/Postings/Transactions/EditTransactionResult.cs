@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Caliburn.Micro;
-using Fab.Client.MoneyServiceReference;
 using Fab.Client.Shell;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Postings.Transactions
 {
@@ -18,7 +18,12 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		private readonly int? categoryId;
 		private readonly bool isDeposit;
 
-		public EditTransactionResult(int transactionId, Guid userId, int accountId, DateTime operationDate, decimal price, decimal quantity, string comment, int? categoryId, bool isDeposit)
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
+
+		public EditTransactionResult(int transactionId, Guid userId, int accountId, DateTime operationDate, decimal price, decimal quantity, string comment, int? categoryId, bool isDeposit, IEventAggregator eventAggregator)
 		{
 			this.transactionId = transactionId;
 			this.userId = userId;
@@ -29,6 +34,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			this.comment = comment;
 			this.categoryId = categoryId;
 			this.isDeposit = isDeposit;
+			EventAggregator = eventAggregator;
 		}
 
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
@@ -46,6 +52,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 										 quantity,
 										 categoryId,
 										 comment);
+			
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Saving updated " + (isDeposit ? "income" : "expense") });
 		}
 
 		private void OnUpdateTransactionCompleted(object s, AsyncCompletedEventArgs e)
@@ -59,6 +67,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			{
 				Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 			}
+
+			EventAggregator.Publish(new AsyncOperationCompleteMessage());
 		}
 	}
 }
