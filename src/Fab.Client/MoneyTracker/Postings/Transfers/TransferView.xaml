@@ -10,6 +10,7 @@
 			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 			 mc:Ignorable="d">
 	<UserControl.Resources>
 		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />

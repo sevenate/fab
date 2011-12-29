@@ -13,6 +13,8 @@ using System.Linq;
 using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
+using Fab.Client.Framework;
+using Fab.Client.Framework.Filters;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 
@@ -23,7 +25,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 	/// </summary>
 	[Export(typeof(TransferViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class TransferViewModel : Screen, IPostingPanel
+	public class TransferViewModel : Screen, ICanBeBusy, IPostingPanel
 	{
 		#region Fields
 
@@ -237,6 +239,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			}
 		}
 
+		[SetBusy]
 		public IEnumerable<IResult> Save()
 		{
 			if (IsEditMode)
@@ -305,6 +308,28 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		public void Cancel()
 		{
 			(Parent as IConductor).CloseItem(this);
+		}
+
+		#endregion
+
+		#region Implementation of ICanBeBusy
+
+		/// <summary>
+		/// Gets or sets a value indicating weather a login view model has a long running operation in the background.
+		/// </summary>
+		private bool isBusy;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a view model has a long running operation in the background.
+		/// </summary>
+		public bool IsBusy
+		{
+			get { return isBusy; }
+			set
+			{
+				isBusy = value;
+				NotifyOfPropertyChange(() => IsBusy);
+			}
 		}
 
 		#endregion

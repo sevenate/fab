@@ -9,6 +9,7 @@
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 			 mc:Ignorable="d"
 			 d:DesignHeight="113"
 			 d:DesignWidth="830">
