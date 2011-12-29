@@ -6,21 +6,98 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 			 xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
-			 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
-			 TabNavigation="Cycle"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
 			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}">
+			 d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}" MinWidth="280">
+	<UserControl.Resources>
+		<Style x:Key="LoginButtonStyle" TargetType="Button">
+			<Setter Property="Foreground"
+				Value="{StaticResource Brush_Foreground}" />
+			<Setter Property="FontFamily"
+				Value="{StaticResource MainFontFamily}" />
+			<Setter Property="FontSize"
+				Value="16" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:0.2" />
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimation Duration="0"
+												To="1"
+												Storyboard.TargetProperty="(UIElement.Opacity)"
+												Storyboard.TargetName="background_over"
+												d:IsOptimized="True" />
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Normal" />
+									<VisualState x:Name="Pressed">
+										<Storyboard>
+											<DoubleAnimation Duration="0"
+												To="1"
+												Storyboard.TargetProperty="(UIElement.Opacity)"
+												Storyboard.TargetName="background_down"
+												d:IsOptimized="True" />
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<DoubleAnimation Duration="0"
+												To="0.5"
+												Storyboard.TargetProperty="(UIElement.Opacity)"
+												Storyboard.TargetName="contentPresenter"
+												d:IsOptimized="True" />
+											<DoubleAnimation Duration="0" To="0.5" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="background" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="FocusStates">
+									<VisualState x:Name="Unfocused" />
+									<VisualState x:Name="Focused" />
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Rectangle x:Name="blackframe"
+								Stroke="{StaticResource Brush_BorderOuter}"
+								Fill="{StaticResource Brush_BorderInner}" />
+							<Rectangle x:Name="background"
+								Margin="2"
+								Fill="#FF4D90FE" />
+							<Rectangle x:Name="background_over"
+								Margin="2"
+								Opacity="0"
+								Fill="#FF4787ED" />
+							<Rectangle x:Name="background_down"
+								Margin="2"
+								Opacity="0"
+								Fill="#FF3079ED" />
+							<ContentPresenter x:Name="contentPresenter"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Margin="{TemplateBinding Padding}" />
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="MinWidth" Value="0"/>
+			<Setter Property="MinHeight" Value="0"/>
+			<Setter Property="Padding" Value="10"/>
+		</Style>
+	</UserControl.Resources>
 	<StackPanel MinWidth="260"
-	            Margin="50, 10"
-	            HorizontalAlignment="Center"
-	            VerticalAlignment="Center"
 	            Background="{StaticResource Brush_WindowBackground}">
 		<TextBlock TextWrapping="Wrap"
-		           Text="Sign In"
+		           Text="Login"
 		           FontSize="21.333"
-		           Margin="2,10,2,2" />
-		<TextBlock Text="Username"
-		           Margin="3,10,0,2" />
+		           Margin="2,0,2,2" />
+		<sdk:Label Content="Username"
+				   Target="{Binding ElementName=Username}"
+		           Margin="3,10,3,2" />
 		<TextBox x:Name="Username"
 		         TabIndex="0"
 		         CaretBrush="Yellow"
@@ -31,8 +108,9 @@
 				<Behaviors:SelectTextOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</TextBox>
-		<TextBlock Text="Password"
-		           Margin="3,10,0,2" />
+		<sdk:Label Content="Password"
+				   Target="{Binding ElementName=PasswordHiden}"
+		           Margin="3,10,3,2" />
 		<TextBox x:Name="Password"
 		         TabIndex="1"
 		         MaxLength="256"
@@ -49,14 +127,14 @@
 		             Foreground="Yellow"
 		             CaretBrush="Yellow"
 		             Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibilityInvert}, ElementName=ShowCharacters}"
-		             MaxLength="256">
+		             MaxLength="256" FontSize="15">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</PasswordBox>
-		<Grid>
+		<Grid MinHeight="40">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
 				<ColumnDefinition />
@@ -64,9 +142,8 @@
 			<CheckBox x:Name="ShowCharacters"
 			          IsChecked="{Binding ShowCharacters, Mode=TwoWay}"
 			          Content="Show characters"
-			          Margin="0, 10"
 			          HorizontalAlignment="Left"
-			          TabIndex="2">
+			          TabIndex="2" VerticalContentAlignment="Stretch">
 				<Interactivity:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 				</Interactivity:Interaction.Behaviors>
@@ -74,11 +151,10 @@
 			<CheckBox IsChecked="{Binding RememberMe, Mode=TwoWay}"
 			          Grid.Column="1"
 			          Content="Remember me"
-			          Margin="0,10"
 			          HorizontalAlignment="Right"
 			          TabIndex="3"
 			          IsEnabled="False"
-			          ToolTipService.ToolTip="Not implemented yet">
+			          ToolTipService.ToolTip="Not implemented yet" VerticalContentAlignment="Stretch">
 				<Interactivity:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 				</Interactivity:Interaction.Behaviors>
@@ -86,12 +162,12 @@
 		</Grid>
 		<TextBlock Foreground="Red"
 		           Text="{Binding Status}"
-		           Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" MinHeight="14" />
+		           Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" MinHeight="14" HorizontalAlignment="Center" />
 		<Button x:Name="Login"
-		        Content="Sign in"
+		        Content="Log in"
 		        MinWidth="75"
-		        Margin="0, 10"
+		        Margin="0,10,0,0"
 		        HorizontalAlignment="Center"
-		        TabIndex="4" />
+		        TabIndex="4" Style="{StaticResource LoginButtonStyle}" />
 	</StackPanel>
 </UserControl>
