@@ -179,11 +179,13 @@
 								   Fill="{StaticResource Brush_BackgroundGrad_Down}"
 								   Width="10"
 								   Height="10" />
-						<ContentPresenter x:Name="contentPresenter"
-										  HorizontalAlignment="Left"
-										  VerticalAlignment="Center"
-										  Grid.Column="1"
-										  Margin="5,0,0,0" />
+						<Grid Grid.Column="1"
+							  Margin="5,0,0,0"
+							  Background="{StaticResource Brush_WindowBackground}">
+							<ContentPresenter x:Name="contentPresenter"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Center" />
+						</Grid>
 						<Path x:Name="tick"
 							  Fill="{StaticResource Brush_Highlight}"
 							  Data="F1 M 4.325,7.852 C 4.175,7.852 4.026,7.807 3.900,7.720 L 0.325,5.262 C -0.016,5.027 -0.103,4.560 0.132,4.219 C 0.367,3.877 0.833,3.792 1.175,4.025 L 4.091,6.030 L 7.478,0.365 C 7.690,0.010 8.151,-0.107 8.506,0.106 C 8.861,0.319 8.978,0.779 8.765,1.135 L 4.969,7.486 C 4.863,7.664 4.688,7.790 4.485,7.834 C 4.432,7.846 4.378,7.852 4.325,7.852 L 4.325,7.852 Z"

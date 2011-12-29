@@ -92,6 +92,7 @@
     <Reference Include="Caliburn.Micro">
       <HintPath>..\..\ext\Silverlight 4\Caliburn.Micro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Silverlight.Controls.ToolTips">
       <HintPath>..\..\ext\Silverlight 4\Silverlight.Controls.ToolTips.dll</HintPath>
     </Reference>

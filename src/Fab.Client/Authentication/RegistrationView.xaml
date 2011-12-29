@@ -8,18 +8,95 @@
              xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
              xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
              IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
-			 TabNavigation="Cycle"
 			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignData Source=./SampleData/RegistrationData.xaml}">
+			 d:DataContext="{d:DesignData Source=./SampleData/RegistrationData.xaml}" MinWidth="280">
+	<UserControl.Resources>
+		<Style x:Key="RegisterButtonStyle" TargetType="Button">
+			<Setter Property="Foreground"
+				Value="{StaticResource Brush_Foreground}" />
+			<Setter Property="FontFamily"
+				Value="{StaticResource MainFontFamily}" />
+			<Setter Property="FontSize"
+				Value="16" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:0.2" />
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimation Duration="0"
+												To="1"
+												Storyboard.TargetProperty="(UIElement.Opacity)"
+												Storyboard.TargetName="background_over"
+												d:IsOptimized="True" />
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Normal" />
+									<VisualState x:Name="Pressed">
+										<Storyboard>
+											<DoubleAnimation Duration="0"
+												To="1"
+												Storyboard.TargetProperty="(UIElement.Opacity)"
+												Storyboard.TargetName="background_down"
+												d:IsOptimized="True" />
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<DoubleAnimation Duration="0"
+												To="0.5"
+												Storyboard.TargetProperty="(UIElement.Opacity)"
+												Storyboard.TargetName="contentPresenter"
+												d:IsOptimized="True" />
+											<DoubleAnimation Duration="0" To="0.5" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="background" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="FocusStates">
+									<VisualState x:Name="Unfocused" />
+									<VisualState x:Name="Focused" />
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Rectangle x:Name="blackframe"
+								Stroke="{StaticResource Brush_BorderOuter}"
+								Fill="{StaticResource Brush_BorderInner}" />
+							<Rectangle x:Name="background"
+								Margin="2"
+								Fill="#FFD14836" />
+							<Rectangle x:Name="background_over"
+								Margin="2"
+								Opacity="0" Fill="#FFDD4B39" />
+							<Rectangle x:Name="background_down"
+								Margin="2"
+								Opacity="0"
+								Fill="#FFD14836" />
+							<ContentPresenter x:Name="contentPresenter"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Margin="{TemplateBinding Padding}" />
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="MinWidth" Value="0"/>
+			<Setter Property="MinHeight" Value="0"/>
+			<Setter Property="Padding" Value="10"/>
+		</Style>
+	</UserControl.Resources>
 	<StackPanel MinWidth="260"
-	            Margin="50,10"
 	            RenderTransformOrigin="0.5,0.5"
 	            Background="{StaticResource Brush_WindowBackground}">
 		<TextBlock TextWrapping="Wrap"
-		           Text="Sign Up"
+		           Text="Sign up"
 		           FontSize="21.333"
-		           Margin="2,10,2,2" />
+		           Margin="2,0,2,2" />
 		<sdk:Label Content="Username"
+				   Target="{Binding ElementName=Username}"
 		           Margin="3,10,0,2" />
 		<TextBox x:Name="Username"
 				 TabIndex="0"
@@ -30,12 +107,13 @@
 			</i:Interaction.Behaviors>
 		</TextBox>
 		<sdk:Label Content="Password"
+				   Target="{Binding ElementName=Password}"
 		           Margin="3,10,0,2" />
 		<PasswordBox x:Name="Password"
 					 TabIndex="1"
 					 Foreground="Yellow"
 					 CaretBrush="Yellow"
-					 MaxLength="256">
+					 MaxLength="256" FontSize="16">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
@@ -43,44 +121,43 @@
 			</i:Interaction.Behaviors>
 		</PasswordBox>
 		<sdk:Label Content="Password (again)"
+				   Target="{Binding ElementName=PasswordConfirmation}"
 		           Margin="3,10,0,2" />
 		<PasswordBox x:Name="PasswordConfirmation"
 					 TabIndex="2"
 					 Foreground="Yellow"
 					 CaretBrush="Yellow"
-					 MaxLength="256">
+					 MaxLength="256" FontSize="16">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding PasswordConfirmation, Mode=TwoWay}" />
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</PasswordBox>
-		<CheckBox x:Name="AgreeToTerms"
-				  TabIndex="3"
-				  Margin="0,10,0,2">
-			<i:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
-			</i:Interaction.Behaviors>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<TextBlock Text="I agree to the "
-				           VerticalAlignment="Center" />
-				<Button Grid.Column="1"
-				        Content="nReez terms and conditions."
-				        FontSize="12" />
-			</Grid>
-		</CheckBox>
+		<Grid Margin="0,10,0,2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+				<CheckBox Content="I agree to the " />
+			<Button Grid.Column="1"
+					TabIndex="4"
+			        Content="nReez terms and conditions"
+			        FontSize="12" Padding="5,10" HorizontalAlignment="Left">
+				<i:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
+				</i:Interaction.Behaviors>
+			</Button>
+		</Grid>
 		<TextBlock Foreground="Red"
 				   Text="{Binding Status}"
 				   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" MinHeight="14" />
 		<Button x:Name="Register"
-		        Content="Sign Up"
+		        Content="Sign up"
 		        MinWidth="75"
-		        Margin="0, 10"
+		        Margin="0,10,0,0"
 		        HorizontalAlignment="Center"
-		        TabIndex="4" />
+		        TabIndex="5"
+				Style="{StaticResource RegisterButtonStyle}" />
 	</StackPanel>
 </UserControl>
