@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Caliburn.Micro;
-using Fab.Client.MoneyServiceReference;
 using Fab.Client.Shell;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Postings.Transactions
 {
@@ -17,8 +17,13 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		private readonly decimal quantity;
 		private readonly Guid userId;
 
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
+
 		public AddTransactionResult(Guid userId, int accountId, DateTime operationDate, decimal price, decimal quantity,
-		                            string comment, int? categoryId, bool isDeposit)
+									string comment, int? categoryId, bool isDeposit, IEventAggregator eventAggregator)
 		{
 			this.userId = userId;
 			this.accountId = accountId;
@@ -28,6 +33,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			this.comment = comment;
 			this.categoryId = categoryId;
 			this.isDeposit = isDeposit;
+			EventAggregator = eventAggregator;
 		}
 
 		#region IResult Members
@@ -48,6 +54,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 				proxy.WithdrawalCompleted += OnSavingCompleted;
 				proxy.WithdrawalAsync(userId, accountId, operationDate, price, quantity, categoryId, comment);
 			}
+
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Saving new " + (isDeposit ? "income" : "expense") });
 		}
 
 		#endregion
@@ -63,6 +71,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			{
 				Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 			}
+
+			EventAggregator.Publish(new AsyncOperationCompleteMessage());
 		}
 	}
 }

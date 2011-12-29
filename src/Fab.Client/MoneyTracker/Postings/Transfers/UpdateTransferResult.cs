@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Caliburn.Micro;
-using Fab.Client.MoneyServiceReference;
 using Fab.Client.Shell;
+using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Postings.Transfers
 {
@@ -16,7 +16,12 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		private readonly decimal amount;
 		private readonly string comment;
 
-		public UpdateTransferResult(int transactionId, Guid user1Id, int account1Id, int account2Id, DateTime operationDate, decimal amount, string comment)
+		/// <summary>
+		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private IEventAggregator EventAggregator { get; set; }
+
+		public UpdateTransferResult(int transactionId, Guid user1Id, int account1Id, int account2Id, DateTime operationDate, decimal amount, string comment, IEventAggregator eventAggregator)
 		{
 			this.transactionId = transactionId;
 			this.user1Id = user1Id;
@@ -25,6 +30,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			this.operationDate = operationDate;
 			this.amount = amount;
 			this.comment = comment;
+			EventAggregator = eventAggregator;
 		}
 
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
@@ -42,6 +48,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 									  1,	//TODO: add "quantity" parameter here
 									  comment
 								);
+
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Saving updated transfer" });
 		}
 
 		private void OnUpdateTransferCompleted(object s, AsyncCompletedEventArgs e)
@@ -55,6 +63,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			{
 				Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 			}
+
+			EventAggregator.Publish(new AsyncOperationCompleteMessage());
 		}
 	}
 }

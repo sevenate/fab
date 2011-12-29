@@ -210,7 +210,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 			};
 
 			proxy.UpdateAccountAsync(UserId, entity.Id, entity.Name);
-			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Updating category \"" + entity.Name + "\"" });
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Updating account \"" + entity.Name + "\"" });
 
 			return entity;
 		}

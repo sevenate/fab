@@ -29,6 +29,12 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 	{
 		#region Fields
 
+		/// <summary>
+		/// Enables loosely-coupled publication of and subscription to events.
+		/// </summary>
+		private readonly IEventAggregator eventAggregator = IoC.Get<IEventAggregator>();
+
+
 		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
 		private int? transactionId;
 		private DateTime operationDate = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
@@ -257,7 +263,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Amount.Trim()),
-					Comment != null ? Comment.Trim() : null
+					Comment != null ? Comment.Trim() : null,
+					eventAggregator
 					);
 
 				yield return request;
@@ -275,7 +282,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Amount.Trim()),
-					Comment != null ? Comment.Trim() : null
+					Comment != null ? Comment.Trim() : null,
+					eventAggregator
 					);
 
 				yield return request;
