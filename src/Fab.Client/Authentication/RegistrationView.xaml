@@ -139,7 +139,9 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-				<CheckBox Content="I agree to the " />
+			<CheckBox x:Name="AgreeToTerms"
+					  Content="I agree to the "
+					  TabIndex="3" />
 			<Button Grid.Column="1"
 					TabIndex="4"
 			        Content="nReez terms and conditions"
