@@ -1,0 +1,40 @@
+﻿<Application x:Class="Fab.Client.App"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:mirco="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+			 xmlns:shell="clr-namespace:Fab.Client.Shell"
+			 xmlns:framework="clr-namespace:Fab.Client.Framework"
+			 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
+			 xmlns:Common="clr-namespace:Fab.Client.Common" xmlns:Categories="clr-namespace:Fab.Client.MoneyTracker.Categories"
+             mc:Ignorable="d">
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Themes/AutoCompleteComboBox.xaml" />
+				<ResourceDictionary Source="Themes/TransitioningFrame.xaml" />
+				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Basic.xaml" />
+				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Advanced.xaml" />
+				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Brushes.xaml" />
+				<ResourceDictionary Source="Themes/generic.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<shell:ScreensBootstrapper x:Key="bootstrapper" />
+			<framework:CultureSettings x:Key="cultureSettings" />
+			<mirco:BooleanToVisibilityConverter x:Key="boolToVisibility" />
+			<converters:BooleanToNotBooleanConverter x:Key="boolToNotBool" />
+			<converters:BooleanToVisibilityInvertConverter x:Key="boolToVisibilityInvert" />
+			<converters:BooleanToOpacityConverter x:Key="boolToOpacity" />
+			<converters:NullToCollapsedConverter x:Key="nullToCollapsed" />
+			<converters:NullToQuestionMarkConverter x:Key="nullToQuestion" />
+			<converters:ZeroToVisibilityConverter x:Key="zeroToVisibility" />
+			<converters:BalanceToColorConverter x:Key="balanceToColor" />
+			<converters:DebugConverter x:Key="debugConverter" />
+			<converters:BooleanToColorConverter x:Key="boolToColor" />
+			<converters:AssetTypeIdToStringConverter x:Key="assetTypeIdToString" />
+			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
+			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
+			<Categories:CategoryTypeToColorConverter x:Key="categoryTypeToColor" />
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

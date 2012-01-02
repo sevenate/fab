@@ -1,0 +1,17 @@
+glob:.hgignore
+glob:StyleCop.Cache
+glob:_ReSharper.*/*
+glob:*.dotCover
+glob:*.user
+glob:*.suo
+glob:*.mdf
+glob:*_log.ldf
+glob:*.sdf
+glob:*.xap
+glob:bin/*
+glob:deploy/*
+glob:obj/*
+glob:test/*
+glob:App_Data/Logs/*
+glob:src/AssemblyInfo.Generated.cs
+glob:version.txt

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f4cf3a9b-7ed1-4aaf-b945-960497370762" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/StagingFab/UserService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="UserService2.xsd" MetadataType="Schema" ID="ff484b91-f4b2-4159-bb20-4159a851eb80" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserService.xsd" MetadataType="Schema" ID="0d947266-dbf8-4ab3-973f-77ee7783aa7c" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?xsd=xsd2" />
+    <MetadataFile FileName="UserService1.wsdl" MetadataType="Wsdl" ID="29e4466c-850c-4758-971e-d9e6c3a1d44a" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?wsdl" />
+    <MetadataFile FileName="UserService21.xsd" MetadataType="Schema" ID="265a0a41-fadd-487c-877a-fb84055fd785" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?xsd=xsd1" />
+    <MetadataFile FileName="UserService1.disco" MetadataType="Disco" ID="35a8457a-a843-4cdb-a2c8-52aa0a1ef6c4" SourceId="1" SourceUrl="http://localhost/StagingFab/UserService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

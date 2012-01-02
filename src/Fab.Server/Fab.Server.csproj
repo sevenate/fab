@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{192B90DA-497A-4986-9863-1AFAF66A1332}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fab.Server</RootNamespace>
+    <AssemblyName>Fab.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <UseIISExpress>false</UseIISExpress>
+    <SilverlightApplicationList>{C75F0C64-CBBF-4B29-9E9E-A362AC3A4760}|..\Fab.Client\Fab.Client.csproj|ClientBin|False</SilverlightApplicationList>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>&lt;Objects&gt;&lt;ObjectGroup Name="ModelContainer" Order="1" Enabled="True"&gt;&lt;Destination Path="" /&gt;&lt;Object Type="dbFullSql"&gt;&lt;PreSource Path="metadata=res://%2a/Model.csdl|res://%2a/Model.ssdl|res://%2a/Model.msl%3bprovider=System.Data.SqlClient%3bprovider connection string=&amp;quot%3bData Source=.\SQLEXPRESS%3bAttachDbFilename=|DataDirectory|\Database.mdf%3bIntegrated Security=True%3bUser Instance=True%3bMultipleActiveResultSets=True&amp;quot%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" /&gt;&lt;Source Path="obj\Debug\AutoScripts\ModelContainer_SchemaOnly.sql" /&gt;&lt;/Object&gt;&lt;/ObjectGroup&gt;&lt;/Objects&gt;</PublishDatabaseSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\ext\.NET 4\Logging\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\..\ext\.NET 4\Logging\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="EmitMapper">
+      <HintPath>..\..\ext\.NET 4\EmitMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\ext\.NET 4\Logging\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Nreez.Utility">
+      <HintPath>..\..\ext\.NET 4\Logging\Nreez.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ext\.NET 4\SQL CE 4.0\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ext\.NET 4\SQL CE 4.0\System.Data.SqlServerCe.Entity\System.Data.SqlServerCe.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\SilverFAB.xap" />
+    <EntityDeploy Include="Core\Master.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Master.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Global.asax" />
+    <Content Include="log4net.config" />
+    <Content Include="ClientBin\web.config" />
+    <None Include="Sql\master_001_setup.sqlce" />
+    <None Include="Sql\personal_001_setup.sqlce" />
+    <Content Include="favicon.png" />
+    <Content Include="index.html" />
+    <Content Include="maintenance.html" />
+    <Content Include="Scripts\Silverlight.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Generated.cs">
+      <Link>Properties\AssemblyInfo.Generated.cs</Link>
+    </Compile>
+    <Compile Include="Core\Contracts\IRegistrationService.cs" />
+    <Compile Include="Core\LogExtensions.cs" />
+    <Compile Include="Core\Services\AdminService.cs" />
+    <Compile Include="Core\DatabaseManager.cs" />
+    <Compile Include="Core\DTO\AccountDTO.cs" />
+    <Compile Include="Core\DTO\AssetTypeDTO.cs" />
+    <Compile Include="Core\DTO\UserDTO.cs" />
+    <Compile Include="Core\DTO\CategoryDTO.cs" />
+    <Compile Include="Core\Enums\CategoryType.cs" />
+    <Compile Include="Core\DTO\DepositDTO.cs" />
+    <Compile Include="Core\DTO\IncomingTransferDTO.cs" />
+    <Compile Include="Core\DTO\JournalDTO.cs" />
+    <Compile Include="Core\DTO\OutgoingTransferDTO.cs" />
+    <Compile Include="Core\DTO\TransferDTO.cs" />
+    <Compile Include="Core\DTO\TransactionDTO.cs" />
+    <Compile Include="Core\DTO\AdminUserDTO.cs" />
+    <Compile Include="Core\DTO\WithdrawalDTO.cs" />
+    <Compile Include="Core\Filters\CategoryFilter.cs" />
+    <Compile Include="Core\Filters\IQueryFilter.cs" />
+    <Compile Include="Core\Filters\QueryFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Filters\TextSearchFilter.cs" />
+    <Compile Include="Core\Master.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Master.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Services\ErrorHandler.cs" />
+    <Compile Include="Core\Services\ErrorHandlingBehaviorAttribute.cs" />
+    <Compile Include="Core\DTO\FaultDetail.cs" />
+    <Compile Include="Core\Services\RegistrationService.cs" />
+    <Compile Include="Core\StringExtensions.cs" />
+    <Compile Include="Core\CustomUserNameValidator.cs" />
+    <Compile Include="Core\Contracts\IAdminService.cs" />
+    <Compile Include="Core\Contracts\IMoneyService.cs" />
+    <Compile Include="Core\Enums\JournalType.cs" />
+    <Compile Include="Core\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Contracts\IUserService.cs" />
+    <Compile Include="Core\ModelHelper.cs" />
+    <Compile Include="Core\Services\MoneyService.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Services\UserService.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Core\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="splash.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="..\..\msbuild.common.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>33809</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://thor/StagingFab</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <EnableWcfTestClientForSVCDefaultValue>True</EnableWcfTestClientForSVCDefaultValue>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
