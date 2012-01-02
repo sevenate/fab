@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Core\Contracts\IRegistrationService.cs" />
     <Compile Include="Core\LogExtensions.cs" />
+    <Compile Include="Core\ManagmentServiceValidator.cs" />
     <Compile Include="Core\Services\AdminService.cs" />
     <Compile Include="Core\DatabaseManager.cs" />
     <Compile Include="Core\DTO\AccountDTO.cs" />
