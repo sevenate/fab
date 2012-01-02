@@ -206,7 +206,7 @@ namespace Fab.Server.Core
 			if (!Path.IsPathRooted(dataDirectory))
 			{
 				var root = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
-				dataDirectory = Path.Combine(root, dataDirectory);
+				dataDirectory = Path.Combine(root, dataDirectory ?? string.Empty);
 			}
 
 			return path.Replace("|DataDirectory|", dataDirectory);
