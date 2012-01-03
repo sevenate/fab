@@ -10,8 +10,8 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fab.Server.Import")]
-[assembly: AssemblyDescription("FAB Data Import tool")]
+[assembly: AssemblyTitle("Fab.Management")]
+[assembly: AssemblyDescription("FAB management tool")]
 
 //In order to begin building localizable applications, set 
 //<UICulture>CultureYouAreCodingWith</UICulture> in your .csproj file
@@ -21,6 +21,7 @@ using System.Windows;
 //the line below to match the UICulture setting in the project file.
 
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
+
 
 [assembly: ThemeInfo(
 	ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located
