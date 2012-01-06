@@ -1,47 +1,202 @@
 ﻿<ribbon:RibbonWindow x:Class="Fab.Managment.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
-        Title="FAB management tool"
-		x:Name="RibbonWindow"
-		Width="640" Height="480">
-
+					 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+					 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					 xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+					 Title="FAB management tool"
+					 mc:Ignorable="d"
+					 d:DesignWidth="1064"
+					 d:DesignHeight="540">
+	<Window.Resources>
+		<DataTemplate x:Key="TimeTemplate">
+			<Grid>
+				<TextBlock Text="{Binding StringFormat=HH:mm}"
+						   TextWrapping="Wrap" />
+			</Grid>
+		</DataTemplate>
+	</Window.Resources>
+	
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded"
+					  SourceName="Clear" />
+	</Window.Triggers>
+	
 	<Grid x:Name="LayoutRoot">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <ribbon:Ribbon x:Name="Ribbon">
-            <ribbon:Ribbon.ApplicationMenu>
-                <ribbon:RibbonApplicationMenu SmallImageSource="Images\SmallIcon.png">
-                    <ribbon:RibbonApplicationMenuItem Header="Hello _Ribbon"
-                                                      x:Name="MenuItem1"
-                                                      ImageSource="Images\LargeIcon.png"/>
-                </ribbon:RibbonApplicationMenu>
-            </ribbon:Ribbon.ApplicationMenu>
-            <ribbon:RibbonTab x:Name="HomeTab" 
-                              Header="Home">
-                <ribbon:RibbonGroup x:Name="Group1" 
-                                    Header="Group1">
-                    <ribbon:RibbonButton x:Name="Button1"
-                                         LargeImageSource="Images\LargeIcon.png"
-                                         Label="Button1" />
-
-                    <ribbon:RibbonButton x:Name="Button2"
-                                         SmallImageSource="Images\SmallIcon.png"
-                                         Label="Button2" />
-                    <ribbon:RibbonButton x:Name="Button3"
-                                         SmallImageSource="Images\SmallIcon.png"
-                                         Label="Button3" />
-                    <ribbon:RibbonButton x:Name="Button4"
-                                         SmallImageSource="Images\SmallIcon.png"
-                                         Label="Button4" />
-                    
-                </ribbon:RibbonGroup>
-                
-            </ribbon:RibbonTab>
-        </ribbon:Ribbon> 
-        
-    </Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<ribbon:Ribbon x:Name="Ribbon" SelectedIndex="0">
+			<ribbon:Ribbon.ApplicationMenu>
+				<ribbon:RibbonApplicationMenu SmallImageSource="Images\SmallIcon.png">
+					<ribbon:RibbonApplicationMenuItem Header="Hello _Ribbon"
+													  x:Name="MenuItem1"
+													  ImageSource="Images\LargeIcon.png" />
+				</ribbon:RibbonApplicationMenu>
+			</ribbon:Ribbon.ApplicationMenu>
+			<ribbon:RibbonTab x:Name="HomeTab"
+							  Header="Home">
+				<ribbon:RibbonGroup x:Name="Group2"
+									Header="Service">
+					<ComboBox x:Name="endPointAddress"
+							  SelectedIndex="0"
+							  SelectionChanged="OnServiceAddressChanged">
+						<ComboBoxItem Content="https://localhost/StagingFab/AdminService.svc" />
+						<ComboBoxItem Content="https://cws13.my-hosting-panel.com/9962BC33-DD6F-45E0-9540-259B2C9DEEA2/AdminService.svc" />
+					</ComboBox>
+					<Grid Width="{Binding ElementName=endPointAddress, Path=ActualWidth}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<TextBox x:Name="Username"
+								 Text="admin"
+								 ToolTip="User name"
+								 TextChanged="OnUsernameTextChanged" />
+						<PasswordBox x:Name="Password"
+									 Grid.Column="1"
+									 Password="123"
+									 ToolTip="Password"
+									 PasswordChanged="OnPasswordPasswordChanged" />
+					</Grid>
+				</ribbon:RibbonGroup>
+				<ribbon:RibbonGroup x:Name="Group5"
+									Header="Start">
+					<GroupBox>
+						<GroupBox.Header>
+							<CheckBox x:Name="IsNotOlderThen"
+									  Content="Not oldet than"
+									  VerticalAlignment="Center"
+									  Margin="2"
+									  IsChecked="True" />
+						</GroupBox.Header>
+						<StackPanel Orientation="Horizontal"
+									IsEnabled="{Binding IsChecked, ElementName=IsNotOlderThen, Mode=Default}">
+							<DatePicker x:Name="NotOlderThen"
+										SelectedDateFormat="Long" />
+							<ComboBox x:Name="NotOlderThenTime"
+									  Margin="4,0,0,0"
+									  ItemTemplate="{DynamicResource TimeTemplate}" />
+						</StackPanel>
+					</GroupBox>
+				</ribbon:RibbonGroup>
+				<ribbon:RibbonGroup x:Name="Group6"
+									Header="End">
+					<GroupBox>
+						<GroupBox.Header>
+							<CheckBox x:Name="IsUpto"
+									  VerticalAlignment="Center"
+									  Content="Up to:"
+									  Margin="2" />
+						</GroupBox.Header>
+						<StackPanel Orientation="Horizontal"
+									IsEnabled="{Binding IsChecked, ElementName=IsUpto, Mode=Default}">
+							<DatePicker x:Name="Upto"
+										SelectedDateFormat="Long" />
+							<ComboBox x:Name="UptoTime"
+									  Margin="4,0,0,0"
+									  ItemTemplate="{DynamicResource TimeTemplate}" />
+						</StackPanel>
+					</GroupBox>
+				</ribbon:RibbonGroup>
+				<ribbon:RibbonGroup x:Name="Group7"
+									Header="Paging">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Skip:" />
+						<TextBox x:Name="Skip"
+								 MinWidth="50"
+								 Text="0" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Take:" />
+						<ComboBox x:Name="Take"
+								  MinWidth="50"
+								  SelectedIndex="2">
+							<ComboBoxItem>5</ComboBoxItem>
+							<ComboBoxItem>10</ComboBoxItem>
+							<ComboBoxItem>20</ComboBoxItem>
+							<ComboBoxItem>50</ComboBoxItem>
+							<ComboBoxItem>100</ComboBoxItem>
+							<ComboBoxItem>500</ComboBoxItem>
+						</ComboBox>
+					</StackPanel>
+				</ribbon:RibbonGroup>
+				<ribbon:RibbonGroup x:Name="Group8"
+									Header="Contains">
+					<StackPanel Orientation="Horizontal">
+						<TextBox x:Name="SearchText"
+								 MinWidth="117" />
+						<Button x:Name="Clear"
+								Content="Clear"
+								ToolTip="Clear search text"
+								Click="OnClearClick" />
+					</StackPanel>
+					<Button x:Name="Search"
+					        Content="Search"
+							MinWidth="150"
+							Click="OnSearchClick" />
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="In view:"
+								   TextWrapping="Wrap"
+								   VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Items.Count, ElementName=UsersList, Mode=Default}"
+								   TextWrapping="Wrap"
+								   Margin="4,0"
+								   Foreground="Red"
+								   FontWeight="Bold"
+								   VerticalAlignment="Center" />
+						<TextBlock Text="of total"
+								   TextWrapping="Wrap"
+								   VerticalAlignment="Center" />
+						<TextBlock x:Name="TotalFound"
+								   Text="0"
+								   TextWrapping="Wrap"
+								   Margin="4,0,0,0"
+								   Foreground="Red"
+								   FontWeight="Bold"
+								   VerticalAlignment="Center" />
+					</StackPanel>
+				</ribbon:RibbonGroup>
+			</ribbon:RibbonTab>
+			<ribbon:RibbonTab x:Name="Tab2"
+							  Header="Misc">
+				<ribbon:RibbonGroup x:Name="Group1"
+									Header="Sample">
+					<ribbon:RibbonButton x:Name="Button1"
+										 LargeImageSource="Images\LargeIcon.png"
+										 Label="Button1" />
+					<ribbon:RibbonButton x:Name="Button2"
+										 SmallImageSource="Images\SmallIcon.png"
+										 Label="Button2" />
+					<ribbon:RibbonButton x:Name="Button3"
+										 SmallImageSource="Images\SmallIcon.png"
+										 Label="Button3" />
+					<ribbon:RibbonButton x:Name="Button4"
+										 SmallImageSource="Images\SmallIcon.png"
+										 Label="Button4" />
+				</ribbon:RibbonGroup>
+				<ribbon:RibbonGroup x:Name="Group3"
+									Header="Hash">
+					<TextBox x:Name="NewPassword"
+							 Text="Password"
+							 MinWidth="150" />
+					<TextBox x:Name="PasswordHash"
+							 Text="Hash"
+							 MinWidth="150" />
+					<Button x:Name="Generate"
+							Content="Generate"
+							MinWidth="150"
+							Click="OnGenerateClick" />
+				</ribbon:RibbonGroup>
+			</ribbon:RibbonTab>
+		</ribbon:Ribbon>
+		<ListBox x:Name="UsersList"
+				 Grid.Row="1"
+				 BorderThickness="0"
+				 HorizontalContentAlignment="Stretch"
+				 ItemTemplate="{DynamicResource UserItemTemplate}"
+				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+				 ScrollViewer.CanContentScroll="False" />
+	</Grid>
 </ribbon:RibbonWindow>

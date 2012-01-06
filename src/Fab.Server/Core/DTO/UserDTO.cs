@@ -23,6 +23,7 @@ namespace Fab.Server.Core.DTO
 
 		/// <summary>
 		/// Gets or sets user registration date.
+		/// Note: should be filled only by service.
 		/// </summary>
 		[DataMember]
 		public DateTime Registered { get; set; }
