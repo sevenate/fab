@@ -6,15 +6,15 @@
 			 mc:Ignorable="d"
 			 xmlns:Converters="clr-namespace:Fab.Managment.Converters"
 			 d:DesignWidth="1369"
-			 d:DesignHeight="88">
+			 d:DesignHeight="64">
 	<Grid x:Name="LayoutRoot">
 		<Border HorizontalAlignment="Stretch"
 				VerticalAlignment="Stretch"
 				Width="Auto"
+				Height="Auto"
 				CornerRadius="5"
 				BorderThickness="2"
-				BorderBrush="#FF929292"
-				Margin="0,0,0,-52">
+				BorderBrush="#FF929292">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition />
@@ -109,6 +109,7 @@
 						 Text="{Binding DatabasePath, Mode=TwoWay}"
 						 ToolTip="Path to personal database"
 						 Foreground="DarkGray"
+						 VerticalAlignment="Center"
 						 MaxLength="4096"
 						 BorderThickness="0" />
 				<TextBox x:Name="ServiceUrl"
@@ -117,6 +118,7 @@
 						 Text="{Binding ServiceUrl, Mode=TwoWay}"
 						 ToolTip="Service Url"
 						 Foreground="DarkGray"
+						 VerticalAlignment="Center"
 						 MinWidth="75"
 						 HorizontalAlignment="Right"
 						 MaxLength="4096"
@@ -137,8 +139,7 @@
 						ToolTip="Save updated user data"
 						FontSize="16"
 						Margin="10,5,0,5"
-						MinWidth="75"
-						Padding="5" />
+						MinWidth="75" />
 				<Button x:Name="Delete"
 						Grid.Column="4"
 						Grid.RowSpan="2"
