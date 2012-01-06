@@ -149,6 +149,27 @@ namespace Fab.Server.Core
 			return AddEntityMetadata(connectionString, PersonalConnectionName);
 		}
 
+		/// <summary>
+		/// Replace the "|DataDirectory|" pattern in path to corresponding value from AppDomain like path to "App_Data" directory.
+		/// </summary>
+		/// <param name="path">Relative path with "|DataDirectory|".</param>
+		/// <returns>Absolute path to the original directory.</returns>
+		public static string ResolveDataDirectory(string path)
+		{
+			//var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
+			//AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
+
+			var dataDirectory = ConfigurationManager.AppSettings["DataDirectory"];
+				
+			if (!Path.IsPathRooted(dataDirectory))
+			{
+				var root = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
+				dataDirectory = Path.Combine(root, dataDirectory ?? string.Empty);
+			}
+
+			return path.Replace("|DataDirectory|", dataDirectory);
+		}
+
 		#endregion
 
 		#region Private Methods
@@ -189,27 +210,6 @@ namespace Fab.Server.Core
 										  registrationDate.ToString("dd"),
 										  userId.ToString().ToLower());
 			return folderPath;
-		}
-
-		/// <summary>
-		/// Replace the "|DataDirectory|" pattern in path to corresponding value from AppDomain like path to "App_Data" directory.
-		/// </summary>
-		/// <param name="path">Relative path with "|DataDirectory|".</param>
-		/// <returns>Absolute path to the original directory.</returns>
-		private static string ResolveDataDirectory(string path)
-		{
-			//var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
-			//AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
-
-			var dataDirectory = ConfigurationManager.AppSettings["DataDirectory"];
-				
-			if (!Path.IsPathRooted(dataDirectory))
-			{
-				var root = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath ?? AppDomain.CurrentDomain.BaseDirectory;
-				dataDirectory = Path.Combine(root, dataDirectory ?? string.Empty);
-			}
-
-			return path.Replace("|DataDirectory|", dataDirectory);
 		}
 
 		/// <summary>

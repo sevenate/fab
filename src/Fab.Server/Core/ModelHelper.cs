@@ -35,7 +35,7 @@ namespace Fab.Server.Core
 		/// <returns>User instance.</returns>
 		internal static User GetUserById(MasterEntities mc, Guid userId)
 		{
-			User user = mc.Users.SingleOrDefault(u => u.Id == userId && !u.IsDisabled);
+			User user = mc.Users.SingleOrDefault(u => u.Id == userId);
 
 			if (user == null)
 			{

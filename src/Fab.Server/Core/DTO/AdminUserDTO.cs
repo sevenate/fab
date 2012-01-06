@@ -15,6 +15,8 @@ namespace Fab.Server.Core.DTO
 	[DataContract]
 	public class AdminUserDTO : UserDTO
 	{
+		#region Properties
+
 		/// <summary>
 		/// Gets or sets user unique login name.
 		/// </summary>
@@ -23,9 +25,10 @@ namespace Fab.Server.Core.DTO
 
 		/// <summary>
 		/// Gets or sets user password.
+		/// Note: should be filled only by client.
 		/// </summary>
 		[DataMember]
-		public string Password { get; set; }
+		public string Passoword { get; set; }
 
 		/// <summary>
 		/// Gets or sets user unique email.
@@ -35,6 +38,7 @@ namespace Fab.Server.Core.DTO
 
 		/// <summary>
 		/// Gets or sets user last access date.
+		/// Note: should be filled only by service.
 		/// </summary>
 		[DataMember]
 		public DateTime? LastAccess { get; set; }
@@ -53,8 +57,40 @@ namespace Fab.Server.Core.DTO
 
 		/// <summary>
 		/// Gets or sets a date when <see cref="IsDisabled"/> value was last changed.
+		/// Note: should be filled only by service.
 		/// </summary>
 		[DataMember]
 		public DateTime? DisabledChanged { get; set; }
+
+		/// <summary>
+		/// Gets or sets database file size in bytes.
+		/// Note: should be filled only by service.
+		/// </summary>
+		[DataMember]
+		public long? DatabaseSize { get; set; }
+
+		#endregion
+
+		#region .Ctors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AdminUserDTO"/> class.
+		/// </summary>
+		public AdminUserDTO()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AdminUserDTO"/> class.
+		/// </summary>
+		/// <param name="userDTO">User instance to copy basic properties from.</param>
+		public AdminUserDTO(UserDTO userDTO)
+		{
+			Id = userDTO.Id;
+			Registered = userDTO.Registered;
+			ServiceUrl = userDTO.ServiceUrl;
+		}
+
+		#endregion
 	}
 }
