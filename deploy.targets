@@ -29,7 +29,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 	<Target Name="Deploy">
 		<CallTarget Targets="Prepare" />
 		<CallTarget Targets="DeployFAB" />
-		<CallTarget Targets="DeployImportTool" />
+		<CallTarget Targets="DeployManagementTool" />
 	</Target>
 
 	<Target Name="Prepare">
@@ -63,14 +63,14 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<TransformXml Source="$(SourceFolder)\Web.Config" Transform="$(SourceFolder)\Web.$(Configuration).config" Destination="$(DeployFolder)\Web.config" StackTrace="true" />
 	</Target>
 
-	<Target Name="DeployImportTool">
+	<Target Name="DeployManagementTool">
 		<PropertyGroup>
-			<BinFolder>$(BinRoot)\Fab.Server.Import</BinFolder>
-			<SourceFolder>$(SourceRoot)\Fab.Server.Import</SourceFolder>
-			<DeployFolder>$(DeployRoot)\ImportTool</DeployFolder>
+			<BinFolder>$(BinRoot)\Fab.Management</BinFolder>
+			<SourceFolder>$(SourceRoot)\Fab.Management</SourceFolder>
+			<DeployFolder>$(DeployRoot)\AdminTool</DeployFolder>
 		</PropertyGroup>
 
-		<Message Text="Deploying FAB Import Tool..." />
+		<Message Text="Deploying FAB Management Tool..." />
 
 		<RemoveDir Condition="Exists('$(DeployFolder)')"
 				   Directories="$(DeployFolder)" />

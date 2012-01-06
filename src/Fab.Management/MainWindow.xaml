@@ -6,7 +6,7 @@
 					 xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
 					 Title="FAB management tool"
 					 mc:Ignorable="d"
-					 d:DesignWidth="1064"
+					 d:DesignWidth="1164"
 					 d:DesignHeight="540">
 	<Window.Resources>
 		<DataTemplate x:Key="TimeTemplate">
