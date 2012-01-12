@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <id>http://nreez.com/feed</id>
+  <title>nReez News</title>
+  <subtitle>Latest news about nReez</subtitle>
+  <author>
+    <name>nReez Team</name>
+  </author>
+  <updated>2012-01-11T19:00:00Z</updated>
+
+  <icon>favicon.png</icon>
+  <logo>images/logo.png</logo>
+  
+  <category term="Finance" />
+  <category term="Money" />
+  <category term="Budget" />
+  <category term="Planning" />
+  <category term="Tracking" />
+  <category term="Report" />
+  <category term="nReez" />
+  
+  <link rel="alternate" type="text/html" href="http://nreez.com" title="nReez.com" />
+  <link rel="self" type="text/xml" href="http://nreez.com/feed" title="nReez News (Atom 1.0)" />
+
+  <entry>
+    <id>urn:uuid:e96d240b-fa9a-4037-82ef-fa165fd5ddfa</id>
+    <title>Coming soon...</title>
+    <category term="Update"/>
+    <published>2012-01-11T19:00:00Z</published>
+    <updated>2012-01-11T19:00:00Z</updated>
+
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <a href="http://nreez.com">nReez.com</a> is currently under internal testing and soon will be publicly available, so stay tuned!
+      </div>
+    </content>
+  </entry>
+
+</feed>

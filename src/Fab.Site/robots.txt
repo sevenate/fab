@@ -1,0 +1,6 @@
+User-Agent: iisbot
+Disallow: /
+
+User-agent: *
+Disallow:
+Sitemap: http://www.nreez.com/sitemap.xml
