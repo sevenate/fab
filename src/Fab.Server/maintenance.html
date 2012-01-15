@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
-  <title>nReez - Maintenance</title>
-  <meta name="keywords" content="nReez maintenance down" />
-  <meta name="description" content="nReez is down for maintenance" />
+  <title>Updating - nReez</title>
+  <meta name="description" content="Down for maintenance" />
+  <meta name="robots" content="noindex">
   <style type="text/css">
     html, body
     {
@@ -25,8 +25,23 @@
     }
     p {
       font-family: Verdana, Tahoma, Geneva, sans-serif;
-      text-align: center;
-      color: black;
+        font-size: 110%;
+        text-align: center;
+        color: #151515;
+        text-shadow: 0px 2px 3px #555;
+    }
+    .copyright {
+        margin: 0px 5px 5px 0px;
+        bottom: 0px;
+        text-align: center;
+        width: 100%;
+        position: fixed;
+        font-family: Verdana, Tahoma, Geneva, sans-serif;
+        font-size: 75%;
+        text-align: center;
+        vertical-align: middle;
+        text-align: center;
+        color: #222;
       text-shadow: 0px 2px 3px #555;
     }
 
@@ -40,34 +55,29 @@
     #inner {position: relative; top: -40%} /* for explorer only */
     /* optional: #inner[id] {position: static;} */
   </style>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-9962509-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
  </head>
 
  <body>
   <div id="outer">
     <div id="middle">
       <div id="inner">
-		  <h1>nReez is currently down for maintenance</h1>
-		  <p>We are performing sheduled update and should be back online shortly.</p>
-		  <p>Sorry for inconvinience.</p>
+  		  <h1>nReez is currently down for maintenance</h1>
+  		  <p>We are performing sheduled update and should be back online shortly.</p>
+  		  <p>Sorry for inconvinience.</p>
       </div>
     </div>
+    <span class="copyright">&copy; 2012 nReez</span>
   </div>
-  <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-9962509-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-<script type="text/javascript">
-  var uvOptions = {};
-  (function() {
-    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/HigsxZC4GyI3X29uzoUk3g.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-  })();
-</script>
  </body>
 </html>
