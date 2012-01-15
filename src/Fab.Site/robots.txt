@@ -3,4 +3,4 @@ Disallow: /
 
 User-agent: *
 Disallow:
-Sitemap: http://www.nreez.com/sitemap.xml
+Sitemap: http://nreez.com/sitemap.xml
