@@ -1,9 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
+  <head profile="http://www.w3.org/2005/10/profile">
     <title>nReez</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <meta name="keywords" content="finance, money, asset, budget, planning, tracking, report, nreez" />
     <meta name="description" content="Your personal assistant for tracking and planning family assets." />
+    <meta name="robots" content="noarchive,index,follow" />
+    <meta name="googlebot" content="noarchive,index,follow" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="alternate" type="application/atom+xml" href="http://feeds.feedburner.com/nreez" title="nReez News (Atom 1.0)" />
     <style type="text/css">
@@ -40,17 +43,17 @@
         width: 100%;
         position: fixed;
         font-family: Verdana, Tahoma, Geneva, sans-serif;
-      font-size: 75%;
-      text-align: center;
-      vertical-align: middle;
-      text-align: center;
-      color: #222;
+        font-size: 75%;
+        text-align: center;
+        vertical-align: middle;
+        text-align: center;
+        color: #222;
         text-shadow: 0px 2px 3px #555;
       }
 
-      .icon {
+      img {
         vertical-align: middle;
-      border-width: 0px;
+        border-width: 0px;
       }
 
       .text {
@@ -113,19 +116,80 @@
       /* optional: #inner[id] {position: static;} */
 
     </style>
-      <script type="text/javascript">
-        var uvOptions = {};
-        (function() {
-          var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-          uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/HigsxZC4GyI3X29uzoUk3g.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-        })();
-     </script>
+    
+    <script type="text/javascript">
+      getSLVersion = function()
+      {
+        var version = 'not installed';
+        var product = 'Silverlight ';
+
+        try
+        {
+          if (window.ActiveXObject)
+          {
+            var control = new ActiveXObject('AgControl.AgControl');
+
+            if (control != null)
+            {
+              if (control.isVersionSupported('5.0'))
+                version = product + '5';
+              else if (control.isVersionSupported('4.0'))
+                version = product + '4';
+              else if (control.isVersionSupported('3.0'))
+                version = product + '3';
+              else if (control.isVersionSupported('2.0'))
+                version = product + '2';
+              else if (control.isVersionSupported('1.0'))
+                version = product + '1';
+              else
+                version = product + '(unknown)';
+
+              control = null;
+            }
+          }
+          else
+          {
+            if (navigator.userAgent.indexOf('Linux') != -1)
+              product = 'Moonlight ';
+
+            var plugin = navigator.plugins['Silverlight Plug-In'];
+
+            if (plugin)
+            {
+              if (plugin.description === '1.0.30226.2')
+                version = product + '2';
+              else
+                version = product + parseInt(plugin.description[0]);
+            }
+          }
+        }
+        catch (e) { }
+
+        return version;
+      }
+    </script>
+
+    <script type="text/javascript">
+      var uvOptions = {};
+      (function() {
+        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/HigsxZC4GyI3X29uzoUk3g.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+      })();
+    </script>
 
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-9962509-1']);
       _gaq.push(['_trackPageview']);
+
+      _gaq.push(['_setCustomVar',
+          1,
+          'SL version',
+          getSLVersion(),
+          1
+       ]);
+
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -138,10 +202,10 @@
     <div id="outer">
       <div id="middle">
         <div id="inner">
-          <h1>nReez is coming&#8230;</h1>
+          <h1><img src="images/logo.png" width="48px" height="48px" title="nReez"> nReez is coming&#8230;</h1>
           <p>We are currently tuning here and fixing there and soon will be publicly available.</p>
           <a class="button" href="http://feeds.feedburner.com/nreez">
-            <img class="icon" src="images/feed.png" title="News feed">
+            <img src="images/feed.png" title="News feed">
             <span class="text" title="News feed">Stay Tuned!</span>
           </a>
         </div>
