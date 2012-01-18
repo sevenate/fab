@@ -145,6 +145,60 @@
   <wsdl:message name="IAdminService_UpdateUser_FaultDetailFault_FaultMessage">
     <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q4:FaultDetail" />
   </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeUserDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeUserDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeUserDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeUserDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeUserDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q5:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyUserDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyUserDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyUserDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q6:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairUserDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepairUserDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairUserDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepairUserDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairUserDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q7:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeMasterDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeMasterDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeMasterDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeMasterDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeMasterDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q8:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyMasterDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyMasterDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyMasterDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyMasterDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyMasterDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q9:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairMasterDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepairMasterDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairMasterDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepairMasterDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairMasterDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q10:FaultDetail" />
+  </wsdl:message>
   <wsdl:portType name="IAdminService">
     <wsdl:operation name="GetUsersCount">
       <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetUsersCount" message="tns:IAdminService_GetUsersCount_InputMessage" />
@@ -165,6 +219,36 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/UpdateUser" message="tns:IAdminService_UpdateUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/UpdateUserResponse" message="tns:IAdminService_UpdateUser_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/UpdateUserFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_UpdateUser_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeUserDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/OptimizeUserDatabase" message="tns:IAdminService_OptimizeUserDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/OptimizeUserDatabaseResponse" message="tns:IAdminService_OptimizeUserDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/OptimizeUserDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_OptimizeUserDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/VerifyUserDatabase" message="tns:IAdminService_VerifyUserDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/VerifyUserDatabaseResponse" message="tns:IAdminService_VerifyUserDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/VerifyUserDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_VerifyUserDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepairUserDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/RepairUserDatabase" message="tns:IAdminService_RepairUserDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/RepairUserDatabaseResponse" message="tns:IAdminService_RepairUserDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/RepairUserDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_RepairUserDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeMasterDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/OptimizeMasterDatabase" message="tns:IAdminService_OptimizeMasterDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/OptimizeMasterDatabaseResponse" message="tns:IAdminService_OptimizeMasterDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/OptimizeMasterDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_OptimizeMasterDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMasterDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/VerifyMasterDatabase" message="tns:IAdminService_VerifyMasterDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/VerifyMasterDatabaseResponse" message="tns:IAdminService_VerifyMasterDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/VerifyMasterDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_VerifyMasterDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepairMasterDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabase" message="tns:IAdminService_RepairMasterDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabaseResponse" message="tns:IAdminService_RepairMasterDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_RepairMasterDatabase_FaultDetailFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="AdminServiceBasic" type="tns:IAdminService">
@@ -208,6 +292,78 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateUser">
       <soap12:operation soapAction="http://tempuri.org/IAdminService/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeUserDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/OptimizeUserDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/VerifyUserDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepairUserDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/RepairUserDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeMasterDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/OptimizeMasterDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMasterDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/VerifyMasterDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepairMasterDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/RepairMasterDatabase" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

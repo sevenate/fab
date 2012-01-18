@@ -471,6 +471,60 @@ namespace Fab.Managment.AdminServiceReference {
         System.IAsyncResult BeginUpdateUser(Fab.Managment.AdminServiceReference.AdminUserDTO userDto, System.AsyncCallback callback, object asyncState);
         
         System.DateTime EndUpdateUser(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/OptimizeUserDatabase", ReplyAction="http://tempuri.org/IAdminService/OptimizeUserDatabaseResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/OptimizeUserDatabaseFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+        long OptimizeUserDatabase(System.Guid userId);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/OptimizeUserDatabase", ReplyAction="http://tempuri.org/IAdminService/OptimizeUserDatabaseResponse")]
+        System.IAsyncResult BeginOptimizeUserDatabase(System.Guid userId, System.AsyncCallback callback, object asyncState);
+        
+        long EndOptimizeUserDatabase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/VerifyUserDatabase", ReplyAction="http://tempuri.org/IAdminService/VerifyUserDatabaseResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/VerifyUserDatabaseFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+        bool VerifyUserDatabase(System.Guid userId);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/VerifyUserDatabase", ReplyAction="http://tempuri.org/IAdminService/VerifyUserDatabaseResponse")]
+        System.IAsyncResult BeginVerifyUserDatabase(System.Guid userId, System.AsyncCallback callback, object asyncState);
+        
+        bool EndVerifyUserDatabase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/RepairUserDatabase", ReplyAction="http://tempuri.org/IAdminService/RepairUserDatabaseResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/RepairUserDatabaseFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+        long RepairUserDatabase(System.Guid userId);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/RepairUserDatabase", ReplyAction="http://tempuri.org/IAdminService/RepairUserDatabaseResponse")]
+        System.IAsyncResult BeginRepairUserDatabase(System.Guid userId, System.AsyncCallback callback, object asyncState);
+        
+        long EndRepairUserDatabase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/OptimizeMasterDatabase", ReplyAction="http://tempuri.org/IAdminService/OptimizeMasterDatabaseResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/OptimizeMasterDatabaseFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+        long OptimizeMasterDatabase();
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/OptimizeMasterDatabase", ReplyAction="http://tempuri.org/IAdminService/OptimizeMasterDatabaseResponse")]
+        System.IAsyncResult BeginOptimizeMasterDatabase(System.AsyncCallback callback, object asyncState);
+        
+        long EndOptimizeMasterDatabase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/VerifyMasterDatabase", ReplyAction="http://tempuri.org/IAdminService/VerifyMasterDatabaseResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/VerifyMasterDatabaseFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+        bool VerifyMasterDatabase();
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/VerifyMasterDatabase", ReplyAction="http://tempuri.org/IAdminService/VerifyMasterDatabaseResponse")]
+        System.IAsyncResult BeginVerifyMasterDatabase(System.AsyncCallback callback, object asyncState);
+        
+        bool EndVerifyMasterDatabase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/RepairMasterDatabase", ReplyAction="http://tempuri.org/IAdminService/RepairMasterDatabaseResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/RepairMasterDatabaseFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+        long RepairMasterDatabase();
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/RepairMasterDatabase", ReplyAction="http://tempuri.org/IAdminService/RepairMasterDatabaseResponse")]
+        System.IAsyncResult BeginRepairMasterDatabase(System.AsyncCallback callback, object asyncState);
+        
+        long EndRepairMasterDatabase(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -536,6 +590,120 @@ namespace Fab.Managment.AdminServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class OptimizeUserDatabaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public OptimizeUserDatabaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class VerifyUserDatabaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public VerifyUserDatabaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RepairUserDatabaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RepairUserDatabaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class OptimizeMasterDatabaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public OptimizeMasterDatabaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class VerifyMasterDatabaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public VerifyMasterDatabaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RepairMasterDatabaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RepairMasterDatabaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class AdminServiceClient : System.ServiceModel.ClientBase<Fab.Managment.AdminServiceReference.IAdminService>, Fab.Managment.AdminServiceReference.IAdminService {
         
         private BeginOperationDelegate onBeginGetUsersCountDelegate;
@@ -561,6 +729,42 @@ namespace Fab.Managment.AdminServiceReference {
         private EndOperationDelegate onEndUpdateUserDelegate;
         
         private System.Threading.SendOrPostCallback onUpdateUserCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginOptimizeUserDatabaseDelegate;
+        
+        private EndOperationDelegate onEndOptimizeUserDatabaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onOptimizeUserDatabaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginVerifyUserDatabaseDelegate;
+        
+        private EndOperationDelegate onEndVerifyUserDatabaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onVerifyUserDatabaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRepairUserDatabaseDelegate;
+        
+        private EndOperationDelegate onEndRepairUserDatabaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onRepairUserDatabaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginOptimizeMasterDatabaseDelegate;
+        
+        private EndOperationDelegate onEndOptimizeMasterDatabaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onOptimizeMasterDatabaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginVerifyMasterDatabaseDelegate;
+        
+        private EndOperationDelegate onEndVerifyMasterDatabaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onVerifyMasterDatabaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRepairMasterDatabaseDelegate;
+        
+        private EndOperationDelegate onEndRepairMasterDatabaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onRepairMasterDatabaseCompletedDelegate;
         
         public AdminServiceClient() {
         }
@@ -588,6 +792,18 @@ namespace Fab.Managment.AdminServiceReference {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DeleteUserCompleted;
         
         public event System.EventHandler<UpdateUserCompletedEventArgs> UpdateUserCompleted;
+        
+        public event System.EventHandler<OptimizeUserDatabaseCompletedEventArgs> OptimizeUserDatabaseCompleted;
+        
+        public event System.EventHandler<VerifyUserDatabaseCompletedEventArgs> VerifyUserDatabaseCompleted;
+        
+        public event System.EventHandler<RepairUserDatabaseCompletedEventArgs> RepairUserDatabaseCompleted;
+        
+        public event System.EventHandler<OptimizeMasterDatabaseCompletedEventArgs> OptimizeMasterDatabaseCompleted;
+        
+        public event System.EventHandler<VerifyMasterDatabaseCompletedEventArgs> VerifyMasterDatabaseCompleted;
+        
+        public event System.EventHandler<RepairMasterDatabaseCompletedEventArgs> RepairMasterDatabaseCompleted;
         
         public int GetUsersCount(object queryFilter) {
             return base.Channel.GetUsersCount(queryFilter);
@@ -786,6 +1002,300 @@ namespace Fab.Managment.AdminServiceReference {
             }
             base.InvokeAsync(this.onBeginUpdateUserDelegate, new object[] {
                         userDto}, this.onEndUpdateUserDelegate, this.onUpdateUserCompletedDelegate, userState);
+        }
+        
+        public long OptimizeUserDatabase(System.Guid userId) {
+            return base.Channel.OptimizeUserDatabase(userId);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginOptimizeUserDatabase(System.Guid userId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginOptimizeUserDatabase(userId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public long EndOptimizeUserDatabase(System.IAsyncResult result) {
+            return base.Channel.EndOptimizeUserDatabase(result);
+        }
+        
+        private System.IAsyncResult OnBeginOptimizeUserDatabase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid userId = ((System.Guid)(inValues[0]));
+            return this.BeginOptimizeUserDatabase(userId, callback, asyncState);
+        }
+        
+        private object[] OnEndOptimizeUserDatabase(System.IAsyncResult result) {
+            long retVal = this.EndOptimizeUserDatabase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnOptimizeUserDatabaseCompleted(object state) {
+            if ((this.OptimizeUserDatabaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.OptimizeUserDatabaseCompleted(this, new OptimizeUserDatabaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void OptimizeUserDatabaseAsync(System.Guid userId) {
+            this.OptimizeUserDatabaseAsync(userId, null);
+        }
+        
+        public void OptimizeUserDatabaseAsync(System.Guid userId, object userState) {
+            if ((this.onBeginOptimizeUserDatabaseDelegate == null)) {
+                this.onBeginOptimizeUserDatabaseDelegate = new BeginOperationDelegate(this.OnBeginOptimizeUserDatabase);
+            }
+            if ((this.onEndOptimizeUserDatabaseDelegate == null)) {
+                this.onEndOptimizeUserDatabaseDelegate = new EndOperationDelegate(this.OnEndOptimizeUserDatabase);
+            }
+            if ((this.onOptimizeUserDatabaseCompletedDelegate == null)) {
+                this.onOptimizeUserDatabaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnOptimizeUserDatabaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginOptimizeUserDatabaseDelegate, new object[] {
+                        userId}, this.onEndOptimizeUserDatabaseDelegate, this.onOptimizeUserDatabaseCompletedDelegate, userState);
+        }
+        
+        public bool VerifyUserDatabase(System.Guid userId) {
+            return base.Channel.VerifyUserDatabase(userId);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginVerifyUserDatabase(System.Guid userId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginVerifyUserDatabase(userId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public bool EndVerifyUserDatabase(System.IAsyncResult result) {
+            return base.Channel.EndVerifyUserDatabase(result);
+        }
+        
+        private System.IAsyncResult OnBeginVerifyUserDatabase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid userId = ((System.Guid)(inValues[0]));
+            return this.BeginVerifyUserDatabase(userId, callback, asyncState);
+        }
+        
+        private object[] OnEndVerifyUserDatabase(System.IAsyncResult result) {
+            bool retVal = this.EndVerifyUserDatabase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnVerifyUserDatabaseCompleted(object state) {
+            if ((this.VerifyUserDatabaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.VerifyUserDatabaseCompleted(this, new VerifyUserDatabaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void VerifyUserDatabaseAsync(System.Guid userId) {
+            this.VerifyUserDatabaseAsync(userId, null);
+        }
+        
+        public void VerifyUserDatabaseAsync(System.Guid userId, object userState) {
+            if ((this.onBeginVerifyUserDatabaseDelegate == null)) {
+                this.onBeginVerifyUserDatabaseDelegate = new BeginOperationDelegate(this.OnBeginVerifyUserDatabase);
+            }
+            if ((this.onEndVerifyUserDatabaseDelegate == null)) {
+                this.onEndVerifyUserDatabaseDelegate = new EndOperationDelegate(this.OnEndVerifyUserDatabase);
+            }
+            if ((this.onVerifyUserDatabaseCompletedDelegate == null)) {
+                this.onVerifyUserDatabaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnVerifyUserDatabaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginVerifyUserDatabaseDelegate, new object[] {
+                        userId}, this.onEndVerifyUserDatabaseDelegate, this.onVerifyUserDatabaseCompletedDelegate, userState);
+        }
+        
+        public long RepairUserDatabase(System.Guid userId) {
+            return base.Channel.RepairUserDatabase(userId);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginRepairUserDatabase(System.Guid userId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRepairUserDatabase(userId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public long EndRepairUserDatabase(System.IAsyncResult result) {
+            return base.Channel.EndRepairUserDatabase(result);
+        }
+        
+        private System.IAsyncResult OnBeginRepairUserDatabase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid userId = ((System.Guid)(inValues[0]));
+            return this.BeginRepairUserDatabase(userId, callback, asyncState);
+        }
+        
+        private object[] OnEndRepairUserDatabase(System.IAsyncResult result) {
+            long retVal = this.EndRepairUserDatabase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRepairUserDatabaseCompleted(object state) {
+            if ((this.RepairUserDatabaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RepairUserDatabaseCompleted(this, new RepairUserDatabaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RepairUserDatabaseAsync(System.Guid userId) {
+            this.RepairUserDatabaseAsync(userId, null);
+        }
+        
+        public void RepairUserDatabaseAsync(System.Guid userId, object userState) {
+            if ((this.onBeginRepairUserDatabaseDelegate == null)) {
+                this.onBeginRepairUserDatabaseDelegate = new BeginOperationDelegate(this.OnBeginRepairUserDatabase);
+            }
+            if ((this.onEndRepairUserDatabaseDelegate == null)) {
+                this.onEndRepairUserDatabaseDelegate = new EndOperationDelegate(this.OnEndRepairUserDatabase);
+            }
+            if ((this.onRepairUserDatabaseCompletedDelegate == null)) {
+                this.onRepairUserDatabaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRepairUserDatabaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginRepairUserDatabaseDelegate, new object[] {
+                        userId}, this.onEndRepairUserDatabaseDelegate, this.onRepairUserDatabaseCompletedDelegate, userState);
+        }
+        
+        public long OptimizeMasterDatabase() {
+            return base.Channel.OptimizeMasterDatabase();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginOptimizeMasterDatabase(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginOptimizeMasterDatabase(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public long EndOptimizeMasterDatabase(System.IAsyncResult result) {
+            return base.Channel.EndOptimizeMasterDatabase(result);
+        }
+        
+        private System.IAsyncResult OnBeginOptimizeMasterDatabase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginOptimizeMasterDatabase(callback, asyncState);
+        }
+        
+        private object[] OnEndOptimizeMasterDatabase(System.IAsyncResult result) {
+            long retVal = this.EndOptimizeMasterDatabase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnOptimizeMasterDatabaseCompleted(object state) {
+            if ((this.OptimizeMasterDatabaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.OptimizeMasterDatabaseCompleted(this, new OptimizeMasterDatabaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void OptimizeMasterDatabaseAsync() {
+            this.OptimizeMasterDatabaseAsync(null);
+        }
+        
+        public void OptimizeMasterDatabaseAsync(object userState) {
+            if ((this.onBeginOptimizeMasterDatabaseDelegate == null)) {
+                this.onBeginOptimizeMasterDatabaseDelegate = new BeginOperationDelegate(this.OnBeginOptimizeMasterDatabase);
+            }
+            if ((this.onEndOptimizeMasterDatabaseDelegate == null)) {
+                this.onEndOptimizeMasterDatabaseDelegate = new EndOperationDelegate(this.OnEndOptimizeMasterDatabase);
+            }
+            if ((this.onOptimizeMasterDatabaseCompletedDelegate == null)) {
+                this.onOptimizeMasterDatabaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnOptimizeMasterDatabaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginOptimizeMasterDatabaseDelegate, null, this.onEndOptimizeMasterDatabaseDelegate, this.onOptimizeMasterDatabaseCompletedDelegate, userState);
+        }
+        
+        public bool VerifyMasterDatabase() {
+            return base.Channel.VerifyMasterDatabase();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginVerifyMasterDatabase(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginVerifyMasterDatabase(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public bool EndVerifyMasterDatabase(System.IAsyncResult result) {
+            return base.Channel.EndVerifyMasterDatabase(result);
+        }
+        
+        private System.IAsyncResult OnBeginVerifyMasterDatabase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginVerifyMasterDatabase(callback, asyncState);
+        }
+        
+        private object[] OnEndVerifyMasterDatabase(System.IAsyncResult result) {
+            bool retVal = this.EndVerifyMasterDatabase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnVerifyMasterDatabaseCompleted(object state) {
+            if ((this.VerifyMasterDatabaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.VerifyMasterDatabaseCompleted(this, new VerifyMasterDatabaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void VerifyMasterDatabaseAsync() {
+            this.VerifyMasterDatabaseAsync(null);
+        }
+        
+        public void VerifyMasterDatabaseAsync(object userState) {
+            if ((this.onBeginVerifyMasterDatabaseDelegate == null)) {
+                this.onBeginVerifyMasterDatabaseDelegate = new BeginOperationDelegate(this.OnBeginVerifyMasterDatabase);
+            }
+            if ((this.onEndVerifyMasterDatabaseDelegate == null)) {
+                this.onEndVerifyMasterDatabaseDelegate = new EndOperationDelegate(this.OnEndVerifyMasterDatabase);
+            }
+            if ((this.onVerifyMasterDatabaseCompletedDelegate == null)) {
+                this.onVerifyMasterDatabaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnVerifyMasterDatabaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginVerifyMasterDatabaseDelegate, null, this.onEndVerifyMasterDatabaseDelegate, this.onVerifyMasterDatabaseCompletedDelegate, userState);
+        }
+        
+        public long RepairMasterDatabase() {
+            return base.Channel.RepairMasterDatabase();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginRepairMasterDatabase(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRepairMasterDatabase(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public long EndRepairMasterDatabase(System.IAsyncResult result) {
+            return base.Channel.EndRepairMasterDatabase(result);
+        }
+        
+        private System.IAsyncResult OnBeginRepairMasterDatabase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginRepairMasterDatabase(callback, asyncState);
+        }
+        
+        private object[] OnEndRepairMasterDatabase(System.IAsyncResult result) {
+            long retVal = this.EndRepairMasterDatabase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRepairMasterDatabaseCompleted(object state) {
+            if ((this.RepairMasterDatabaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RepairMasterDatabaseCompleted(this, new RepairMasterDatabaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RepairMasterDatabaseAsync() {
+            this.RepairMasterDatabaseAsync(null);
+        }
+        
+        public void RepairMasterDatabaseAsync(object userState) {
+            if ((this.onBeginRepairMasterDatabaseDelegate == null)) {
+                this.onBeginRepairMasterDatabaseDelegate = new BeginOperationDelegate(this.OnBeginRepairMasterDatabase);
+            }
+            if ((this.onEndRepairMasterDatabaseDelegate == null)) {
+                this.onEndRepairMasterDatabaseDelegate = new EndOperationDelegate(this.OnEndRepairMasterDatabase);
+            }
+            if ((this.onRepairMasterDatabaseCompletedDelegate == null)) {
+                this.onRepairMasterDatabaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRepairMasterDatabaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginRepairMasterDatabaseDelegate, null, this.onEndRepairMasterDatabaseDelegate, this.onRepairMasterDatabaseCompletedDelegate, userState);
         }
     }
 }

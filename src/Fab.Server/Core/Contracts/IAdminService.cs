@@ -20,6 +20,8 @@ namespace Fab.Server.Core.Contracts
 	[ServiceKnownType(typeof(TextSearchFilter))]
 	public interface IAdminService
 	{
+		#region Common
+
 		/// <summary>
 		/// Return count of users based on search filter.
 		/// </summary>
@@ -55,5 +57,66 @@ namespace Fab.Server.Core.Contracts
 		[OperationContract]
 		[FaultContract(typeof(FaultDetail))]
 		DateTime UpdateUser(AdminUserDTO userDto);
+
+		#endregion
+
+		#region User
+
+		/// <summary>
+		/// Optimize user personal database file size.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <returns>Database file after optimization.</returns>
+		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+		long OptimizeUserDatabase(Guid userId);
+
+		/// <summary>
+		/// Verify user personal database file integrity by comparing checksums.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <returns>True if the checksums match and there is no database corruption; otherwise, false.</returns>
+		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+		bool VerifyUserDatabase(Guid userId);
+
+		/// <summary>
+		/// Try to repair a corrupted personal database file.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <returns>Database file after repair.</returns>
+		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+		long RepairUserDatabase(Guid userId);
+
+		#endregion
+
+		#region Master
+
+		/// <summary>
+		/// Optimize master database file size.
+		/// </summary>
+		/// <returns>Database file after optimization.</returns>
+		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+		long OptimizeMasterDatabase();
+
+		/// <summary>
+		/// Verify master database file integrity by comparing checksums.
+		/// </summary>
+		/// <returns>True if the checksums match and there is no database corruption; otherwise, false.</returns>
+		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+		bool VerifyMasterDatabase();
+
+		/// <summary>
+		/// Try to repair a corrupted master database file.
+		/// </summary>
+		/// <returns>Database file after repair.</returns>
+		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+		long RepairMasterDatabase();
+
+		#endregion
 	}
 }

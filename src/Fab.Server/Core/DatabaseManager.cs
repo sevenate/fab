@@ -33,9 +33,10 @@ namespace Fab.Server.Core
 		private const string PersonalConnectionName = "ModelContainer";
 
 		/// <summary>
-		/// Connection string template to the SQL CE 4.0 database file - "Data Source='{0}'; Password='{1}'"
+		/// Connection string template to the SQL CE 4.0 database file - "Data Source='{0}'; Password='{1}'; max database size=4096"
+		/// Note: default "max database size" value is "128" Mb, but we set it to physical maximum ~ 4Gb.
 		/// </summary>
-		private const string ConnectionStringTemplate = @"Data Source='{0}'; Password='{1}'";
+		private const string ConnectionStringTemplate = @"Data Source='{0}'; Password='{1}'; max database size=4091";
 
 		/// <summary>
 		/// Master database file name - "master.sdf".
@@ -86,7 +87,8 @@ namespace Fab.Server.Core
 				Directory.CreateDirectory(dataDirectory);
 			}
 
-			var connectionString = GetConnectionString(Path.Combine(dataDirectory, MasterDatabaseName), password);
+			var masterDatabasePath = GetMasterDatabasePath(rootFolder);
+			var connectionString = GetConnectionString(masterDatabasePath, password);
 
 			// Execute SQL scripts only once right after database file was created
 			if (CreateDatabaseFile(connectionString))
@@ -119,7 +121,6 @@ namespace Fab.Server.Core
 				Directory.CreateDirectory(dataDirectory);
 			}
 
-
 			var absolutePathToDatabase = ResolveDataDirectory(absoluteFilePathTemplate);
 			var connectionString = GetConnectionString(absolutePathToDatabase, password);
 
@@ -145,8 +146,80 @@ namespace Fab.Server.Core
 		{
 			var absolutePathToDatabase = ResolveDataDirectory(pathToDatabase);
 			var connectionString = GetConnectionString(absolutePathToDatabase, password);
-			
 			return AddEntityMetadata(connectionString, PersonalConnectionName);
+		}
+
+		#region Service
+
+		/// <summary>
+		/// Shrink database file.
+		/// Note, that file should exist at the moment when service try to open returned connection or run-time exception will be thrown.
+		/// </summary>
+		/// <param name="pathToDatabase">Relative path to database file.</param>
+		/// <param name="password">Database encryption password.</param>
+		public void ShrinkDatabase(string pathToDatabase = DefaultFolder, string password = DefaultPassword)
+		{
+			var absolutePathToDatabase = ResolveDataDirectory(pathToDatabase);
+			var connectionString = GetConnectionString(absolutePathToDatabase, password);
+			ShrinkDatabaseFile(connectionString);
+		}
+
+		/// <summary>
+		/// Compact database file. Free more space compared to <see cref="ShrinkDatabase"/>, but require re-create database file.
+		/// Note, that file should exist at the moment when service try to open returned connection or run-time exception will be thrown.
+		/// </summary>
+		/// <param name="pathToDatabase">Relative path to database file.</param>
+		/// <param name="password">Database encryption password.</param>
+		public void CompactDatabase(string pathToDatabase = DefaultFolder, string password = DefaultPassword)
+		{
+			var absolutePathToDatabase = ResolveDataDirectory(pathToDatabase);
+			var connectionString = GetConnectionString(absolutePathToDatabase, password);
+			//TODO: consider use ability to change database password here when user change his own password.
+			CompactDatabaseFile(connectionString);
+		}
+
+		/// <summary>
+		/// Verify database file integrity by comparing checksums.
+		/// Note, that file should exist at the moment when service try to open returned connection or run-time exception will be thrown.
+		/// </summary>
+		/// <param name="pathToDatabase">Relative path to database file.</param>
+		/// <param name="password">Database encryption password.</param>
+		/// <returns>True if the checksums match and there is no database corruption; otherwise, false.</returns>
+		public bool VerifyDatabase(string pathToDatabase = DefaultFolder, string password = DefaultPassword)
+		{
+			var absolutePathToDatabase = ResolveDataDirectory(pathToDatabase);
+			var connectionString = GetConnectionString(absolutePathToDatabase, password);
+			//TODO: consider use ability to change database password here when user change his own password.
+			return VerifyDatabaseFile(connectionString);
+		}
+
+		/// <summary>
+		/// Try to repair a corrupted database file.
+		/// Note, that file should exist at the moment when service try to open returned connection or run-time exception will be thrown.
+		/// </summary>
+		/// <param name="pathToDatabase">Relative path to database file.</param>
+		/// <param name="password">Database encryption password.</param>
+		public void RepairDatabase(string pathToDatabase = DefaultFolder, string password = DefaultPassword)
+		{
+			var absolutePathToDatabase = ResolveDataDirectory(pathToDatabase);
+			var connectionString = GetConnectionString(absolutePathToDatabase, password);
+			//TODO: consider use ability to change database password here when user change his own password.
+			RepairDatabaseFile(connectionString);
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Return path to master database file.
+		/// Note: there is no need in similar method for user's personal database file,
+		/// since it is saved in user record in master database.
+		/// </summary>
+		/// <param name="rootFolder">Root database folder.</param>
+		/// <returns>Path to master database file.</returns>
+		public static string GetMasterDatabasePath(string rootFolder = DefaultFolder)
+		{
+			var dataDirectory = ResolveDataDirectory(rootFolder);
+			return Path.Combine(dataDirectory, MasterDatabaseName);
 		}
 
 		/// <summary>
@@ -156,6 +229,11 @@ namespace Fab.Server.Core
 		/// <returns>Absolute path to the original directory.</returns>
 		public static string ResolveDataDirectory(string path)
 		{
+			if (string.IsNullOrWhiteSpace(path))
+			{
+				throw new ArgumentNullException("path");
+			}
+
 			//var dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory");
 			//AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
 
@@ -231,6 +309,90 @@ namespace Fab.Server.Core
 				}
 
 				return false;
+			}
+		}
+
+		/// <summary>
+		/// Shrink the database file by connection string to it.
+		/// </summary>
+		/// <param name="connectionString">Connection string to the database file that should be shrink.</param>
+		private static void ShrinkDatabaseFile(string connectionString)
+		{
+			if (string.IsNullOrWhiteSpace(connectionString))
+			{
+				throw new ArgumentNullException("connectionString");
+			}
+
+			using (var sqlCeEngine = new SqlCeEngine(connectionString))
+			{
+				sqlCeEngine.Shrink();
+			}
+		}
+
+		/// <summary>
+		/// Compact the database file by connection string to it.
+		/// </summary>
+		/// <param name="connectionString">Connection string to the database file that should be compact.</param>
+		/// <param name="newConnectionString">Connection string to the new destination database file that will be created.</param>
+		private static void CompactDatabaseFile(string connectionString, string newConnectionString = null)
+		{
+			if (string.IsNullOrWhiteSpace(connectionString))
+			{
+				throw new ArgumentNullException("connectionString");
+			}
+
+			using (var sqlCeEngine = new SqlCeEngine(connectionString))
+			{
+				// Specify null destination connection string for in-place compaction
+				sqlCeEngine.Compact(null);
+				
+				if (!string.IsNullOrWhiteSpace(newConnectionString))
+				{
+					// Specify connection string for new database options; The following 
+					// tokens are valid:
+					//      - Password
+					//      - LCID
+					//      - Encrypt
+					// 
+					// All other SqlCeConnection.ConnectionString tokens are ignored
+					sqlCeEngine.Compact(newConnectionString);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Recalculates the checksums for each page in the database and compares the new checksums to the expected values. 
+		/// </summary>
+		/// <param name="connectionString">Connection string to the database file that should be verified.</param>
+		/// <returns>True if the checksums match and there is no database corruption; otherwise, false.</returns>
+		private static bool VerifyDatabaseFile(string connectionString)
+		{
+			if (string.IsNullOrWhiteSpace(connectionString))
+			{
+				throw new ArgumentNullException("connectionString");
+			}
+
+			using (var sqlCeEngine = new SqlCeEngine(connectionString))
+			{
+				return sqlCeEngine.Verify();
+			}
+		}
+
+		/// <summary>
+		/// Try to repair a corrupted database file by connection string to it.
+		/// </summary>
+		/// <param name="connectionString">Connection string to the database file that should be repaired.</param>
+		private static void RepairDatabaseFile(string connectionString)
+		{
+			if (string.IsNullOrWhiteSpace(connectionString))
+			{
+				throw new ArgumentNullException("connectionString");
+			}
+
+			using (var sqlCeEngine = new SqlCeEngine(connectionString))
+			{
+				//TODO: consider using different repair param
+				sqlCeEngine.Repair(connectionString, RepairOption.RecoverAllOrFail);
 			}
 		}
 

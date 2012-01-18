@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="AdminUserDTO" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Fab.Managment.AdminServiceReference.AdminUserDTO, Fab.Managment, Version=0.4.140.9, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>Fab.Managment.AdminServiceReference.AdminUserDTO, Fab.Managment, Version=0.5.157.4, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>
