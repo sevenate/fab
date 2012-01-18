@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------
-// <copyright file="AdminService.svc.cs" company="nReez">
+// <copyright file="AdminService.cs" company="nReez">
 // 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
@@ -207,11 +207,11 @@ namespace Fab.Server.Core.Services
 
 			foreach (var adminUserDTO in records)
 			{
-				var absoluteFile = DatabaseManager.ResolveDataDirectory(adminUserDTO.DatabasePath);
+				var absolutePath = DatabaseManager.ResolveDataDirectory(adminUserDTO.DatabasePath);
 
-				if (File.Exists(absoluteFile))
+				if (File.Exists(absolutePath))
 				{
-					adminUserDTO.DatabaseSize = new FileInfo(absoluteFile).Length;
+					adminUserDTO.DatabaseSize = new FileInfo(absolutePath).Length;
 				}
 			}
 
@@ -233,6 +233,21 @@ namespace Fab.Server.Core.Services
 				var user = ModelHelper.GetUserById(mc, userId);
 				mc.Users.DeleteObject(user);
 				mc.SaveChanges();
+
+				var absolutePath = DatabaseManager.ResolveDataDirectory(user.DatabasePath);
+				var userFolder = new FileInfo(absolutePath).Directory;
+				
+				if (userFolder != null)
+				{
+					var deletedFolderName = "DELETED_" + userFolder.Name;
+					var parentUserFolder = userFolder.Parent;
+					
+					if (parentUserFolder != null)
+					{
+						var targetFolder = new DirectoryInfo(Path.Combine(parentUserFolder.FullName, deletedFolderName));
+						Directory.Move(userFolder.FullName, targetFolder.FullName);
+					}
+				}
 			}
 		}
 
@@ -272,6 +287,129 @@ namespace Fab.Server.Core.Services
 				return user.DisabledChanged.Value;
 			}
 		}
+
+		#region User
+
+		/// <summary>
+		/// Optimize user personal database file size.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <returns>Database file after optimization.</returns>
+		public long OptimizeUserDatabase(Guid userId)
+		{
+			LogManager.GetCurrentClassLogger().LogClientIP("OptimizeUserDatabase");
+
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("userId");
+			}
+
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
+			{
+				var user = ModelHelper.GetUserById(mc, userId);
+				var absolutePath = DatabaseManager.ResolveDataDirectory(user.DatabasePath);
+				dbManager.ShrinkDatabase(absolutePath);
+				return new FileInfo(absolutePath).Length;
+			}
+		}
+
+		/// <summary>
+		/// Verify user personal database file integrity by comparing checksums.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <returns>True if the checksums match and there is no database corruption; otherwise, false.</returns>
+		public bool VerifyUserDatabase(Guid userId)
+		{
+			LogManager.GetCurrentClassLogger().LogClientIP("VerifyUserDatabase");
+
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("userId");
+			}
+
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
+			{
+				var user = ModelHelper.GetUserById(mc, userId);
+				var absolutePath = DatabaseManager.ResolveDataDirectory(user.DatabasePath);
+				return dbManager.VerifyDatabase(absolutePath);
+			}
+		}
+
+		/// <summary>
+		/// Try to repair a corrupted personal database file.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <returns>Database file after repair.</returns>
+		public long RepairUserDatabase(Guid userId)
+		{
+			LogManager.GetCurrentClassLogger().LogClientIP("RepairUserDatabase");
+
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("userId");
+			}
+
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+
+			using (var mc = new MasterEntities(masterConnection))
+			{
+				var user = ModelHelper.GetUserById(mc, userId);
+				var absolutePath = DatabaseManager.ResolveDataDirectory(user.DatabasePath);
+				dbManager.RepairDatabase(absolutePath);
+				return new FileInfo(absolutePath).Length;
+			}
+		}
+
+		#endregion
+
+		#region Master
+
+		/// <summary>
+		/// Optimize master database file size.
+		/// </summary>
+		/// <returns>Database file after optimization.</returns>
+		public long OptimizeMasterDatabase()
+		{
+			LogManager.GetCurrentClassLogger().LogClientIP("OptimizeMasterDatabase");
+
+			// Assume that master database already exist
+			var absolutePath = DatabaseManager.GetMasterDatabasePath(DefaultFolder);
+			dbManager.ShrinkDatabase(absolutePath);
+			return new FileInfo(absolutePath).Length;
+		}
+
+		/// <summary>
+		/// Verify master database file integrity by comparing checksums.
+		/// </summary>
+		/// <returns>True if the checksums match and there is no database corruption; otherwise, false.</returns>
+		public bool VerifyMasterDatabase()
+		{
+			LogManager.GetCurrentClassLogger().LogClientIP("VerifyMasterDatabase");
+
+			// Assume that master database already exist
+			var absolutePath = DatabaseManager.GetMasterDatabasePath(DefaultFolder);
+			return dbManager.VerifyDatabase(absolutePath);
+		}
+
+		/// <summary>
+		/// Try to repair a corrupted master database file.
+		/// </summary>
+		/// <returns>Database file after repair.</returns>
+		public long RepairMasterDatabase()
+		{
+			LogManager.GetCurrentClassLogger().LogClientIP("RepairMasterDatabase");
+
+			// Assume that master database already exist
+			var absolutePath = DatabaseManager.GetMasterDatabasePath(DefaultFolder);
+			dbManager.RepairDatabase(absolutePath);
+			return new FileInfo(absolutePath).Length;
+		}
+
+		#endregion
 
 		#endregion
 	}

@@ -82,6 +82,101 @@ namespace Fab.Server.Tests
 			Assert.True(connectionString == expectedConnectoinString);
 		}
 
+		/// <summary>
+		/// Test <see cref="DatabaseManager.ShrinkDatabase"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Shrink_Personal_Database()
+		// ReSharper restore InconsistentNaming
+		{
+			var manager = new DatabaseManager();
+			var databasePath = manager.CreatePersonalDatabase(userId, registrationDate, DefaultFolder, Password);
+			var fileName = DatabaseManager.ResolveDataDirectory(databasePath);
+			var initialFileSize = new FileInfo(fileName).Length;
+
+			manager.ShrinkDatabase(databasePath, Password);
+
+			var fileSizeAfterShrink = new FileInfo(fileName).Length;
+
+			Assert.True(initialFileSize > fileSizeAfterShrink);
+		}
+
+		/// <summary>
+		/// Test <see cref="DatabaseManager.CompactDatabase"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Compact_Personal_Database()
+		// ReSharper restore InconsistentNaming
+		{
+			var manager = new DatabaseManager();
+			var databasePath = manager.CreatePersonalDatabase(userId, registrationDate, DefaultFolder, Password);
+			var fileName = DatabaseManager.ResolveDataDirectory(databasePath);
+			var initialFileSize = new FileInfo(fileName).Length;
+
+			manager.CompactDatabase(databasePath, Password);
+
+			var fileSizeAfterCompact = new FileInfo(fileName).Length;
+
+			Assert.True(initialFileSize > fileSizeAfterCompact);
+		}
+
+		/// <summary>
+		/// Test <see cref="DatabaseManager.VerifyDatabase"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Verify_Personal_Database()
+		// ReSharper restore InconsistentNaming
+		{
+			var manager = new DatabaseManager();
+			var databasePath = manager.CreatePersonalDatabase(userId, registrationDate, DefaultFolder, Password);
+
+			var isOk = manager.VerifyDatabase(databasePath, Password);
+
+			Assert.True(isOk);
+		}
+
+		/// <summary>
+		/// Test <see cref="DatabaseManager.RepairDatabase"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Repair_Personal_Database()
+		// ReSharper restore InconsistentNaming
+		{
+			var manager = new DatabaseManager();
+			var databasePath = manager.CreatePersonalDatabase(userId, registrationDate, DefaultFolder, Password);
+
+			manager.RepairDatabase(databasePath, Password);
+		}
+
+		/// <summary>
+		/// Test <see cref="DatabaseManager.GetMasterDatabasePath"/> method.
+		/// </summary>
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void Shrink_Master_Database()
+		// ReSharper restore InconsistentNaming
+		{
+			var manager = new DatabaseManager();
+			
+			//Creating master database first time
+			manager.GetMasterConnection(DefaultFolder, Password);
+			
+			var databasePath = DatabaseManager.GetMasterDatabasePath(DefaultFolder);
+
+			var fileName = DatabaseManager.ResolveDataDirectory(databasePath);
+			var initialFileSize = new FileInfo(fileName).Length;
+
+			manager.ShrinkDatabase(databasePath, Password);
+
+			var fileSizeAfterShrink = new FileInfo(fileName).Length;
+
+			Assert.True(initialFileSize == fileSizeAfterShrink);
+		}
+
 		#endregion
 
 		#region Implementation of IDisposable
