@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------
-// <copyright file="UserService.svc.cs" company="nReez">
+// <copyright file="UserService.cs" company="nReez">
 // 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
