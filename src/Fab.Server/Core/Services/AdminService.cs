@@ -211,7 +211,9 @@ namespace Fab.Server.Core.Services
 
 				if (File.Exists(absolutePath))
 				{
-					adminUserDTO.DatabaseSize = new FileInfo(absolutePath).Length;
+					var file = new FileInfo(absolutePath);
+					adminUserDTO.DatabaseSize = file.Length;
+					adminUserDTO.FreeDiskSpaceAvailable = new DriveInfo(file.FullName).AvailableFreeSpace;
 				}
 			}
 

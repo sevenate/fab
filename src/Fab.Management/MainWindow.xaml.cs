@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Web.Configuration;
 using System.Windows;
 using System.Windows.Controls;
@@ -89,8 +90,23 @@ namespace Fab.Managment
 						: null,
 			};
 
+			adminService.GetUsersCountCompleted += OnGetUsersCountCompleted;
+			adminService.GetUsersCountAsync(filter);
+
 			adminService.GetUsersCompleted += GetSearchCompleted;
 			adminService.GetUsersAsync(filter);
+		}
+
+		private void OnGetUsersCountCompleted(object sender, GetUsersCountCompletedEventArgs args)
+		{
+			if (args.Error == null)
+			{
+				TotalFound.Text = args.Result.ToString(CultureInfo.InvariantCulture);
+			}
+			else
+			{
+				Helpers.ErrorProcessing(args);
+			}
 		}
 
 		#endregion

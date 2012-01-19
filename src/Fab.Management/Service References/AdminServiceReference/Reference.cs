@@ -226,6 +226,9 @@ namespace Fab.Managment.AdminServiceReference {
         private string EmailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> FreeDiskSpaceAvailableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsDisabledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -285,6 +288,19 @@ namespace Fab.Managment.AdminServiceReference {
                 if ((object.ReferenceEquals(this.EmailField, value) != true)) {
                     this.EmailField = value;
                     this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> FreeDiskSpaceAvailable {
+            get {
+                return this.FreeDiskSpaceAvailableField;
+            }
+            set {
+                if ((this.FreeDiskSpaceAvailableField.Equals(value) != true)) {
+                    this.FreeDiskSpaceAvailableField = value;
+                    this.RaisePropertyChanged("FreeDiskSpaceAvailable");
                 }
             }
         }
