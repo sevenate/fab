@@ -12,8 +12,7 @@
 				VerticalAlignment="Stretch"
 				Width="Auto"
 				Height="Auto"
-				CornerRadius="5"
-				BorderThickness="2"
+				BorderThickness="0,0,0,2"
 				BorderBrush="#FF929292">
 			<Grid>
 				<Grid.RowDefinitions>
