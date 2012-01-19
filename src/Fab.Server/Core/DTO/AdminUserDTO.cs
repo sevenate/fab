@@ -69,6 +69,13 @@ namespace Fab.Server.Core.DTO
 		[DataMember]
 		public long? DatabaseSize { get; set; }
 
+		/// <summary>
+		/// Gets or sets free disk space in bytes, where database file located.
+		/// Note: should be filled only by service.
+		/// </summary>
+		[DataMember]
+		public long? FreeDiskSpaceAvailable { get; set; }
+
 		#endregion
 
 		#region .Ctors

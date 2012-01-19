@@ -23,6 +23,7 @@
           <xs:element minOccurs="0" name="DatabaseSize" nillable="true" type="xs:long" />
           <xs:element minOccurs="0" name="DisabledChanged" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FreeDiskSpaceAvailable" nillable="true" type="xs:long" />
           <xs:element minOccurs="0" name="IsDisabled" type="xs:boolean" />
           <xs:element minOccurs="0" name="LastAccess" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
