@@ -9,8 +9,6 @@ namespace Fab.Managment
 	/// </summary>
 	public partial class UserItem
 	{
-		private AdminServiceClient feedbackManagmentServiceClient;
-
 		public UserItem()
 		{
 			InitializeComponent();
@@ -23,22 +21,43 @@ namespace Fab.Managment
 
 			var userDTO = (AdminUserDTO) button.DataContext;
 
-			feedbackManagmentServiceClient = Helpers.CreateClientProxy(null, null, null);
+			var adminServiceClient = Helpers.CreateClientProxy(null, null, null);
 
-			feedbackManagmentServiceClient.DeleteUserCompleted += DeleteFeedbackCompleted;
-			feedbackManagmentServiceClient.DeleteUser(userDTO.Id);
+			adminServiceClient.DeleteUserCompleted += (o, args) =>
+			                                          {
+														  if (args.Error != null)
+														  {
+															  Helpers.ErrorProcessing(args);
+														  }
+														
+														  button.IsEnabled = true;
+													  };
+			adminServiceClient.DeleteUserAsync(userDTO.Id);
 		}
 
-		private void DeleteFeedbackCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs args)
+		private void DatabaseSize_OnClick(object sender, RoutedEventArgs e)
 		{
-			feedbackManagmentServiceClient.Close();
+			var button = (FrameworkElement)sender;
+			button.IsEnabled = false;
 
-			if (args.Error != null)
-			{
-				Helpers.ErrorProcessing(args);
-			}
+			var userDTO = (AdminUserDTO)button.DataContext;
 
-			((FrameworkElement) args.UserState).IsEnabled = true;
+			var adminServiceClient = Helpers.CreateClientProxy(null, null, null);
+
+			adminServiceClient.OptimizeUserDatabaseCompleted += (o, args) =>
+			                                                    {
+																	if (args.Error != null)
+																	{
+																		Helpers.ErrorProcessing(args);
+																	}
+																	else
+																	{
+																		userDTO.DatabaseSize = args.Result;
+																	}
+
+																	button.IsEnabled = true;
+																};
+			adminServiceClient.OptimizeUserDatabaseAsync(userDTO.Id);
 		}
 	}
 }
