@@ -14,13 +14,14 @@
 				Height="Auto"
 				BorderThickness="0,0,0,2"
 				BorderBrush="#FF929292">
-			<Grid>
+			<Grid Width="1395">
 				<Grid.RowDefinitions>
 					<RowDefinition />
 					<RowDefinition />
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
+					<ColumnDefinition  Width="Auto" />
 					<ColumnDefinition  Width="Auto" />
 					<ColumnDefinition  Width="Auto" />
 					<ColumnDefinition  Width="Auto" />
@@ -89,18 +90,16 @@
 							  Content="Disabled"
 							  VerticalAlignment="Center"
 							  VerticalContentAlignment="Center" />
-					<TextBox x:Name="DatabaseSize"
-							 Text="{Binding DatabaseSize, StringFormat=N0}"
-							 MinWidth="120"
-							 FontSize="16"
-							 Foreground="RoyalBlue"
-							 FontWeight="Bold"
-							 Margin="10,0,0,0"
-							 ToolTip="Database size (in bytes)"
-							 VerticalAlignment="Center"
-							 HorizontalContentAlignment="Right"
-							 IsReadOnly="True"
-							 BorderThickness="0" />
+					<Button x:Name="DatabaseSize"
+							Content="{Binding DatabaseSize, StringFormat={}{0:N}}"
+							FontSize="16"
+							Click="DatabaseSize_OnClick"
+							ToolTip="Database size (in bytes). Click to compress it."
+							Margin="10,0,0,0"
+							Foreground="RoyalBlue"
+							FontWeight="Bold"
+							HorizontalContentAlignment="Right"
+							MinWidth="120" />
 				</StackPanel>
 				<TextBox x:Name="DatabasePath"
 						 Grid.Column="0"
@@ -122,17 +121,26 @@
 						 HorizontalAlignment="Right"
 						 MaxLength="4096"
 						 BorderThickness="0" />
-				<Button x:Name="Compress"
+				<Button x:Name="Verify"
 						Grid.Column="2"
 						Grid.RowSpan="2"
-						Content="Compress"
-						ToolTip="Compress user personal database file"
+						Content="Verify"
+						ToolTip="Verify database"
+						Margin="10,5,0,5"
+						FontSize="16"
+						MinWidth="75"
+						Padding="5" />
+				<Button x:Name="Repair"
+						Grid.Column="3"
+						Grid.RowSpan="2"
+						Content="Repair"
+						ToolTip="Repair database"
 						Margin="10,5,0,5"
 						FontSize="16"
 						MinWidth="75"
 						Padding="5" />
 				<Button x:Name="Save"
-						Grid.Column="3"
+						Grid.Column="4"
 						Grid.RowSpan="2"
 						Content="Save"
 						ToolTip="Save updated user data"
@@ -140,7 +148,7 @@
 						Margin="10,5,0,5"
 						MinWidth="75" />
 				<Button x:Name="Delete"
-						Grid.Column="4"
+						Grid.Column="5"
 						Grid.RowSpan="2"
 						ToolTip="Delete"
 						Margin="10,0,0,0"

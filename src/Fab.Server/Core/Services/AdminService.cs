@@ -205,15 +205,31 @@ namespace Fab.Server.Core.Services
 						  .ToList();
 			}
 
+			var cachedDriveInfo = new Dictionary<string, DriveInfo>();
+
 			foreach (var adminUserDTO in records)
 			{
-				var absolutePath = DatabaseManager.ResolveDataDirectory(adminUserDTO.DatabasePath);
+				var resolvedFile = DatabaseManager.ResolveDataDirectory(adminUserDTO.DatabasePath);
 
-				if (File.Exists(absolutePath))
+				if (File.Exists(resolvedFile))
 				{
-					var file = new FileInfo(absolutePath);
+					var file = new FileInfo(resolvedFile);
 					adminUserDTO.DatabaseSize = file.Length;
-					adminUserDTO.FreeDiskSpaceAvailable = new DriveInfo(file.FullName).AvailableFreeSpace;
+
+					// C:\ or D:\ etc.
+					var root = Path.GetPathRoot(file.FullName);
+
+					// Cache drive info
+					if (!string.IsNullOrEmpty(root) && !cachedDriveInfo.ContainsKey(root))
+					{
+						cachedDriveInfo[root] = new DriveInfo(root);
+					}
+
+					if (!string.IsNullOrEmpty(root))
+					{
+						// Free space available for IIS AppPool user account, not the entire free space on disk!
+						adminUserDTO.FreeDiskSpaceAvailable = cachedDriveInfo[root].AvailableFreeSpace;
+					}
 				}
 			}
 

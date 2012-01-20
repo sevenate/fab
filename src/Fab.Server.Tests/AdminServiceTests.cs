@@ -78,8 +78,10 @@ namespace Fab.Server.Tests
 			Assert.True(users != null && users.Count == 2);
 			Assert.True(users[0].Id == userDTO.Id);
 			Assert.True(users[0].DatabaseSize != null);
+			Assert.True(users[0].FreeDiskSpaceAvailable != null);
 			Assert.True(users[1].Id == userDTO2.Id);
 			Assert.True(users[1].DatabaseSize != null);
+			Assert.True(users[1].FreeDiskSpaceAvailable != null);
 		}
 
 		/// <summary>
