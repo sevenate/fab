@@ -20,14 +20,14 @@
    </basicHttpBinding>
   </bindings>
 		<client>
-   <endpoint address="https://thor/StagingFab/UserService.svc" binding="basicHttpBinding"
+   <endpoint address="https://localhost/StagingFab/UserService.svc" binding="basicHttpBinding"
     bindingConfiguration="UserServiceBasic" contract="UserServiceReference.IUserService"
     name="UserServiceBasic" />
-   <endpoint address="https://thor/StagingFab/RegistrationService.svc"
+   <endpoint address="https://localhost/StagingFab/RegistrationService.svc"
     binding="basicHttpBinding" bindingConfiguration="RegistrationServiceBasic"
     contract="RegistrationServiceReference.IRegistrationService"
     name="RegistrationServiceBasic" />
-   <endpoint address="https://thor/StagingFab/MoneyService.svc"
+   <endpoint address="https://localhost/StagingFab/MoneyService.svc"
     binding="basicHttpBinding" bindingConfiguration="MoneyServiceBasic"
     contract="MoneyServiceReference.IMoneyService" name="MoneyServiceBasic" />
   </client>
