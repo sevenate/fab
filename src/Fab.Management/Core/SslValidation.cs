@@ -49,7 +49,8 @@ namespace Fab.Managment.Core
 		{
 			return sslPolicyErrors == SslPolicyErrors.None
 				|| certificate.Subject.Equals("CN=hulk.my-hosting-panel.com, OU=Comodo InstantSSL, OU=Hosted by Mochanin, O=Mochahost, STREET=\"2880 Zanker Rd. #203\", L=San Jose, S=CA, PostalCode=95134, C=US", StringComparison.InvariantCultureIgnoreCase)
-				|| certificate.Subject.Equals("CN=Thor", StringComparison.InvariantCultureIgnoreCase);
+				|| certificate.Subject.Equals("CN=Thor", StringComparison.InvariantCultureIgnoreCase)
+				|| certificate.Subject.Equals("CN=Orion", StringComparison.InvariantCultureIgnoreCase);
 		}
 	}
 }

@@ -14,27 +14,6 @@ namespace Fab.Managment
 			InitializeComponent();
 		}
 
-		private void DeleteClick(object sender, RoutedEventArgs e)
-		{
-			var button = (FrameworkElement)sender;
-			button.IsEnabled = false;
-
-			var userDTO = (AdminUserDTO) button.DataContext;
-
-			var adminServiceClient = Helpers.CreateClientProxy(null, null, null);
-
-			adminServiceClient.DeleteUserCompleted += (o, args) =>
-			                                          {
-														  if (args.Error != null)
-														  {
-															  Helpers.ErrorProcessing(args);
-														  }
-														
-														  button.IsEnabled = true;
-													  };
-			adminServiceClient.DeleteUserAsync(userDTO.Id);
-		}
-
 		private void DatabaseSize_OnClick(object sender, RoutedEventArgs e)
 		{
 			var button = (FrameworkElement)sender;

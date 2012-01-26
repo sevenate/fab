@@ -65,6 +65,9 @@
     <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\SslValidation.cs" />
+    <Compile Include="UserDetails.xaml.cs">
+      <DependentUpon>UserDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserItem.xaml.cs">
       <DependentUpon>UserItem.xaml</DependentUpon>
     </Compile>
@@ -73,6 +76,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Page Include="UserDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

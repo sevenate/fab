@@ -16,6 +16,8 @@ namespace Fab.Managment
 	public partial class MainWindow
 	{
 		private AdminServiceClient adminService;
+		private int currentPageIndex = 0;
+		private int pagesCount;
 
 		public MainWindow()
 		{
@@ -62,46 +64,57 @@ namespace Fab.Managment
 			Helpers.Password = Password.Password;
 		}
 
-		#region WCF calls
-
-		private void OnSearchClick(object sender, RoutedEventArgs e)
+		private TextSearchFilter CreateFilter(int? pageSize = null)
 		{
-			Search.IsEnabled = false;
-			Search.Content = "Searching...";
+			var filter = new TextSearchFilter
+			             	{
+			             		NotOlderThen = IsNotOlderThen.IsChecked.HasValue && IsNotOlderThen.IsChecked.Value
+			             		               	? (NotOlderThen.SelectedDate.Value +
+			             		               	   ((DateTime) NotOlderThenTime.SelectedValue).TimeOfDay).ToUniversalTime()
+			             		               	: (DateTime?) null,
+			             		Upto = IsUpto.IsChecked.HasValue && IsUpto.IsChecked.Value
+			             		       	? (Upto.SelectedDate.Value + ((DateTime) UptoTime.SelectedValue).TimeOfDay).ToUniversalTime()
+			             		       	: (DateTime?) null,
+			             		Contains = !string.IsNullOrEmpty(SearchText.Text)
+			             		           	? SearchText.Text
+			             		           	: null,
+			             		Take = pageSize,
+								Skip = pageSize != null ? (currentPageIndex - 1) * pageSize : null,
+			             	};
+			return filter;
+		}
+
+		private int PageSize
+		{
+			get { return int.Parse(take.SelectedValue.ToString()); }
+		}
+
+		private void OnLoadClick(object sender, RoutedEventArgs e)
+		{
+			search.IsEnabled = false;
+			search.Content = "Loadig...";
+
+			// Reset curent page index
+			currentPageIndex = 1;
 
 			adminService = Helpers.CreateClientProxy(endPointAddress.Text, Username.Text, Password.Password);
 
-			var filter = new TextSearchFilter
-			{
-				NotOlderThen = IsNotOlderThen.IsChecked.HasValue && IsNotOlderThen.IsChecked.Value
-								? (NotOlderThen.SelectedDate.Value + ((DateTime)NotOlderThenTime.SelectedValue).TimeOfDay).ToUniversalTime()
-								: (DateTime?)null,
-				Upto = IsUpto.IsChecked.HasValue && IsUpto.IsChecked.Value
-						? (Upto.SelectedDate.Value + ((DateTime)UptoTime.SelectedValue).TimeOfDay).ToUniversalTime()
-						: (DateTime?)null,
-				Contains = !string.IsNullOrEmpty(SearchText.Text)
-							? SearchText.Text
-							: null,
-				Skip = Skip.Text.Length > 0
-						? (int?)int.Parse(Skip.Text)
-						: null,
-				Take = Take.Text.Length > 0
-						? (int?)int.Parse(Take.Text)
-						: null,
-			};
-
 			adminService.GetUsersCountCompleted += OnGetUsersCountCompleted;
-			adminService.GetUsersCountAsync(filter);
+			adminService.GetUsersCountAsync(CreateFilter());
 
-			adminService.GetUsersCompleted += GetSearchCompleted;
-			adminService.GetUsersAsync(filter);
+			adminService.GetUsersCompleted += GetLoadUserCompleted;
+			adminService.GetUsersAsync(CreateFilter(PageSize));
 		}
 
 		private void OnGetUsersCountCompleted(object sender, GetUsersCountCompletedEventArgs args)
 		{
 			if (args.Error == null)
 			{
-				TotalFound.Text = args.Result.ToString(CultureInfo.InvariantCulture);
+				totalUsersText.Text = args.Result.ToString(CultureInfo.InvariantCulture);
+				pagesCount = args.Result / PageSize + args.Result % PageSize > 0 ? 1 : 0;
+				pagesCountText.Text = pagesCount.ToString(CultureInfo.InvariantCulture);
+				currentPageIndex = pagesCount > 0 ? 1 : 0;
+				currentPageText.Text = currentPageIndex.ToString(CultureInfo.InvariantCulture);
 			}
 			else
 			{
@@ -109,52 +122,61 @@ namespace Fab.Managment
 			}
 		}
 
-		#endregion
-
-		#region Callback handlers
-
-		private void GetSearchCompleted(object sender, GetUsersCompletedEventArgs args)
+		private void GetLoadUserCompleted(object sender, GetUsersCompletedEventArgs args)
 		{
 			if (args.Error == null)
 			{
 				adminService.Close();
-				UsersList.ItemsSource = args.Result;
+				usersList.ItemsSource = args.Result;
 			}
 			else
 			{
 				Helpers.ErrorProcessing(args);
 			}
 
-			Search.Content = "Search";
-			Search.IsEnabled = true;
+			search.Content = "Load";
+			search.IsEnabled = true;
 		}
-
-//		private void GetFeedbacksCountCompleted(object sender, GetFeedbacksCountCompletedEventArgs args)
-//		{
-//			feedbackManagmentServiceClient.Close();
-//
-//			var feedbackCounts = "- indeterminate -";
-//
-//			if (args.Error == null)
-//			{
-//				feedbackCounts = string.Format("{0:N0}", (decimal)args.Result);
-//			}
-//			else
-//			{
-//				Helpers.ErrorProcessing(args);
-//			}
-//
-//			FoundCount.Content = feedbackCounts;
-//			FoundCount.IsEnabled = true;
-//		}
-
-		#endregion
 
 		private void OnClearClick(object sender, RoutedEventArgs e)
 		{
 			SearchText.Text = string.Empty;
-			UsersList.ItemsSource = null;
+			usersList.ItemsSource = null;
 		}
+
+		private void OnNextPageClick(object sender, RoutedEventArgs e)
+		{
+			currentPageIndex++;
+			currentPageText.Text = currentPageIndex.ToString(CultureInfo.InvariantCulture);
+
+			search.IsEnabled = false;
+			search.Content = "Loadig...";
+
+			var filter = CreateFilter(PageSize);
+
+			adminService = Helpers.CreateClientProxy(endPointAddress.Text, Username.Text, Password.Password);
+
+			adminService.GetUsersCompleted += GetLoadUserCompleted;
+			adminService.GetUsersAsync(filter);
+		}
+
+		private void OnPrevPageClick(object sender, RoutedEventArgs e)
+		{
+			currentPageIndex--;
+			currentPageText.Text = currentPageIndex.ToString(CultureInfo.InvariantCulture);
+
+			search.IsEnabled = false;
+			search.Content = "Loadig...";
+
+			var filter = CreateFilter(PageSize);
+
+			adminService = Helpers.CreateClientProxy(endPointAddress.Text, Username.Text, Password.Password);
+
+			adminService.GetUsersCompleted += GetLoadUserCompleted;
+			adminService.GetUsersAsync(filter);
+		}
+
+		#region Misc
 
 		private void OnGenerateClick(object sender, RoutedEventArgs e)
 		{
@@ -176,5 +198,7 @@ namespace Fab.Managment
 		{
 			Helpers.Password = Password.Password;
 		}
+
+		#endregion
 	}
 }
