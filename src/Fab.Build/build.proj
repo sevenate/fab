@@ -18,7 +18,7 @@
 		<VersionString>Alpha</VersionString>
 		<ProductName>FAB</ProductName>
 		<CompanyName>nReez, LLC</CompanyName>
-		<Copyright>Copyright © nReez 2011</Copyright>
+		<Copyright>Copyright © nReez 2012</Copyright>
 		<Trademark>All Rights Reserved</Trademark>
 	</PropertyGroup>
 	
@@ -105,8 +105,7 @@
 					  AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
 					  AssemblyInformationalVersion="$(Major).$(Minor) $(VersionString)"
 					  AssemblyConfiguration="$(Configuration)"
-					  CLSCompliant="false"
-					  ComVisible="false" />
+					  CLSCompliant="false" />
 		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision) $(VersionString)" Importance="high" />
 	</Target>
 

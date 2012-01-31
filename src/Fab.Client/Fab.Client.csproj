@@ -580,9 +580,16 @@
     <WCFMetadataStorage Include="Service References\RegistrationServiceReference\" />
     <WCFMetadataStorage Include="Service References\UserServiceReference\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Fab.Core\Fab.Core.csproj">
+      <Project>{2833E7CE-248E-4A7C-A5E5-8CFFA544EC67}</Project>
+      <Name>Fab.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!--
   <Import Project="..\..\msbuild.common.targets" />
+  -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
