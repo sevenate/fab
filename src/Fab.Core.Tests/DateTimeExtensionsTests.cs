@@ -9,6 +9,9 @@ using Xunit;
 
 namespace Fab.Core.Tests
 {
+	/// <summary>
+	/// Unit tests for <see cref="DateTimeExtensions"/> class.
+	/// </summary>
 	public class DateTimeExtensionsTests
 	{
 		[Fact]
@@ -17,7 +20,7 @@ namespace Fab.Core.Tests
 // ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 7, 8);
+			var toDate = fromDate;
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("just now", smartTimespan);
 		}
@@ -28,7 +31,7 @@ namespace Fab.Core.Tests
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 7, 9);
+			var toDate = fromDate.AddSeconds(1);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("just now", smartTimespan);
 		}
@@ -39,7 +42,7 @@ namespace Fab.Core.Tests
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 59);
-			var toDate = new DateTime(2012, 1, 31, 18, 8, 3);
+			var toDate = fromDate.AddSeconds(4);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("just now", smartTimespan);
 		}
@@ -50,7 +53,7 @@ namespace Fab.Core.Tests
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 59);
-			var toDate = new DateTime(2012, 1, 31, 18, 8, 4);
+			var toDate = fromDate.AddSeconds(5);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("5 seconds ago", smartTimespan);
 		}
@@ -61,84 +64,84 @@ namespace Fab.Core.Tests
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 8, 7);
+			var toDate = fromDate.AddSeconds(59);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("59 seconds ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void AMinuteAgo_For_60_Sec()
+		public void AMinuteAgo_For_1_Min()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 8, 8);
+			var toDate = fromDate.AddMinutes(1);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("a minute ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void AMinuteAgo_For_119_Sec()
+		public void AMinuteAgo_For_1_Min_59_Sec()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 9, 7);
+			var toDate = fromDate.AddMinutes(1).AddSeconds(59);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("a minute ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void TwoMinutesAgo_For_120_Sec()
+		public void TwoMinutesAgo_For_2_Min()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 9, 8);
+			var toDate = fromDate.AddMinutes(2);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("2 minutes ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void FortyFourMinutesAgo_For_44_Min_59_Sec()
+		public void FiftyNineMinutesAgo_For_59_Min_59_Sec()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 52, 7);
+			var toDate = fromDate.AddMinutes(59).AddSeconds(59);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
-			Assert.Equal("44 minutes ago", smartTimespan);
+			Assert.Equal("59 minutes ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void AnHourAgo_For_45_Min()
+		public void AnHourAgo_For_1_Hour()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 18, 52, 8);
-			var smartTimespan = fromDate.ToSmartTimespan(toDate);
-			Assert.Equal("an hour ago", smartTimespan);
-		}
-
-		[Fact]
-		// ReSharper disable InconsistentNaming
-		public void AnHourAgo_For_119_Min_59_Sec()
-		// ReSharper restore InconsistentNaming
-		{
-			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 20, 7, 7);
+			var toDate = fromDate.AddHours(1);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("an hour ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void TwoHoursAgo_For_120_Min()
+		public void AnHourAgo_For_1_Hour_59_Min_59_Sec()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 1, 31, 20, 7, 8);
+			var toDate = fromDate.AddHours(1).AddMinutes(59).AddSeconds(59);
+			var smartTimespan = fromDate.ToSmartTimespan(toDate);
+			Assert.Equal("an hour ago", smartTimespan);
+		}
+
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void TwoHoursAgo_For_2_Hours()
+		// ReSharper restore InconsistentNaming
+		{
+			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
+			var toDate = fromDate.AddHours(2);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("2 hours ago", smartTimespan);
 		}
@@ -149,40 +152,40 @@ namespace Fab.Core.Tests
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 2, 1, 18, 7, 7);
+			var toDate = fromDate.AddHours(23).AddMinutes(59).AddSeconds(59);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("23 hours ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void Yesterday_For_24_Hours()
+		public void Yesterday_For_1_Day()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 2, 1, 18, 7, 8);
+			var toDate = fromDate.AddDays(1);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("yesterday", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void Yesterday_For_47_Hours_59_Min_59_Sec()
+		public void Yesterday_For_1_Day_23_Hours_59_Min_59_Sec()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 2, 2, 18, 7, 7);
+			var toDate = fromDate.AddDays(1).AddHours(23).AddMinutes(59).AddSeconds(59);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("yesterday", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void TwoDaysAgo_For_48_Hours()
+		public void TwoDaysAgo_For_2_Days()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 1, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 2, 2, 18, 7, 8);
+			var toDate = fromDate.AddDays(2);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("2 days ago", smartTimespan);
 		}
@@ -193,20 +196,86 @@ namespace Fab.Core.Tests
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 4, 30, 18, 7, 7);
+			var toDate = fromDate.AddDays(29).AddHours(23).AddMinutes(59).AddSeconds(59);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("29 days ago", smartTimespan);
 		}
 
 		[Fact]
 		// ReSharper disable InconsistentNaming
-		public void ThirtyDaysAgo_For_30_Days()
+		public void AMonthAgo_For_30_Days()
 		// ReSharper restore InconsistentNaming
 		{
 			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
-			var toDate = new DateTime(2012, 4, 30, 18, 7, 8);
+			var toDate = fromDate.AddDays(30);
 			var smartTimespan = fromDate.ToSmartTimespan(toDate);
 			Assert.Equal("a month ago", smartTimespan);
+		}
+
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void AMonthAgo_For_59_Days_23_Hours_59_Min_59_Sec()
+		// ReSharper restore InconsistentNaming
+		{
+			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
+			var toDate = fromDate.AddDays(59).AddHours(23).AddMinutes(59).AddSeconds(59);
+			var smartTimespan = fromDate.ToSmartTimespan(toDate);
+			Assert.Equal("a month ago", smartTimespan);
+		}
+
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void TwoMonthsAgo_For_60_Days()
+		// ReSharper restore InconsistentNaming
+		{
+			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
+			var toDate = fromDate.AddDays(60);
+			var smartTimespan = fromDate.ToSmartTimespan(toDate);
+			Assert.Equal("2 months ago", smartTimespan);
+		}
+
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void ElevenMonthsAgo_For_12x30_Days_Minus_1_Sec()
+		// ReSharper restore InconsistentNaming
+		{
+			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
+			var toDate = fromDate.AddDays(12*30).AddSeconds(-1);
+			var smartTimespan = fromDate.ToSmartTimespan(toDate);
+			Assert.Equal("11 months ago", smartTimespan);
+		}
+
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void AYearAgo_For_12x30_Days()
+		// ReSharper restore InconsistentNaming
+		{
+			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
+			var toDate = fromDate.AddDays(12 * 30);
+			var smartTimespan = fromDate.ToSmartTimespan(toDate);
+			Assert.Equal("a year ago", smartTimespan);
+		}
+
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void AYearAgo_For_2x365_Days_Minus_1_Sec()
+		// ReSharper restore InconsistentNaming
+		{
+			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
+			var toDate = fromDate.AddDays(2*365).AddSeconds(-1);
+			var smartTimespan = fromDate.ToSmartTimespan(toDate);
+			Assert.Equal("a year ago", smartTimespan);
+		}
+
+		[Fact]
+		// ReSharper disable InconsistentNaming
+		public void TwoYearsAgo_For_2x365_Days()
+		// ReSharper restore InconsistentNaming
+		{
+			var fromDate = new DateTime(2012, 3, 31, 18, 7, 8);
+			var toDate = fromDate.AddDays(2*365);
+			var smartTimespan = fromDate.ToSmartTimespan(toDate);
+			Assert.Equal("2 years ago", smartTimespan);
 		}
 	}
 }
