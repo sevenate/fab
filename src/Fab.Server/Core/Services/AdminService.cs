@@ -273,7 +273,7 @@ namespace Fab.Server.Core.Services
 		/// Update specific user data.
 		/// </summary>
 		/// <param name="userDto">User to update.</param>
-		/// <returns>Latest "DisabledChanged" value.</returns>
+		/// <returns>Last updated date.</returns>
 		public DateTime UpdateUser(AdminUserDTO userDto)
 		{
 			LogManager.GetCurrentClassLogger().LogClientIP("UpdateUser");
@@ -301,7 +301,7 @@ namespace Fab.Server.Core.Services
 
 				mc.SaveChanges();
 
-				// After this method call DisabledChanged will be always initialized
+				// After this method call "user.DisabledChanged" will be always initialized
 				return user.DisabledChanged.Value;
 			}
 		}

@@ -53,7 +53,7 @@ namespace Fab.Server.Core.Contracts
 		/// Update specific user data.
 		/// </summary>
 		/// <param name="userDto">User to update.</param>
-		/// <returns>Latest "DisabledChanged" value.</returns>
+		/// <returns>Last updated date.</returns>
 		[OperationContract]
 		[FaultContract(typeof(FaultDetail))]
 		DateTime UpdateUser(AdminUserDTO userDto);

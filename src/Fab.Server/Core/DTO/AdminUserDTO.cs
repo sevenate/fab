@@ -56,11 +56,11 @@ namespace Fab.Server.Core.DTO
 		public bool IsDisabled { get; set; }
 
 		/// <summary>
-		/// Gets or sets a date when <see cref="IsDisabled"/> value was last changed.
+		/// Gets or sets a date when user attributes was last changed.
 		/// Note: should be filled only by service.
 		/// </summary>
 		[DataMember]
-		public DateTime? DisabledChanged { get; set; }
+		public DateTime? LastUpdated { get; set; }
 
 		/// <summary>
 		/// Gets or sets database file size in bytes.
