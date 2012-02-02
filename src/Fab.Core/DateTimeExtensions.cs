@@ -106,5 +106,27 @@ namespace Fab.Core
 			int years = Convert.ToInt32(Math.Floor(ts.Days / 365.0));
 			return years <= 1 ? "a year ago" : years + " years ago";
 		}
+
+		/// <summary>
+		/// Get friendly representation like "58 minutes ago", "16 hours ago", "2 days ago" etc.
+		/// for timespan from <see cref="DateTime.UtcNow"/> to specified date.
+		/// </summary>
+		/// <param name="toDate">End offset date. Usually taked database or other permanent storage.</param>
+		/// <returns>Friendly timespan string.</returns>
+		public static string ToSmartTimespanUtc(this DateTime toDate)
+		{
+			return toDate.ToSmartTimespan(DateTime.UtcNow);
+		}
+
+		/// <summary>
+		/// Get friendly representation like "58 minutes ago", "16 hours ago", "2 days ago" etc.
+		/// for timespan from <see cref="DateTime.Now"/> to specified date.
+		/// </summary>
+		/// <param name="toDate">End offset date. Usually taked database or other permanent storage.</param>
+		/// <returns>Friendly timespan string.</returns>
+		public static string ToSmartTimespanLocal(this DateTime toDate)
+		{
+			return toDate.ToSmartTimespan(DateTime.Now);
+		}
 	}
 }

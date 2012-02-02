@@ -61,10 +61,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\DateTimeToSmartTimeSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\SslValidation.cs" />
+    <Compile Include="CultureSettings.cs" />
     <Compile Include="UserDetails.xaml.cs">
       <DependentUpon>UserDetails.xaml</DependentUpon>
     </Compile>
