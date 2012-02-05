@@ -85,6 +85,72 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		private string databasePath;
+		public string DatabasePath
+		{
+			get { return databasePath; }
+			set
+			{
+				databasePath = value;
+				NotifyOfPropertyChange(() => DatabasePath);
+			}
+		}
+
+		private DateTime? disabledChanged;
+		public DateTime? DisabledChanged
+		{
+			get { return disabledChanged; }
+			set
+			{
+				disabledChanged = value;
+				NotifyOfPropertyChange(() => DisabledChanged);
+			}
+		}
+
+		private string email;
+		public string Email
+		{
+			get { return email; }
+			set
+			{
+				email = value;
+				NotifyOfPropertyChange(() => Email);
+			}
+		}
+
+		private long? freeDiskSpaceAvailable;
+		public long? FreeDiskSpaceAvailable
+		{
+			get { return freeDiskSpaceAvailable; }
+			set
+			{
+				freeDiskSpaceAvailable = value;
+				NotifyOfPropertyChange(() => FreeDiskSpaceAvailable);
+			}
+		}
+
+		private bool isDisabled;
+		public bool IsDisabled
+		{
+			get { return isDisabled; }
+			set
+			{
+				isDisabled = value;
+				NotifyOfPropertyChange(() => IsDisabled);
+			}
+		}
+
+		private string serviceUrl;
+		public string ServiceUrl
+		{
+			get { return serviceUrl; }
+			set
+			{
+				serviceUrl = value;
+				NotifyOfPropertyChange(() => ServiceUrl);
+			}
+		}
+
 		public IEnumerable<IResult> Optimize()
 		{
 			IsBusy = true;

@@ -17,9 +17,7 @@ using Fab.Managment.Shell.Results;
 
 namespace Fab.Managment.Shell
 {
-	// ReSharper disable ClassNeverInstantiated.Global
 	public class ShellViewModel : Screen, ICanBeBusy
-		// ReSharper restore ClassNeverInstantiated.Global
 	{
 		#region Autorization
 
@@ -279,7 +277,13 @@ namespace Fab.Managment.Shell
 				          		Login = adminUserDto.Login,
 				          		Registered = adminUserDto.Registered,
 				          		LastAccess = adminUserDto.LastAccess,
-				          		DatabaseSize = adminUserDto.DatabaseSize
+				          		DatabaseSize = adminUserDto.DatabaseSize,
+								DatabasePath = adminUserDto.DatabasePath,
+								DisabledChanged = adminUserDto.DisabledChanged,
+								Email = adminUserDto.Email,
+								FreeDiskSpaceAvailable = adminUserDto.FreeDiskSpaceAvailable,
+								IsDisabled = adminUserDto.IsDisabled,
+								ServiceUrl = adminUserDto.ServiceUrl
 				          	});
 			}
 

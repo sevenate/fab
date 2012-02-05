@@ -7,8 +7,7 @@
 										 Title="FAB Management Tool"
 										 mc:Ignorable="d"
 										 d:DesignHeight="300"
-										 Language="{Binding Language, Source={StaticResource cultureSettings}}"
-										 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}">
+										 Language="{Binding Language, Source={StaticResource cultureSettings}}">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -117,7 +116,7 @@
 										 Grid.ColumnSpan="2" />
 					</Grid>
 				</ribbon:RibbonGroup>
-				<ribbon:RibbonGroup>
+				<ribbon:RibbonGroup IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}">
 					<ribbon:RibbonButton x:Name="Load"
 															 Label="{Binding LoadText, FallbackValue=Load}"
 															 FontSize="18"
@@ -159,6 +158,7 @@
 		</ribbon:Ribbon>
 		<ListBox x:Name="Users"
 						 Grid.Row="1"
+						 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
 						 BorderThickness="0"
 						 HorizontalContentAlignment="Stretch"
 						 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -167,6 +167,7 @@
 								Orientation="Horizontal"
 								HorizontalAlignment="Center"
 								VerticalAlignment="Center"
+								IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
 								MinHeight="50">
 			<Button x:Name="PrevPage"
 							Content="&lt;"
