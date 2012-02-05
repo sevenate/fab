@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
+using Fab.Core.Framework;
 
 namespace Fab.Client.Authentication
 {

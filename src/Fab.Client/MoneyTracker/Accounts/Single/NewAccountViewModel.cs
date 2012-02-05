@@ -13,6 +13,7 @@ using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts.AssetTypes;
+using Fab.Core.Framework;
 
 namespace Fab.Client.MoneyTracker.Accounts.Single
 {

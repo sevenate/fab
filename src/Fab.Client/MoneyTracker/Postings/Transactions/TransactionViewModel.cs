@@ -20,6 +20,7 @@ using Fab.Client.Framework.Filters;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Categories;
+using Fab.Core.Framework;
 
 namespace Fab.Client.MoneyTracker.Postings.Transactions
 {

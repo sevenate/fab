@@ -3,7 +3,7 @@ using System.ServiceModel;
 using System.Windows;
 using Fab.Managment.AdminServiceReference;
 
-namespace Fab.Managment.Core
+namespace Fab.Managment.Framework
 {
 	public static class Helpers
 	{

@@ -225,7 +225,6 @@
     <Compile Include="Framework\FilterFramework.cs" />
     <Compile Include="Framework\FilterManager.cs" />
     <Compile Include="Framework\IRepository.cs" />
-    <Compile Include="Framework\ICanBeBusy.cs" />
     <Compile Include="Framework\Filters\IFilter.cs" />
     <Compile Include="Framework\Loader.cs" />
     <Compile Include="Framework\Filters\PreviewAttribute.cs" />
