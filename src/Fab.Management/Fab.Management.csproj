@@ -79,6 +79,8 @@
     <Compile Include="Framework\SslValidation.cs" />
     <Compile Include="Framework\CultureSettings.cs" />
     <Compile Include="Shell\AppBootstrapper.cs" />
+    <Compile Include="Shell\Results\CountUsersResult.cs" />
+    <Compile Include="Shell\Results\LoadResult.cs" />
     <Compile Include="Shell\Results\DeleteResult.cs" />
     <Compile Include="Shell\Results\OptimizeResult.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />

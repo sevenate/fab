@@ -5,6 +5,7 @@
 //------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Web.Configuration;
 using System.Web.Security;
 using Caliburn.Micro;
@@ -12,6 +13,7 @@ using Fab.Client.Framework.Filters;
 using Fab.Core.Framework;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;
+using Fab.Managment.Shell.Results;
 
 namespace Fab.Managment.Shell
 {
@@ -19,8 +21,6 @@ namespace Fab.Managment.Shell
 	public class ShellViewModel : Screen, ICanBeBusy
 		// ReSharper restore ClassNeverInstantiated.Global
 	{
-		private AdminServiceClient adminService;
-
 		#region Autorization
 
 		private string password = "123";
@@ -114,36 +114,45 @@ namespace Fab.Managment.Shell
 			{
 				currentPageIndex = value;
 				NotifyOfPropertyChange(() => CurrentPageIndex);
+				NotifyOfPropertyChange(() => CanNextPage);
+				NotifyOfPropertyChange(() => CanPrevPage);
 			}
 		}
 
-		public void NextPage()
+		public IEnumerable<IResult> NextPage()
 		{
-			currentPageIndex++;
-
 			IsBusy = true;
-			LoadText = "Loadig...";
+			CurrentPageIndex++;
 
-			TextSearchFilter filter = CreateFilter(PageSize);
+			foreach (var result in LoadUsers())
+			{
+				yield return result;
+			}
 
-			adminService = Helpers.CreateClientProxy(EndPointAddress, Username, Password);
-
-			adminService.GetUsersCompleted += LoadUserCompleted;
-			adminService.GetUsersAsync(filter);
+			IsBusy = false;
 		}
 
-		public void PrevPage()
+		public bool CanNextPage
 		{
+			get { return CurrentPageIndex < PagesCount; }
+		}
+
+		public IEnumerable<IResult> PrevPage()
+		{
+			IsBusy = true;
 			CurrentPageIndex--;
 
-			IsBusy = true;
-			LoadText = "Loadig...";
+			foreach (var result in LoadUsers())
+			{
+				yield return result;
+			}
 
-			TextSearchFilter filter = CreateFilter(PageSize);
+			IsBusy = false;
+		}
 
-			adminService = Helpers.CreateClientProxy(EndPointAddress, Username, Password);
-			adminService.GetUsersCompleted += LoadUserCompleted;
-			adminService.GetUsersAsync(filter);
+		public bool CanPrevPage
+		{
+			get { return 1 < CurrentPageIndex; }
 		}
 
 		#endregion
@@ -225,63 +234,56 @@ namespace Fab.Managment.Shell
 
 		public IObservableCollection<UserViewModel> Users { get; private set; }
 
-		public void Load()
+		public IEnumerable<IResult> Load()
 		{
 			IsBusy = true;
-			LoadText = "Loading...";
 
-			// Reset curent page index
-			currentPageIndex = 1;
+			LoadText = "Counting...";
+			CurrentPageIndex = 0;
+			PagesCount = 0;
+			var countResult = new CountUsersResult { Filer = CreateFilter() };
+			yield return countResult;
 
-			adminService = Helpers.CreateClientProxy(EndPointAddress, Username, Password);
-
-			adminService.GetUsersCountCompleted += CountUsersCompleted;
-			adminService.GetUsersCountAsync(CreateFilter());
-
-			adminService.GetUsersCompleted += LoadUserCompleted;
-			adminService.GetUsersAsync(CreateFilter(PageSize));
-		}
-
-		private void CountUsersCompleted(object sender, GetUsersCountCompletedEventArgs args)
-		{
-			if (args.Error == null)
+			if (countResult.Count >= 1)
 			{
-				TotalUsers = args.Result;
-				PagesCount = args.Result/PageSize + args.Result%PageSize > 0 ? 1 : 0;
-				CurrentPageIndex = PagesCount > 0 ? 1 : 0;
-			}
-			else
-			{
-				Helpers.ErrorProcessing(args);
-			}
-		}
+				TotalUsers = countResult.Count;
+				PagesCount = countResult.Count / PageSize + (countResult.Count % PageSize > 0 ? 1 : 0);
+				CurrentPageIndex = 1;
 
-		private void LoadUserCompleted(object sender, GetUsersCompletedEventArgs args)
-		{
-			if (args.Error == null)
-			{
-				adminService.Close();
-				Users.Clear();
-
-				foreach (AdminUserDTO adminUserDto in args.Result)
+				foreach (var result in LoadUsers())
 				{
-					Users.Add(new UserViewModel
-					          	{
-					          		Id = adminUserDto.Id,
-					          		Login = adminUserDto.Login,
-					          		Registered = adminUserDto.Registered,
-					          		LastAccess = adminUserDto.LastAccess,
-					          		DatabaseSize = adminUserDto.DatabaseSize
-					          	});
+					yield return result;
 				}
 			}
 			else
 			{
-				Helpers.ErrorProcessing(args);
+				LoadText = "Load";
+			}
+
+			IsBusy = false;
+		}
+
+		private IEnumerable<IResult> LoadUsers()
+		{
+			LoadText = "Loading...";
+			var loadResult = new LoadResult {Filer = CreateFilter(PageSize)};
+			yield return loadResult;
+
+			Users.Clear();
+
+			foreach (AdminUserDTO adminUserDto in loadResult.Users)
+			{
+				Users.Add(new UserViewModel
+				          	{
+				          		Id = adminUserDto.Id,
+				          		Login = adminUserDto.Login,
+				          		Registered = adminUserDto.Registered,
+				          		LastAccess = adminUserDto.LastAccess,
+				          		DatabaseSize = adminUserDto.DatabaseSize
+				          	});
 			}
 
 			LoadText = "Load";
-			IsBusy = false;
 		}
 
 		public void ClearSearch()
@@ -289,10 +291,13 @@ namespace Fab.Managment.Shell
 			UseStartDate = false;
 			UseEndDate = false;
 			SearchText = string.Empty;
+			TotalUsers = 0;
+			PagesCount = 0;
+			CurrentPageIndex = 0;
 			Users.Clear();
 		}
 
-		private TextSearchFilter CreateFilter(int? pageSize = null)
+		private TextSearchFilter CreateFilter(int? usersPerPage = null)
 		{
 			var filter = new TextSearchFilter
 			             	{
@@ -305,8 +310,8 @@ namespace Fab.Managment.Shell
 			             		Contains = !string.IsNullOrEmpty(SearchText)
 			             		           	? SearchText
 			             		           	: null,
-			             		Take = pageSize,
-			             		Skip = pageSize != null ? (currentPageIndex - 1)*pageSize : null,
+			             		Take = usersPerPage,
+			             		Skip = usersPerPage != null ? (CurrentPageIndex - 1)*usersPerPage : null,
 			             	};
 			return filter;
 		}
@@ -326,6 +331,7 @@ namespace Fab.Managment.Shell
 			{
 				adminPassword = value;
 				NotifyOfPropertyChange(() => AdminPassword);
+				NotifyOfPropertyChange(() => CanGenerateHash);
 			}
 		}
 
@@ -346,12 +352,10 @@ namespace Fab.Managment.Shell
 			Hash = FormsAuthentication.HashPasswordForStoringInConfigFile(AdminPassword, FormsAuthPasswordFormat.SHA1.ToString());
 		}
 
-		/*
-		public bool CanGenerateHash()
+		public bool CanGenerateHash
 		{
-			return !string.IsNullOrWhiteSpace(AdminPassword);
+			get { return !string.IsNullOrWhiteSpace(AdminPassword); }
 		}
-		*/
 
 		#endregion
 

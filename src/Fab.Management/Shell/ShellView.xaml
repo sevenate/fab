@@ -6,8 +6,9 @@
 										 xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
 										 Title="FAB Management Tool"
 										 mc:Ignorable="d"
-										 d:DesignHeight="337"
-										 Language="{Binding Language, Source={StaticResource cultureSettings}}">
+										 d:DesignHeight="300"
+										 Language="{Binding Language, Source={StaticResource cultureSettings}}"
+										 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -118,7 +119,7 @@
 				</ribbon:RibbonGroup>
 				<ribbon:RibbonGroup>
 					<ribbon:RibbonButton x:Name="Load"
-															 Label="{Binding LoadText}"
+															 Label="{Binding LoadText, FallbackValue=Load}"
 															 FontSize="18"
 															 MinWidth="110"
 															 Padding="0,24"
