@@ -8,7 +8,7 @@
 using System.Threading;
 using System.Windows.Markup;
 
-namespace Fab.Managment
+namespace Fab.Managment.Framework
 {
 	/// <summary>
 	/// Used to get <see cref="XmlLanguage"/> for current OS culture.

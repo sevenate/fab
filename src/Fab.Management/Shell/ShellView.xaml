@@ -1,48 +1,13 @@
-﻿<ribbon:RibbonWindow x:Class="Fab.Managment.MainWindow"
+﻿<ribbon:RibbonWindow x:Class="Fab.Managment.Shell.ShellView"
 										 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 										 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 										 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 										 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 										 xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
-										 xmlns:Managment="clr-namespace:Fab.Managment"
 										 Title="FAB Management Tool"
 										 mc:Ignorable="d"
 										 d:DesignHeight="337"
 										 Language="{Binding Language, Source={StaticResource cultureSettings}}">
-	<Window.Resources>
-
-		<DataTemplate x:Key="ItemTemplate">
-			<Managment:UserItem />
-		</DataTemplate>
-
-		<DataTemplate x:Key="SelectedTemplate">
-			<Managment:UserDetails />
-		</DataTemplate>
-
-		<DataTemplate x:Key="TimeTemplate">
-			<TextBlock Text="{Binding StringFormat=HH:mm}"
-								 TextWrapping="Wrap" />
-		</DataTemplate>
-
-		<Style x:Key="ListBoxItemStyle"
-					 TargetType="{x:Type ListBoxItem}">
-			<Setter Property="ContentTemplate"
-							Value="{StaticResource ItemTemplate}" />
-			<Style.Triggers>
-				<Trigger Property="IsSelected"
-								 Value="True">
-					<Setter Property="ContentTemplate"
-									Value="{StaticResource SelectedTemplate}" />
-				</Trigger>
-			</Style.Triggers>
-		</Style>
-	</Window.Resources>
-
-	<Window.Triggers>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded"
-									SourceName="Clear" />
-	</Window.Triggers>
-
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -51,43 +16,46 @@
 		</Grid.RowDefinitions>
 		<ribbon:Ribbon SelectedIndex="0">
 			<ribbon:Ribbon.ApplicationMenu>
-				<ribbon:RibbonApplicationMenu SmallImageSource="Images\SmallIcon.png">
+				<ribbon:RibbonApplicationMenu SmallImageSource="..\Images\SmallIcon.png">
 					<ribbon:RibbonApplicationMenuItem Header="Hello _Ribbon"
-																						ImageSource="Images\LargeIcon.png" />
+																						ImageSource="..\Images\LargeIcon.png" />
 				</ribbon:RibbonApplicationMenu>
 			</ribbon:Ribbon.ApplicationMenu>
 			<ribbon:RibbonTab Header="Home">
 				<ribbon:RibbonGroup Header="Service">
-					<ComboBox x:Name="endPointAddress"
-										SelectedIndex="0"
-										SelectionChanged="OnServiceAddressChanged">
-						<ComboBoxItem Content="https://localhost/StagingFab/AdminService.svc" />
-						<ComboBoxItem Content="https://cws13.my-hosting-panel.com/9962BC33-DD6F-45E0-9540-259B2C9DEEA2/AdminService.svc" />
-					</ComboBox>
+					<ribbon:RibbonComboBox x:Name="endPointAddress"
+																 SelectionBoxWidth="250">
+						<ribbon:RibbonGallery SelectedValuePath="Tag"
+																	SelectedValue="{Binding Path=EndPointAddress, Mode=OneWayToSource}">
+							<ribbon:RibbonGalleryCategory FontSize="16">
+								<ribbon:RibbonGalleryItem Tag="https://localhost/StagingFab/AdminService.svc"
+																					Content="https://localhost/StagingFab/AdminService.svc"
+																					IsSelected="True" />
+								<ribbon:RibbonGalleryItem Tag="https://cws13.my-hosting-panel.com/9962BC33-DD6F-45E0-9540-259B2C9DEEA2/AdminService.svc"
+																					Content="https://cws13.my-hosting-panel.com/9962BC33-DD6F-45E0-9540-259B2C9DEEA2/AdminService.svc" />
+							</ribbon:RibbonGalleryCategory>
+						</ribbon:RibbonGallery>
+					</ribbon:RibbonComboBox>
 					<Grid Width="{Binding ElementName=endPointAddress, Path=ActualWidth}">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition />
 							<ColumnDefinition />
 						</Grid.ColumnDefinitions>
 						<TextBox x:Name="Username"
-										 Text="admin"
-										 ToolTip="User name"
-										 TextChanged="OnUsernameTextChanged" />
-						<PasswordBox x:Name="Password"
-												 Grid.Column="1"
-												 Password="123"
-												 ToolTip="Password"
-												 PasswordChanged="OnPasswordPasswordChanged" />
+										 ToolTip="User name" />
+						<TextBox x:Name="Password"
+										 Grid.Column="1"
+										 ToolTip="Password" />
 					</Grid>
 				</ribbon:RibbonGroup>
 				<ribbon:RibbonGroup Header="Settings">
 					<ribbon:RibbonComboBox SelectionBoxWidth="120">
-						<ribbon:RibbonGallery x:Name="take"
-																	SelectedValuePath="Tag">
+						<ribbon:RibbonGallery SelectedValuePath="Tag"
+																	SelectedValue="{Binding Path=PageSize, Mode=OneWayToSource}">
 							<ribbon:RibbonGalleryCategory FontSize="18">
 								<ribbon:RibbonGalleryItem Tag="5"
 																					Content="5 users per page"
-																					Foreground="Green" />
+																					Foreground="LightGreen" />
 								<ribbon:RibbonGalleryItem Tag="10"
 																					Content="10 users per page"
 																					Foreground="LightGreen" />
@@ -97,13 +65,13 @@
 																					IsSelected="True" />
 								<ribbon:RibbonGalleryItem Tag="50"
 																					Content="50 users per page"
-																					Foreground="DarkOrange" />
+																					Foreground="Orange" />
 								<ribbon:RibbonGalleryItem Tag="100"
 																					Content="100 users per page"
 																					Foreground="Red" />
 								<ribbon:RibbonGalleryItem Tag="500"
 																					Content="500 users per page"
-																					Foreground="DarkRed" />
+																					Foreground="Red" />
 							</ribbon:RibbonGalleryCategory>
 						</ribbon:RibbonGallery>
 					</ribbon:RibbonComboBox>
@@ -120,91 +88,78 @@
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition />
-							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						<CheckBox x:Name="IsNotOlderThen"
-											Grid.Row="0"
-											Grid.Column="0"
-											Content="From:"
-											VerticalAlignment="Center"
-											IsChecked="True" />
+						<ribbon:RibbonCheckBox x:Name="IsNotOlderThen"
+																	 Grid.Row="0"
+																	 Grid.Column="0"
+																	 Label="Start"
+																	 IsChecked="{Binding Path=UseStartDate}" />
 						<DatePicker x:Name="NotOlderThen"
 												Grid.Row="0"
 												Grid.Column="1"
 												IsEnabled="{Binding IsChecked, ElementName=IsNotOlderThen, Mode=Default}"
 												SelectedDateFormat="Long" />
-						<ComboBox x:Name="NotOlderThenTime"
-											Grid.Row="0"
-											Grid.Column="2"
-											IsEnabled="{Binding IsChecked, ElementName=IsNotOlderThen, Mode=Default}"
-											Margin="4,0,0,0"
-											ItemTemplate="{DynamicResource TimeTemplate}" />
-						<CheckBox x:Name="IsUpto"
-											Grid.Row="1"
-											Grid.Column="0"
-											VerticalAlignment="Center"
-											Content="Up to:" />
-						<DatePicker x:Name="Upto"
+						<ribbon:RibbonCheckBox x:Name="IsUpto"
+																	 Grid.Row="1"
+																	 Grid.Column="0"
+																	 Label="End"
+																	 HorizontalAlignment="Left"
+																	 IsChecked="{Binding Path=UseEndDate}" />
+						<DatePicker x:Name="UpTo"
 												Grid.Row="1"
 												Grid.Column="1"
 												IsEnabled="{Binding IsChecked, ElementName=IsUpto, Mode=Default}"
 												SelectedDateFormat="Long" />
-						<ComboBox x:Name="UptoTime"
-											Grid.Row="1"
-											Grid.Column="2"
-											IsEnabled="{Binding IsChecked, ElementName=IsUpto, Mode=Default}"
-											Margin="4,0,0,0"
-											ItemTemplate="{DynamicResource TimeTemplate}" />
 						<TextBox x:Name="SearchText"
 										 ToolTip="Contains Text"
 										 Grid.Row="2"
 										 Grid.ColumnSpan="2" />
-						<Button x:Name="Clear"
-										Grid.Row="2"
-										Grid.Column="2"
-										Content="Clear"
-										ToolTip="Clear filter text"
-										Margin="4,0,0,0"
-										Click="OnClearClick" />
 					</Grid>
-					<ribbon:RibbonButton x:Name="search"
-															 Label="Load"
-															 Padding="25"
+				</ribbon:RibbonGroup>
+				<ribbon:RibbonGroup>
+					<ribbon:RibbonButton x:Name="Load"
+															 Label="{Binding LoadText}"
 															 FontSize="18"
-															 FontWeight="Bold"
-															 Click="OnLoadClick" />
+															 MinWidth="110"
+															 Padding="0,24"
+															 FontWeight="Bold" />
+					<ribbon:RibbonButton x:Name="ClearSearch"
+															 Label="Clear"
+															 FontSize="18"
+															 Padding="10,24" />
 				</ribbon:RibbonGroup>
 			</ribbon:RibbonTab>
 			<ribbon:RibbonTab Header="Misc">
 				<ribbon:RibbonGroup Header="Sample">
-					<ribbon:RibbonButton LargeImageSource="Images\LargeIcon.png"
+					<ribbon:RibbonButton LargeImageSource="..\Images\LargeIcon.png"
 															 Label="Button1" />
-					<ribbon:RibbonButton SmallImageSource="Images\SmallIcon.png"
+					<ribbon:RibbonButton SmallImageSource="..\Images\SmallIcon.png"
 															 Label="Button2" />
-					<ribbon:RibbonButton SmallImageSource="Images\SmallIcon.png"
+					<ribbon:RibbonButton SmallImageSource="..\Images\SmallIcon.png"
 															 Label="Button3" />
-					<ribbon:RibbonButton SmallImageSource="Images\SmallIcon.png"
+					<ribbon:RibbonButton SmallImageSource="..\Images\SmallIcon.png"
 															 Label="Button4" />
 				</ribbon:RibbonGroup>
 				<ribbon:RibbonGroup Header="Hash">
-					<TextBox x:Name="NewPassword"
-									 Text="Password"
-									 MinWidth="150" />
-					<TextBox x:Name="PasswordHash"
-									 Text="Hash"
-									 MinWidth="150" />
-					<Button x:Name="Generate"
-									Content="Generate"
-									MinWidth="150"
-									Click="OnGenerateClick" />
+					<TextBox x:Name="AdminPassword"
+									 ToolTip="New admin password"
+									 MinWidth="280" />
+					<TextBox x:Name="Hash"
+									 ToolTip="Generated password hash"
+									 MinWidth="280" />
+					<ribbon:RibbonButton x:Name="GenerateHash"
+															 Label="Generate"
+															 FontSize="18"
+															 Padding="13"
+															 MinWidth="100"
+															 FontWeight="Bold" />
 				</ribbon:RibbonGroup>
 			</ribbon:RibbonTab>
 		</ribbon:Ribbon>
-		<ListBox x:Name="usersList"
+		<ListBox x:Name="Users"
 						 Grid.Row="1"
 						 BorderThickness="0"
 						 HorizontalContentAlignment="Stretch"
-						 ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
 						 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 						 ScrollViewer.CanContentScroll="False" />
 		<StackPanel Grid.Row="2"
@@ -212,15 +167,13 @@
 								HorizontalAlignment="Center"
 								VerticalAlignment="Center"
 								MinHeight="50">
-			<Button x:Name="prevPage"
+			<Button x:Name="PrevPage"
 							Content="&lt;"
 							ToolTip="Previous Page"
 							FontSize="26"
 							MinWidth="50"
-							Margin="10,0"
-							Click="OnPrevPageClick" />
-			<TextBlock x:Name="currentPageText"
-								 Text="0"
+							Margin="10,0" />
+			<TextBlock x:Name="CurrentPageIndex"
 								 ToolTip="Current Page"
 								 FontWeight="Bold"
 								 FontSize="16"
@@ -228,19 +181,17 @@
 			<TextBlock Text=" of "
 								 FontSize="16"
 								 VerticalAlignment="Center" />
-			<TextBlock x:Name="pagesCountText"
-								 Text="0"
+			<TextBlock x:Name="PagesCount"
 								 ToolTip="Pages Count"
 								 FontWeight="Bold"
 								 FontSize="16"
 								 VerticalAlignment="Center" />
-			<Button x:Name="nextPage"
+			<Button x:Name="NextPage"
 							Content="&gt;"
 							ToolTip="Next Page"
 							FontSize="26"
 							MinWidth="50"
-							Margin="10,0"
-							Click="OnNextPageClick" />
+							Margin="10,0" />
 		</StackPanel>
 		<StackPanel Orientation="Horizontal"
 								Grid.Row="2"
@@ -248,8 +199,7 @@
 			<TextBlock Text="Found Users:"
 								 VerticalAlignment="Center"
 								 FontSize="16" />
-			<TextBlock x:Name="totalUsersText"
-								 Text="0"
+			<TextBlock x:Name="TotalUsers"
 								 Foreground="Red"
 								 FontWeight="Bold"
 								 VerticalAlignment="Center"

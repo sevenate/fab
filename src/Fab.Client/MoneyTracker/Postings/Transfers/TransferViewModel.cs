@@ -17,6 +17,7 @@ using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
+using Fab.Core.Framework;
 
 namespace Fab.Client.MoneyTracker.Postings.Transfers
 {

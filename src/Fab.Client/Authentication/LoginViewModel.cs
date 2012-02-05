@@ -7,8 +7,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
-using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
+using Fab.Core.Framework;
 
 namespace Fab.Client.Authentication
 {
@@ -282,12 +282,12 @@ namespace Fab.Client.Authentication
 		#region Implementation of ICanBeBusy
 
 		/// <summary>
-		/// Gets or sets a value indicating weather a login view model has a long running operation in the background.
+		/// Indicate whether view-model is busy by some background operation.
 		/// </summary>
 		private bool isBusy;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a view model has a long running operation in the background.
+		/// Gets or sets a value indicating whether view-model is busy by some background operation.
 		/// </summary>
 		public bool IsBusy
 		{

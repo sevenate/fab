@@ -12,6 +12,7 @@ using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
 using Fab.Client.MoneyServiceReference;
+using Fab.Core.Framework;
 
 namespace Fab.Client.MoneyTracker.Categories.Single
 {

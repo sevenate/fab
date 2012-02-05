@@ -16,7 +16,7 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Fab.Managment.Core
+namespace Fab.Managment.Framework
 {
 	/// <summary>
 	/// Provide custom SSL certificate validation.

@@ -1,5 +1,6 @@
 ﻿using System;
 using Caliburn.Micro;
+using Fab.Core.Framework;
 
 namespace Fab.Client.Framework.Filters
 {

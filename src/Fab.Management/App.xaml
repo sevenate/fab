@@ -4,26 +4,68 @@
 						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 						 xmlns:local="clr-namespace:Fab.Managment"
-						 mc:Ignorable="d"
-						 StartupUri="MainWindow.xaml"
-						 DispatcherUnhandledException="OnUnhandledException">
+						 xmlns:Shell="clr-namespace:Fab.Managment.Shell"
+						 xmlns:Framework="clr-namespace:Fab.Managment.Framework"
+						 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
+						 mc:Ignorable="d">
 	<Application.Resources>
-		<local:CultureSettings x:Key="cultureSettings" />
-		<DataTemplate x:Key="UserItemTemplate">
-			<Grid d:DesignWidth="650"
-						d:DesignHeight="200">
-				<local:UserItem />
-			</Grid>
-		</DataTemplate>
-		<ControlTemplate x:Key="FileSizeTemplate">
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="{Binding DatabaseSize, StringFormat={}{0:N0}, FallbackValue=?}"
-									 Foreground="RoyalBlue"
-									 FontSize="16"
-									 FontWeight="Bold" />
-				<TextBlock Text=" bytes"
-									 VerticalAlignment="Center" />
-			</StackPanel>
-		</ControlTemplate>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary>
+					<Shell:AppBootstrapper x:Key="bootstrapper" />
+				</ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+			<Framework:CultureSettings x:Key="cultureSettings" />
+			<converters:BooleanToNotBooleanConverter x:Key="boolToNotBool" />
+			<DataTemplate x:Key="UserItemTemplate">
+				<Grid d:DesignWidth="650"
+							d:DesignHeight="200">
+					<Shell:UserView />
+				</Grid>
+			</DataTemplate>
+			<ControlTemplate x:Key="FileSizeTemplate">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="{Binding DatabaseSize, StringFormat={}{0:N0}, FallbackValue=?}"
+										 Foreground="RoyalBlue"
+										 FontSize="16"
+										 FontWeight="Bold" />
+					<TextBlock Text=" bytes"
+										 VerticalAlignment="Center" />
+				</StackPanel>
+			</ControlTemplate>
+			<Style TargetType="ListBoxItem">
+				<Setter Property="FocusVisualStyle"
+								Value="{x:Null}" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="ListBoxItem">
+							<Border x:Name="Border"
+											Padding="2"
+											SnapsToDevicePixels="true">
+								<ContentPresenter />
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsSelected"
+												 Value="true">
+									<Setter TargetName="Border"
+													Property="Background"
+													Value="Yellow" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style TargetType="TextBox"
+						 x:Key="ReadOnly"
+						 BasedOn="{StaticResource {x:Type TextBox}}">
+				<Setter Property="IsReadOnly"
+								Value="True" />
+				<Setter Property="BorderThickness"
+								Value="0" />
+				<Setter Property="Background"
+								Value="Transparent" />
+			</Style>
+		</ResourceDictionary>
 	</Application.Resources>
 </Application>

@@ -37,16 +37,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\..\ext\.NET 4\Caliburn.Micro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -54,52 +54,55 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RibbonControlsLibrary" />
-    <Reference Include="Microsoft.Windows.Shell" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\Fab.Client\Framework\Converters\BooleanToNotBooleanConverter.cs">
+      <Link>Converters\BooleanToNotBooleanConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Fab.Client\Framework\Filters\DependenciesAttribute.cs">
+      <Link>Framework\Filters\DependenciesAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Fab.Client\Framework\Filters\IContextAware.cs">
+      <Link>Framework\Filters\IContextAware.cs</Link>
+    </Compile>
+    <Compile Include="..\Fab.Client\Framework\Filters\IFilter.cs">
+      <Link>Framework\Filters\IFilter.cs</Link>
+    </Compile>
     <Compile Include="Converters\DateTimeToSmartTimeSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\TimeToStringConverter.cs" />
-    <Compile Include="Core\Helpers.cs" />
-    <Compile Include="Core\SslValidation.cs" />
-    <Compile Include="CultureSettings.cs" />
-    <Compile Include="UserDetails.xaml.cs">
-      <DependentUpon>UserDetails.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserItem.xaml.cs">
-      <DependentUpon>UserItem.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Framework\Helpers.cs" />
+    <Compile Include="Framework\SslValidation.cs" />
+    <Compile Include="Framework\CultureSettings.cs" />
+    <Compile Include="Shell\AppBootstrapper.cs" />
+    <Compile Include="Shell\Results\DeleteResult.cs" />
+    <Compile Include="Shell\Results\OptimizeResult.cs" />
+    <Compile Include="Shell\ShellViewModel.cs" />
+    <Compile Include="Shell\UserDetails.xaml.cs" />
+    <Compile Include="Shell\UserViewModel.cs" />
     <Compile Include="Service References\AdminServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Page Include="UserDetails.xaml">
+    <Page Include="Shell\UserDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserItem.xaml">
+    <Page Include="Shell\UserView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Shell\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="..\AssemblyInfo.Generated.cs">
       <Link>Properties\AssemblyInfo.Generated.cs</Link>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
