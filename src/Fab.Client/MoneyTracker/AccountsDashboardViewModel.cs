@@ -1,4 +1,4 @@
-// <copyright file="AccountsDashboardModel.cs" company="HD">
+// <copyright file="AccountsDashboardViewModel.cs" company="HD">
 // 	Copyright (c) 2010 HD. All rights reserved.
 // </copyright>
 // <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-02" />
@@ -17,7 +17,7 @@ namespace Fab.Client.MoneyTracker
 	/// Money module dashboard with accounts and transactions.
 	/// </summary>
 	[Export(typeof (IModule))]
-	public class AccountsDashboardModel : Conductor<AccountViewModel>.Collection.OneActive,
+	public class AccountsDashboardViewModel : Conductor<AccountViewModel>.Collection.OneActive,
 	                                      IModule,
 	                                      IHandle<AccountUpdatedMessage>,
 	                                      IHandle<AccountsUpdatedMessage>,
@@ -49,10 +49,10 @@ namespace Fab.Client.MoneyTracker
 		#region Ctors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AccountsDashboardModel"/> class.
+		/// Initializes a new instance of the <see cref="AccountsDashboardViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public AccountsDashboardModel(PostingsFilterViewModel postingsFilterVM)
+		public AccountsDashboardViewModel(PostingsFilterViewModel postingsFilterVM)
 		{
 			PostingsFilter = postingsFilterVM;
 			eventAggregator.Subscribe(this);
