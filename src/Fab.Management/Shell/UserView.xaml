@@ -247,6 +247,8 @@
 					<ColumnDefinition Width="Auto"
 														MinWidth="90" />
 					<ColumnDefinition Width="Auto"
+														MinWidth="90" />
+					<ColumnDefinition Width="Auto"
 														MinWidth="140" />
 				</Grid.ColumnDefinitions>
 				<TextBox Grid.Column="0"
@@ -290,8 +292,17 @@
 				         Converter={x:Static Converters:DateTimeToStringConverter.Inst}}" />
 					</TextBox.ToolTip>
 				</TextBox>
+				<TextBox Grid.Column="4"
+								 ToolTip="Database 4Gb limit size used %"
+								 Text="{Binding DatabaseSize, Converter={x:Static Converters:DatabaseSizeToPercentConverter.Inst}}"
+								 Style="{DynamicResource ReadOnly}"
+								 VerticalAlignment="Center"
+								 HorizontalContentAlignment="Right"
+								 HorizontalAlignment="Right"
+								 MaxLines="1"
+								 Margin="5,0" />
 				<Button x:Name="Optimize"
-								Grid.Column="4"
+								Grid.Column="5"
 								ToolTip="Database size (in bytes). Click to compress it."
 								Margin="5,0"
 								HorizontalContentAlignment="Right"
