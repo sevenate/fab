@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------
-// <copyright file="CategoriesDashBoardModel.cs" company="nReez">
+// <copyright file="CategoriesDashBoardViewModel.cs" company="nReez">
 // 	Copyright (c) 2009-2011 nReez. All rights reserved.
 // </copyright>
 // <author name="Andrey Levshov" email="78@nreez.com" date="2011-09-06" />
@@ -17,7 +17,7 @@ namespace Fab.Client.MoneyTracker
 	/// General categories screen model.
 	/// </summary>
 	[Export(typeof(IModule))]
-	public class CategoriesDashBoardModel : Conductor<CategoriesViewModel>.Collection.AllActive, IModule
+	public class CategoriesDashBoardViewModel : Conductor<CategoriesViewModel>.Collection.AllActive, IModule
 	{
 		#region Fields
 
@@ -90,7 +90,7 @@ namespace Fab.Client.MoneyTracker
 		/// Initializes a new instance of the <see cref="T:Caliburn.Micro.Conductor`1.Collection.AllActive"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public CategoriesDashBoardModel()
+		public CategoriesDashBoardViewModel()
 		{
 			CommonCategories = IoC.Get<CategoriesViewModel>();
 			CommonCategories.CategoryType = CategoryType.Common;
