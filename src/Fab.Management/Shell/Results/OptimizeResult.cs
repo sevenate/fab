@@ -1,4 +1,10 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// <copyright file="OptimizeResult.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
+// </copyright>
+//------------------------------------------------------------
+
+using System;
 using Caliburn.Micro;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;

@@ -34,6 +34,8 @@
 								 ToolTip="User ID"
 								 Text="{Binding Id}"
 								 Style="{DynamicResource ReadOnly}"
+								 VerticalAlignment="Center"
+								 HorizontalAlignment="Left"
 								 MinWidth="250"
 								 MaxLines="1"
 								 MaxLength="50"
@@ -41,6 +43,7 @@
 				<TextBox Grid.Column="1"
 								 ToolTip="Login"
 								 Text="{Binding Login, Mode=TwoWay}"
+								 VerticalAlignment="Center"
 								 MinWidth="100"
 								 MaxLines="1"
 								 MaxLength="50"
@@ -49,6 +52,7 @@
 				<TextBox Grid.Column="2"
 								 Text="{Binding Registered, Converter={x:Static Converters:DateTimeToSmartTimeSpanConverter.Inst}}"
 								 Style="{DynamicResource ReadOnly}"
+								 VerticalAlignment="Center"
 								 HorizontalContentAlignment="Right"
 								 Margin="5,0">
 					<TextBox.ToolTip>
@@ -59,6 +63,7 @@
 				<TextBox Grid.Column="3"
 								 Text="{Binding LastAccess, Converter={x:Static Converters:DateTimeToSmartTimeSpanConverter.Inst}}"
 								 Style="{DynamicResource ReadOnly}"
+								 VerticalAlignment="Center"
 								 HorizontalContentAlignment="Right"
 								 Margin="5,0">
 					<TextBox.ToolTip>
@@ -73,7 +78,7 @@
 								HorizontalContentAlignment="Right"
 								IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}">
 					<Button.Content>
-						<ContentControl Content="{Binding DatabaseSize}"
+						<ContentControl DataContext="{Binding DatabaseSize}"
 														Template="{StaticResource FileSizeTemplate}" />
 					</Button.Content>
 				</Button>

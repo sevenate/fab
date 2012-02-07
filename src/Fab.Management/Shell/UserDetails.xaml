@@ -4,6 +4,8 @@
 						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 						 xmlns:Converters="clr-namespace:Fab.Managment.Converters"
+						 xmlns:cal="http://www.caliburnproject.org"
+						 cal:Bind.Model="{Binding}"
 						 mc:Ignorable="d"
 						 d:DesignWidth="350"
 						 d:DesignHeight="200">

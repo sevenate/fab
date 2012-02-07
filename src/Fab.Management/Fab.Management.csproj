@@ -40,7 +40,9 @@
     <Reference Include="Caliburn.Micro">
       <HintPath>..\..\ext\.NET 4\Caliburn.Micro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Engine" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
@@ -76,9 +78,12 @@
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Framework\Helpers.cs" />
+    <Compile Include="Framework\Results\SingleResult.cs" />
     <Compile Include="Framework\SslValidation.cs" />
     <Compile Include="Framework\CultureSettings.cs" />
     <Compile Include="Shell\AppBootstrapper.cs" />
+    <Compile Include="Shell\IShell.cs" />
+    <Compile Include="Shell\Messages\UserDeletedMessage.cs" />
     <Compile Include="Shell\Results\CountUsersResult.cs" />
     <Compile Include="Shell\Results\LoadResult.cs" />
     <Compile Include="Shell\Results\DeleteResult.cs" />

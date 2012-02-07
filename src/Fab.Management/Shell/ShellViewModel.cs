@@ -6,18 +6,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Web.Configuration;
 using System.Web.Security;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
-using Fab.Core.Framework;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;
+using Fab.Managment.Framework.Results;
+using Fab.Managment.Shell.Messages;
 using Fab.Managment.Shell.Results;
 
 namespace Fab.Managment.Shell
 {
-	public class ShellViewModel : Screen, ICanBeBusy
+	[Export(typeof(IShell))]
+	public class ShellViewModel : Screen, IShell
 	{
 		#region Autorization
 
@@ -74,11 +77,22 @@ namespace Fab.Managment.Shell
 		public int TotalUsers
 		{
 			get { return totalUsers; }
-
 			set
 			{
 				totalUsers = value;
 				NotifyOfPropertyChange(() => TotalUsers);
+			}
+		}
+
+		private long totalUsedSpace;
+
+		public long TotalUsedSpace
+		{
+			get { return totalUsedSpace; }
+			set
+			{
+				totalUsedSpace = value;
+				NotifyOfPropertyChange(() => TotalUsedSpace);
 			}
 		}
 
@@ -122,10 +136,7 @@ namespace Fab.Managment.Shell
 			IsBusy = true;
 			CurrentPageIndex++;
 
-			foreach (var result in LoadUsers())
-			{
-				yield return result;
-			}
+			yield return new SequentialResult(LoadUsers().GetEnumerator());
 
 			IsBusy = false;
 		}
@@ -140,10 +151,7 @@ namespace Fab.Managment.Shell
 			IsBusy = true;
 			CurrentPageIndex--;
 
-			foreach (var result in LoadUsers())
-			{
-				yield return result;
-			}
+			yield return new SequentialResult(LoadUsers().GetEnumerator());
 
 			IsBusy = false;
 		}
@@ -234,24 +242,33 @@ namespace Fab.Managment.Shell
 
 		public IEnumerable<IResult> Load()
 		{
-			IsBusy = true;
+			yield return new SingleResult
+			             	{
+			             		Action = () =>
+			             		         	{
+												IsBusy = true;
+												LoadText = "Counting...";
+												CurrentPageIndex = 0;
+												PagesCount = 0;
+			             		         	}
+			             	};
 
-			LoadText = "Counting...";
-			CurrentPageIndex = 0;
-			PagesCount = 0;
 			var countResult = new CountUsersResult { Filer = CreateFilter() };
 			yield return countResult;
 
 			if (countResult.Count >= 1)
 			{
-				TotalUsers = countResult.Count;
-				PagesCount = countResult.Count / PageSize + (countResult.Count % PageSize > 0 ? 1 : 0);
-				CurrentPageIndex = 1;
-
-				foreach (var result in LoadUsers())
+				yield return new SingleResult
 				{
-					yield return result;
-				}
+					Action = () =>
+					{
+						TotalUsers = countResult.Count;
+						PagesCount = countResult.Count / PageSize + (countResult.Count % PageSize > 0 ? 1 : 0);
+						CurrentPageIndex = 1;
+					}
+				};
+
+				yield return new SequentialResult(LoadUsers().GetEnumerator());
 			}
 			else
 			{
@@ -263,14 +280,25 @@ namespace Fab.Managment.Shell
 
 		private IEnumerable<IResult> LoadUsers()
 		{
-			LoadText = "Loading...";
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					LoadText = "Loading...";
+					TotalUsedSpace = 0;
+				}
+			};
+
 			var loadResult = new LoadResult {Filer = CreateFilter(PageSize)};
 			yield return loadResult;
 
 			Users.Clear();
 
+			long usedSpace = 0;
+
 			foreach (AdminUserDTO adminUserDto in loadResult.Users)
 			{
+				usedSpace += adminUserDto.DatabaseSize ?? 0;
 				Users.Add(new UserViewModel
 				          	{
 				          		Id = adminUserDto.Id,
@@ -287,6 +315,7 @@ namespace Fab.Managment.Shell
 				          	});
 			}
 
+			TotalUsedSpace = usedSpace;
 			LoadText = "Load";
 		}
 
@@ -296,6 +325,7 @@ namespace Fab.Managment.Shell
 			UseEndDate = false;
 			SearchText = string.Empty;
 			TotalUsers = 0;
+			TotalUsedSpace = 0;
 			PagesCount = 0;
 			CurrentPageIndex = 0;
 			Users.Clear();
@@ -368,12 +398,15 @@ namespace Fab.Managment.Shell
 		/// <summary>
 		/// Creates an instance of the screen.
 		/// </summary>
-		public ShellViewModel()
+		[ImportingConstructor]
+		public ShellViewModel(IEventAggregator aggregator)
 		{
 			Helpers.EndPointAddress = EndPointAddress;
 			Helpers.Username = Username;
 			Helpers.Password = Password;
 			Users = new BindableCollection<UserViewModel>();
+
+			aggregator.Subscribe(this);
 		}
 
 		#endregion
@@ -396,6 +429,19 @@ namespace Fab.Managment.Shell
 				isBusy = value;
 				NotifyOfPropertyChange(() => IsBusy);
 			}
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<UserDeletedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(UserDeletedMessage message)
+		{
+			Users.Remove(message.User);
 		}
 
 		#endregion

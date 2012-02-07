@@ -1,3 +1,9 @@
+//------------------------------------------------------------
+// <copyright file="DeleteResult.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
+// </copyright>
+//------------------------------------------------------------
+
 using System;
 using Caliburn.Micro;
 using Fab.Managment.AdminServiceReference;
@@ -8,6 +14,7 @@ namespace Fab.Managment.Shell.Results
 	public class DeleteResult : IResult
 	{
 		public Guid Id { get; set; }
+		public bool Success { get; private set; }
 
 		#region Implementation of IResult
 
@@ -31,6 +38,7 @@ namespace Fab.Managment.Shell.Results
 				}
 				else
 				{
+					Success = true;
 					Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 				}
 			};

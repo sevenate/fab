@@ -1,13 +1,22 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// <copyright file="UserViewModel.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
+// </copyright>
+//------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
 using Fab.Core.Framework;
+using Fab.Managment.Shell.Messages;
 using Fab.Managment.Shell.Results;
 
 namespace Fab.Managment.Shell
 {
 	public class UserViewModel : Screen, ICanBeBusy
 	{
+		private readonly IEventAggregator aggregator = IoC.Get<IEventAggregator>();
+
 		#region Implementation of ICanBeBusy
 
 		/// <summary>
@@ -166,6 +175,11 @@ namespace Fab.Managment.Shell
 			IsBusy = true;
 			var deleteResult = new DeleteResult {Id = Id};
 			yield return deleteResult;
+
+			if (deleteResult.Success)
+			{
+				aggregator.Publish(new UserDeletedMessage { User = this });
+			}
 
 			IsBusy = false;
 		}

@@ -195,18 +195,42 @@
 							MinWidth="50"
 							Margin="10,0" />
 		</StackPanel>
-		<StackPanel Orientation="Horizontal"
-								Grid.Row="2"
-								HorizontalAlignment="Right">
-			<TextBlock Text="Found Users:"
+		<Grid Grid.Row="2"
+					HorizontalAlignment="Right">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<TextBox x:Name="TotalUsers"
+							 Grid.Row="0"
+							 Grid.Column="0"
+							 Style="{StaticResource ReadOnly}"
+							 Foreground="Red"
+							 FontWeight="Bold"
+							 VerticalAlignment="Center"
+							 HorizontalAlignment="Right"
+							 FontSize="16" />
+			<TextBlock Text=" Users"
+								 Grid.Row="0"
+								 Grid.Column="1"
 								 VerticalAlignment="Center"
 								 FontSize="16" />
-			<TextBlock x:Name="TotalUsers"
-								 Foreground="Red"
-								 FontWeight="Bold"
+			<ContentControl DataContext="{Binding TotalUsedSpace}"
+											Grid.Row="1"
+											Grid.Column="0"
+											Padding="0"
+											VerticalAlignment="Center"
+											HorizontalAlignment="Right"
+											Template="{StaticResource FileSizeTemplate}" />
+			<TextBlock Text=" Bytes"
+								 Grid.Row="1"
+								 Grid.Column="1"
 								 VerticalAlignment="Center"
-								 FontSize="16"
-								 Margin="10,0" />
-		</StackPanel>
+								 FontSize="16" />
+		</Grid>
 	</Grid>
 </ribbon:RibbonWindow>
