@@ -87,7 +87,9 @@
 							 Text="{Binding LastUpdated, Converter={x:Static Converters:DateTimeToStringConverter.Inst}, StringFormat=d}"
 							 MaxLines="1" />
 		</StackPanel>
-		<StackPanel Grid.Column="2">
+		<StackPanel Grid.Column="2"
+								Width="137"
+								Margin="2,0">
 			<Button x:Name="Verify"
 							Content="Verify DB"
 							ToolTip="Verify database" />
