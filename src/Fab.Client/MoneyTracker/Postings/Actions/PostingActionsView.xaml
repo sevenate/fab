@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Fab.Client.MoneyTracker.Postings.Actions.PostingActionsView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d">
+	<StackPanel Orientation="Horizontal"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Right">
+		<Button x:Name="NewExpense"
+				Content="+ Expense"
+				Padding="10"
+				MinWidth="75"
+				MinHeight="23"
+				Foreground="Red" />
+		<Button x:Name="NewIncome"
+				Content="+ Income"
+				Padding="10"
+				MinWidth="75"
+				MinHeight="23"
+				Foreground="#FF00FF00" />
+		<Button x:Name="NewTransfer"
+				Content="+ Transfer"
+				Padding="10"
+				MinWidth="75"
+				MinHeight="23"
+				Foreground="Yellow" />
+	</StackPanel>
+</UserControl>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2a64c57e-d2b6-415c-9dc1-021b94d43cec" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://thor/StagingFab/MoneyService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MoneyService4.xsd" MetadataType="Schema" ID="84aa37f8-3cc9-4786-82d1-635f76d860ec" SourceId="1" SourceUrl="https://thor/StagingFab/MoneyService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MoneyService41.xsd" MetadataType="Schema" ID="842fd17e-2cae-4064-8bfb-3beabff0c5ba" SourceId="1" SourceUrl="https://thor/StagingFab/MoneyService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MoneyService42.xsd" MetadataType="Schema" ID="b36a2227-dd6d-471b-81fa-d5e5c2e2f07d" SourceId="1" SourceUrl="https://thor/StagingFab/MoneyService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MoneyService43.xsd" MetadataType="Schema" ID="9e7f5ee7-2565-4366-a1d7-801320c36777" SourceId="1" SourceUrl="https://thor/StagingFab/MoneyService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MoneyService44.xsd" MetadataType="Schema" ID="b621a516-b9fc-4930-8bb1-635900669221" SourceId="1" SourceUrl="https://thor/StagingFab/MoneyService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MoneyService1.wsdl" MetadataType="Wsdl" ID="3da3be74-6db7-4fa8-ab21-f0be2af8299a" SourceId="1" SourceUrl="https://thor/StagingFab/MoneyService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,15 @@
+﻿CREATE TABLE [Users] (
+  [Id] uniqueidentifier NOT NULL DEFAULT (newid())
+, [Login] nvarchar(50) NOT NULL
+, [Password] nvarchar(256) NOT NULL
+, [Email] nvarchar(256) NULL
+, [Registered] datetime NOT NULL DEFAULT (GETDATE())
+, [LastAccess] datetime NULL
+, [DatabasePath] nvarchar(2048) NULL
+, [ServiceUrl] nvarchar(2048) NULL
+, [IsDisabled] bit NOT NULL DEFAULT ((0))
+, [DisabledChanged] datetime NULL
+);
+GO
+ALTER TABLE [Users] ADD CONSTRAINT [PK_Users] PRIMARY KEY ([Id]);
+GO
