@@ -5,7 +5,9 @@
 						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 						 mc:Ignorable="d"
 						 xmlns:Converters="clr-namespace:Fab.Managment.Converters"
-						 xmlns:Shell="clr-namespace:Fab.Managment.Shell">
+						 xmlns:Shell="clr-namespace:Fab.Managment.Shell"
+			 d:DesignHeight="50"
+			 d:DesignWidth="1096">
 	<UserControl.Resources>
 		<Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
 			<Setter Property="Template">
@@ -241,6 +243,8 @@
 														MinWidth="90" />
 					<ColumnDefinition Width="Auto"
 														MinWidth="140" />
+					<ColumnDefinition Width="Auto"
+														MinWidth="140" />
 				</Grid.ColumnDefinitions>
 				<TextBox Grid.Column="0"
 								 ToolTip="User ID"
@@ -303,6 +307,13 @@
 														Template="{StaticResource FileSizeTemplate}" />
 					</Button.Content>
 				</Button>
+				<ContentControl Grid.Column="6"
+												ToolTip="Free space on disk (in bytes) where database is located."
+												Margin="5,0"
+												HorizontalAlignment="Right"
+												HorizontalContentAlignment="Right"
+												DataContext="{Binding FreeDiskSpaceAvailable}"
+												Template="{StaticResource FileSizeTemplate}" />
 			</Grid>
 		</Expander.Header>
 		<Shell:UserDetails />
