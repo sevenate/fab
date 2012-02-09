@@ -1,5 +1,5 @@
 //------------------------------------------------------------
-// <copyright file="DatabaseSizeToPercentConverter.cs" company="nReez">
+// <copyright file="NullableSizeToStringConverter.cs" company="nReez">
 // 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
@@ -12,13 +12,11 @@ using System.Windows.Data;
 namespace Fab.Managment.Converters
 {
 	/// <summary>
-	/// Convert database size in long? into "% of 4 Gb size limit" string.
+	/// Convert database size in long? into "xxx xxxx" or "?" if not unknown.
 	/// </summary>
 	[ValueConversion(typeof(long?), typeof(string))]
-	public class DatabaseSizeToPercentConverter : IValueConverter
+	public class NullableSizeToStringConverter : IValueConverter
 	{
-		private const long Gigabyte = 4 * 1024 * 1024 * 1024L;
-
 		#region Implementation of IValueConverter
 
 		/// <summary>
@@ -35,10 +33,10 @@ namespace Fab.Managment.Converters
 
 			if (!size.HasValue)
 			{
-				return string.Empty;
+				return "?";
 			}
 
-			return string.Format("{0:N4}%", (double)size.Value * 100 / Gigabyte);
+			return value; // string.Format("{0:N0}", size.Value);
 		}
 
 		/// <summary>
@@ -61,26 +59,26 @@ namespace Fab.Managment.Converters
 		/// <summary>
 		/// Singleton instance.
 		/// </summary>
-		private static DatabaseSizeToPercentConverter instance;
+		private static NullableSizeToStringConverter instance;
 
 		/// <summary>
-		/// Prevents a default instance of the <see cref="DatabaseSizeToPercentConverter"/> class from being created.
+		/// Prevents a default instance of the <see cref="NullableSizeToStringConverter"/> class from being created.
 		/// </summary>
-		private DatabaseSizeToPercentConverter()
+		private NullableSizeToStringConverter()
 		{
 		}
 
 		/// <summary>
 		/// Gets the singleton instance.
 		/// </summary>
-		public static DatabaseSizeToPercentConverter Inst
+		public static NullableSizeToStringConverter Inst
 		{
 			[DebuggerStepThrough]
 			get
 			{
 				if (instance == null)
 				{
-					instance = new DatabaseSizeToPercentConverter();
+					instance = new NullableSizeToStringConverter();
 				}
 
 				return instance;

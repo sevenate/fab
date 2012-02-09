@@ -6,7 +6,7 @@
 						 xmlns:Shell="clr-namespace:Fab.Managment.Shell"
 						 xmlns:Framework="clr-namespace:Fab.Managment.Framework"
 						 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
-						 mc:Ignorable="d">
+             xmlns:Converters="clr-namespace:Fab.Managment.Converters" mc:Ignorable="d">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -39,6 +39,15 @@
 					</Setter.Value>
 				</Setter>
 			</Style>
+			<Style TargetType="TextBox">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding Path=IsDisabled}"
+											 Value="true">
+						<Setter Property="TextBox.Foreground"
+										Value="DarkGray" />
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
 			<Style TargetType="TextBox"
 						 x:Key="ReadOnly"
 						 BasedOn="{StaticResource {x:Type TextBox}}">
@@ -50,7 +59,7 @@
 								Value="Transparent" />
 			</Style>
 			<ControlTemplate x:Key="FileSizeTemplate">
-				<TextBox Text="{Binding StringFormat={}{0:N0}, Mode=OneWay, FallbackValue=?}"
+				<TextBox Text="{Binding StringFormat={}{0:N0}, Mode=OneWay, Converter={x:Static Converters:NullableSizeToStringConverter.Inst}}"
 								 Style="{StaticResource ReadOnly}"
 								 Foreground="RoyalBlue"
 								 FontSize="16"

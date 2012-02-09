@@ -84,23 +84,29 @@
 			<TextBox Style="{DynamicResource ReadOnly}"
 							 Height="{Binding ElementName=Email, Path=ActualHeight}"
 							 Margin="3,0"
-							 Text="{Binding LastUpdated, Converter={x:Static Converters:DateTimeToStringConverter.Inst}, StringFormat=d}"
+							 VerticalAlignment="Center"
+							 VerticalContentAlignment="Center"
+							 Text="{Binding DisabledChanged, Converter={x:Static Converters:DateTimeToStringConverter.Inst}, StringFormat={}{0:F}}"
 							 MaxLines="1" />
 		</StackPanel>
 		<StackPanel Grid.Column="2"
 								Width="137"
 								Margin="2,0">
 			<Button x:Name="Verify"
-							Content="Verify DB"
-							ToolTip="Verify database" />
+							Content="{Binding VerifyStatus}"
+							ToolTip="Verify database"
+							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
 			<Button x:Name="Repair"
-							Content="Repair DB"
-							ToolTip="Repair database" />
+							Content="{Binding RepairStatus}"
+							ToolTip="Repair database"
+							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
 			<Button x:Name="Save"
-							Content="Save"
-							ToolTip="Save updated user data" />
+							Content="{Binding SaveStatus}"
+							ToolTip="Save updated user data"
+							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
 			<Button x:Name="Delete"
 							ToolTip="Delete"
+							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
 							Width="{Binding ElementName=Save, Path=ActualWidth}"
 							Height="{Binding ElementName=Save, Path=ActualHeight}">
 				<Button.Content>

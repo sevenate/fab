@@ -28,20 +28,13 @@ namespace Fab.Server.Core.DTO
 		/// Note: should be filled only by client.
 		/// </summary>
 		[DataMember]
-		public string Passoword { get; set; }
+		public string Password { get; set; }
 
 		/// <summary>
 		/// Gets or sets user unique email.
 		/// </summary>
 		[DataMember]
 		public string Email { get; set; }
-
-		/// <summary>
-		/// Gets or sets user last access date.
-		/// Note: should be filled only by service.
-		/// </summary>
-		[DataMember]
-		public DateTime? LastAccess { get; set; }
 
 		/// <summary>
 		/// Gets or sets path to the user personal database.
@@ -55,12 +48,21 @@ namespace Fab.Server.Core.DTO
 		[DataMember]
 		public bool IsDisabled { get; set; }
 
+		#region Only Server To Client
+
+		/// <summary>
+		/// Gets or sets user last access date.
+		/// Note: should be filled only by service.
+		/// </summary>
+		[DataMember]
+		public DateTime? LastAccess { get; set; }
+
 		/// <summary>
 		/// Gets or sets a date when user attributes was last changed.
 		/// Note: should be filled only by service.
 		/// </summary>
 		[DataMember]
-		public DateTime? LastUpdated { get; set; }
+		public DateTime? DisabledChanged { get; set; }
 
 		/// <summary>
 		/// Gets or sets database file size in bytes.
@@ -75,6 +77,8 @@ namespace Fab.Server.Core.DTO
 		/// </summary>
 		[DataMember]
 		public long? FreeDiskSpaceAvailable { get; set; }
+
+		#endregion
 
 		#endregion
 

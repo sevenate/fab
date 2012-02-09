@@ -7,15 +7,6 @@
 						 xmlns:Converters="clr-namespace:Fab.Managment.Converters"
 						 xmlns:Shell="clr-namespace:Fab.Managment.Shell">
 	<UserControl.Resources>
-		<Style TargetType="TextBox">
-			<Style.Triggers>
-				<DataTrigger Binding="{Binding Path=IsDisabled}"
-										 Value="true">
-					<Setter Property="TextBox.Foreground"
-									Value="DarkGray" />
-				</DataTrigger>
-			</Style.Triggers>
-		</Style>
 		<Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
 			<Setter Property="Template">
 				<Setter.Value>

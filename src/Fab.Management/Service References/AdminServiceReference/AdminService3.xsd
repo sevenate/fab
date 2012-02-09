@@ -27,7 +27,7 @@
           <xs:element minOccurs="0" name="IsDisabled" type="xs:boolean" />
           <xs:element minOccurs="0" name="LastAccess" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Passoword" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
