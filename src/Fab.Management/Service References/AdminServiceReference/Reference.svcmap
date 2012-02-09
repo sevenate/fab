@@ -21,10 +21,10 @@
     <MetadataSource Address="https://localhost/StagingFab/AdminService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="AdminService1.xsd" MetadataType="Schema" ID="131b6dd7-da52-4f4e-bca6-dea433070ae8" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AdminService.disco" MetadataType="Disco" ID="641821ba-f980-4d17-b9c1-aa2c3df1ec9d" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?disco" />
     <MetadataFile FileName="AdminService.wsdl" MetadataType="Wsdl" ID="fdf1b876-f9c5-41e6-abb3-599801a36072" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?wsdl" />
     <MetadataFile FileName="AdminService.xsd" MetadataType="Schema" ID="bedebd11-a039-4755-b598-11621f9240da" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?xsd=xsd1" />
-    <MetadataFile FileName="AdminService.disco" MetadataType="Disco" ID="641821ba-f980-4d17-b9c1-aa2c3df1ec9d" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?disco" />
+    <MetadataFile FileName="AdminService1.xsd" MetadataType="Schema" ID="131b6dd7-da52-4f4e-bca6-dea433070ae8" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?xsd=xsd0" />
     <MetadataFile FileName="AdminService3.xsd" MetadataType="Schema" ID="c34736b4-9c8a-49d8-9dfe-757bfe83ae67" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?xsd=xsd3" />
     <MetadataFile FileName="AdminService2.xsd" MetadataType="Schema" ID="1c280021-c90e-48a8-86a2-c6f02a1d42af" SourceId="1" SourceUrl="https://localhost/StagingFab/AdminService.svc?xsd=xsd2" />
   </Metadata>

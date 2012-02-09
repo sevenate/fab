@@ -290,7 +290,12 @@ namespace Fab.Server.Core.Services
 				User user = ModelHelper.GetUserById(mc, userDto.Id);
 
 				user.Login = userDto.Login;
-				user.Password = userDto.Passoword.Hash();
+
+				if (!string.IsNullOrEmpty(userDto.Password))
+				{
+					user.Password = userDto.Password.Hash();
+				}
+
 				user.Email = string.IsNullOrWhiteSpace(userDto.Email)
 								? null
 								: userDto.Email.Trim();

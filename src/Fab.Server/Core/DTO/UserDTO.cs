@@ -22,16 +22,20 @@ namespace Fab.Server.Core.DTO
 		public Guid Id { get; set; }
 
 		/// <summary>
+		/// Gets or sets service api url for the client app to this particular user.
+		/// </summary>
+		[DataMember]
+		public string ServiceUrl { get; set; }
+
+		#region Only Server To Client
+
+		/// <summary>
 		/// Gets or sets user registration date.
 		/// Note: should be filled only by service.
 		/// </summary>
 		[DataMember]
 		public DateTime Registered { get; set; }
 
-		/// <summary>
-		/// Gets or sets service api url for the client app to this particular user.
-		/// </summary>
-		[DataMember]
-		public string ServiceUrl { get; set; }
+		#endregion
 	}
 }

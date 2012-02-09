@@ -74,6 +74,7 @@
     <Compile Include="..\Fab.Client\Framework\Filters\IFilter.cs">
       <Link>Framework\Filters\IFilter.cs</Link>
     </Compile>
+    <Compile Include="Converters\NullableSizeToStringConverter.cs" />
     <Compile Include="Converters\DatabaseSizeToPercentConverter.cs" />
     <Compile Include="Converters\DateTimeToSmartTimeSpanConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
@@ -85,12 +86,14 @@
     <Compile Include="Shell\AppBootstrapper.cs" />
     <Compile Include="Shell\IShell.cs" />
     <Compile Include="Shell\Messages\UserDeletedMessage.cs" />
+    <Compile Include="Shell\Results\SaveResult.cs" />
+    <Compile Include="Shell\Results\VerifyDbResult.cs" />
+    <Compile Include="Shell\Results\RepairResult.cs" />
     <Compile Include="Shell\Results\CountUsersResult.cs" />
     <Compile Include="Shell\Results\LoadResult.cs" />
     <Compile Include="Shell\Results\DeleteResult.cs" />
     <Compile Include="Shell\Results\OptimizeResult.cs" />
     <Compile Include="Shell\ShellViewModel.cs" />
-    <Compile Include="Shell\UserDetails.xaml.cs" />
     <Compile Include="Shell\UserViewModel.cs" />
     <Compile Include="Service References\AdminServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -101,6 +104,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Shell\UserDetails.xaml.cs">
+      <DependentUpon>UserDetails.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Page Include="Shell\UserView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

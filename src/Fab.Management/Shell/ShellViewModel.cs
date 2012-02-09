@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Web.Configuration;
 using System.Web.Security;
 using Caliburn.Micro;
@@ -133,8 +134,14 @@ namespace Fab.Managment.Shell
 
 		public IEnumerable<IResult> NextPage()
 		{
-			IsBusy = true;
-			CurrentPageIndex++;
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+					CurrentPageIndex++;
+				}
+			};
 
 			yield return new SequentialResult(LoadUsers().GetEnumerator());
 
@@ -148,8 +155,14 @@ namespace Fab.Managment.Shell
 
 		public IEnumerable<IResult> PrevPage()
 		{
-			IsBusy = true;
-			CurrentPageIndex--;
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+					CurrentPageIndex--;
+				}
+			};
 
 			yield return new SequentialResult(LoadUsers().GetEnumerator());
 
@@ -299,24 +312,29 @@ namespace Fab.Managment.Shell
 			foreach (AdminUserDTO adminUserDto in loadResult.Users)
 			{
 				usedSpace += adminUserDto.DatabaseSize ?? 0;
-				Users.Add(new UserViewModel
-				          	{
-				          		Id = adminUserDto.Id,
-				          		Login = adminUserDto.Login,
-				          		Registered = adminUserDto.Registered,
-				          		LastAccess = adminUserDto.LastAccess,
-				          		DatabaseSize = adminUserDto.DatabaseSize,
-								DatabasePath = adminUserDto.DatabasePath,
-								DisabledChanged = adminUserDto.DisabledChanged,
-								Email = adminUserDto.Email,
-								FreeDiskSpaceAvailable = adminUserDto.FreeDiskSpaceAvailable,
-								IsDisabled = adminUserDto.IsDisabled,
-								ServiceUrl = adminUserDto.ServiceUrl
-				          	});
+				Users.Add(MapToViewModel(adminUserDto));
 			}
 
 			TotalUsedSpace = usedSpace;
 			LoadText = "Load";
+		}
+
+		private static UserViewModel MapToViewModel(AdminUserDTO adminUserDto)
+		{
+			return new UserViewModel
+			       	{
+			       		Id = adminUserDto.Id,
+			       		Login = adminUserDto.Login,
+			       		Registered = adminUserDto.Registered,
+			       		LastAccess = adminUserDto.LastAccess,
+			       		DatabaseSize = adminUserDto.DatabaseSize,
+			       		DatabasePath = adminUserDto.DatabasePath,
+			       		DisabledChanged = adminUserDto.DisabledChanged,
+			       		Email = adminUserDto.Email,
+			       		FreeDiskSpaceAvailable = adminUserDto.FreeDiskSpaceAvailable,
+			       		IsDisabled = adminUserDto.IsDisabled,
+			       		ServiceUrl = adminUserDto.ServiceUrl
+			       	};
 		}
 
 		public void ClearSearch()
@@ -442,6 +460,8 @@ namespace Fab.Managment.Shell
 		public void Handle(UserDeletedMessage message)
 		{
 			Users.Remove(message.User);
+			TotalUsers--;
+			TotalUsedSpace = Users.Sum(model => model.DatabaseSize ?? 0);
 		}
 
 		#endregion

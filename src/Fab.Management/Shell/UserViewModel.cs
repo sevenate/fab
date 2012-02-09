@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
 using Fab.Core.Framework;
+using Fab.Managment.AdminServiceReference;
+using Fab.Managment.Framework.Results;
 using Fab.Managment.Shell.Messages;
 using Fab.Managment.Shell.Results;
 
@@ -106,6 +108,10 @@ namespace Fab.Managment.Shell
 		}
 
 		private DateTime? disabledChanged;
+		
+		/// <summary>
+		/// Last Updated date.
+		/// </summary>
 		public DateTime? DisabledChanged
 		{
 			get { return disabledChanged; }
@@ -124,6 +130,17 @@ namespace Fab.Managment.Shell
 			{
 				email = value;
 				NotifyOfPropertyChange(() => Email);
+			}
+		}
+
+		private string password;
+		public string Password
+		{
+			get { return password; }
+			set
+			{
+				password = value;
+				NotifyOfPropertyChange(() => Password);
 			}
 		}
 
@@ -162,21 +179,146 @@ namespace Fab.Managment.Shell
 
 		public IEnumerable<IResult> Optimize()
 		{
-			IsBusy = true;
-			var optimizeResult = new OptimizeResult{Id = Id};
-			yield return optimizeResult;
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+				}
+			};
+			
+			var result = new OptimizeResult{Id = Id};
+			yield return result;
 
-			DatabaseSize = optimizeResult.DatabaseSize;
+			DatabaseSize = result.DatabaseSize;
 			IsBusy = false;
+		}
+
+		public IEnumerable<IResult> Repair()
+		{
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+					RepairStatus = "Repairing...";
+				}
+			};
+
+			var result = new RepairResult { Id = Id };
+			yield return result;
+
+			DatabaseSize = result.DatabaseSize;
+			RepairStatus = "Repair DB";
+			IsBusy = false;
+		}
+
+		private string repairStatus = "Repair DB";
+		public string RepairStatus
+		{
+			get { return repairStatus; }
+			set
+			{
+				repairStatus = value;
+				NotifyOfPropertyChange(() => RepairStatus);
+			}
+		}
+
+		public IEnumerable<IResult> Verify()
+		{
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+					VerifyStatus = "Verifing...";
+				}
+			};
+
+			var result = new VerifyDbResult { Id = Id };
+			yield return result;
+
+			if (result.Success)
+			{
+			}
+
+			VerifyStatus = "Verify DB";
+			IsBusy = false;
+		}
+
+		private string verifyStatus = "Verify DB";
+		public string VerifyStatus
+		{
+			get { return verifyStatus; }
+			set
+			{
+				verifyStatus = value;
+				NotifyOfPropertyChange(() => VerifyStatus);
+			}
+		}
+
+		private string saveStatus = "Save";
+		public string SaveStatus
+		{
+			get { return saveStatus; }
+			set
+			{
+				saveStatus = value;
+				NotifyOfPropertyChange(() => SaveStatus);
+			}
+		}
+
+		public IEnumerable<IResult> Save()
+		{
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+					SaveStatus = "Saving...";
+				}
+			};
+
+			var result = new SaveResult { User = MapToDTO(this)};
+			yield return result;
+
+			if (result.LastUpdated.HasValue)
+			{
+				DisabledChanged = result.LastUpdated;
+			}
+
+			SaveStatus = "Save";
+			IsBusy = false;
+		}
+
+		private static AdminUserDTO MapToDTO(UserViewModel userViewModel)
+		{
+			return new AdminUserDTO
+			{
+				Id = userViewModel.Id,
+				Login = userViewModel.Login,
+				Password = userViewModel.Password,
+				DatabasePath = userViewModel.DatabasePath,
+				ServiceUrl = userViewModel.ServiceUrl,
+				IsDisabled = userViewModel.IsDisabled,
+				Email = userViewModel.Email,
+			};
 		}
 
 		public IEnumerable<IResult> Delete()
 		{
-			IsBusy = true;
-			var deleteResult = new DeleteResult {Id = Id};
-			yield return deleteResult;
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+				}
+			};
 
-			if (deleteResult.Success)
+			var result = new DeleteResult {Id = Id};
+			yield return result;
+
+			if (result.Success)
 			{
 				aggregator.Publish(new UserDeletedMessage { User = this });
 			}

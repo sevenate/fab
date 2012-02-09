@@ -124,7 +124,7 @@ namespace Fab.Server.Tests
 			adminUserDTO.DatabasePath = @"d:\New Path here.sdf";
 			adminUserDTO.IsDisabled = true;
 			adminUserDTO.Login = @"new_login";
-			adminUserDTO.Passoword = @"newPa$$w0rd!";
+			adminUserDTO.Password = @"newPa$$w0rd!";
 			adminUserDTO.ServiceUrl = @"\\some\service_here.svc";
 
 			adminService.UpdateUser(adminUserDTO);
@@ -136,7 +136,7 @@ namespace Fab.Server.Tests
 			Assert.True(users[0].DatabasePath == adminUserDTO.DatabasePath);
 			Assert.True(users[0].IsDisabled == adminUserDTO.IsDisabled);
 			Assert.True(users[0].Login == adminUserDTO.Login);
-			Assert.True(users[0].Passoword == null);
+			Assert.True(users[0].Password == null);
 			Assert.True(users[0].ServiceUrl == adminUserDTO.ServiceUrl);
 		}
 
