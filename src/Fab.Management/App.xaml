@@ -59,7 +59,7 @@
 								Value="Transparent" />
 			</Style>
 			<ControlTemplate x:Key="FileSizeTemplate">
-				<TextBox Text="{Binding StringFormat={}{0:N0}, Mode=OneWay, Converter={x:Static Converters:NullableSizeToStringConverter.Inst}}"
+				<TextBox Text="{Binding StringFormat={}{0:N0}, Mode=OneWay, Converter={x:Static Converters:NullableSizeToStringConverter.Inst}, TargetNullValue=?}"
 								 Style="{StaticResource ReadOnly}"
 								 Foreground="RoyalBlue"
 								 FontSize="16"

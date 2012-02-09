@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
+using Caliburn.Micro;
 
 namespace Fab.Managment.Converters
 {
@@ -29,11 +30,14 @@ namespace Fab.Managment.Converters
 		/// <param name="culture">The culture to use in the converter.</param>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var size = (long?)value;
-
-			if (!size.HasValue)
+			if (value is long?)
 			{
-				return "?";
+				var size = (long?)value;
+
+				if (!size.HasValue)
+				{
+					return "?";
+				}
 			}
 
 			return value; // string.Format("{0:N0}", size.Value);
