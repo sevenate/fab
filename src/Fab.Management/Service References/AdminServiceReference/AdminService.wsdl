@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AdminService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="AdminServiceBasic_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:BootstrapPolicy>
+                  <wsp:Policy>
+                    <sp:SignedParts>
+                      <sp:Body />
+                      <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+                    </sp:SignedParts>
+                    <sp:EncryptedParts>
+                      <sp:Body />
+                    </sp:EncryptedParts>
+                    <sp:TransportBinding>
+                      <wsp:Policy>
+                        <sp:TransportToken>
+                          <wsp:Policy>
+                            <sp:HttpsToken RequireClientCertificate="false" />
+                          </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                          <wsp:Policy>
+                            <sp:Basic256 />
+                          </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                          <wsp:Policy>
+                            <sp:Strict />
+                          </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp />
+                      </wsp:Policy>
+                    </sp:TransportBinding>
+                    <sp:SignedSupportingTokens>
+                      <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                          <wsp:Policy>
+                            <sp:WssUsernameToken10 />
+                          </wsp:Policy>
+                        </sp:UsernameToken>
+                      </wsp:Policy>
+                    </sp:SignedSupportingTokens>
+                    <sp:Wss11>
+                      <wsp:Policy />
+                    </sp:Wss11>
+                    <sp:Trust10>
+                      <wsp:Policy>
+                        <sp:MustSupportIssuedTokens />
+                        <sp:RequireClientEntropy />
+                        <sp:RequireServerEntropy />
+                      </wsp:Policy>
+                    </sp:Trust10>
+                  </wsp:Policy>
+                </sp:BootstrapPolicy>
+              </wsp:Policy>
+            </sp:SecureConversationToken>
+          </wsp:Policy>
+        </sp:EndorsingSupportingTokens>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens />
+            <sp:RequireClientEntropy />
+            <sp:RequireServerEntropy />
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://localhost/StagingFab/AdminService.svc?xsd=xsd2" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://localhost/StagingFab/AdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
+      <xsd:import schemaLocation="https://localhost/StagingFab/AdminService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://localhost/StagingFab/AdminService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Filters" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAdminService_GetUsersCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersCount" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetUsersCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetUsersCount_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q1:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsers" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetUsers_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q2:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_DeleteUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUser" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_DeleteUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_DeleteUser_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q3:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateUser_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q4:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeUserDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeUserDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeUserDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeUserDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeUserDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q5:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyUserDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyUserDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyUserDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q6:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairUserDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepairUserDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairUserDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepairUserDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairUserDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q7:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeMasterDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeMasterDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeMasterDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OptimizeMasterDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_OptimizeMasterDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q8:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyMasterDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyMasterDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyMasterDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyMasterDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_VerifyMasterDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q9:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairMasterDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepairMasterDatabase" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairMasterDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepairMasterDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RepairMasterDatabase_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q10:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateCachedValuesForUserAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCachedValuesForUserAccounts" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateCachedValuesForUserAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCachedValuesForUserAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateCachedValuesForUserAccounts_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q11:FaultDetail" />
+  </wsdl:message>
+  <wsdl:portType name="IAdminService">
+    <wsdl:operation name="GetUsersCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetUsersCount" message="tns:IAdminService_GetUsersCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetUsersCountResponse" message="tns:IAdminService_GetUsersCount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/GetUsersCountFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_GetUsersCount_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetUsers" message="tns:IAdminService_GetUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetUsersResponse" message="tns:IAdminService_GetUsers_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/GetUsersFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_GetUsers_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/DeleteUser" message="tns:IAdminService_DeleteUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/DeleteUserResponse" message="tns:IAdminService_DeleteUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/DeleteUserFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_DeleteUser_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/UpdateUser" message="tns:IAdminService_UpdateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/UpdateUserResponse" message="tns:IAdminService_UpdateUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/UpdateUserFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_UpdateUser_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeUserDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/OptimizeUserDatabase" message="tns:IAdminService_OptimizeUserDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/OptimizeUserDatabaseResponse" message="tns:IAdminService_OptimizeUserDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/OptimizeUserDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_OptimizeUserDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/VerifyUserDatabase" message="tns:IAdminService_VerifyUserDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/VerifyUserDatabaseResponse" message="tns:IAdminService_VerifyUserDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/VerifyUserDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_VerifyUserDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepairUserDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/RepairUserDatabase" message="tns:IAdminService_RepairUserDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/RepairUserDatabaseResponse" message="tns:IAdminService_RepairUserDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/RepairUserDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_RepairUserDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeMasterDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/OptimizeMasterDatabase" message="tns:IAdminService_OptimizeMasterDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/OptimizeMasterDatabaseResponse" message="tns:IAdminService_OptimizeMasterDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/OptimizeMasterDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_OptimizeMasterDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMasterDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/VerifyMasterDatabase" message="tns:IAdminService_VerifyMasterDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/VerifyMasterDatabaseResponse" message="tns:IAdminService_VerifyMasterDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/VerifyMasterDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_VerifyMasterDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepairMasterDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabase" message="tns:IAdminService_RepairMasterDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabaseResponse" message="tns:IAdminService_RepairMasterDatabase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_RepairMasterDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCachedValuesForUserAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccounts" message="tns:IAdminService_UpdateCachedValuesForUserAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccountsResponse" message="tns:IAdminService_UpdateCachedValuesForUserAccounts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccountsFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_UpdateCachedValuesForUserAccounts_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AdminServiceBasic" type="tns:IAdminService">
+    <wsp:PolicyReference URI="#AdminServiceBasic_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetUsersCount">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetUsersCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsers">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/DeleteUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeUserDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/OptimizeUserDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/VerifyUserDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepairUserDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/RepairUserDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="OptimizeMasterDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/OptimizeMasterDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMasterDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/VerifyMasterDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepairMasterDatabase">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/RepairMasterDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCachedValuesForUserAccounts">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccounts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdminService">
+    <wsdl:port name="AdminServiceBasic" binding="tns:AdminServiceBasic">
+      <soap12:address location="https://localhost/StagingFab/AdminService.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>https://localhost/StagingFab/AdminService.svc</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

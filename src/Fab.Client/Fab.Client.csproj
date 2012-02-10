@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C75F0C64-CBBF-4B29-9E9E-A362AC3A4760}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fab.Client</RootNamespace>
+    <AssemblyName>SilverFAB</AssemblyName>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>SilverFAB.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Fab.Client.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <EnableOutOfBrowser>true</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <LinkedServerProject>
+    </LinkedServerProject>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\test\$(MSBuildProjectName)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\$(MSBuildProjectName)\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\..\ext\Silverlight 4\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Silverlight.Controls.ToolTips">
+      <HintPath>..\..\ext\Silverlight 4\Silverlight.Controls.ToolTips.dll</HintPath>
+    </Reference>
+    <Reference Include="SilverlightContrib.Controls">
+      <HintPath>..\..\ext\Silverlight 4\SilverlightContrib.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition.Initialization, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.Composition.Initialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Generated.cs">
+      <Link>Properties\AssemblyInfo.Generated.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authentication\LoggedInMessage.cs" />
+    <Compile Include="Authentication\LoggedOutMessage.cs" />
+    <Compile Include="Authentication\PersonalCornerViewModel.cs" />
+    <Compile Include="Authentication\RegisterationResult.cs" />
+    <Compile Include="Authentication\RegistrationViewModel.cs" />
+    <Compile Include="Authentication\UserCredentials.cs" />
+    <Compile Include="Framework\Behaviors\SelectPasswordOnFocusBehavior.cs" />
+    <Compile Include="Framework\Behaviors\SelectTextOnFocusBehavior.cs" />
+    <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
+    <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
+    <Compile Include="Framework\Converters\DebugConverter.cs" />
+    <Compile Include="Framework\Extensions\ColorFromString.cs" />
+    <Compile Include="Framework\Results\Animation.cs" />
+    <Compile Include="Framework\Results\AnimationResult.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountDeletedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\AssetTypes\IAssetTypesRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Accounts\Single\NewAccountViewModel.cs" />
+    <Compile Include="MoneyTracker\CategoriesDashBoardViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoryTypeToColorConverter.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoryDeletedMessage.cs" />
+    <Compile Include="MoneyTracker\Categories\Single\NewCategoryViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\Single\CategoryViewModel.cs" />
+    <Compile Include="Authentication\StartViewModel.cs" />
+    <Compile Include="Resources\Actions\EditIcon.xaml.cs">
+      <DependentUpon>EditIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Actions\DeleteIcon.xaml.cs">
+      <DependentUpon>DeleteIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\RegistrationServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\ApplicationErrorMessage.cs" />
+    <Compile Include="Shell\ErrorDialogViewModel.cs" />
+    <Compile Include="Shell\ServiceErrorMessage.cs" />
+    <Compile Include="Framework\Converters\NullToQuestionMarkConverter.cs" />
+    <Compile Include="Framework\OpenConfirmationResult.cs" />
+    <Compile Include="Framework\Behaviors\CalendarLimitedSelectedRangeBehavior.cs" />
+    <Compile Include="Framework\Behaviors\DefaultButtonBehavior.cs" />
+    <Compile Include="Framework\Behaviors\FocusBehavior.cs" />
+    <Compile Include="Authentication\PasswordBindBehavior.cs" />
+    <Compile Include="Framework\EnumWrapper.cs" />
+    <Compile Include="Framework\EnumWrapperList.cs" />
+    <Compile Include="Framework\Converters\BooleanToOpacityConverter.cs" />
+    <Compile Include="Framework\Converters\BooleanToVisibilityInvertConverter.cs" />
+    <Compile Include="Framework\Converters\ZeroToVisibilityConverter.cs" />
+    <Compile Include="Framework\Converters\BalanceToColorConverter.cs" />
+    <Compile Include="Framework\Converters\BooleanToNotBooleanConverter.cs" />
+    <Compile Include="Framework\ApplicationExtensions.cs" />
+    <Compile Include="Framework\Converters\ZeroToEmptyStringConverter.cs" />
+    <Compile Include="Framework\CultureSettings.cs" />
+    <Compile Include="Framework\Converters\DateTimeUtcToLocalConverter.cs" />
+    <Compile Include="Framework\Controls\AutoCompleteComboBox.cs" />
+    <Compile Include="Framework\Controls\WatermarkedTextbox.xaml.cs">
+      <DependentUpon>WatermarkedTextbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Framework\ApplicationCloseCheck.cs" />
+    <Compile Include="Framework\Filters\AsyncAttribute.cs" />
+    <Compile Include="Framework\Filters\IContextAware.cs" />
+    <Compile Include="Framework\Filters\IExecutionWrapper.cs" />
+    <Compile Include="Framework\Controls\CustomTransitionControl.cs" />
+    <Compile Include="Framework\Converters\NullToCollapsedConverter.cs" />
+    <Compile Include="Framework\Filters\DependenciesAttribute.cs" />
+    <Compile Include="Framework\Filters\DoNotExecuteAttribute.cs" />
+    <Compile Include="Framework\ExecuteActionResult.cs" />
+    <Compile Include="Framework\Filters\ExecutionWrapperBase.cs" />
+    <Compile Include="Framework\FilterFramework.cs" />
+    <Compile Include="Framework\FilterManager.cs" />
+    <Compile Include="Framework\IRepository.cs" />
+    <Compile Include="Framework\Filters\IFilter.cs" />
+    <Compile Include="Framework\Loader.cs" />
+    <Compile Include="Framework\Filters\PreviewAttribute.cs" />
+    <Compile Include="Framework\Filters\RescueAttribute.cs" />
+    <Compile Include="Framework\Filters\SetBusyAttribute.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsExtensions.cs" />
+    <Compile Include="MoneyTracker\Accounts\Single\AccountViewModel.cs" />
+    <Compile Include="MoneyTracker\Accounts\IAccountsRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsRepository.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesExtensions.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesViewModel.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoryUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Categories\ICategoriesRepository.cs" />
+    <Compile Include="MoneyTracker\Accounts\AccountsUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Categories\CategoriesRepository.cs" />
+    <Compile Include="Framework\RepositoryBase.cs" />
+    <Compile Include="MoneyTracker\Filters\PostingsFilterUpdatedMessage.cs" />
+    <Compile Include="MoneyTracker\Filters\PostingsFilterViewModel.cs" />
+    <Compile Include="MoneyTracker\Postings\GetBalanceResult.cs" />
+    <Compile Include="MoneyTracker\Postings\DateRange.cs" />
+    <Compile Include="MoneyTracker\Postings\IPostingPanel.cs" />
+    <Compile Include="MoneyTracker\Postings\Actions\PostingActionsViewModel.cs" />
+    <Compile Include="Shell\Async\AsyncOperationStartedMessage.cs" />
+    <Compile Include="Shell\Async\AsyncProgressIndicatorViewModel.cs" />
+    <Compile Include="Shell\Async\AsyncOperationCompleteMessage.cs" />
+    <Compile Include="Shell\OpenDialogMessage.cs" />
+    <Compile Include="MoneyTracker\Postings\PostingRecord.cs" />
+    <Compile Include="MoneyTracker\Postings\Transactions\TransactionViewModel.cs" />
+    <Compile Include="MoneyTracker\Postings\PostingsViewModel.cs" />
+    <Compile Include="MoneyTracker\Postings\Transfers\TransferViewModel.cs" />
+    <Compile Include="Framework\BindingHelper.cs" />
+    <Compile Include="MoneyTracker\Postings\Transactions\AddTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Postings\Transfers\AddTransferResult.cs" />
+    <Compile Include="Framework\IDialogManager.cs" />
+    <Compile Include="Framework\IHaveShutdownTask.cs" />
+    <Compile Include="Framework\IMessageBox.cs" />
+    <Compile Include="Framework\MessageBoxOptions.cs" />
+    <Compile Include="MoneyTracker\Postings\Transfers\UpdateTransferResult.cs" />
+    <Compile Include="MoneyTracker\Postings\Transactions\EditTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Postings\DeleteTransactionResult.cs" />
+    <Compile Include="MoneyTracker\Postings\GetPostingResult.cs" />
+    <Compile Include="Framework\IShell.cs" />
+    <Compile Include="Framework\IModule.cs" />
+    <Compile Include="MoneyTracker\AccountsDashboardViewModel.cs" />
+    <Compile Include="MoneyTracker\Postings\GetPostingsResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\MoneyServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\ApplicationCloseStrategy.cs" />
+    <Compile Include="Framework\Controls\Spinner.xaml.cs">
+      <DependentUpon>Spinner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\DialogConductorView.xaml.cs">
+      <DependentUpon>DialogConductorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\DialogConductorViewModel.cs" />
+    <Compile Include="Shell\MessageBoxViewModel.cs" />
+    <Compile Include="Shell\OpenMessageBoxMessage.cs" />
+    <Compile Include="Shell\ScreensBootstrapper.cs" />
+    <Compile Include="Authentication\AuthenticateResult.cs" />
+    <Compile Include="Authentication\IStartViewModel.cs" />
+    <Compile Include="Authentication\LoginViewModel.cs" />
+    <Compile Include="Shell\ServiceFactory.cs" />
+    <Compile Include="Shell\ShellViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Authentication\PersonalCornerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <DesignData Include="Authentication\SampleData\PersonalData.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="Authentication\SampleData\LoginData.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="Authentication\RegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <DesignData Include="Authentication\SampleData\RegistrationData.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="Framework\Controls\WatermarkedTextbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MoneyTracker\Accounts\Single\AccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <DesignData Include="MoneyTracker\Accounts\Single\SampleData\Account.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="MoneyTracker\Accounts\Single\NewAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\CategoriesDashBoardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\Categories\CategoriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\Categories\Single\NewCategoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <DesignData Include="MoneyTracker\Categories\SampleData\Categories.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="MoneyTracker\Categories\Single\CategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <DesignData Include="MoneyTracker\Categories\Single\SampleData\Category.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="MoneyTracker\Filters\PostingsFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <DesignData Include="MoneyTracker\Postings\SampleData\Postings.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="Authentication\StartView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MoneyTracker\Postings\Transactions\TransactionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\AccountsDashboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MoneyTracker\Postings\Actions\PostingActionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\Postings\PostingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyTracker\Postings\Transfers\TransferView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Resources\Actions\EditIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Actions\DeleteIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell\Async\AsyncProgressIndicatorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <DesignData Include="Shell\Async\SampleData\AsyncData.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="Shell\ErrorDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\BS_ResourceDictionary_Advanced.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\BS_ResourceDictionary_Basic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\BS_ResourceDictionary_Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Framework\Controls\Spinner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authentication\LoginView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\DialogConductorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\MessageBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\AutoCompleteComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\TransitioningFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.AccountDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.AssetTypeDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.CategoryDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.JournalDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService1.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService44.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\Fab.Client.RegistrationServiceReference.UserDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.wsdl" />
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserServiceReference\Fab.Client.UserServiceReference.UserDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServiceReference\UserService.wsdl" />
+    <None Include="Service References\UserServiceReference\UserService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserServiceReference\UserService11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserServiceReference\UserService12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\OutOfBrowserSettings.xml" />
+    <None Include="Service References\UserServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\UserServiceReference\configuration.svcinfo" />
+    <None Include="Service References\UserServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\MoneyServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\MoneyServiceReference\configuration.svcinfo" />
+    <None Include="Service References\MoneyServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Resources\AppIcon_128x128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AppIcon_16x16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AppIcon_32x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AppIcon_48x48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.disco" />
+    <None Include="Service References\RegistrationServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\RegistrationServiceReference\configuration.svcinfo" />
+    <None Include="Service References\RegistrationServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\MoneyServiceReference\" />
+    <WCFMetadataStorage Include="Service References\RegistrationServiceReference\" />
+    <WCFMetadataStorage Include="Service References\UserServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fab.Core\Fab.Core.csproj">
+      <Project>{2833E7CE-248E-4A7C-A5E5-8CFFA544EC67}</Project>
+      <Name>Fab.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!--
+  <Import Project="..\..\msbuild.common.targets" />
+  -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

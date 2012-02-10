@@ -1,0 +1,70 @@
+﻿<Application x:Class="Fab.Managment.App"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+						 xmlns:Shell="clr-namespace:Fab.Managment.Shell"
+						 xmlns:Framework="clr-namespace:Fab.Managment.Framework"
+						 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
+             xmlns:Converters="clr-namespace:Fab.Managment.Converters" mc:Ignorable="d">
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary>
+					<Shell:AppBootstrapper x:Key="bootstrapper" />
+				</ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+			<Framework:CultureSettings x:Key="cultureSettings" />
+			<converters:BooleanToNotBooleanConverter x:Key="boolToNotBool" />
+			<Style TargetType="ListBoxItem">
+				<Setter Property="FocusVisualStyle"
+								Value="{x:Null}" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="ListBoxItem">
+							<Border x:Name="Border"
+											Padding="2"
+											SnapsToDevicePixels="true">
+								<ContentPresenter />
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsSelected"
+												 Value="true">
+									<Setter TargetName="Border"
+													Property="Background"
+													Value="Yellow" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style TargetType="TextBox">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding Path=IsDisabled}"
+											 Value="true">
+						<Setter Property="TextBox.Foreground"
+										Value="DarkGray" />
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style TargetType="TextBox"
+						 x:Key="ReadOnly"
+						 BasedOn="{StaticResource {x:Type TextBox}}">
+				<Setter Property="IsReadOnly"
+								Value="True" />
+				<Setter Property="BorderThickness"
+								Value="0" />
+				<Setter Property="Background"
+								Value="Transparent" />
+			</Style>
+			<ControlTemplate x:Key="FileSizeTemplate">
+				<TextBox Text="{Binding StringFormat={}{0:N0}, Mode=OneWay, Converter={x:Static Converters:NullableSizeToStringConverter.Inst}, TargetNullValue=?}"
+								 Style="{StaticResource ReadOnly}"
+								 Foreground="RoyalBlue"
+								 FontSize="16"
+								 FontWeight="Bold" />
+			</ControlTemplate>
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

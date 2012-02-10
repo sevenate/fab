@@ -1,0 +1,112 @@
+<?xml version="1.0"	encoding="utf-8" ?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+		 ToolsVersion="4.0"
+		 DefaultTargets="GenerateAssemblyInfo">
+
+	<UsingTask TaskName="MSBuild.Community.Tasks.AssemblyInfo" AssemblyFile="..\..\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<!--
+	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile="..\..\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	-->
+	<UsingTask TaskName="nReez.MSBuild.Tasks.Version" AssemblyFile="..\..\tools\MSBuildExtensions\nReez.MSBuild.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Mercurial.HgVersion" AssemblyFile="..\..\tools\MSBuildExtensions\MSBuild.Mercurial\MSBuild.Mercurial.dll" />
+
+	<!-- Common projects assembly information -->
+	<PropertyGroup>
+		<MajorVersion>0</MajorVersion>
+		<MinorVersion>5</MinorVersion>
+		<VersionString>Alpha</VersionString>
+		<ProductName>FAB</ProductName>
+		<CompanyName>nReez, LLC</CompanyName>
+		<Copyright>Copyright © nReez 2012</Copyright>
+		<Trademark>All Rights Reserved</Trademark>
+	</PropertyGroup>
+	
+	<!-- Initialization properties -->
+	<PropertyGroup>
+		<RepositoryRoot>..\..</RepositoryRoot>
+		<ResponseTimeout>5000</ResponseTimeout>
+		<OutputVersionFile>..\version.txt</OutputVersionFile>
+		<OutputAssemblyInfoFile>..\AssemblyInfo.Generated.cs</OutputAssemblyInfoFile>
+	</PropertyGroup>
+
+	<!--
+		Generate a file	Property\AssemblyInfo.Generated.cs for the project
+		that contains both the AssemblyVersion and the AssemblyFileVersion
+		based on the current Mercurial Revision.
+	-->
+	<PropertyGroup>
+		<BuildDependsOn>
+			GenerateAssemblyInfo;
+			$(BuildDependsOn)
+		</BuildDependsOn>
+	</PropertyGroup>
+
+	<Target Name="ExtractRevision">
+		<HgVersion LocalPath="$(RepositoryRoot)" Timeout="$(ResponseTimeout)">
+			<Output TaskParameter="Revision" PropertyName="Build" />
+		</HgVersion>
+		<Version Major="$(MajorVersion)"
+				 Minor="$(MinorVersion)"
+				 Build="$(Build)"
+				 VersionFile="$(OutputVersionFile)"
+				 RevisionType="BuildIncrement" >
+			<Output TaskParameter="Major" PropertyName="Major" />
+			<Output TaskParameter="Minor" PropertyName="Minor" />
+			<Output TaskParameter="Revision" PropertyName="Revision" />
+		</Version>
+		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
+		<CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="Minor" AdditionalMetadata="ReplacementValue=$(Minor)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="Build" AdditionalMetadata="ReplacementValue=$(Build)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="Revision" AdditionalMetadata="ReplacementValue=$(Revision)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="Configuration" AdditionalMetadata="ReplacementValue=$(Configuration)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="ProductName" AdditionalMetadata="ReplacementValue=$(ProductName)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="CompanyName" AdditionalMetadata="ReplacementValue=$(CompanyName)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="Copyright" AdditionalMetadata="ReplacementValue=$(Copyright)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="Trademark" AdditionalMetadata="ReplacementValue=$(Trademark)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+		<CreateItem Include="ProductId" AdditionalMetadata="ReplacementValue=$(ProductId)">
+			<Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+		</CreateItem>
+	</Target>
+
+	<Target Name="GenerateAssemblyInfo" DependsOnTargets="ExtractRevision">
+		<PropertyGroup Condition=" '$(Build)' == '' ">
+			<Build>0</Build>
+		</PropertyGroup>
+		<AssemblyInfo CodeLanguage="CS"
+					  OutputFile="$(OutputAssemblyInfoFile)"
+					  AssemblyCompany="$(CompanyName)"
+					  AssemblyProduct="$(ProductName)"
+					  AssemblyCopyright="$(Copyright)"
+					  AssemblyTrademark="$(Trademark)"
+					  AssemblyDelaySign="false"
+					  AssemblyKeyName=""
+					  AssemblyCulture=""
+					  AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+					  AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
+					  AssemblyInformationalVersion="$(Major).$(Minor) $(VersionString)"
+					  AssemblyConfiguration="$(Configuration)"
+					  CLSCompliant="false" />
+		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision) $(VersionString)" Importance="high" />
+	</Target>
+
+</Project>

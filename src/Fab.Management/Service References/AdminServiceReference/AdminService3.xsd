@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://localhost/StagingFab/AdminService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="FaultDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FaultDetail" nillable="true" type="tns:FaultDetail" />
+  <xs:complexType name="ArrayOfAdminUserDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AdminUserDTO" nillable="true" type="tns:AdminUserDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAdminUserDTO" nillable="true" type="tns:ArrayOfAdminUserDTO" />
+  <xs:complexType name="AdminUserDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:UserDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DatabasePath" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DatabaseSize" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="DisabledChanged" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FreeDiskSpaceAvailable" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="IsDisabled" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LastAccess" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AdminUserDTO" nillable="true" type="tns:AdminUserDTO" />
+  <xs:complexType name="UserDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Registered" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ServiceUrl" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserDTO" nillable="true" type="tns:UserDTO" />
+  <xs:complexType name="ArrayOfAccountMaintenanceDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountMaintenanceDTO" nillable="true" type="tns:AccountMaintenanceDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountMaintenanceDTO" nillable="true" type="tns:ArrayOfAccountMaintenanceDTO" />
+  <xs:complexType name="AccountMaintenanceDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AccountDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActualBalance" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ActualFirstPostingDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ActualLastPostingDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ActualPostingsCount" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountMaintenanceDTO" nillable="true" type="tns:AccountMaintenanceDTO" />
+  <xs:complexType name="AccountDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AssetTypeId" type="xs:int" />
+      <xs:element minOccurs="0" name="Balance" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Created" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FirstPostingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LastPostingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostingsCount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountDTO" nillable="true" type="tns:AccountDTO" />
+</xs:schema>

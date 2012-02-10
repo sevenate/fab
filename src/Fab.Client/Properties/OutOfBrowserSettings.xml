@@ -1,0 +1,15 @@
+<OutOfBrowserSettings ShortName="SilverFAB" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>SilverFAB Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
+  <OutOfBrowserSettings.WindowSettings>
+    <WindowSettings Title="SilverFAB" Height="700" Width="1100" />
+  </OutOfBrowserSettings.WindowSettings>
+  <OutOfBrowserSettings.SecuritySettings>
+    <SecuritySettings ElevatedPermissions="NotRequired" />
+  </OutOfBrowserSettings.SecuritySettings>
+  <OutOfBrowserSettings.Icons>
+    <Icon Size="16,16">Resources/AppIcon_16x16.png</Icon>
+    <Icon Size="32,32">Resources/AppIcon_32x32.png</Icon>
+    <Icon Size="48,48">Resources/AppIcon_48x48.png</Icon>
+    <Icon Size="128,128">Resources/AppIcon_128x128.png</Icon>
+  </OutOfBrowserSettings.Icons>
+</OutOfBrowserSettings>
