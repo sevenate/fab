@@ -1,8 +1,8 @@
-// <copyright file="AccountDTO.cs" company="HD">
-// 	Copyright (c) 2009-2010 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="AccountDTO.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-06-28" />
-// <summary>Account data transfer object.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Runtime.Serialization;

@@ -118,5 +118,15 @@ namespace Fab.Server.Core.Contracts
 		long RepairMasterDatabase();
 
 		#endregion
+
+		/// <summary>
+		/// Update (check/recalculate) cached values for user like accounts current balance, categories used statistic etc.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <param name="checkOnly">If <c>false</c> - difference between cached and actual values will be fixed.</param>
+		/// <returns>List of maintenance object (one per account) with info about actual and previous cached values.</returns>
+		[OperationContract]
+		[FaultContract(typeof(FaultDetail))]
+		IList<AccountMaintenanceDTO> UpdateCachedValuesForUserAccounts(Guid userId, bool checkOnly);
 	}
 }

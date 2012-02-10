@@ -436,6 +436,235 @@ namespace Fab.Managment.AdminServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountMaintenanceDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+    [System.SerializableAttribute()]
+    public partial class AccountMaintenanceDTO : Fab.Managment.AdminServiceReference.AccountDTO {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal ActualBalanceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ActualFirstPostingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ActualLastPostingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal ActualPostingsCountField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal ActualBalance {
+            get {
+                return this.ActualBalanceField;
+            }
+            set {
+                if ((this.ActualBalanceField.Equals(value) != true)) {
+                    this.ActualBalanceField = value;
+                    this.RaisePropertyChanged("ActualBalance");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ActualFirstPostingDate {
+            get {
+                return this.ActualFirstPostingDateField;
+            }
+            set {
+                if ((this.ActualFirstPostingDateField.Equals(value) != true)) {
+                    this.ActualFirstPostingDateField = value;
+                    this.RaisePropertyChanged("ActualFirstPostingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ActualLastPostingDate {
+            get {
+                return this.ActualLastPostingDateField;
+            }
+            set {
+                if ((this.ActualLastPostingDateField.Equals(value) != true)) {
+                    this.ActualLastPostingDateField = value;
+                    this.RaisePropertyChanged("ActualLastPostingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal ActualPostingsCount {
+            get {
+                return this.ActualPostingsCountField;
+            }
+            set {
+                if ((this.ActualPostingsCountField.Equals(value) != true)) {
+                    this.ActualPostingsCountField = value;
+                    this.RaisePropertyChanged("ActualPostingsCount");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountDTO", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AccountMaintenanceDTO))]
+    public partial class AccountDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int AssetTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal BalanceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreatedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> FirstPostingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastPostingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal PostingsCountField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AssetTypeId {
+            get {
+                return this.AssetTypeIdField;
+            }
+            set {
+                if ((this.AssetTypeIdField.Equals(value) != true)) {
+                    this.AssetTypeIdField = value;
+                    this.RaisePropertyChanged("AssetTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Balance {
+            get {
+                return this.BalanceField;
+            }
+            set {
+                if ((this.BalanceField.Equals(value) != true)) {
+                    this.BalanceField = value;
+                    this.RaisePropertyChanged("Balance");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Created {
+            get {
+                return this.CreatedField;
+            }
+            set {
+                if ((this.CreatedField.Equals(value) != true)) {
+                    this.CreatedField = value;
+                    this.RaisePropertyChanged("Created");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> FirstPostingDate {
+            get {
+                return this.FirstPostingDateField;
+            }
+            set {
+                if ((this.FirstPostingDateField.Equals(value) != true)) {
+                    this.FirstPostingDateField = value;
+                    this.RaisePropertyChanged("FirstPostingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastPostingDate {
+            get {
+                return this.LastPostingDateField;
+            }
+            set {
+                if ((this.LastPostingDateField.Equals(value) != true)) {
+                    this.LastPostingDateField = value;
+                    this.RaisePropertyChanged("LastPostingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal PostingsCount {
+            get {
+                return this.PostingsCountField;
+            }
+            set {
+                if ((this.PostingsCountField.Equals(value) != true)) {
+                    this.PostingsCountField = value;
+                    this.RaisePropertyChanged("PostingsCount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AdminServiceReference.IAdminService")]
     public interface IAdminService {
@@ -448,6 +677,9 @@ namespace Fab.Managment.AdminServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.UserDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AccountMaintenanceDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AccountDTO))]
         int GetUsersCount(object queryFilter);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/GetUsersCount", ReplyAction="http://tempuri.org/IAdminService/GetUsersCountResponse")]
@@ -463,6 +695,9 @@ namespace Fab.Managment.AdminServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.UserDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AccountMaintenanceDTO))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AccountDTO))]
         Fab.Managment.AdminServiceReference.AdminUserDTO[] GetUsers(object queryFilter);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/GetUsers", ReplyAction="http://tempuri.org/IAdminService/GetUsersResponse")]
@@ -541,6 +776,16 @@ namespace Fab.Managment.AdminServiceReference {
         System.IAsyncResult BeginRepairMasterDatabase(System.AsyncCallback callback, object asyncState);
         
         long EndRepairMasterDatabase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccounts", ReplyAction="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccountsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccountsFaultDetailFaul" +
+            "t", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
+        Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[] UpdateCachedValuesForUserAccounts(System.Guid userId, bool checkOnly);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccounts", ReplyAction="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccountsResponse")]
+        System.IAsyncResult BeginUpdateCachedValuesForUserAccounts(System.Guid userId, bool checkOnly, System.AsyncCallback callback, object asyncState);
+        
+        Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[] EndUpdateCachedValuesForUserAccounts(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -720,6 +965,25 @@ namespace Fab.Managment.AdminServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UpdateCachedValuesForUserAccountsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UpdateCachedValuesForUserAccountsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class AdminServiceClient : System.ServiceModel.ClientBase<Fab.Managment.AdminServiceReference.IAdminService>, Fab.Managment.AdminServiceReference.IAdminService {
         
         private BeginOperationDelegate onBeginGetUsersCountDelegate;
@@ -782,6 +1046,12 @@ namespace Fab.Managment.AdminServiceReference {
         
         private System.Threading.SendOrPostCallback onRepairMasterDatabaseCompletedDelegate;
         
+        private BeginOperationDelegate onBeginUpdateCachedValuesForUserAccountsDelegate;
+        
+        private EndOperationDelegate onEndUpdateCachedValuesForUserAccountsDelegate;
+        
+        private System.Threading.SendOrPostCallback onUpdateCachedValuesForUserAccountsCompletedDelegate;
+        
         public AdminServiceClient() {
         }
         
@@ -820,6 +1090,8 @@ namespace Fab.Managment.AdminServiceReference {
         public event System.EventHandler<VerifyMasterDatabaseCompletedEventArgs> VerifyMasterDatabaseCompleted;
         
         public event System.EventHandler<RepairMasterDatabaseCompletedEventArgs> RepairMasterDatabaseCompleted;
+        
+        public event System.EventHandler<UpdateCachedValuesForUserAccountsCompletedEventArgs> UpdateCachedValuesForUserAccountsCompleted;
         
         public int GetUsersCount(object queryFilter) {
             return base.Channel.GetUsersCount(queryFilter);
@@ -1312,6 +1584,58 @@ namespace Fab.Managment.AdminServiceReference {
                 this.onRepairMasterDatabaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRepairMasterDatabaseCompleted);
             }
             base.InvokeAsync(this.onBeginRepairMasterDatabaseDelegate, null, this.onEndRepairMasterDatabaseDelegate, this.onRepairMasterDatabaseCompletedDelegate, userState);
+        }
+        
+        public Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[] UpdateCachedValuesForUserAccounts(System.Guid userId, bool checkOnly) {
+            return base.Channel.UpdateCachedValuesForUserAccounts(userId, checkOnly);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginUpdateCachedValuesForUserAccounts(System.Guid userId, bool checkOnly, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateCachedValuesForUserAccounts(userId, checkOnly, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[] EndUpdateCachedValuesForUserAccounts(System.IAsyncResult result) {
+            return base.Channel.EndUpdateCachedValuesForUserAccounts(result);
+        }
+        
+        private System.IAsyncResult OnBeginUpdateCachedValuesForUserAccounts(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid userId = ((System.Guid)(inValues[0]));
+            bool checkOnly = ((bool)(inValues[1]));
+            return this.BeginUpdateCachedValuesForUserAccounts(userId, checkOnly, callback, asyncState);
+        }
+        
+        private object[] OnEndUpdateCachedValuesForUserAccounts(System.IAsyncResult result) {
+            Fab.Managment.AdminServiceReference.AccountMaintenanceDTO[] retVal = this.EndUpdateCachedValuesForUserAccounts(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUpdateCachedValuesForUserAccountsCompleted(object state) {
+            if ((this.UpdateCachedValuesForUserAccountsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UpdateCachedValuesForUserAccountsCompleted(this, new UpdateCachedValuesForUserAccountsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UpdateCachedValuesForUserAccountsAsync(System.Guid userId, bool checkOnly) {
+            this.UpdateCachedValuesForUserAccountsAsync(userId, checkOnly, null);
+        }
+        
+        public void UpdateCachedValuesForUserAccountsAsync(System.Guid userId, bool checkOnly, object userState) {
+            if ((this.onBeginUpdateCachedValuesForUserAccountsDelegate == null)) {
+                this.onBeginUpdateCachedValuesForUserAccountsDelegate = new BeginOperationDelegate(this.OnBeginUpdateCachedValuesForUserAccounts);
+            }
+            if ((this.onEndUpdateCachedValuesForUserAccountsDelegate == null)) {
+                this.onEndUpdateCachedValuesForUserAccountsDelegate = new EndOperationDelegate(this.OnEndUpdateCachedValuesForUserAccounts);
+            }
+            if ((this.onUpdateCachedValuesForUserAccountsCompletedDelegate == null)) {
+                this.onUpdateCachedValuesForUserAccountsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateCachedValuesForUserAccountsCompleted);
+            }
+            base.InvokeAsync(this.onBeginUpdateCachedValuesForUserAccountsDelegate, new object[] {
+                        userId,
+                        checkOnly}, this.onEndUpdateCachedValuesForUserAccountsDelegate, this.onUpdateCachedValuesForUserAccountsCompletedDelegate, userState);
         }
     }
 }

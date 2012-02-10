@@ -37,7 +37,7 @@ namespace Fab.Server.Core.Services
 		/// <summary>
 		/// Gets or sets default root folder for master and personal databases = |DataDirectory|.
 		/// </summary>
-		public string DefaultFolder { get; set; }
+		public string DefaultFolder { private get; set; }
 
 		#endregion
 
@@ -53,7 +53,7 @@ namespace Fab.Server.Core.Services
 		/// </summary>
 		public string UserName
 		{
-			get
+			private get
 			{
 				return ServiceSecurityContext.Current == null
 				       	? userName
@@ -135,9 +135,9 @@ namespace Fab.Server.Core.Services
 		{
 			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
-				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
+				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMapper.AccountMappingConfigurator);
 				var result = accountMapper.Map(ModelHelper.GetAccountById(mc, accountId));
-				return SetUTCforAccountNullableDates(result);
+				return AccountMapper.SetUTCforAccountNullableDates(result);
 			}
 		}
 
@@ -189,7 +189,7 @@ namespace Fab.Server.Core.Services
 		{
 			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
-				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMappingConfigurator);
+				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountDTO>(AccountMapper.AccountMappingConfigurator);
 
 				var result = mc.Accounts.Include("AssetType")
 					.Where(a => !a.IsSystem && !a.IsClosed)
@@ -198,9 +198,9 @@ namespace Fab.Server.Core.Services
 					.Select(accountMapper.Map)
 					.ToList();
 
-				foreach (var accountDTO in result)
+				foreach (var account in result)
 				{
-					SetUTCforAccountNullableDates(accountDTO);
+					AccountMapper.SetUTCforAccountNullableDates(account);
 				}
 
 				return result;
@@ -221,8 +221,7 @@ namespace Fab.Server.Core.Services
 			using (var mc = new ModelContainer(GetPersonalConnection(UserName)))
 			{
 				// Todo: Fix Sum() of Postings when there is no any posting yet.
-				var firstPosting = mc.Postings.Where(p => p.Account.Id == accountId && p.Date < dateTime)
-					.FirstOrDefault();
+				var firstPosting = mc.Postings.FirstOrDefault(p => p.Account.Id == accountId && p.Date < dateTime);
 
 				balance = firstPosting != null
 				          	? mc.Postings.Where(p => p.Account.Id == accountId && p.Date < dateTime)
@@ -231,57 +230,6 @@ namespace Fab.Server.Core.Services
 			}
 
 			return balance;
-		}
-
-		/// <summary>
-		/// Gets default mapping between <see cref="Account"/> and <see cref="AccountDTO"/>.
-		/// </summary>
-		private static DefaultMapConfig AccountMappingConfigurator
-		{
-			get
-			{
-				return new DefaultMapConfig()
-					.MatchMembers((m1, m2) => m1 == m2 || m1 + "Id" == m2)
-					.ConvertUsing<AssetType, int>(type => type.Id)
-					.ConvertUsing<DateTime, DateTime>(type => DateTime.SpecifyKind(type, DateTimeKind.Utc));
-//						.ConvertUsing<DateTime?, DateTime?>(type => type.HasValue
-//						                                            	? DateTime.SpecifyKind(type.Value, DateTimeKind.Utc)
-//						                                            	: (DateTime?) null)
-//						.PostProcess<AccountDTO>((value, state) =>
-//						                         {
-//													 if (value.FirstPostingDate.HasValue)
-//													 {
-//														 value.FirstPostingDate = DateTime.SpecifyKind(value.FirstPostingDate.Value, DateTimeKind.Utc);
-//													 }
-//
-//													 if (value.LastPostingDate.HasValue)
-//													 {
-//														 value.LastPostingDate = DateTime.SpecifyKind(value.LastPostingDate.Value, DateTimeKind.Utc);
-//													 }
-//
-//						                         	return value;
-//						                         })
-			}
-		}
-
-		/// <summary>
-		/// Workaround for "DateTime?" properties mapping between <see cref="Account"/> and <see cref="AccountDTO" />
-		/// </summary>
-		/// <param name="accountDTO">Account data transfer object for post processing.</param>
-		/// <returns>Modified source account DTO.</returns>
-		private AccountDTO SetUTCforAccountNullableDates(AccountDTO accountDTO)
-		{
-			if (accountDTO.FirstPostingDate.HasValue)
-			{
-				accountDTO.FirstPostingDate = DateTime.SpecifyKind(accountDTO.FirstPostingDate.Value, DateTimeKind.Utc);
-			}
-
-			if (accountDTO.LastPostingDate.HasValue)
-			{
-				accountDTO.LastPostingDate = DateTime.SpecifyKind(accountDTO.LastPostingDate.Value, DateTimeKind.Utc);
-			}
-
-			return accountDTO;
 		}
 
 		#endregion
@@ -448,7 +396,7 @@ namespace Fab.Server.Core.Services
 
 				var journal = ModelHelper.GetJournalById(mc, journalId);
 
-				var posting = journal.Postings.Where(p => p.Account.Id == accountId).Single();
+				var posting = journal.Postings.Single(p => p.Account.Id == accountId);
 
 				switch (journal.JournalType)
 				{
@@ -480,7 +428,7 @@ namespace Fab.Server.Core.Services
 
 					case (byte) JournalType.Transfer:
 					{
-						var posting2 = journal.Postings.Where(p => p.Account.Id != accountId).Single();
+						var posting2 = journal.Postings.Single(p => p.Account.Id != accountId);
 
 						return posting.Amount >= 0
 						       	? (JournalDTO) new IncomingTransferDTO
@@ -804,7 +752,7 @@ namespace Fab.Server.Core.Services
 		public int Deposit(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId,
 		                   string comment)
 		{
-			return CreateTransaction(userId, accountId, true, date, rate, quantity, categoryId, comment);
+			return CreateTransaction(accountId, true, date, rate, quantity, categoryId, comment);
 		}
 
 		/// <summary>
@@ -823,7 +771,7 @@ namespace Fab.Server.Core.Services
 		public int Withdrawal(Guid userId, int accountId, DateTime date, decimal rate, decimal quantity, int? categoryId,
 		                      string comment)
 		{
-			return CreateTransaction(userId, accountId, false, date, rate, quantity, categoryId, comment);
+			return CreateTransaction(accountId, false, date, rate, quantity, categoryId, comment);
 		}
 
 		/// <summary>
@@ -852,7 +800,7 @@ namespace Fab.Server.Core.Services
 		                              decimal rate, decimal quantity, int? categoryId, string comment)
 		{
 			// Check comment max length
-			if (comment.Length > 256)
+			if (comment != null && comment.Length > 256)
 			{
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
@@ -881,7 +829,6 @@ namespace Fab.Server.Core.Services
 		/// and will be positive if the <paramref name="isDeposit"/> is <c>true</c>;
 		/// otherwise the amount will be negative.
 		/// </summary>
-		/// <param name="userId">User unique ID.</param>
 		/// <param name="accountId">Account ID.</param>
 		/// <param name="isDeposit">
 		/// 	<c>true</c> means that transaction is "Deposit";
@@ -893,11 +840,11 @@ namespace Fab.Server.Core.Services
 		/// <param name="categoryId">The category ID.</param>
 		/// <param name="comment">Comment notes.</param>
 		/// <returns>Created transaction ID.</returns>
-		private int CreateTransaction(Guid userId, int accountId, bool isDeposit, DateTime date, decimal rate,
+		private int CreateTransaction(int accountId, bool isDeposit, DateTime date, decimal rate,
 		                                     decimal quantity, int? categoryId, string comment)
 		{
 			// Check comment max length
-			if (comment.Length > 256)
+			if (comment != null && comment.Length > 256)
 			{
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
@@ -950,7 +897,7 @@ namespace Fab.Server.Core.Services
 			}
 
 			// Check comment max length
-			if (comment.Length > 256)
+			if (comment != null && comment.Length > 256)
 			{
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
@@ -1003,7 +950,7 @@ namespace Fab.Server.Core.Services
 			}
 
 			// Check comment max length
-			if (comment.Length > 256)
+			if (comment != null && comment.Length > 256)
 			{
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
@@ -1039,6 +986,11 @@ namespace Fab.Server.Core.Services
 		/// <returns>Connection string to the user personal database.</returns>
 		private string GetPersonalConnection(string login)
 		{
+			if (string.IsNullOrEmpty(login))
+			{
+				throw new ArgumentException("login");
+			}
+
 			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
 			User user;
 

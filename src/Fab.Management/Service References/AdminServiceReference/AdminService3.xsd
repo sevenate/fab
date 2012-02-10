@@ -41,4 +41,36 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserDTO" nillable="true" type="tns:UserDTO" />
+  <xs:complexType name="ArrayOfAccountMaintenanceDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountMaintenanceDTO" nillable="true" type="tns:AccountMaintenanceDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountMaintenanceDTO" nillable="true" type="tns:ArrayOfAccountMaintenanceDTO" />
+  <xs:complexType name="AccountMaintenanceDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AccountDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActualBalance" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ActualFirstPostingDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ActualLastPostingDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ActualPostingsCount" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountMaintenanceDTO" nillable="true" type="tns:AccountMaintenanceDTO" />
+  <xs:complexType name="AccountDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AssetTypeId" type="xs:int" />
+      <xs:element minOccurs="0" name="Balance" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Created" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FirstPostingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LastPostingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostingsCount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountDTO" nillable="true" type="tns:AccountDTO" />
 </xs:schema>

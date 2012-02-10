@@ -207,14 +207,14 @@ namespace Fab.Server.Core.Services
 
 			var cachedDriveInfo = new Dictionary<string, DriveInfo>();
 
-			foreach (var adminUserDTO in records)
+			foreach (var adminUser in records)
 			{
-				var resolvedFile = DatabaseManager.ResolveDataDirectory(adminUserDTO.DatabasePath);
+				var resolvedFile = DatabaseManager.ResolveDataDirectory(adminUser.DatabasePath);
 
 				if (File.Exists(resolvedFile))
 				{
 					var file = new FileInfo(resolvedFile);
-					adminUserDTO.DatabaseSize = file.Length;
+					adminUser.DatabaseSize = file.Length;
 
 					// C:\ or D:\ etc.
 					var root = Path.GetPathRoot(file.FullName);
@@ -228,7 +228,7 @@ namespace Fab.Server.Core.Services
 					if (!string.IsNullOrEmpty(root))
 					{
 						// Free space available for IIS AppPool user account, not the entire free space on disk!
-						adminUserDTO.FreeDiskSpaceAvailable = cachedDriveInfo[root].AvailableFreeSpace;
+						adminUser.FreeDiskSpaceAvailable = cachedDriveInfo[root].AvailableFreeSpace;
 					}
 				}
 			}
@@ -244,6 +244,12 @@ namespace Fab.Server.Core.Services
 		public void DeleteUser(Guid userId)
 		{
 			LogManager.GetCurrentClassLogger().LogClientIP("DisableUser");
+
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("userId");
+			}
+
 			var masterConnectioString = dbManager.GetMasterConnection(DefaultFolder);
 
 			using (var mc = new MasterEntities(masterConnectioString))
@@ -433,6 +439,129 @@ namespace Fab.Server.Core.Services
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Update (check/recalculate) cached values for user like accounts current balance, categories used statistic etc.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <param name="checkOnly">If <c>false</c> - difference between cached and actual values will be fixed.</param>
+		/// <returns>List of maintenance object (one per account) with info about actual and previous cached values.</returns>
+		public IList<AccountMaintenanceDTO> UpdateCachedValuesForUserAccounts(Guid userId, bool checkOnly)
+		{
+			LogManager.GetCurrentClassLogger().LogClientIP("UpdateCachedValues");
+			
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("userId");
+			}
+
+			var result = new List<AccountMaintenanceDTO>();
+
+			using (var mc = new ModelContainer(GetPersonalConnection(userId)))
+			{
+				var accountMapper = ObjectMapperManager.DefaultInstance.GetMapper<Account, AccountMaintenanceDTO>(AccountMapper.AccountMappingConfigurator);
+
+				var accounts = mc.Accounts.Include("AssetType")
+					//.Where(a => !a.IsSystem && !a.IsClosed)
+					.ToList();
+
+				foreach (var account in accounts)
+				{
+					var maintenanceDto = accountMapper.Map(account);
+
+					// Update balance
+					if (mc.Postings.Any(posting => posting.Account.Id == account.Id))
+					{
+						var actualBalance = mc.Postings.Where(posting => posting.Account.Id == account.Id)
+												  .Sum(p => p.Amount);
+						
+						maintenanceDto.ActualBalance = actualBalance;
+
+						if (!checkOnly)
+						{
+							account.Balance = actualBalance;
+						}
+					}
+
+					// Update postings count
+					var actualPostingsCount = mc.Postings.Count(posting => posting.Account.Id == account.Id);
+
+					maintenanceDto.ActualPostingsCount = actualPostingsCount;
+
+					if (!checkOnly)
+					{
+						account.PostingsCount = actualPostingsCount;
+					}
+
+					// Update first posting date
+					var actualFirstPosting = mc.Postings.Where(posting => posting.Account.Id == account.Id)
+																.OrderBy(posting => posting.Date)
+																.FirstOrDefault();
+
+					if (actualFirstPosting != null)
+					{
+						maintenanceDto.ActualFirstPostingDate = actualFirstPosting.Date;
+					}
+
+					if (!checkOnly)
+					{
+						account.FirstPostingDate = maintenanceDto.ActualFirstPostingDate;
+					}
+
+					// Update last posting date
+					var actualLastPosting = mc.Postings.Where(posting => posting.Account.Id == account.Id)
+																.OrderByDescending(posting => posting.Date)
+																.FirstOrDefault();
+
+					if (actualLastPosting != null)
+					{
+						maintenanceDto.ActualLastPostingDate = actualLastPosting.Date;
+					}
+
+					if (!checkOnly)
+					{
+						account.LastPostingDate = maintenanceDto.ActualLastPostingDate;
+					}
+
+					result.Add(maintenanceDto);
+				}
+
+				// Updated cached values if required
+				if (!checkOnly)
+				{
+					mc.SaveChanges();
+				}
+			}
+		
+			return result;
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		/// <summary>
+		/// Gets connection string to the user personal database based on user ID.
+		/// </summary>
+		/// <param name="userId">Unique user ID.</param>
+		/// <returns>Connection string to the user personal database.</returns>
+		private string GetPersonalConnection(Guid userId)
+		{
+			if (userId == Guid.Empty)
+			{
+				throw new ArgumentException("userId");
+			}
+
+			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
+			User user;
+
+			using (var mc = new MasterEntities(masterConnection))
+			{
+				user = mc.Users.Single(u => u.Id == userId);
+			}
+
+			return dbManager.GetPersonalConnection(user.DatabasePath);
+		}
 
 		#endregion
 	}

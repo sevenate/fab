@@ -26,14 +26,24 @@ namespace Fab.Server.Tests
 		private const string DefaultFolder = "db";
 
 		/// <summary>
+		/// Admin service dependency.
+		/// </summary>
+		private readonly AdminService adminService;
+
+		/// <summary>
 		/// User registration service dependency.
 		/// </summary>
 		private readonly RegistrationService registrationService;
 
 		/// <summary>
-		/// Admin service dependency.
+		/// Money service dependency.
 		/// </summary>
-		private readonly AdminService adminService;
+		private readonly MoneyService moneyService;
+
+		/// <summary>
+		/// Current user.
+		/// </summary>
+		private UserDTO currentUser;
 
 		#endregion
 
@@ -45,14 +55,25 @@ namespace Fab.Server.Tests
 		public AdminServiceTests()
 		{
 			Dispose();
-			registrationService = new RegistrationService
-			          {
-			          	DefaultFolder = DefaultFolder
-			          };
+			
 			adminService = new AdminService
 			               {
 			               	DefaultFolder = DefaultFolder
 			               };
+			moneyService = new MoneyService
+			{
+				DefaultFolder = DefaultFolder
+			};
+
+			string login = "testUser" + Guid.NewGuid();
+			moneyService.UserName = login;
+
+			registrationService = new RegistrationService
+			{
+				DefaultFolder = DefaultFolder
+			};
+
+			currentUser = registrationService.Register(login, "testPassword");
 		}
 
 		#endregion
@@ -67,19 +88,16 @@ namespace Fab.Server.Tests
 		public void Get_All_Users()
 // ReSharper restore InconsistentNaming
 		{
-			string login = "testUser" + Guid.NewGuid();
+			string login = "secondTestUser" + Guid.NewGuid();
 			var userDTO = registrationService.Register(login, "testPassword");
-
-			login = "testUser2" + Guid.NewGuid();
-			var userDTO2 = registrationService.Register(login, "testPassword");
 
 			var users = adminService.GetUsers(new QueryFilter());
 
 			Assert.True(users != null && users.Count == 2);
-			Assert.True(users[0].Id == userDTO.Id);
+			Assert.True(users[0].Id == currentUser.Id);
 			Assert.True(users[0].DatabaseSize != null);
 			Assert.True(users[0].FreeDiskSpaceAvailable != null);
-			Assert.True(users[1].Id == userDTO2.Id);
+			Assert.True(users[1].Id == userDTO.Id);
 			Assert.True(users[1].DatabaseSize != null);
 			Assert.True(users[1].FreeDiskSpaceAvailable != null);
 		}
@@ -90,12 +108,10 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void DeleteUser()
 		{
-			var userDTO = registrationService.Register("testUser" + Guid.NewGuid(), "testPassword");
-
 			var users = adminService.GetUsers(new QueryFilter());
 			Assert.True(users != null && users.Count == 1);
 
-			adminService.DeleteUser(userDTO.Id);
+			adminService.DeleteUser(currentUser.Id);
 
 			users = adminService.GetUsers(new QueryFilter());
 			Assert.True(users != null && users.Count == 0);
@@ -107,16 +123,14 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void UpdateUser()
 		{
-			var userDTO = registrationService.Register("testUser" + Guid.NewGuid(), "testPassword");
+			Assert.True(currentUser.Id != Guid.Empty);
+			Assert.True(currentUser.Registered != new DateTime());
+			Assert.True(currentUser.ServiceUrl == string.Empty);
 
-			Assert.True(userDTO.Id != Guid.Empty);
-			Assert.True(userDTO.Registered != new DateTime());
-			Assert.True(userDTO.ServiceUrl == string.Empty);
-			
-			var adminUserDTO = new AdminUserDTO(userDTO);
-			Assert.True(adminUserDTO.Id == userDTO.Id);
-			Assert.True(adminUserDTO.Registered == userDTO.Registered);
-			Assert.True(adminUserDTO.ServiceUrl == userDTO.ServiceUrl);
+			var adminUserDTO = new AdminUserDTO(currentUser);
+			Assert.True(adminUserDTO.Id == currentUser.Id);
+			Assert.True(adminUserDTO.Registered == currentUser.Registered);
+			Assert.True(adminUserDTO.ServiceUrl == currentUser.ServiceUrl);
 			Assert.True(adminUserDTO.ServiceUrl == string.Empty);
 			Assert.True(adminUserDTO.DatabaseSize == null);
 	
@@ -138,6 +152,24 @@ namespace Fab.Server.Tests
 			Assert.True(users[0].Login == adminUserDTO.Login);
 			Assert.True(users[0].Password == null);
 			Assert.True(users[0].ServiceUrl == adminUserDTO.ServiceUrl);
+		}
+
+		[Fact]
+		public void Check_Cached_Values_For_User_Accounts()
+		{
+			var account1 = moneyService.CreateAccount(currentUser.Id, "Account 1", 1);
+			var account2 = moneyService.CreateAccount(currentUser.Id, "Account 2", 2);
+			var account3 = moneyService.CreateAccount(currentUser.Id, "Account 3", 3);
+
+			moneyService.Deposit(currentUser.Id, account1, new DateTime(2012, 2, 11), 10, 3, null, null);
+			moneyService.Deposit(currentUser.Id, account1, new DateTime(2012, 2, 10), 5, 4, null, null);
+			moneyService.Withdrawal(currentUser.Id, account1, new DateTime(2012, 2, 13), 20, 2, null, null);
+
+			moneyService.Deposit(currentUser.Id, account2, new DateTime(2012, 2, 5), 8, 1, null, null);
+
+			var maintenanceAccounts = adminService.UpdateCachedValuesForUserAccounts(currentUser.Id, true);
+
+			Assert.Equal(7, maintenanceAccounts.Count);
 		}
 
 		#endregion

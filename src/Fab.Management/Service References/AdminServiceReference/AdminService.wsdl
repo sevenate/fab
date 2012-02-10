@@ -199,6 +199,15 @@
   <wsdl:message name="IAdminService_RepairMasterDatabase_FaultDetailFault_FaultMessage">
     <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q10:FaultDetail" />
   </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateCachedValuesForUserAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCachedValuesForUserAccounts" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateCachedValuesForUserAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCachedValuesForUserAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateCachedValuesForUserAccounts_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q11:FaultDetail" />
+  </wsdl:message>
   <wsdl:portType name="IAdminService">
     <wsdl:operation name="GetUsersCount">
       <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetUsersCount" message="tns:IAdminService_GetUsersCount_InputMessage" />
@@ -249,6 +258,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabase" message="tns:IAdminService_RepairMasterDatabase_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabaseResponse" message="tns:IAdminService_RepairMasterDatabase_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/RepairMasterDatabaseFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_RepairMasterDatabase_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCachedValuesForUserAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccounts" message="tns:IAdminService_UpdateCachedValuesForUserAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccountsResponse" message="tns:IAdminService_UpdateCachedValuesForUserAccounts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccountsFaultDetailFault" name="FaultDetailFault" message="tns:IAdminService_UpdateCachedValuesForUserAccounts_FaultDetailFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="AdminServiceBasic" type="tns:IAdminService">
@@ -364,6 +378,18 @@
     </wsdl:operation>
     <wsdl:operation name="RepairMasterDatabase">
       <soap12:operation soapAction="http://tempuri.org/IAdminService/RepairMasterDatabase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap12:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCachedValuesForUserAccounts">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/UpdateCachedValuesForUserAccounts" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
