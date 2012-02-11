@@ -6,7 +6,9 @@
 						 xmlns:Shell="clr-namespace:Fab.Managment.Shell"
 						 xmlns:Framework="clr-namespace:Fab.Managment.Framework"
 						 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
-             xmlns:Converters="clr-namespace:Fab.Managment.Converters" mc:Ignorable="d">
+						 xmlns:Converters="clr-namespace:Fab.Managment.Converters"
+						 xmlns:Common="clr-namespace:Fab.Client.Common"
+						 mc:Ignorable="d">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -16,6 +18,8 @@
 			</ResourceDictionary.MergedDictionaries>
 			<Framework:CultureSettings x:Key="cultureSettings" />
 			<converters:BooleanToNotBooleanConverter x:Key="boolToNotBool" />
+			<converters:BalanceToColorConverter x:Key="balanceToColor" />
+			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
 			<Style TargetType="ListBoxItem">
 				<Setter Property="FocusVisualStyle"
 								Value="{x:Null}" />

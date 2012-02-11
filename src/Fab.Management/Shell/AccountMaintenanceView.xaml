@@ -3,41 +3,128 @@
 						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+						 xmlns:cal="http://www.caliburnproject.org"
 						 mc:Ignorable="d"
-						 d:DesignHeight="300"
-						 d:DesignWidth="300">
+						 cal:Bind.Model="{Binding}"
+						 d:DesignHeight="100"
+						 d:DesignWidth="837">
+	<UserControl.Resources>
+		<Style x:Key="BalanceStyle"
+					 TargetType="TextBlock">
+			<Setter Property="HorizontalAlignment"
+							Value="Right" />
+		</Style>
+		<Style x:Key="TextStyle"
+					 TargetType="TextBlock">
+			<Setter Property="HorizontalAlignment"
+							Value="Center" />
+			<Setter Property="VerticalAlignment"
+							Value="Center" />
+		</Style>
+	</UserControl.Resources>
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40*" />
-			<RowDefinition Height="52*" />
-			<RowDefinition Height="42*" />
-			<RowDefinition Height="54*" />
-			<RowDefinition Height="50*" />
-			<RowDefinition Height="62*" />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="140*" />
-			<ColumnDefinition Width="160*" />
-		</Grid.ColumnDefinitions>
-		<Label Content="Account ID"
-					 VerticalContentAlignment="Center"
-					 HorizontalAlignment="Right" />
-		<Label Content="Name"
-					 Grid.Row="1"
-					 HorizontalAlignment="Right"
-					 VerticalContentAlignment="Center" />
-		<Label Content="Created"
-					 Grid.Row="2"
-					 HorizontalAlignment="Right"
-					 VerticalContentAlignment="Center" />
-		<Label Content="Balance"
-					 Grid.Row="3"
-					 HorizontalAlignment="Right"
-					 VerticalContentAlignment="Center" />
-		<Label Content="Actual Balance"
-					 Grid.Row="4"
-					 HorizontalAlignment="Right"
-					 VerticalContentAlignment="Center" />
-
+		<DataGrid x:Name="Accounts"
+							AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID"
+														IsReadOnly="True"
+														Binding="{Binding Path=Id}"
+														ElementStyle="{StaticResource BalanceStyle}" />
+				<DataGridTextColumn Header="Name"
+														IsReadOnly="True"
+														Binding="{Binding Path=Name}" />
+				<DataGridTemplateColumn Header="Created"
+																MinWidth="75"
+																IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource TextStyle}"
+												 Text="{Binding Path=Created, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+												 ToolTipService.ToolTip="{Binding Path=Created, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="Asset Type ID"
+														IsReadOnly="True"
+														ElementStyle="{StaticResource TextStyle}"
+														Binding="{Binding Path=AssetTypeId}" />
+				<DataGridTemplateColumn Header="Balance"
+																MinWidth="75"
+																IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource BalanceStyle}"
+												 VerticalAlignment="Center"
+												 Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
+												 Text="{Binding Path=Balance, StringFormat=n}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="Actual Balance"
+																MinWidth="75"
+																IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource BalanceStyle}"
+												 VerticalAlignment="Center"
+												 Foreground="{Binding Path=ActualBalance, Converter={StaticResource balanceToColor}}"
+												 Text="{Binding Path=Balance, StringFormat=n}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="Postings Count"
+														IsReadOnly="True"
+														ElementStyle="{StaticResource TextStyle}"
+														Binding="{Binding Path=PostingsCount}" />
+				<DataGridTextColumn Header="Actual Postings Count"
+														IsReadOnly="True"
+														ElementStyle="{StaticResource TextStyle}"
+														Binding="{Binding Path=ActualPostingsCount}" />
+				<DataGridTemplateColumn Header="First Posting"
+																MinWidth="75"
+																IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource TextStyle}"
+												 Text="{Binding Path=FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+												 ToolTipService.ToolTip="{Binding Path=FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="Actual First Posting"
+																MinWidth="75"
+																IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource TextStyle}"
+												 Text="{Binding Path=ActualFirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+												 ToolTipService.ToolTip="{Binding Path=ActualFirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="Last Posting"
+																MinWidth="75"
+																IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource TextStyle}"
+												 Text="{Binding Path=LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+												 ToolTipService.ToolTip="{Binding Path=LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="Actual Last Posting"
+																MinWidth="75"
+																IsReadOnly="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource TextStyle}"
+												 Text="{Binding Path=ActualLastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+												 ToolTipService.ToolTip="{Binding Path=ActualLastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
 	</Grid>
 </UserControl>
