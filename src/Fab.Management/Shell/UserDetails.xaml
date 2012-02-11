@@ -5,10 +5,10 @@
 						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 						 xmlns:Converters="clr-namespace:Fab.Managment.Converters"
 						 xmlns:cal="http://www.caliburnproject.org"
-						 cal:Bind.Model="{Binding}"
+						 xmlns:Shell="clr-namespace:Fab.Managment.Shell"
+             cal:Bind.Model="{Binding}"
 						 mc:Ignorable="d"
-						 d:DesignWidth="350"
-						 d:DesignHeight="200">
+						 d:DesignWidth="350">
 	<UserControl.Resources>
 		<Style TargetType="Label">
 			<Setter Property="FontWeight"
@@ -41,11 +41,14 @@
 							Value="16" />
 			<Setter Property="VerticalAlignment"
 							Value="Center" />
+			<Setter Property="MinHeight"
+							Value="36" />
 		</Style>
 	</UserControl.Resources>
-	<Grid>
+	<Grid Height="296">
 		<Grid.RowDefinitions>
 			<RowDefinition />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
@@ -57,7 +60,7 @@
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		<StackPanel>
-			<Label Content="Password" />
+			<Label Content="New Password" />
 			<Label Content="Database" />
 			<Label Content="Service" />
 			<Label Content="Email" />
@@ -90,14 +93,13 @@
 							 MaxLines="1" />
 		</StackPanel>
 		<StackPanel Grid.Column="2"
-								Width="137"
 								Margin="2,0">
 			<Button x:Name="Verify"
-							Content="{Binding VerifyStatus}"
+							Content="{Binding VerifyStatus, FallbackValue=Verify}"
 							ToolTip="Verify database"
 							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
 			<Button x:Name="Repair"
-							Content="{Binding RepairStatus}"
+							Content="{Binding RepairStatus, FallbackValue=Repair}"
 							ToolTip="Repair database"
 							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
 			<Grid>
@@ -105,8 +107,10 @@
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Button x:Name="CheckCache" Content="{Binding CheckCacheStatus}" ToolTip="Repair database"
-				        IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
+				<Button x:Name="CheckCache"
+								Content="{Binding CheckCacheStatus, FallbackValue='Check Cache'}"
+								ToolTip="Check accounts cached values"
+								IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
 				<CheckBox Grid.Column="1"
 									x:Name="UpdateCache"
 									Content="Update"
@@ -115,24 +119,36 @@
 									VerticalAlignment="Center" />
 			</Grid>
 			<Button x:Name="Save"
-							Content="{Binding SaveStatus}"
+							Content="{Binding SaveStatus, FallbackValue=Save}"
 							ToolTip="Save updated user data"
 							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
 			<Button x:Name="Delete"
 							ToolTip="Delete"
 							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
 							Width="{Binding ElementName=Save, Path=ActualWidth}"
-							Height="{Binding ElementName=Save, Path=ActualHeight}">
+							Height="{Binding ElementName=Save, Path=ActualHeight}"
+							HorizontalContentAlignment="Stretch"
+							VerticalContentAlignment="Stretch">
 				<Button.Content>
-					<Path Stretch="Uniform"
-								StrokeThickness="0.5"
-								Stroke="DarkRed"
-								Fill="Red"
-								Data="F1 M 2.28484e-007,1.33331L 1.33333,0L 4.00001,2.66669L 6.66667,6.10352e-005L 8,1.33331L 5.33334,4L 8,6.66669L 6.66667,8L 4,5.33331L 1.33333,8L 1.086e-007,6.66669L 2.66667,4L 2.28484e-007,1.33331 Z "
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Stretch" />
+					<StackPanel HorizontalAlignment="Center"
+											Orientation="Horizontal">
+						<Path Stretch="Uniform"
+									StrokeThickness="0.5"
+									Stroke="DarkRed"
+									Fill="Red"
+									Data="F1 M 2.28484e-007,1.33331L 1.33333,0L 4.00001,2.66669L 6.66667,6.10352e-005L 8,1.33331L 5.33334,4L 8,6.66669L 6.66667,8L 4,5.33331L 1.33333,8L 1.086e-007,6.66669L 2.66667,4L 2.28484e-007,1.33331 Z "
+									HorizontalAlignment="Stretch"
+									VerticalAlignment="Stretch"
+									Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualHeight}"/>
+						<TextBlock Text="Delete"
+											 VerticalAlignment="Center"
+											 Margin="5,0,0,0"/>
+					</StackPanel>
 				</Button.Content>
 			</Button>
 		</StackPanel>
+		<Shell:AccountMaintenanceView Grid.Row="1"
+																	Grid.ColumnSpan="7"
+																	MaxHeight="300" />
 	</Grid>
 </UserControl>

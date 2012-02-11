@@ -337,6 +337,17 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		private IObservableCollection<AccountMaintenanceDTO> accounts;
+		public IObservableCollection<AccountMaintenanceDTO> Accounts
+		{
+			get { return accounts; }
+			set
+			{
+				accounts = value;
+				NotifyOfPropertyChange(() => Accounts);
+			}
+		}
+
 		public IEnumerable<IResult> CheckCache()
 		{
 			yield return new SingleResult
@@ -355,7 +366,7 @@ namespace Fab.Managment.Shell
 			             	};
 			yield return result;
 
-			var a = result.Accounts;
+			Accounts = new BindableCollection<AccountMaintenanceDTO>(result.Accounts);
 			CheckCacheStatus = "Check Cache";
 			IsBusy = false;
 		}
@@ -365,6 +376,7 @@ namespace Fab.Managment.Shell
 		#region Save
 
 		private string saveStatus = "Save";
+
 		public string SaveStatus
 		{
 			get { return saveStatus; }

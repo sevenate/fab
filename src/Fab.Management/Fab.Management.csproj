@@ -62,8 +62,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\Fab.Client\Framework\Converters\BalanceToColorConverter.cs">
+      <Link>Converters\BalanceToColorConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Fab.Client\Framework\Converters\BooleanToNotBooleanConverter.cs">
       <Link>Converters\BooleanToNotBooleanConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Fab.Client\Framework\Converters\DateTimeUtcToLocalConverter.cs">
+      <Link>Converters\DateTimeUtcToLocalConverter.cs</Link>
     </Compile>
     <Compile Include="..\Fab.Client\Framework\Filters\DependenciesAttribute.cs">
       <Link>Framework\Filters\DependenciesAttribute.cs</Link>
