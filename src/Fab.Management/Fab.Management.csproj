@@ -83,9 +83,13 @@
     <Compile Include="Framework\Results\SingleResult.cs" />
     <Compile Include="Framework\SslValidation.cs" />
     <Compile Include="Framework\CultureSettings.cs" />
+    <Compile Include="Shell\AccountMaintenanceView.xaml.cs">
+      <DependentUpon>AccountMaintenanceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\AppBootstrapper.cs" />
     <Compile Include="Shell\IShell.cs" />
     <Compile Include="Shell\Messages\UserDeletedMessage.cs" />
+    <Compile Include="Shell\Results\CheckAccountsCachedValuesResult.cs" />
     <Compile Include="Shell\Results\SaveResult.cs" />
     <Compile Include="Shell\Results\VerifyDbResult.cs" />
     <Compile Include="Shell\Results\RepairResult.cs" />
@@ -100,6 +104,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Page Include="Shell\AccountMaintenanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell\UserDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

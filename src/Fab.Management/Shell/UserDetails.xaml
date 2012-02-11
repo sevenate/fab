@@ -100,6 +100,20 @@
 							Content="{Binding RepairStatus}"
 							ToolTip="Repair database"
 							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="CheckCache" Content="{Binding CheckCacheStatus}" ToolTip="Repair database"
+				        IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
+				<CheckBox Grid.Column="1"
+									x:Name="UpdateCache"
+									Content="Update"
+									FontWeight="10"
+									HorizontalAlignment="Center"
+									VerticalAlignment="Center" />
+			</Grid>
 			<Button x:Name="Save"
 							Content="{Binding SaveStatus}"
 							ToolTip="Save updated user data"
