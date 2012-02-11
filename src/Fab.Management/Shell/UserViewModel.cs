@@ -41,6 +41,8 @@ namespace Fab.Managment.Shell
 
 		#endregion
 
+		#region Id
+
 		private Guid id;
 		public Guid Id
 		{
@@ -51,6 +53,10 @@ namespace Fab.Managment.Shell
 				NotifyOfPropertyChange(() => Id);
 			}
 		}
+
+		#endregion
+
+		#region Login
 
 		private string login;
 		public string Login
@@ -63,6 +69,10 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		#endregion
+
+		#region Registered
+
 		private DateTime registered;
 		public DateTime Registered
 		{
@@ -73,6 +83,10 @@ namespace Fab.Managment.Shell
 				NotifyOfPropertyChange(() => Registered);
 			}
 		}
+
+		#endregion
+
+		#region Last Access
 
 		private DateTime? lastAccess;
 		public DateTime? LastAccess
@@ -85,6 +99,10 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		#endregion
+
+		#region Database Size
+
 		private long? databaseSize;
 		public long? DatabaseSize
 		{
@@ -96,6 +114,27 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		public IEnumerable<IResult> Optimize()
+		{
+			yield return new SingleResult
+			             	{
+			             		Action = () =>
+			             		         	{
+			             		         		IsBusy = true;
+			             		         	}
+			             	};
+			
+			var result = new OptimizeResult{Id = Id};
+			yield return result;
+
+			DatabaseSize = result.DatabaseSize;
+			IsBusy = false;
+		}
+
+		#endregion
+
+		#region Database Path
+
 		private string databasePath;
 		public string DatabasePath
 		{
@@ -106,6 +145,10 @@ namespace Fab.Managment.Shell
 				NotifyOfPropertyChange(() => DatabasePath);
 			}
 		}
+
+		#endregion
+
+		#region Disabled Changed
 
 		private DateTime? disabledChanged;
 		
@@ -122,6 +165,10 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		#endregion
+
+		#region Email
+
 		private string email;
 		public string Email
 		{
@@ -132,6 +179,10 @@ namespace Fab.Managment.Shell
 				NotifyOfPropertyChange(() => Email);
 			}
 		}
+
+		#endregion
+
+		#region Password
 
 		private string password;
 		public string Password
@@ -144,6 +195,10 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		#endregion
+
+		#region Free Disk Space Available
+
 		private long? freeDiskSpaceAvailable;
 		public long? FreeDiskSpaceAvailable
 		{
@@ -154,6 +209,10 @@ namespace Fab.Managment.Shell
 				NotifyOfPropertyChange(() => FreeDiskSpaceAvailable);
 			}
 		}
+
+		#endregion
+
+		#region Is Disabled
 
 		private bool isDisabled;
 		public bool IsDisabled
@@ -166,6 +225,10 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		#endregion
+
+		#region Service URL
+
 		private string serviceUrl;
 		public string ServiceUrl
 		{
@@ -177,41 +240,9 @@ namespace Fab.Managment.Shell
 			}
 		}
 
-		public IEnumerable<IResult> Optimize()
-		{
-			yield return new SingleResult
-			{
-				Action = () =>
-				{
-					IsBusy = true;
-				}
-			};
-			
-			var result = new OptimizeResult{Id = Id};
-			yield return result;
+		#endregion
 
-			DatabaseSize = result.DatabaseSize;
-			IsBusy = false;
-		}
-
-		public IEnumerable<IResult> Repair()
-		{
-			yield return new SingleResult
-			{
-				Action = () =>
-				{
-					IsBusy = true;
-					RepairStatus = "Repairing...";
-				}
-			};
-
-			var result = new RepairResult { Id = Id };
-			yield return result;
-
-			DatabaseSize = result.DatabaseSize;
-			RepairStatus = "Repair DB";
-			IsBusy = false;
-		}
+		#region Repair
 
 		private string repairStatus = "Repair DB";
 		public string RepairStatus
@@ -224,16 +255,50 @@ namespace Fab.Managment.Shell
 			}
 		}
 
+		public IEnumerable<IResult> Repair()
+		{
+			yield return new SingleResult
+			             	{
+			             		Action = () =>
+			             		         	{
+			             		         		IsBusy = true;
+			             		         		RepairStatus = "Repairing...";
+			             		         	}
+			             	};
+
+			var result = new RepairResult { Id = Id };
+			yield return result;
+
+			DatabaseSize = result.DatabaseSize;
+			RepairStatus = "Repair DB";
+			IsBusy = false;
+		}
+
+		#endregion
+
+		#region Verify
+
+		private string verifyStatus = "Verify DB";
+		public string VerifyStatus
+		{
+			get { return verifyStatus; }
+			set
+			{
+				verifyStatus = value;
+				NotifyOfPropertyChange(() => VerifyStatus);
+			}
+		}
+
 		public IEnumerable<IResult> Verify()
 		{
 			yield return new SingleResult
-			{
-				Action = () =>
-				{
-					IsBusy = true;
-					VerifyStatus = "Verifing...";
-				}
-			};
+			             	{
+			             		Action = () =>
+			             		         	{
+			             		         		IsBusy = true;
+			             		         		VerifyStatus = "Verifing...";
+			             		         	}
+			             	};
 
 			var result = new VerifyDbResult { Id = Id };
 			yield return result;
@@ -246,16 +311,58 @@ namespace Fab.Managment.Shell
 			IsBusy = false;
 		}
 
-		private string verifyStatus = "Verify DB";
-		public string VerifyStatus
+		#endregion
+
+		#region Check Accounts
+
+		private string checkCacheStatus = "Check Cache";
+		public string CheckCacheStatus
 		{
-			get { return verifyStatus; }
+			get { return checkCacheStatus; }
 			set
 			{
-				verifyStatus = value;
-				NotifyOfPropertyChange(() => VerifyStatus);
+				checkCacheStatus = value;
+				NotifyOfPropertyChange(() => CheckCacheStatus);
 			}
 		}
+
+		private bool updateCache;
+		public bool UpdateCache
+		{
+			get { return updateCache; }
+			set
+			{
+				updateCache = value;
+				NotifyOfPropertyChange(() => UpdateCache);
+			}
+		}
+
+		public IEnumerable<IResult> CheckCache()
+		{
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+					CheckCacheStatus = "Checking...";
+				}
+			};
+
+			var result = new CheckAccountsCachedValuesResult
+			             	{
+			             		Id = Id,
+								UpdateCachedValues = UpdateCache
+			             	};
+			yield return result;
+
+			var a = result.Accounts;
+			CheckCacheStatus = "Check Cache";
+			IsBusy = false;
+		}
+
+		#endregion
+
+		#region Save
 
 		private string saveStatus = "Save";
 		public string SaveStatus
@@ -291,19 +398,7 @@ namespace Fab.Managment.Shell
 			IsBusy = false;
 		}
 
-		private static AdminUserDTO MapToDTO(UserViewModel userViewModel)
-		{
-			return new AdminUserDTO
-			{
-				Id = userViewModel.Id,
-				Login = userViewModel.Login,
-				Password = userViewModel.Password,
-				DatabasePath = userViewModel.DatabasePath,
-				ServiceUrl = userViewModel.ServiceUrl,
-				IsDisabled = userViewModel.IsDisabled,
-				Email = userViewModel.Email,
-			};
-		}
+		#endregion
 
 		public IEnumerable<IResult> Delete()
 		{
@@ -324,6 +419,20 @@ namespace Fab.Managment.Shell
 			}
 
 			IsBusy = false;
+		}
+
+		private static AdminUserDTO MapToDTO(UserViewModel userViewModel)
+		{
+			return new AdminUserDTO
+			       	{
+			       		Id = userViewModel.Id,
+			       		Login = userViewModel.Login,
+			       		Password = userViewModel.Password,
+			       		DatabasePath = userViewModel.DatabasePath,
+			       		ServiceUrl = userViewModel.ServiceUrl,
+			       		IsDisabled = userViewModel.IsDisabled,
+			       		Email = userViewModel.Email,
+			       	};
 		}
 	}
 }
