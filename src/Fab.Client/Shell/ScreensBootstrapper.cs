@@ -49,8 +49,8 @@ namespace Fab.Client.Shell
 		protected override object GetInstance(Type serviceType, string key)
 		{
 			var contractName = string.IsNullOrEmpty(key)
-			                   	? AttributedModelServices.GetContractName(serviceType)
-			                   	: key;
+								? AttributedModelServices.GetContractName(serviceType)
+								: key;
 
 			var exportedValues = container.GetExportedValues<object>(contractName);
 
@@ -86,6 +86,8 @@ namespace Fab.Client.Shell
 			{
 				mainWindow = Application.MainWindow;
 				mainWindow.Closing += OnMainWindowClosing;
+				Application.CheckAndDownloadUpdateCompleted += OnCheckAndDownloadUpdateCompleted;
+				Application.CheckAndDownloadUpdateAsync();
 			}
 			else
 			{
@@ -124,20 +126,20 @@ namespace Fab.Client.Shell
 			e.Cancel = true;
 
 			Execute.OnUIThread(() =>
-			                   	{
-			                   		var shell = IoC.Get<IShell>();
+								{
+									var shell = IoC.Get<IShell>();
 
-			                   		shell.CanClose(result =>
-			                   		               	{
-			                   		               		if (result)
-			                   		               		{
-			                   		               			actuallyClosing = true;
+									shell.CanClose(result =>
+													{
+														if (result)
+														{
+															actuallyClosing = true;
 
 															//NOTE: to manually close application the elevated permissions required.
 															if (Application.HasElevatedPermissions)
-			                   		               			{
-			                   		               				mainWindow.Close();
-			                   		               			}
+															{
+																mainWindow.Close();
+															}
 															else
 															{
 																shell.Dialogs.ShowMessageBox(
@@ -145,9 +147,30 @@ namespace Fab.Client.Shell
 																	"Notification");
 																e.Cancel = false;
 															}
-			                   		               		}
-			                   		               	});
-			                   	});
+														}
+													});
+								});
+		}
+
+		private void OnCheckAndDownloadUpdateCompleted(object sender, CheckAndDownloadUpdateCompletedEventArgs args)
+		{
+			var shell = IoC.Get<IShell>();
+
+			// http://nerddawg.blogspot.com/2009/07/silverlight-out-of-browser-apps-how.html
+			if (args.UpdateAvailable)
+			{
+				shell.Dialogs.ShowMessageBox("The application has been updated! Please close and reopen it to load the new version.",
+											 "Notification");
+				//MessageBox.Show("Application updated, please restart to apply changes.");
+			}
+			else if (args.Error != null && args.Error is PlatformNotSupportedException)
+			{
+				shell.Dialogs.ShowMessageBox(
+					"An application update is available, but it requires a new version of Silverlight. Please contact tech support for further instructions.");
+			}
+
+
+			//else - there is no update available.
 		}
 	}
 }
