@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Common.Logging;
@@ -205,7 +206,7 @@ namespace Fab.Server.Core.Services
 						  .ToList();
 			}
 
-			var cachedDriveInfo = new Dictionary<string, DriveInfo>();
+			var drivesCache = new Dictionary<string, bool>();
 
 			foreach (var adminUser in records)
 			{
@@ -217,42 +218,31 @@ namespace Fab.Server.Core.Services
 					adminUser.DatabaseSize = file.Length;
 
 					// C:\ or D:\ etc.
-					var root = Path.GetPathRoot(file.FullName);
+					var driveName = Path.GetPathRoot(file.FullName);
 
-					// Cache drive info
-					if (!string.IsNullOrEmpty(root) && !cachedDriveInfo.ContainsKey(root))
+					if (!string.IsNullOrEmpty(driveName))
 					{
-						cachedDriveInfo[root] = new DriveInfo(root);
-					}
-
-					if (!string.IsNullOrEmpty(root))
-					{
-						long? freeSpace = null;
-
-						try
-						{
-							// Free space available for IIS AppPool user account
-							freeSpace = cachedDriveInfo[root].AvailableFreeSpace;
-						}
-						catch (UnauthorizedAccessException)
-						{
-							LogManager.GetCurrentClassLogger().Error("DriveInfo.AvailableFreeSpace is denied");
-						}
-
-						if (!freeSpace.HasValue)
+						if (!drivesCache.ContainsKey(driveName))
 						{
 							try
 							{
-								// Free space on entire disk
-								freeSpace = cachedDriveInfo[root].TotalFreeSpace;
+								// Check drive free space info availability
+								long availableFreeSpace = new DriveInfo(driveName).AvailableFreeSpace;
+								drivesCache[driveName] = true;
 							}
 							catch (UnauthorizedAccessException)
 							{
-								LogManager.GetCurrentClassLogger().Error("DriveInfo.TotalFreeSpace is denied");
+								LogManager.GetCurrentClassLogger().Error("DriveInfo.AvailableFreeSpace for " + driveName + " is denied.");
+								drivesCache[driveName] = false;
 							}
 						}
 
-						adminUser.FreeDiskSpaceAvailable = freeSpace;
+						if (drivesCache[driveName])
+						{
+							// Free space available for IIS AppPool user account, not the entire disk
+							long freeSpace = new DriveInfo(driveName).AvailableFreeSpace;
+							adminUser.FreeDiskSpaceAvailable = freeSpace;
+						}
 					}
 				}
 			}
