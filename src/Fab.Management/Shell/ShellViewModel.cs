@@ -43,7 +43,6 @@ namespace Fab.Managment.Shell
 		public string Username
 		{
 			get { return username; }
-
 			set
 			{
 				if (username != value)
@@ -58,11 +57,10 @@ namespace Fab.Managment.Shell
 		public string Password
 		{
 			get { return password; }
-
 			set
 			{
 				password = value;
-				Helpers.Password = username;
+				Helpers.Password = password;
 				NotifyOfPropertyChange(() => Password);
 			}
 		}
