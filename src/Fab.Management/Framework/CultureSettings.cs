@@ -4,7 +4,6 @@
 // </copyright>
 //------------------------------------------------------------
 
-
 using System.Threading;
 using System.Windows.Markup;
 

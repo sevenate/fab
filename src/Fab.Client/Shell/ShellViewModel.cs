@@ -234,7 +234,6 @@ namespace Fab.Client.Shell
 			errorDialog.DisplayName = "Application Error";
 
 			//TODO: show desktop "toast" notification here (if possible)
-			//TODO: use TextBox for application error with stack track information
 			Dialogs.ShowDialog(errorDialog);
 		}
 

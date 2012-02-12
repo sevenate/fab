@@ -1,13 +1,16 @@
 //------------------------------------------------------------
-// <copyright file="CustomUserNameValidator.cs" company="nReez">
+// <copyright file="ManagmentServiceValidator.cs" company="nReez">
 // 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
 
+using System;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
+using System.ServiceModel;
 using System.Web.Security;
 using Common.Logging;
+using Fab.Server.Core.DTO;
 
 namespace Fab.Server.Core
 {
@@ -18,18 +21,46 @@ namespace Fab.Server.Core
 	{
 		public override void Validate(string userName, string password)
 		{
-			if (!FormsAuthentication.Authenticate(userName, password))
+			if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+			{
+				throw new SecurityTokenException("Username and password should not be empty.");
+			}
+
+			bool isAuthenticated;
+
+			try
+			{
+				isAuthenticated = FormsAuthentication.Authenticate(userName, password);
+			}
+			catch (Exception e)
+			{
+				var log = LogManager.GetCurrentClassLogger();
+				log.Fatal("Unhandled exception: " + e);
+				throw new SecurityTokenException("Unable to authenticate by the reason of service internal error.");
+			}
+
+			if (!isAuthenticated)
 			{
 				// User name or password is incorrect.
 				var log = LogManager.GetCurrentClassLogger();
-				log.Warn("Managment authentication failed. Attempt to use username: " + userName);
+				log.Warn("Management authentication failed. Attempt to use username: " + userName);
 
-				throw new SecurityTokenException("Validation failed.");
+//				throw new SecurityTokenException("Validation failed.");
 
 				// To provide detailed information about failed validation use FaultException
-				// Note: this is NOT recommendted for production by security reason
+				// Note: this is NOT recommended for production by security reason
 
-				//throw new FaultException("Validation failed.");
+				var faultDetail = new FaultDetail
+				{
+					ErrorCode = "AUTH-1",
+					ErrorMessage = "Authentication failed.",
+					Description = "Username or password is incorrect."
+				};
+
+				throw new FaultException<FaultDetail>(
+					faultDetail,
+					new FaultReason(faultDetail.Description),
+					new FaultCode("Receiver"));
 			}
 		}
 	}

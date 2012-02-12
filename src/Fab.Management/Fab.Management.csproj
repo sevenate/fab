@@ -52,6 +52,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -62,6 +63,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\Fab.Client\Framework\Behaviors\DefaultButtonBehavior.cs">
+      <Link>Behaviors\DefaultButtonBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\Fab.Client\Framework\Behaviors\FocusBehavior.cs">
+      <Link>Behaviors\FocusBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\Fab.Client\Framework\Behaviors\SelectTextOnFocusBehavior.cs">
+      <Link>Behaviors\SelectTextOnFocusBehavior.cs</Link>
+    </Compile>
     <Compile Include="..\Fab.Client\Framework\Converters\BalanceToColorConverter.cs">
       <Link>Converters\BalanceToColorConverter.cs</Link>
     </Compile>
@@ -80,6 +90,9 @@
     <Compile Include="..\Fab.Client\Framework\Filters\IFilter.cs">
       <Link>Framework\Filters\IFilter.cs</Link>
     </Compile>
+    <Compile Include="..\Fab.Client\Shell\ApplicationErrorMessage.cs">
+      <Link>Shell\Messages\ApplicationErrorMessage.cs</Link>
+    </Compile>
     <Compile Include="Converters\NullableSizeToStringConverter.cs" />
     <Compile Include="Converters\DatabaseSizeToPercentConverter.cs" />
     <Compile Include="Converters\DateTimeToSmartTimeSpanConverter.cs" />
@@ -93,9 +106,11 @@
       <DependentUpon>AccountMaintenanceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\AppBootstrapper.cs" />
+    <Compile Include="Shell\ErrorDialogViewModel.cs" />
     <Compile Include="Shell\IShell.cs" />
     <Compile Include="Shell\Messages\UserDeletedMessage.cs" />
     <Compile Include="Shell\Results\CheckAccountsCachedValuesResult.cs" />
+    <Compile Include="Framework\Results\ResultBase.cs" />
     <Compile Include="Shell\Results\SaveResult.cs" />
     <Compile Include="Shell\Results\VerifyDbResult.cs" />
     <Compile Include="Shell\Results\RepairResult.cs" />
@@ -111,6 +126,10 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Page Include="Shell\AccountMaintenanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell\ErrorDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

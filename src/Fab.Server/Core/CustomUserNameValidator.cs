@@ -29,7 +29,7 @@ namespace Fab.Server.Core
 		{
 			if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
 			{
-				throw new SecurityTokenException("Username and password should not be empty");
+				throw new SecurityTokenException("Username and password should not be empty.");
 			}
 			
 			var client = new UserService();
@@ -43,8 +43,8 @@ namespace Fab.Server.Core
 			catch (Exception e)
 			{
 				var log = LogManager.GetCurrentClassLogger();
-				log.Fatal("Unhandled exception:", e);
-				throw;
+				log.Fatal("Unhandled exception: ", e);
+				throw new SecurityTokenException("Unable to authenticate by the reason of service internal error.");
 			}
 
 			if (!isAuthenticated)
