@@ -227,8 +227,32 @@ namespace Fab.Server.Core.Services
 
 					if (!string.IsNullOrEmpty(root))
 					{
-						// Free space available for IIS AppPool user account, not the entire free space on disk!
-						adminUser.FreeDiskSpaceAvailable = cachedDriveInfo[root].AvailableFreeSpace;
+						long? freeSpace = null;
+
+						try
+						{
+							// Free space available for IIS AppPool user account
+							freeSpace = cachedDriveInfo[root].AvailableFreeSpace;
+						}
+						catch (UnauthorizedAccessException)
+						{
+							LogManager.GetCurrentClassLogger().Error("DriveInfo.AvailableFreeSpace is denied");
+						}
+
+						if (!freeSpace.HasValue)
+						{
+							try
+							{
+								// Free space on entire disk
+								freeSpace = cachedDriveInfo[root].TotalFreeSpace;
+							}
+							catch (UnauthorizedAccessException)
+							{
+								LogManager.GetCurrentClassLogger().Error("DriveInfo.TotalFreeSpace is denied");
+							}
+						}
+
+						adminUser.FreeDiskSpaceAvailable = freeSpace;
 					}
 				}
 			}
