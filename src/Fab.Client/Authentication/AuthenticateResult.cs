@@ -44,16 +44,19 @@ namespace Fab.Client.Authentication
 			                            	{
 												if (args.Error != null)
 												{
-													if (args.Error.InnerException is FaultException)
+													if (args.Error is TimeoutException)
 													{
-														Status = args.Error.InnerException.Message;
-														Caliburn.Micro.Execute.OnUIThread(
-															() => Completed(this, new ResultCompletionEventArgs()));
+														Status = "Service is not responding. Please try again later.";
+														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 													}
+//													if (args.Error.InnerException is FaultException)
+//													{
+//														Status = args.Error.InnerException.Message;
+//														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
+//													}
 													else
 													{
-														Caliburn.Micro.Execute.OnUIThread(
-															() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
+														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
 													}
 												}
 												else
