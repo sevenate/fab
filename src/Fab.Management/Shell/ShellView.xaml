@@ -4,7 +4,8 @@
 										 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 										 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 										 xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
-										 Title="FAB Management Tool"
+                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                     xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 										 mc:Ignorable="d"
 										 d:DesignHeight="300"
 										 Language="{Binding Language, Source={StaticResource cultureSettings}}">
@@ -42,10 +43,21 @@
 							<ColumnDefinition />
 						</Grid.ColumnDefinitions>
 						<TextBox x:Name="Username"
-										 ToolTip="User name" />
+										 ToolTip="User name">
+							<i:Interaction.Behaviors>
+								<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Load}" />
+								<Behaviors:FocusBehavior HasInitialFocus="True" />
+								<Behaviors:SelectTextOnFocusBehavior />
+							</i:Interaction.Behaviors>
+						</TextBox>
 						<TextBox x:Name="Password"
 										 Grid.Column="1"
-										 ToolTip="Password" />
+										 ToolTip="Password">
+							<i:Interaction.Behaviors>
+								<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Load}" />
+								<Behaviors:SelectTextOnFocusBehavior />
+							</i:Interaction.Behaviors>
+						</TextBox>
 					</Grid>
 				</ribbon:RibbonGroup>
 				<ribbon:RibbonGroup Header="Settings">
@@ -113,7 +125,12 @@
 						<TextBox x:Name="SearchText"
 										 ToolTip="Contains Text"
 										 Grid.Row="2"
-										 Grid.ColumnSpan="2" />
+										 Grid.ColumnSpan="2">
+							<i:Interaction.Behaviors>
+								<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Load}" />
+								<Behaviors:SelectTextOnFocusBehavior />
+							</i:Interaction.Behaviors>
+						</TextBox>
 					</Grid>
 				</ribbon:RibbonGroup>
 				<ribbon:RibbonGroup IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}">
@@ -232,5 +249,9 @@
 								 VerticalAlignment="Center"
 								 FontSize="16" />
 		</Grid>
+		<ContentControl x:Name="ActiveItem"
+										Grid.RowSpan="3"
+										VerticalContentAlignment="Stretch"
+										HorizontalContentAlignment="Stretch" />
 	</Grid>
 </ribbon:RibbonWindow>

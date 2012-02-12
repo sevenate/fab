@@ -8,10 +8,11 @@ using System;
 using Caliburn.Micro;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;
+using Fab.Managment.Framework.Results;
 
 namespace Fab.Managment.Shell.Results
 {
-	public class CountUsersResult : IResult
+	public class CountUsersResult : ResultBase, IResult
 	{
 		public QueryFilter Filer { get; set; }
 		public int Count { get; private set; }
@@ -33,7 +34,7 @@ namespace Fab.Managment.Shell.Results
 																				() =>
 																				{
 																					Completed(this, new ResultCompletionEventArgs());
-																					Helpers.ErrorProcessing(args);
+																					SendErrorMessage(args.Error);
 																				});
 																		}
 																		else

@@ -8,10 +8,11 @@ using System;
 using Caliburn.Micro;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;
+using Fab.Managment.Framework.Results;
 
 namespace Fab.Managment.Shell.Results
 {
-	public class CheckAccountsCachedValuesResult : IResult
+	public class CheckAccountsCachedValuesResult : ResultBase, IResult
 	{
 		public Guid Id { get; set; }
 		public bool UpdateCachedValues { get; set; }
@@ -34,7 +35,7 @@ namespace Fab.Managment.Shell.Results
 			                                                    				() =>
 			                                                    					{
 																						Completed(this, new ResultCompletionEventArgs());
-																						Helpers.ErrorProcessing(args);
+			                                                    						SendErrorMessage(args.Error);
 			                                                    					});
 			                                                    		}
 			                                                    		else

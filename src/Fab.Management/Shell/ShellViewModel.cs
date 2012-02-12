@@ -12,6 +12,7 @@ using System.Web.Configuration;
 using System.Web.Security;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Shell;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;
 using Fab.Managment.Framework.Results;
@@ -21,7 +22,7 @@ using Fab.Managment.Shell.Results;
 namespace Fab.Managment.Shell
 {
 	[Export(typeof(IShell))]
-	public class ShellViewModel : Screen, IShell
+	public class ShellViewModel : Conductor<IScreen>, IShell
 	{
 		#region Autorization
 
@@ -429,6 +430,22 @@ namespace Fab.Managment.Shell
 
 		#endregion
 
+		#region Error Handling
+
+		private ErrorDialogViewModel modalDialog;
+		public ErrorDialogViewModel ModalDialog
+		{
+			get { return modalDialog; }
+
+			set
+			{
+				modalDialog = value;
+				NotifyOfPropertyChange(() => ModalDialog);
+			}
+		}
+
+		#endregion
+
 		#region Implementation of ICanBeBusy
 
 		/// <summary>
@@ -462,6 +479,22 @@ namespace Fab.Managment.Shell
 			Users.Remove(message.User);
 			TotalUsers--;
 			TotalUsedSpace = Users.Sum(model => model.DatabaseSize ?? 0);
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<ApplicationErrorMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(ApplicationErrorMessage message)
+		{
+			var errorDialog = IoC.Get<ErrorDialogViewModel>();
+			errorDialog.DisplayName = "Application Error";
+			errorDialog.Error = message.Error.ToString();
+			ActivateItem(errorDialog);
 		}
 
 		#endregion

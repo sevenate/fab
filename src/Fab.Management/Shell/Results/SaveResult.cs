@@ -8,10 +8,11 @@ using System;
 using Caliburn.Micro;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;
+using Fab.Managment.Framework.Results;
 
 namespace Fab.Managment.Shell.Results
 {
-	public class SaveResult : IResult
+	public class SaveResult : ResultBase, IResult
 	{
 		public AdminUserDTO User { get; set; }
 		public DateTime? LastUpdated { get; private set; }
@@ -33,7 +34,7 @@ namespace Fab.Managment.Shell.Results
 																				() =>
 																				{
 																					Completed(this, new ResultCompletionEventArgs());
-																					Helpers.ErrorProcessing(args);
+																					SendErrorMessage(args.Error);
 																				});
 																		}
 																		else

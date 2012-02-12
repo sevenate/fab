@@ -1,6 +1,10 @@
-using System.ComponentModel;
+//------------------------------------------------------------
+// <copyright file="Helpers.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
+// </copyright>
+//------------------------------------------------------------
+
 using System.ServiceModel;
-using System.Windows;
 using Fab.Managment.AdminServiceReference;
 
 namespace Fab.Managment.Framework
@@ -40,48 +44,6 @@ namespace Fab.Managment.Framework
 			proxy.ClientCredentials.UserName.Password = password ?? Password;
 
 			return proxy;
-		}
-
-		/// <summary>
-		/// Display error message.
-		/// </summary>
-		/// <param name="args">Async WCF service call result data.</param>
-		public static void ErrorProcessing(AsyncCompletedEventArgs args)
-		{
-			if (args.Error is FaultException<FaultDetail>)
-			{
-				var ex = args.Error as FaultException<FaultDetail>;
-
-				MessageBox.Show(ex.Detail.Description, "FaultException<FaultDetail> " + ex.Detail.ErrorCode + ": " + ex.Detail.ErrorMessage, MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-			else if (args.Error is FaultException)
-			{
-				var ex = args.Error as FaultException;
-				var reason = ex.Reason.GetMatchingTranslation() ?? ex.Reason.Translations[0];
-
-				MessageBox.Show(ex.Message, "FaultException " + reason.Text, MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-			else
-			{
-				if (args.Error.InnerException != null)
-				{
-					var ex = args.Error.InnerException as FaultException;
-					
-					if (ex != null)
-					{
-						var reason = ex.Reason.GetMatchingTranslation() ?? ex.Reason.Translations[0];
-						MessageBox.Show("Message: " + ex.Message + "\nReason: " + reason.Text, "FaultException", MessageBoxButton.OK, MessageBoxImage.Error);
-					}
-					else
-					{
-						MessageBox.Show(args.Error.InnerException.ToString(), "InnerException", MessageBoxButton.OK, MessageBoxImage.Error);
-					}
-				}
-				else
-				{
-					MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				}
-			}
 		}
 	}
 }

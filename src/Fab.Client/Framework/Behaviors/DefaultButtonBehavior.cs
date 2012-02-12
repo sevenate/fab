@@ -12,7 +12,6 @@ using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using Fab.Client.Framework.Controls;
 
 namespace Fab.Client.Framework.Behaviors
 {
@@ -77,7 +76,7 @@ namespace Fab.Client.Framework.Behaviors
 		/// <summary>
 		/// The <see cref="UIElement.KeyUp"/> handler.
 		/// </summary>
-		/// <param name="sender">The <see cref="UIElement"/> itself. Most likely it will be <see cref="WatermarkedTextbox"/>.</param>
+		/// <param name="sender">The <see cref="UIElement"/> itself. Most likely it will be <see cref="TextBox"/>.</param>
 		/// <param name="args">"Key" event data.</param>
 		private void OnKeyUp(object sender, KeyEventArgs args)
 		{
@@ -88,7 +87,6 @@ namespace Fab.Client.Framework.Behaviors
 			}
 
 			UpdateBinding<TextBox>(sender, TextBox.TextProperty);
-			UpdateBinding<WatermarkedTextbox>(sender, WatermarkedTextbox.TextProperty);
 
 			// "click" on associated button
 			if (DefaultButton == null)

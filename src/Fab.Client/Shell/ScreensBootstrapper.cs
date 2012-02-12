@@ -1,4 +1,10 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// <copyright file="ScreensBootstrapper.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
+// </copyright>
+//------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
