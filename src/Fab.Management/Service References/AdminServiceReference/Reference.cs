@@ -454,6 +454,9 @@ namespace Fab.Managment.AdminServiceReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private decimal ActualPostingsCountField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AssetNameField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public decimal ActualBalance {
             get {
@@ -502,6 +505,19 @@ namespace Fab.Managment.AdminServiceReference {
                 if ((this.ActualPostingsCountField.Equals(value) != true)) {
                     this.ActualPostingsCountField = value;
                     this.RaisePropertyChanged("ActualPostingsCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AssetName {
+            get {
+                return this.AssetNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssetNameField, value) != true)) {
+                    this.AssetNameField = value;
+                    this.RaisePropertyChanged("AssetName");
                 }
             }
         }
@@ -671,8 +687,8 @@ namespace Fab.Managment.AdminServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetUsersCount", ReplyAction="http://tempuri.org/IAdminService/GetUsersCountResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/GetUsersCountFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.TextSearchFilter))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO))]
@@ -689,8 +705,8 @@ namespace Fab.Managment.AdminServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetUsers", ReplyAction="http://tempuri.org/IAdminService/GetUsersResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail), Action="http://tempuri.org/IAdminService/GetUsersFaultDetailFault", Name="FaultDetail", Namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.TextSearchFilter))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.QueryFilter))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.FaultDetail))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fab.Managment.AdminServiceReference.AdminUserDTO))]

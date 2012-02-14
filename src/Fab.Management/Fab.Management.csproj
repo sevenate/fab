@@ -96,7 +96,6 @@
     <Compile Include="Converters\NullableSizeToStringConverter.cs" />
     <Compile Include="Converters\DatabaseSizeToPercentConverter.cs" />
     <Compile Include="Converters\DateTimeToSmartTimeSpanConverter.cs" />
-    <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Framework\Helpers.cs" />
     <Compile Include="Framework\Results\SingleResult.cs" />

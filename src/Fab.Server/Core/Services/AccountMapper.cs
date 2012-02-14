@@ -1,5 +1,6 @@
 ﻿using System;
 using EmitMapper.MappingConfiguration;
+using Fab.Core;
 using Fab.Server.Core.DTO;
 
 namespace Fab.Server.Core.Services
@@ -19,20 +20,20 @@ namespace Fab.Server.Core.Services
 				return new DefaultMapConfig()
 					.MatchMembers((m1, m2) => m1 == m2 || m1 + "Id" == m2)
 					.ConvertUsing<AssetType, int>(type => type.Id)
-					.ConvertUsing<DateTime, DateTime>(type => DateTime.SpecifyKind(type, DateTimeKind.Utc));
+					.ConvertUsing<DateTime, DateTime>(type => type.IsUtc());
 //						.ConvertUsing<DateTime?, DateTime?>(type => type.HasValue
-//						                                            	? DateTime.SpecifyKind(type.Value, DateTimeKind.Utc)
+//						                                            	? type.Value.IsUtc()
 //						                                            	: (DateTime?) null)
 //						.PostProcess<AccountDTO>((value, state) =>
 //						                         {
 //													 if (value.FirstPostingDate.HasValue)
 //													 {
-//														 value.FirstPostingDate = DateTime.SpecifyKind(value.FirstPostingDate.Value, DateTimeKind.Utc);
+//														 value.FirstPostingDate = value.FirstPostingDate.Value.IsUtc();
 //													 }
 //
 //													 if (value.LastPostingDate.HasValue)
 //													 {
-//														 value.LastPostingDate = DateTime.SpecifyKind(value.LastPostingDate.Value, DateTimeKind.Utc);
+//														 value.LastPostingDate = value.LastPostingDate.Value.IsUtc();
 //													 }
 //
 //						                         	return value;
@@ -49,12 +50,12 @@ namespace Fab.Server.Core.Services
 		{
 			if (account.FirstPostingDate.HasValue)
 			{
-				account.FirstPostingDate = DateTime.SpecifyKind(account.FirstPostingDate.Value, DateTimeKind.Utc);
+				account.FirstPostingDate = account.FirstPostingDate.Value.IsUtc();
 			}
 
 			if (account.LastPostingDate.HasValue)
 			{
-				account.LastPostingDate = DateTime.SpecifyKind(account.LastPostingDate.Value, DateTimeKind.Utc);
+				account.LastPostingDate = account.LastPostingDate.Value.IsUtc();
 			}
 
 			return account;

@@ -3,12 +3,11 @@
 						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-						 xmlns:Converters="clr-namespace:Fab.Managment.Converters"
 						 xmlns:cal="http://www.caliburnproject.org"
 						 xmlns:Shell="clr-namespace:Fab.Managment.Shell"
-             cal:Bind.Model="{Binding}"
+						 cal:Bind.Model="{Binding}"
 						 mc:Ignorable="d"
-						 d:DesignWidth="350">
+						 d:DesignWidth="745">
 	<UserControl.Resources>
 		<Style TargetType="Label">
 			<Setter Property="FontWeight"
@@ -34,18 +33,18 @@
 		</Style>
 		<Style TargetType="Button">
 			<Setter Property="Margin"
-							Value="3" />
+							Value="2" />
 			<Setter Property="Padding"
-							Value="5" />
+							Value="3" />
 			<Setter Property="FontSize"
 							Value="16" />
 			<Setter Property="VerticalAlignment"
 							Value="Center" />
-			<Setter Property="MinHeight"
-							Value="36" />
+			<Setter Property="MinWidth"
+							Value="130" />
 		</Style>
 	</UserControl.Resources>
-	<Grid Height="296">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
@@ -54,10 +53,6 @@
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition />
 			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		<StackPanel>
 			<Label Content="New Password" />
@@ -65,7 +60,6 @@
 			<Label Content="Service" />
 			<Label Content="Email" />
 			<Label Content="Is Disabled" />
-			<Label Content="Last Update" />
 		</StackPanel>
 		<StackPanel Grid.Column="1">
 			<TextBox Text="{Binding Password, Mode=TwoWay}"
@@ -81,16 +75,27 @@
 							 Text="{Binding Email, Mode=TwoWay}"
 							 MaxLines="1"
 							 MaxLength="50" />
-			<CheckBox IsChecked="{Binding IsDisabled, Mode=TwoWay}"
-								Margin="3,4,3,3"
-								Content="Yes" />
-			<TextBox Style="{DynamicResource ReadOnly}"
-							 Height="{Binding ElementName=Email, Path=ActualHeight}"
-							 Margin="3,0"
-							 VerticalAlignment="Center"
-							 VerticalContentAlignment="Center"
-							 Text="{Binding DisabledChanged, Converter={x:Static Converters:DateTimeToStringConverter.Inst}, StringFormat={}{0:F}}"
-							 MaxLines="1" />
+			<DockPanel Margin="2">
+				<CheckBox IsChecked="{Binding IsDisabled, Mode=TwoWay}"
+									Margin="3,4,3,3"
+									Content="Yes" />
+				<Label Content="Last Updated"
+							 VerticalAlignment="Top"/>
+				<Button x:Name="UpdateCache"
+								DockPanel.Dock="Right"
+								Content="{Binding UpdateCacheStatus, FallbackValue='Update Cache'}"
+								ToolTip="Update account's cached values"
+								IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
+				<Button x:Name="CheckCache"
+								DockPanel.Dock="Right"
+								Content="{Binding CheckCacheStatus, FallbackValue='Check Cache'}"
+								ToolTip="Check account's cached values"
+								IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
+				<TextBox Style="{DynamicResource ReadOnly}"
+								 VerticalAlignment="Top"
+								 Margin="0,5"
+								 Text="{Binding DisabledChanged, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F, FallbackValue=DisabledChanged}"
+								 MaxLines="1" />			</DockPanel>
 		</StackPanel>
 		<StackPanel Grid.Column="2"
 								Margin="2,0">
@@ -102,22 +107,6 @@
 							Content="{Binding RepairStatus, FallbackValue=Repair}"
 							ToolTip="Repair database"
 							IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<Button x:Name="CheckCache"
-								Content="{Binding CheckCacheStatus, FallbackValue='Check Cache'}"
-								ToolTip="Check accounts cached values"
-								IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}" />
-				<CheckBox Grid.Column="1"
-									x:Name="UpdateCache"
-									Content="Update"
-									FontWeight="10"
-									HorizontalAlignment="Center"
-									VerticalAlignment="Center" />
-			</Grid>
 			<Button x:Name="Save"
 							Content="{Binding SaveStatus, FallbackValue=Save}"
 							ToolTip="Save updated user data"
@@ -139,16 +128,16 @@
 									Data="F1 M 2.28484e-007,1.33331L 1.33333,0L 4.00001,2.66669L 6.66667,6.10352e-005L 8,1.33331L 5.33334,4L 8,6.66669L 6.66667,8L 4,5.33331L 1.33333,8L 1.086e-007,6.66669L 2.66667,4L 2.28484e-007,1.33331 Z "
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
-									Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualHeight}"/>
+									Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualHeight}" />
 						<TextBlock Text="Delete"
 											 VerticalAlignment="Center"
-											 Margin="5,0,0,0"/>
+											 Margin="5,0,0,0" />
 					</StackPanel>
 				</Button.Content>
 			</Button>
 		</StackPanel>
 		<Shell:AccountMaintenanceView Grid.Row="1"
-																	Grid.ColumnSpan="7"
-																	MaxHeight="300" />
+																	Grid.ColumnSpan="3"
+																	Margin="0,0,3,0"/>
 	</Grid>
 </UserControl>

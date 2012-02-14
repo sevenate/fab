@@ -8,7 +8,9 @@
                      xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 										 mc:Ignorable="d"
 										 d:DesignHeight="300"
-										 Language="{Binding Language, Source={StaticResource cultureSettings}}">
+										 Language="{Binding Language, Source={StaticResource cultureSettings}}"
+					 MinWidth="1000"
+					 MinHeight="580">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />

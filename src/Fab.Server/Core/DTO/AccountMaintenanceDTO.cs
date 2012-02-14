@@ -38,5 +38,11 @@ namespace Fab.Server.Core.DTO
 		/// </summary>
 		[DataMember]
 		public DateTime? ActualLastPostingDate { get; set; }
+
+		/// <summary>
+		/// Gets or sets account's asset name.
+		/// </summary>
+		[DataMember]
+		public string AssetName { get; set; }
 	}
 }

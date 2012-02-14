@@ -163,6 +163,7 @@
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
     <Compile Include="Framework\Converters\DebugConverter.cs" />
     <Compile Include="Framework\Extensions\ColorFromString.cs" />
+    <Compile Include="Framework\Extensions\FrameworkElementExtensions.cs" />
     <Compile Include="Framework\Results\Animation.cs" />
     <Compile Include="Framework\Results\AnimationResult.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountDeletedMessage.cs" />
