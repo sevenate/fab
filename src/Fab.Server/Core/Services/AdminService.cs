@@ -64,7 +64,7 @@ namespace Fab.Server.Core.Services
 		public int GetUsersCount(IQueryFilter queryFilter)
 		{
 			LogManager.GetCurrentClassLogger().LogClientIP("GetUsersCount");
-			
+
 			if (queryFilter == null)
 			{
 				throw new ArgumentNullException("queryFilter");
@@ -98,14 +98,14 @@ namespace Fab.Server.Core.Services
 				{
 					query = from user in query
 							where user.LastAccess >= queryFilter.NotOlderThen.Value
-					        select user;
+							select user;
 				}
 
 				if (queryFilter.Upto.HasValue)
 				{
 					query = from user in query
 							where user.LastAccess < queryFilter.Upto.Value
-					        select user;
+							select user;
 				}
 
 				query = query.OrderBy(user => user.Registered);
@@ -203,6 +203,13 @@ namespace Fab.Server.Core.Services
 				var userMaper = ObjectMapperManager.DefaultInstance.GetMapper<User, AdminUserDTO>();
 
 				records = res.Select(userMaper.Map)
+							 .Select(dto =>
+							 {
+								 // Do not return password hash to client
+								 // by security considerations
+								 dto.Password = null;
+								 return dto;
+							 })
 						  .ToList();
 			}
 
@@ -276,12 +283,12 @@ namespace Fab.Server.Core.Services
 
 				var absolutePath = DatabaseManager.ResolveDataDirectory(user.DatabasePath);
 				var userFolder = new FileInfo(absolutePath).Directory;
-				
+
 				if (userFolder != null)
 				{
 					var deletedFolderName = "DELETED_" + userFolder.Name;
 					var parentUserFolder = userFolder.Parent;
-					
+
 					if (parentUserFolder != null)
 					{
 						var targetFolder = new DirectoryInfo(Path.Combine(parentUserFolder.FullName, deletedFolderName));
@@ -465,7 +472,7 @@ namespace Fab.Server.Core.Services
 		public IList<AccountMaintenanceDTO> UpdateCachedValuesForUserAccounts(Guid userId, bool checkOnly)
 		{
 			LogManager.GetCurrentClassLogger().LogClientIP("UpdateCachedValues");
-			
+
 			if (userId == Guid.Empty)
 			{
 				throw new ArgumentException("userId");
@@ -491,7 +498,7 @@ namespace Fab.Server.Core.Services
 					{
 						var actualBalance = mc.Postings.Where(posting => posting.Account.Id == account.Id)
 												  .Sum(p => p.Amount);
-						
+
 						maintenanceDto.ActualBalance = actualBalance;
 
 						if (!checkOnly)
@@ -549,7 +556,7 @@ namespace Fab.Server.Core.Services
 					mc.SaveChanges();
 				}
 			}
-		
+
 			return result;
 		}
 

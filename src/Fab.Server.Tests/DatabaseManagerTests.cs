@@ -55,12 +55,12 @@ namespace Fab.Server.Tests
 // ReSharper restore InconsistentNaming
 		{
 			var expectedConnectoinString =
-				string.Format(@"metadata=res://*/Core.Master.csdl|res://*/Core.Master.ssdl|res://*/Core.Master.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=""Data Source='{0}\master.sdf'; Password='{1}'""", DefaultFolder.ToLower(), Password);
+				string.Format(@"metadata=res://*/Core.Master.csdl|res://*/Core.Master.ssdl|res://*/Core.Master.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=""Data Source='{0}\master.sdf'; Password='{1}'; max database size=4091""", DefaultFolder.ToLower(), Password);
 
 			var manager = new DatabaseManager();
 			var connectionString = manager.GetMasterConnection(DefaultFolder, Password);
 
-			Assert.True(connectionString == expectedConnectoinString);
+			Assert.Equal(expectedConnectoinString, connectionString);
 		}
 
 		/// <summary>
@@ -73,7 +73,7 @@ namespace Fab.Server.Tests
 		{
 			var userGuid = userId.ToString();
 			var expectedConnectoinString =
-				string.Format(@"metadata=res://*/Core.Model.csdl|res://*/Core.Model.ssdl|res://*/Core.Model.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=""Data Source='{0}\2011\09\05\{1}\{1}.sdf'; Password='{2}'""", DefaultFolder.ToLower(), userGuid.ToLower(), Password);
+				string.Format(@"metadata=res://*/Core.Model.csdl|res://*/Core.Model.ssdl|res://*/Core.Model.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=""Data Source='{0}\2011\09\05\{1}\{1}.sdf'; Password='{2}'; max database size=4091""", DefaultFolder.ToLower(), userGuid.ToLower(), Password);
 
 			var manager = new DatabaseManager();
 			var databasePath = manager.CreatePersonalDatabase(userId, registrationDate, DefaultFolder, Password);
