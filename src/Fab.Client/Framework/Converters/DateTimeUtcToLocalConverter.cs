@@ -1,15 +1,8 @@
-// <copyright file="DateTimeUtcToLocalConverter.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="DateTimeUtcToLocalConverter.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-06-05</date>
-// </author>
-// <editor name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-06-05</date>
-// </editor>
-// <summary>Convert <see cref="DateTime"/> from UTC to local and vise versa.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Globalization;

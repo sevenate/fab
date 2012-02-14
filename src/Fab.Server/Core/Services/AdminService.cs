@@ -6,11 +6,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Common.Logging;
 using EmitMapper;
+using Fab.Core;
 using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
 using Fab.Server.Core.Filters;
@@ -227,8 +227,10 @@ namespace Fab.Server.Core.Services
 							try
 							{
 								// Check drive free space info availability
-								long availableFreeSpace = new DriveInfo(driveName).AvailableFreeSpace;
-								drivesCache[driveName] = true;
+								if (new DriveInfo(driveName).AvailableFreeSpace > 0)
+								{
+									drivesCache[driveName] = true;
+								}
 							}
 							catch (UnauthorizedAccessException)
 							{
@@ -482,6 +484,7 @@ namespace Fab.Server.Core.Services
 				foreach (var account in accounts)
 				{
 					var maintenanceDto = accountMapper.Map(account);
+					maintenanceDto.AssetName = account.AssetType.Name;
 
 					// Update balance
 					if (mc.Postings.Any(posting => posting.Account.Id == account.Id))
@@ -514,7 +517,7 @@ namespace Fab.Server.Core.Services
 
 					if (actualFirstPosting != null)
 					{
-						maintenanceDto.ActualFirstPostingDate = actualFirstPosting.Date;
+						maintenanceDto.ActualFirstPostingDate = actualFirstPosting.Date.IsUtc();
 					}
 
 					if (!checkOnly)
@@ -529,7 +532,7 @@ namespace Fab.Server.Core.Services
 
 					if (actualLastPosting != null)
 					{
-						maintenanceDto.ActualLastPostingDate = actualLastPosting.Date;
+						maintenanceDto.ActualLastPostingDate = actualLastPosting.Date.IsUtc();
 					}
 
 					if (!checkOnly)

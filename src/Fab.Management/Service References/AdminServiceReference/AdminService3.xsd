@@ -55,6 +55,7 @@
           <xs:element minOccurs="0" name="ActualFirstPostingDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ActualLastPostingDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ActualPostingsCount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="AssetName" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

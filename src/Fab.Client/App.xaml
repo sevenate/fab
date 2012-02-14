@@ -35,6 +35,12 @@
 			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
 			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
 			<Categories:CategoryTypeToColorConverter x:Key="categoryTypeToColor" />
+			<SolidColorBrush Color="#FF00FF00"
+											 x:Key="PositiveBalanceBrush" />
+			<SolidColorBrush Color="Red"
+											 x:Key="NegativeBalanceBrush" />
+			<SolidColorBrush Color="White"
+											 x:Key="NeutralBalanceBrush" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

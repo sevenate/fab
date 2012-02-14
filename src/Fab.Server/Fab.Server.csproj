@@ -191,6 +191,12 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fab.Core\Fab.Core.csproj">
+      <Project>{2833E7CE-248E-4A7C-A5E5-8CFFA544EC67}</Project>
+      <Name>Fab.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <Import Project="..\..\msbuild.common.targets" />

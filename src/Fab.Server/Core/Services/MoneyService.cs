@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using EmitMapper;
-using EmitMapper.MappingConfiguration;
+using Fab.Core;
 using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
 using Fab.Server.Core.Enums;
@@ -407,7 +407,7 @@ namespace Fab.Server.Core.Services
 						       	CategoryId =
 						       		journal.Category != null && journal.Category.Deleted == null ? journal.Category.Id : (int?) null,
 						       	Comment = journal.Comment,
-						       	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+						       	Date = posting.Date.IsUtc(),
 						       	Id = journal.Id,
 						       	Quantity = journal.Quantity,
 						       	Rate = journal.Rate
@@ -420,7 +420,7 @@ namespace Fab.Server.Core.Services
 						       	CategoryId =
 						       		journal.Category != null && journal.Category.Deleted == null ? journal.Category.Id : (int?) null,
 						       	Comment = journal.Comment,
-						       	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+								Date = posting.Date.IsUtc(),
 						       	Id = journal.Id,
 						       	Quantity = journal.Quantity,
 						       	Rate = journal.Rate
@@ -435,7 +435,7 @@ namespace Fab.Server.Core.Services
 						       	               {
 						       	               	Amount = posting.Amount,
 						       	               	Comment = journal.Comment,
-						       	               	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+												Date = posting.Date.IsUtc(),
 						       	               	Id = journal.Id,
 						       	               	Quantity = journal.Quantity,
 						       	               	Rate = journal.Rate,
@@ -445,7 +445,7 @@ namespace Fab.Server.Core.Services
 						       	  {
 						       	  	Amount = posting.Amount,
 						       	  	Comment = journal.Comment,
-						       	  	Date = DateTime.SpecifyKind(posting.Date, DateTimeKind.Utc),
+									Date = posting.Date.IsUtc(),
 						       	  	Id = journal.Id,
 						       	  	Quantity = journal.Quantity,
 						       	  	Rate = journal.Rate,
@@ -658,7 +658,7 @@ namespace Fab.Server.Core.Services
 							            	Amount = r.Posting.Amount,
 							            	CategoryId = r.Category != null && r.Category.Deleted == null ? r.Category.Id : (int?) null,
 							            	Comment = r.Journal.Comment,
-							            	Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+											Date = r.Posting.Date.IsUtc(),
 							            	Id = r.Journal.Id,
 							            	Quantity = r.Journal.Quantity,
 							            	Rate = r.Journal.Rate
@@ -671,7 +671,7 @@ namespace Fab.Server.Core.Services
 							            	Amount = r.Posting.Amount,
 							            	CategoryId = r.Category != null && r.Category.Deleted == null ? r.Category.Id : (int?) null,
 							            	Comment = r.Journal.Comment,
-											Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+											Date = r.Posting.Date.IsUtc(),
 							            	Id = r.Journal.Id,
 							            	Quantity = r.Journal.Quantity,
 							            	Rate = r.Journal.Rate
@@ -684,7 +684,7 @@ namespace Fab.Server.Core.Services
 							        	                {
 							        	                	Amount = r.Posting.Amount,
 							        	                	Comment = r.Journal.Comment,
-															Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+															Date = r.Posting.Date.IsUtc(),
 							        	                	Id = r.Journal.Id,
 							        	                	Quantity = r.Journal.Quantity,
 							        	                	Rate = r.Journal.Rate,
@@ -694,7 +694,7 @@ namespace Fab.Server.Core.Services
 							        	  {
 							        	  	Amount = r.Posting.Amount,
 							        	  	Comment = r.Journal.Comment,
-											Date = DateTime.SpecifyKind(r.Posting.Date, DateTimeKind.Utc),
+											Date = r.Posting.Date.IsUtc(),
 							        	  	Id = r.Journal.Id,
 							        	  	Quantity = r.Journal.Quantity,
 							        	  	Rate = r.Journal.Rate,

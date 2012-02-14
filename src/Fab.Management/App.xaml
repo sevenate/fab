@@ -69,6 +69,12 @@
 								 FontSize="16"
 								 FontWeight="Bold" />
 			</ControlTemplate>
+			<SolidColorBrush Color="#FF00FF00"
+											 x:Key="PositiveBalanceBrush" />
+			<SolidColorBrush Color="Red"
+											 x:Key="NegativeBalanceBrush" />
+			<SolidColorBrush Color="Black"
+											 x:Key="NeutralBalanceBrush" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

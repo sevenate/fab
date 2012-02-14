@@ -1,11 +1,12 @@
-// <copyright file="BalanceToColorConverter.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="BalanceToColorConverter.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" />
-// <summary>Convert negative <see cref="decimal"/> value to <see cref="Colors.Red"/>.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -33,13 +34,21 @@ namespace Fab.Client.Framework.Converters
 			{
 				var balance = (decimal) value;
 
-				//TODO: move balance colors values to resources.
-				return balance < 0 ? new SolidColorBrush(Colors.Red)
-								   : balance == 0 ? new SolidColorBrush(Colors.Yellow)
-												  : new SolidColorBrush(new Color { A = 0xFF, R = 0, G = 0xFF, B = 0});
+#if SILVERLIGHT
+				var positiveBrush = Application.Current.Resources["PositiveBalanceBrush"];
+				var negativeBrush = Application.Current.Resources["NegativeBalanceBrush"];
+				var neutralBrush = Application.Current.Resources["NeutralBalanceBrush"];
+#else
+				var positiveBrush = Application.Current.FindResource("PositiveBalanceBrush");
+				var negativeBrush = Application.Current.FindResource("NegativeBalanceBrush");
+				var neutralBrush = Application.Current.FindResource("NeutralBalanceBrush");
+#endif
+				return balance < 0 ? negativeBrush != null ? negativeBrush : new SolidColorBrush(Colors.Red)
+					: balance == 0 ? neutralBrush != null ? neutralBrush : new SolidColorBrush(Colors.Yellow)
+					: positiveBrush != null ? positiveBrush : new SolidColorBrush(new Color { A = 0xFF, R = 0, G = 0xFF, B = 0 });
 			}
 
-			return new SolidColorBrush(Colors.Yellow);
+			return value;
 		}
 
 		/// <summary>

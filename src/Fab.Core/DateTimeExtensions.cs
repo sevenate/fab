@@ -42,13 +42,12 @@ namespace Fab.Core
 
 		#endregion
 
-
 		/// <summary>
-		/// Get friendly timespan representation like "58 minutes ago", "16 hours ago", "2 days ago" etc.
+		/// Get friendly <see cref="TimeSpan"/> representation like "58 minutes ago", "16 hours ago", "2 days ago" etc.
 		/// </summary>
-		/// <param name="fromDate">Start date to caclculate offset from. Usually <see cref="DateTime.UtcNow"/>.</param>
-		/// <param name="toDate">End offset date. Usually taked database or other permanent storage.</param>
-		/// <returns>Friendly timespan string.</returns>
+		/// <param name="fromDate">Start date to calculate offset from. Usually <see cref="DateTime.UtcNow"/>.</param>
+		/// <param name="toDate">End offset date. Usually retrieved from database or other permanent storage.</param>
+		/// <returns>Friendly <see cref="TimeSpan"/> string.</returns>
 		/// <note>
 		/// Inspired from http://stackoverflow.com/questions/11/how-do-i-calculate-relative-time/12#12.
 		/// </note>
@@ -109,10 +108,10 @@ namespace Fab.Core
 
 		/// <summary>
 		/// Get friendly representation like "58 minutes ago", "16 hours ago", "2 days ago" etc.
-		/// for timespan from <see cref="DateTime.UtcNow"/> to specified date.
+		/// for <see cref="TimeSpan"/> from <see cref="DateTime.UtcNow"/> to specified date.
 		/// </summary>
-		/// <param name="toDate">End offset date. Usually taked database or other permanent storage.</param>
-		/// <returns>Friendly timespan string.</returns>
+		/// <param name="toDate">End offset date. Usually retrieved from database or other permanent storage.</param>
+		/// <returns>Friendly <see cref="TimeSpan"/> string.</returns>
 		public static string ToSmartTimespanUtc(this DateTime toDate)
 		{
 			return toDate.ToSmartTimespan(DateTime.UtcNow);
@@ -120,13 +119,23 @@ namespace Fab.Core
 
 		/// <summary>
 		/// Get friendly representation like "58 minutes ago", "16 hours ago", "2 days ago" etc.
-		/// for timespan from <see cref="DateTime.Now"/> to specified date.
+		/// for <see cref="TimeSpan"/> from <see cref="DateTime.Now"/> to specified date.
 		/// </summary>
-		/// <param name="toDate">End offset date. Usually taked database or other permanent storage.</param>
-		/// <returns>Friendly timespan string.</returns>
+		/// <param name="toDate">End offset date. Usually retrieved from database or other permanent storage.</param>
+		/// <returns>Friendly <see cref="TimeSpan"/> string.</returns>
 		public static string ToSmartTimespanLocal(this DateTime toDate)
 		{
 			return toDate.ToSmartTimespan(DateTime.Now);
+		}
+
+		/// <summary>
+		/// Specify <see cref="DateTimeKind.Utc"/> for <see cref="DateTime"/> values, retrieved from database via Entity Framework mapping.
+		/// </summary>
+		/// <param name="dateTime">Original <see cref="DateTime"/> instance (with <see cref="DateTimeKind.Unspecified"/> kind).</param>
+		/// <returns>The same value with <see cref="DateTimeKind.Utc"/> kind.</returns>
+		public static DateTime IsUtc(this DateTime dateTime)
+		{
+			return DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
 		}
 	}
 }

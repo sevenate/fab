@@ -326,14 +326,14 @@ namespace Fab.Managment.Shell
 			}
 		}
 
-		private bool updateCache;
-		public bool UpdateCache
+		private string updateCacheStatus = "Update Cache";
+		public string UpdateCacheStatus
 		{
-			get { return updateCache; }
+			get { return updateCacheStatus; }
 			set
 			{
-				updateCache = value;
-				NotifyOfPropertyChange(() => UpdateCache);
+				updateCacheStatus = value;
+				NotifyOfPropertyChange(() => UpdateCacheStatus);
 			}
 		}
 
@@ -362,7 +362,7 @@ namespace Fab.Managment.Shell
 			var result = new CheckAccountsCachedValuesResult
 			             	{
 			             		Id = Id,
-								UpdateCachedValues = UpdateCache
+								UpdateCachedValues = false
 			             	};
 			yield return result;
 
@@ -371,12 +371,34 @@ namespace Fab.Managment.Shell
 			IsBusy = false;
 		}
 
+		public IEnumerable<IResult> UpdateCache()
+		{
+			yield return new SingleResult
+			{
+				Action = () =>
+				{
+					IsBusy = true;
+					UpdateCacheStatus = "Updating...";
+				}
+			};
+
+			var result = new CheckAccountsCachedValuesResult
+			{
+				Id = Id,
+				UpdateCachedValues = true
+			};
+			yield return result;
+
+			Accounts = new BindableCollection<AccountMaintenanceDTO>(result.Accounts);
+			UpdateCacheStatus = "Update Cache";
+			IsBusy = false;
+		}
+
 		#endregion
 
 		#region Save
 
 		private string saveStatus = "Save";
-
 		public string SaveStatus
 		{
 			get { return saveStatus; }
