@@ -41,6 +41,23 @@
 											 x:Key="NegativeBalanceBrush" />
 			<SolidColorBrush Color="White"
 											 x:Key="NeutralBalanceBrush" />
+			<Style x:Key="NumbersStyle"
+						 TargetType="TextBlock">
+				<Setter Property="HorizontalAlignment"
+								Value="Right" />
+			</Style>
+			<Style x:Key="ExpenceStyle"
+						 TargetType="TextBlock"
+						 BasedOn="{StaticResource NumbersStyle}">
+				<Setter Property="Foreground"
+								Value="Red" />
+			</Style>
+			<Style x:Key="IncomeStyle"
+						 TargetType="TextBlock"
+						 BasedOn="{StaticResource NumbersStyle}">
+				<Setter Property="Foreground"
+								Value="#FF00FF00" />
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

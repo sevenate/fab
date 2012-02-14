@@ -1,8 +1,8 @@
-// <copyright file="DateRange.cs" company="HD">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="DateRange.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-02-09" />
-// <summary>Common date ranges.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.ComponentModel;

@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------
-// <copyright file="CategoriesDashBoardViewModel.cs" company="nReez">
-// 	Copyright (c) 2011 nReez. All rights reserved.
+// <copyright file="SearchDashBoardViewModel.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
 
@@ -13,10 +13,10 @@ using Fab.Client.MoneyTracker.Categories;
 namespace Fab.Client.MoneyTracker
 {
 	/// <summary>
-	/// General categories screen model.
+	/// General search screen model.
 	/// </summary>
 	[Export(typeof(IModule))]
-	public class CategoriesDashBoardViewModel : Conductor<CategoriesViewModel>.Collection.AllActive, IModule
+	public class SearchDashBoardViewModel : Conductor<CategoriesViewModel>.Collection.AllActive, IModule
 	{
 		#region Fields
 
@@ -24,43 +24,6 @@ namespace Fab.Client.MoneyTracker
 		/// Category repository.
 		/// </summary>
 		private readonly ICategoriesRepository repository = IoC.Get<ICategoriesRepository>();
-
-		#endregion
-
-		#region Common categories
-
-		private CategoriesViewModel commonCategories;
-
-		public CategoriesViewModel CommonCategories
-		{
-			get { return commonCategories; }
-			set {
-				if (commonCategories != value)
-				{
-					commonCategories = value;
-					NotifyOfPropertyChange(() => CommonCategories);
-				}
-			}
-		}
-
-		#endregion
-
-		#region Withdrawal categories
-
-		private CategoriesViewModel withdrawalCategories;
-
-		public CategoriesViewModel WithdrawalCategories
-		{
-			get { return withdrawalCategories; }
-			set
-			{
-				if (withdrawalCategories != value)
-				{
-					withdrawalCategories = value;
-					NotifyOfPropertyChange(() => WithdrawalCategories);
-				}
-			}
-		}
 
 		#endregion
 
@@ -89,14 +52,8 @@ namespace Fab.Client.MoneyTracker
 		/// Initializes a new instance of the <see cref="T:Caliburn.Micro.Conductor`1.Collection.AllActive"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public CategoriesDashBoardViewModel()
+		public SearchDashBoardViewModel()
 		{
-			CommonCategories = IoC.Get<CategoriesViewModel>();
-			CommonCategories.CategoryType = CategoryType.Common;
-
-			WithdrawalCategories = IoC.Get<CategoriesViewModel>();
-			WithdrawalCategories.CategoryType = CategoryType.Withdrawal;
-
 			DepositCategories = IoC.Get<CategoriesViewModel>();
 			DepositCategories.CategoryType = CategoryType.Deposit;
 
@@ -109,7 +66,7 @@ namespace Fab.Client.MoneyTracker
 
 		public string Name
 		{
-			get { return "Categories (" + repository.Entities.Count + ")"; }
+			get { return "Search (" + repository.Entities.Count + ")"; }
 		}
 
 		public void Show()
@@ -124,7 +81,7 @@ namespace Fab.Client.MoneyTracker
 				((IConductor)Parent).ActivateItem(this);
 			}
 		}
-
+	
 		#endregion
 	}
 }
