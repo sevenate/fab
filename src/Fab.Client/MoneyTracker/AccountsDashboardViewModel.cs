@@ -1,7 +1,8 @@
-// <copyright file="AccountsDashboardViewModel.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="AccountsDashboardViewModel.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" date="2010-04-02" />
+//------------------------------------------------------------
 
 using System.ComponentModel.Composition;
 using System.Linq;

@@ -1,8 +1,8 @@
-// <copyright file="TransactionRecord.cs" company="HD">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="DateRange.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-16" />
-// <summary>Simple "income / expense / balance" data object.</summary>
+//------------------------------------------------------------
 
 using System;
 using Caliburn.Micro;

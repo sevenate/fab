@@ -178,6 +178,7 @@
     <Compile Include="MoneyTracker\Categories\Single\NewCategoryViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\Single\CategoryViewModel.cs" />
     <Compile Include="Authentication\StartViewModel.cs" />
+    <Compile Include="MoneyTracker\SearchDashBoardViewModel.cs" />
     <Compile Include="Resources\Actions\EditIcon.xaml.cs">
       <DependentUpon>EditIcon.xaml</DependentUpon>
     </Compile>
@@ -361,6 +362,10 @@
     <DesignData Include="MoneyTracker\Categories\Single\SampleData\Category.xaml">
       <SubType>Designer</SubType>
     </DesignData>
+    <Page Include="MoneyTracker\SearchDashBoardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MoneyTracker\Filters\PostingsFilterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

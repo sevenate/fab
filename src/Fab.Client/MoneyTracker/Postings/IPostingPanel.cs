@@ -1,3 +1,9 @@
+//------------------------------------------------------------
+// <copyright file="DateRange.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
+// </copyright>
+//------------------------------------------------------------
+
 using Fab.Client.MoneyTracker.Postings.Transactions;
 using Fab.Client.MoneyTracker.Postings.Transfers;
 
