@@ -238,13 +238,12 @@
 					HorizontalAlignment="Right"
 					VerticalAlignment="Center"
 					TabIndex="6" />
-			<Controls:WatermarkedTextbox x:Name="Comment"
-										 Watermark="Optional comment..."
+			<TextBox x:Name="Comment"
 										 Text="{Binding Path=Comment, Mode=TwoWay}"
 										 VerticalAlignment="Center"
 										 IsTabStop="True"
 										 TabIndex="5">
-				<Controls:WatermarkedTextbox.TextBoxStyle>
+				<TextBox.Style>
 					<Style TargetType="TextBox">
 						<Setter Property="MaxLength"
 								Value="255" />
@@ -261,8 +260,8 @@
 						<Setter Property="Background"
 								Value="{StaticResource Brush_WindowBackground}" />
 					</Style>
-				</Controls:WatermarkedTextbox.TextBoxStyle>
-			</Controls:WatermarkedTextbox>
+				</TextBox.Style>
+			</TextBox>
 		</toolkit:DockPanel>
 	</Grid>
 </UserControl>

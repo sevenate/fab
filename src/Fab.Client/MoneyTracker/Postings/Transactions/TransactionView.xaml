@@ -342,34 +342,32 @@
 				   MinWidth="50"
 				   FontSize="16"
 				   Margin="5,0" />
-
-		<Controls:WatermarkedTextbox x:Name="Comment"
-									 Grid.Row="2"
-									 Grid.ColumnSpan="7"
-									 Watermark="Optional comment..."
-									 Text="{Binding Path=Comment, Mode=TwoWay}"
-									 VerticalAlignment="Center"
-									 TabIndex="3"
-									 ToolTipService.ToolTip="Comment">
-			<Controls:WatermarkedTextbox.TextBoxStyle>
+		<TextBox x:Name="Comment"
+						 Grid.Row="2"
+						 Grid.ColumnSpan="7"
+						 Text="{Binding Path=Comment, Mode=TwoWay}"
+						 VerticalAlignment="Center"
+						 TabIndex="3"
+						 ToolTipService.ToolTip="Comment">
+			<TextBox.Style>
 				<Style TargetType="TextBox">
 					<Setter Property="MaxLength"
-							Value="255" />
+									Value="255" />
 					<Setter Property="TextWrapping"
-							Value="Wrap" />
+									Value="Wrap" />
 					<Setter Property="MaxHeight"
-							Value="100" />
+									Value="100" />
 					<Setter Property="AcceptsReturn"
-							Value="True" />
+									Value="True" />
 					<Setter Property="Foreground"
-							Value="White" />
+									Value="White" />
 					<Setter Property="CaretBrush"
-							Value="White" />
+									Value="White" />
 					<Setter Property="Background"
-							Value="{StaticResource Brush_WindowBackground}" />
+									Value="{StaticResource Brush_WindowBackground}" />
 				</Style>
-			</Controls:WatermarkedTextbox.TextBoxStyle>
-		</Controls:WatermarkedTextbox>
+			</TextBox.Style>
+		</TextBox>
 		<Button x:Name="Save"
 				Grid.Column="8"
 				Grid.RowSpan="3"
