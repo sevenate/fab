@@ -1,7 +1,8 @@
+//------------------------------------------------------------
 // <copyright file="IRepository.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-04-05" />
+//------------------------------------------------------------
 
 using Caliburn.Micro;
 using Fab.Client.Authentication;

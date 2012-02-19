@@ -10,7 +10,7 @@ using System.Windows.Threading;
 using Caliburn.Micro;
 using Action = System.Action;
 
-namespace Fab.Managment.Framework.Results
+namespace Fab.Client.Framework.Results
 {
 	/// <summary>
 	/// Single <see cref="IResult"/> that will cause all changed binded properties
@@ -31,7 +31,11 @@ namespace Fab.Managment.Framework.Results
 			Action();
 
 			// Push all binded properties changes during Action to appear faster on screen
+#if SILVERLIGHT
+			Application.Current.RootVisual.Dispatcher.BeginInvoke(delegate { });
+#else
 			Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate { }));
+#endif
 			
 			Completed(this, new ResultCompletionEventArgs());
 		}

@@ -57,6 +57,12 @@ namespace Fab.Client.MoneyTracker.Accounts.AssetTypes
 			                                 	{
 			                                 		Entities.Clear();
 													Entities.AddRange(e.Result);
+
+//													foreach (var item in e.Result)
+//													{
+//														Entities.Add(item);
+//													}
+
 			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new AssetTypesUpdatedMessage
 			                                 		                                                 {
 																										 AssetTypes = Entities

@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------
-// <copyright file="GetPostingsResult.cs" company="nReez">
+// <copyright file="CountPostingsResult.cs" company="nReez">
 // 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
@@ -12,14 +12,14 @@ using Fab.Client.Shell.Async;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
-	public class GetPostingsResult : IResult
+	public class CountPostingsResult : IResult
 	{
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public GetPostingsResult(Guid userId, int accountId, QueryFilter queryFilter, IEventAggregator eventAggregator)
+		public CountPostingsResult(Guid userId, int accountId, QueryFilter queryFilter, IEventAggregator eventAggregator)
 		{
 			UserId = userId;
 			AccountId = accountId;
@@ -28,19 +28,16 @@ namespace Fab.Client.MoneyTracker.Postings
 		}
 
 		public Guid UserId { get; private set; }
-
 		public int AccountId { get; private set; }
-
 		public QueryFilter QueryFilter { get; private set; }
-
-		public JournalDTO[] TransactionRecords { get; set; }
-
+		public int Count { get; private set; }
+		
 		public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
 
 		public void Execute(ActionExecutionContext context)
 		{
 			var proxy = ServiceFactory.CreateMoneyService();
-			proxy.GetJournalsCompleted += (s, e) =>
+			proxy.GetJournalsCountCompleted += (s, e) =>
 			{
 				if (e.Error != null)
 				{
@@ -49,15 +46,15 @@ namespace Fab.Client.MoneyTracker.Postings
 				}
 				else
 				{
-					TransactionRecords = e.Result;
+					Count = e.Result;
 					Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 				}
 				
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.GetJournalsAsync(UserId, AccountId, QueryFilter);
-			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading postings for account #" + AccountId});
+			proxy.GetJournalsCountAsync(UserId, AccountId, QueryFilter);
+			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Counting matched postings for account #" + AccountId});
 		}
 	}
 }

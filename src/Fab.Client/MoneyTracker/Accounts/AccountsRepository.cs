@@ -1,7 +1,8 @@
+//------------------------------------------------------------
 // <copyright file="AccountsRepository.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2011-03-26" />
+//------------------------------------------------------------
 
 using System;
 using System.ComponentModel.Composition;
@@ -76,6 +77,12 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                                 	{
 			                                 		Entities.Clear();
 													Entities.AddRange(e.Result);
+													
+//													foreach (var item in e.Result)
+//			                                 		{
+//														Entities.Add(item);
+//													}
+
 			                                 		Execute.OnUIThread(() => EventAggregator.Publish(new AccountsUpdatedMessage
 			                                 		                                                 {
 			                                 		                                                 	Accounts = Entities
@@ -109,7 +116,15 @@ namespace Fab.Client.MoneyTracker.Accounts
 				{
 					var account = ByKey(key);
 					var index = Entities.IndexOf(account);
-					Entities[index] = e.Result;
+					//Entities[index] = e.Result;
+					Entities[index].AssetTypeId = e.Result.AssetTypeId;
+					Entities[index].Balance = e.Result.Balance;
+					Entities[index].Created = e.Result.Created;
+					Entities[index].FirstPostingDate = e.Result.FirstPostingDate;
+					Entities[index].Id = e.Result.Id;
+					Entities[index].LastPostingDate = e.Result.LastPostingDate;
+					Entities[index].Name = e.Result.Name;
+					Entities[index].PostingsCount = e.Result.PostingsCount;
 
 					Execute.OnUIThread(() => EventAggregator.Publish(new AccountUpdatedMessage
 					{

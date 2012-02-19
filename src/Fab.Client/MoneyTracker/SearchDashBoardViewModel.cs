@@ -4,47 +4,53 @@
 // </copyright>
 //------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Windows.Data;
 using Caliburn.Micro;
+using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.MoneyServiceReference;
-using Fab.Client.MoneyTracker.Categories;
+using Fab.Client.MoneyTracker.Accounts;
+using Fab.Client.MoneyTracker.Postings;
+using Fab.Client.MoneyTracker.Postings.Transactions;
+using Fab.Client.MoneyTracker.Postings.Transfers;
 
 namespace Fab.Client.MoneyTracker
 {
 	/// <summary>
 	/// General search screen model.
 	/// </summary>
-	[Export(typeof(IModule))]
-	public class SearchDashBoardViewModel : Conductor<CategoriesViewModel>.Collection.AllActive, IModule
+	[Export(typeof (IModule))]
+	public class SearchDashBoardViewModel : PostingViewModelBase, IModule, IHandle<LoggedOutMessage>
 	{
 		#region Fields
 
 		/// <summary>
-		/// Category repository.
+		/// Accounts repository.
 		/// </summary>
-		private readonly ICategoriesRepository repository = IoC.Get<ICategoriesRepository>();
+		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
 
 		#endregion
 
-		#region Deposit categories
+		private readonly CollectionViewSource sourceAccountsViewSource = new CollectionViewSource();
 
-		private CategoriesViewModel depositCategories;
-
-		public CategoriesViewModel DepositCategories
+		public ICollectionView Accounts
 		{
-			get { return depositCategories; }
-			set
-			{
-				if (depositCategories != value)
-				{
-					depositCategories = value;
-					NotifyOfPropertyChange(() => DepositCategories);
-				}
-			}
+			get { return sourceAccountsViewSource.View; }
 		}
 
-		#endregion
+		private void InitSourceAccounts()
+		{
+			sourceAccountsViewSource.Source = accountsRepository.Entities;
+
+			if (!Accounts.IsEmpty)
+			{
+				Accounts.MoveCurrentToFirst();
+			}
+		}
 
 		#region Ctor
 
@@ -52,12 +58,11 @@ namespace Fab.Client.MoneyTracker
 		/// Initializes a new instance of the <see cref="T:Caliburn.Micro.Conductor`1.Collection.AllActive"/> class.
 		/// </summary>
 		[ImportingConstructor]
-		public SearchDashBoardViewModel()
+		public SearchDashBoardViewModel(TransactionViewModel transactionDetails, TransferViewModel transferDetails)
+			: base(transactionDetails, transferDetails)
 		{
-			DepositCategories = IoC.Get<CategoriesViewModel>();
-			DepositCategories.CategoryType = CategoryType.Deposit;
-
-			repository.Entities.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
+			TransactionRecords.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
+			InitSourceAccounts();
 		}
 
 		#endregion
@@ -66,22 +71,56 @@ namespace Fab.Client.MoneyTracker
 
 		public string Name
 		{
-			get { return "Search (" + repository.Entities.Count + ")"; }
+			get
+			{
+				return TransactionRecords.Count > 0
+				       	? "Search (" + TransactionRecords.Count + ")"
+				       	: "Search";
+			}
 		}
 
 		public void Show()
 		{
+			if (!Accounts.IsEmpty && Accounts.CurrentItem == null)
+			{
+				Accounts.MoveCurrentToFirst();
+			}
+
 			//TODO: make this method common for all IModels
-			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
+			if (Parent is IHaveActiveItem && ((IHaveActiveItem) Parent).ActiveItem == this)
 			{
 				DisplayName = Name;
 			}
 			else
 			{
-				((IConductor)Parent).ActivateItem(this);
+				((IConductor) Parent).ActivateItem(this);
 			}
 		}
-	
+
+		#endregion
+
+		#region Implementation of IHandle<in LoggedOutMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(LoggedOutMessage message)
+		{
+			Init();
+		}
+
+		#endregion
+
+		#region Overrides of PostingViewModelBase
+
+		protected override IEnumerable<IResult> PreAction()
+		{
+			// Initialize account for search postings
+			AccountId = ((AccountDTO)Accounts.CurrentItem).Id;
+			yield break;
+		}
+
 		#endregion
 	}
 }
