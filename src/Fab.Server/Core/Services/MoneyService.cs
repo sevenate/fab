@@ -473,7 +473,7 @@ namespace Fab.Server.Core.Services
 				throw new ArgumentNullException("queryFilter");
 			}
 
-			var count = 0;
+			int count;
 
 			// Bug: warning security weakness!
 			// Check User.IsDisabled + Account.IsDeleted also
@@ -499,7 +499,6 @@ namespace Fab.Server.Core.Services
 					{
 						query = from t in query
 								where t.Journal.Comment.Contains(textSearchFilter.Contains)
-									  || t.Category.Name.Contains(textSearchFilter.Contains)
 								select t;
 					}
 				}
@@ -595,7 +594,6 @@ namespace Fab.Server.Core.Services
 					{
 						query = from t in query
 								where t.Journal.Comment.Contains(textSearchFilter.Contains)
-									  || t.Category.Name.Contains(textSearchFilter.Contains)
 						        select t;
 					}
 				}

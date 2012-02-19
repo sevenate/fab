@@ -90,6 +90,9 @@
     <Compile Include="..\Fab.Client\Framework\Filters\IFilter.cs">
       <Link>Framework\Filters\IFilter.cs</Link>
     </Compile>
+    <Compile Include="..\Fab.Client\Framework\Results\SingleResult.cs">
+      <Link>Framework\Results\SingleResult.cs</Link>
+    </Compile>
     <Compile Include="..\Fab.Client\Shell\ApplicationErrorMessage.cs">
       <Link>Shell\Messages\ApplicationErrorMessage.cs</Link>
     </Compile>
@@ -98,7 +101,6 @@
     <Compile Include="Converters\DateTimeToSmartTimeSpanConverter.cs" />
     <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Framework\Helpers.cs" />
-    <Compile Include="Framework\Results\SingleResult.cs" />
     <Compile Include="Framework\SslValidation.cs" />
     <Compile Include="Framework\CultureSettings.cs" />
     <Compile Include="Shell\AccountMaintenanceView.xaml.cs">

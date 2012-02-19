@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
+using Fab.Client.Framework.Results;
 using Fab.Core.Framework;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework.Results;

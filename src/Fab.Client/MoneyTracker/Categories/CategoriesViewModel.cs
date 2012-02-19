@@ -1,7 +1,8 @@
+//------------------------------------------------------------
 // <copyright file="CategoriesViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2010-04-12" />
+//------------------------------------------------------------
 
 using System.ComponentModel.Composition;
 using System.Linq;

@@ -166,6 +166,7 @@
     <Compile Include="Framework\Extensions\FrameworkElementExtensions.cs" />
     <Compile Include="Framework\Results\Animation.cs" />
     <Compile Include="Framework\Results\AnimationResult.cs" />
+    <Compile Include="Framework\Results\SingleResult.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountDeletedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesUpdatedMessage.cs" />
@@ -178,6 +179,11 @@
     <Compile Include="MoneyTracker\Categories\Single\NewCategoryViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\Single\CategoryViewModel.cs" />
     <Compile Include="Authentication\StartViewModel.cs" />
+    <Compile Include="MoneyTracker\Postings\AddTransactionRecordBaseResult.cs" />
+    <Compile Include="MoneyTracker\Postings\AddTransactionRecordResult.cs" />
+    <Compile Include="MoneyTracker\Postings\CountPostingsResult.cs" />
+    <Compile Include="MoneyTracker\Postings\PostingRecordBase.cs" />
+    <Compile Include="MoneyTracker\Postings\PostingViewModelBase.cs" />
     <Compile Include="MoneyTracker\SearchDashBoardViewModel.cs" />
     <Compile Include="Resources\Actions\EditIcon.xaml.cs">
       <DependentUpon>EditIcon.xaml</DependentUpon>

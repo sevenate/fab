@@ -1,6 +1,6 @@
 //------------------------------------------------------------
 // <copyright file="RegisterationResult.cs" company="nReez">
-// 	Copyright (c) 2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
 

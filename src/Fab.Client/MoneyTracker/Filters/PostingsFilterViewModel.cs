@@ -1,6 +1,6 @@
 //------------------------------------------------------------
 // <copyright file="PostingsFilterViewModel.cs" company="nReez">
-// 	Copyright (c) 2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
 
@@ -41,18 +41,21 @@ namespace Fab.Client.MoneyTracker.Filters
 			get { return selectedRange; }
 			set
 			{
-				selectedRange = value;
-				NotifyOfPropertyChange(() => SelectedRange);
-
-				eventAggregator.Publish(new PostingsFilterUpdatedMessage
+				if (selectedRange != value)
 				{
-					Start = selectedRange.Item1 < selectedRange.Item2
-								? selectedRange.Item1
-								: selectedRange.Item2,
-					End = selectedRange.Item1 >= selectedRange.Item2
-								? selectedRange.Item1
-								: selectedRange.Item2,
-				});
+					selectedRange = value;
+					NotifyOfPropertyChange(() => SelectedRange);
+
+					eventAggregator.Publish(new PostingsFilterUpdatedMessage
+					                        	{
+					                        		Start = selectedRange.Item1 < selectedRange.Item2
+					                        		        	? selectedRange.Item1
+					                        		        	: selectedRange.Item2,
+					                        		End = selectedRange.Item1 >= selectedRange.Item2
+					                        		      	? selectedRange.Item1
+					                        		      	: selectedRange.Item2,
+					                        	});
+				}
 			}
 		}
 

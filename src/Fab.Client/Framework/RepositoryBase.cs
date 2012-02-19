@@ -4,6 +4,7 @@
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-26" />
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Authentication;

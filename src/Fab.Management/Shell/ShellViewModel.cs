@@ -12,10 +12,10 @@ using System.Web.Configuration;
 using System.Web.Security;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Framework.Results;
 using Fab.Client.Shell;
 using Fab.Managment.AdminServiceReference;
 using Fab.Managment.Framework;
-using Fab.Managment.Framework.Results;
 using Fab.Managment.Shell.Messages;
 using Fab.Managment.Shell.Results;
 
@@ -70,17 +70,40 @@ namespace Fab.Managment.Shell
 		#region Paging
 
 		private int currentPageIndex;
-		private int pageSize;
-		private int pagesCount;
-		private int totalUsers;
 
-		public int TotalUsers
+		public int CurrentPageIndex
 		{
-			get { return totalUsers; }
+			get { return currentPageIndex; }
 			set
 			{
-				totalUsers = value;
-				NotifyOfPropertyChange(() => TotalUsers);
+				currentPageIndex = value;
+				NotifyOfPropertyChange(() => CurrentPageIndex);
+				NotifyOfPropertyChange(() => CanNextPage);
+				NotifyOfPropertyChange(() => CanPrevPage);
+			}
+		}
+
+		private int pageSize;
+
+		public int PageSize
+		{
+			get { return pageSize; }
+			set
+			{
+				pageSize = value;
+				NotifyOfPropertyChange(() => PageSize);
+			}
+		}
+
+		private int pagesCount;
+
+		public int PagesCount
+		{
+			get { return pagesCount; }
+			set
+			{
+				pagesCount = value;
+				NotifyOfPropertyChange(() => PagesCount);
 			}
 		}
 
@@ -96,38 +119,15 @@ namespace Fab.Managment.Shell
 			}
 		}
 
-		public int PageSize
-		{
-			get { return pageSize; }
+		private int totalUsers;
 
+		public int TotalUsers
+		{
+			get { return totalUsers; }
 			set
 			{
-				pageSize = value;
-				NotifyOfPropertyChange(() => PageSize);
-			}
-		}
-
-		public int PagesCount
-		{
-			get { return pagesCount; }
-
-			set
-			{
-				pagesCount = value;
-				NotifyOfPropertyChange(() => PagesCount);
-			}
-		}
-
-		public int CurrentPageIndex
-		{
-			get { return currentPageIndex; }
-
-			set
-			{
-				currentPageIndex = value;
-				NotifyOfPropertyChange(() => CurrentPageIndex);
-				NotifyOfPropertyChange(() => CanNextPage);
-				NotifyOfPropertyChange(() => CanPrevPage);
+				totalUsers = value;
+				NotifyOfPropertyChange(() => TotalUsers);
 			}
 		}
 

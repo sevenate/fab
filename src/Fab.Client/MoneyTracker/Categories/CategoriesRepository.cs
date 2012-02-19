@@ -1,7 +1,8 @@
+//------------------------------------------------------------
 // <copyright file="CategoriesRepository.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2011-03-26" />
+//------------------------------------------------------------
 
 using System;
 using System.ComponentModel.Composition;
@@ -76,6 +77,12 @@ namespace Fab.Client.MoneyTracker.Categories
 												   {
 													   Entities.Clear();
 													   Entities.AddRange(e.Result);
+//
+//													   foreach (var item in e.Result)
+//													   {
+//														   Entities.Add(item);
+//													   }
+
 													   Execute.OnUIThread(() => EventAggregator.Publish(new CategoriesUpdatedMessage
 																										{
 																											Categories = Entities
