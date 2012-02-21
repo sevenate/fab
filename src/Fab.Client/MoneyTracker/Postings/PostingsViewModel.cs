@@ -116,12 +116,15 @@ namespace Fab.Client.MoneyTracker.Postings
 			yield return balanceResult;
 
 			StartBalance = balanceResult.Balance;
+			prevBalance = balanceResult.Balance;
 		}
 
 		protected override AddTransactionRecordBaseResult CreateTransactionRecordResult(JournalDTO r)
 		{
-			return new AddTransactionRecordResult(r, categoriesRepository, StartBalance);
+			return new AddTransactionRecordResult(r, categoriesRepository, prevBalance);
 		}
+
+		private decimal prevBalance;
 
 		protected override void PostAction(AddTransactionRecordBaseResult result)
 		{
@@ -129,7 +132,7 @@ namespace Fab.Client.MoneyTracker.Postings
 
 			if (result is AddTransactionRecordResult)
 			{
-				StartBalance = ((AddTransactionRecordResult) result).Balance;
+				prevBalance = ((AddTransactionRecordResult)result).Balance;
 			}
 		}
 
@@ -175,6 +178,5 @@ namespace Fab.Client.MoneyTracker.Postings
 		}
 
 		#endregion
-
 	}
 }
