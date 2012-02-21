@@ -447,7 +447,7 @@ namespace Fab.Server.Core
 
 			// Decrement cached account balance by the previous transaction amount
 			targetAccount.Balance -= targetAccountPosting.Amount;
-			cashAccount.Balance += cashAccountPosting.Amount;
+			cashAccount.Balance -= cashAccountPosting.Amount;
 
 			// Note: cached postings count will be the same after update transaction operation
 
@@ -580,7 +580,7 @@ namespace Fab.Server.Core
 		/// <param name="comment">Comment notes.</param>
 		internal static void UpdateTransfer(ModelContainer mc, int transactionId, int fromAccountId, int toAccountId, DateTime date, decimal rate, decimal quantity, string comment)
 		{
-			// Todo: add user ID account ID to the GetJournalById() method call to
+			// TODO: add user ID account ID to the GetJournalById() method call to
 			// join them with transaction ID to prevent unauthorized delete 
 			// Do this for all user-aware calls (i.e. Categories, Accounts etc.)
 			var journal = GetJournalById(mc, transactionId);

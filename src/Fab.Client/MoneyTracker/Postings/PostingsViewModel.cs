@@ -123,6 +123,16 @@ namespace Fab.Client.MoneyTracker.Postings
 			return new AddTransactionRecordResult(r, categoriesRepository, StartBalance);
 		}
 
+		protected override void PostAction(AddTransactionRecordBaseResult result)
+		{
+			base.PostAction(result);
+
+			if (result is AddTransactionRecordResult)
+			{
+				StartBalance = ((AddTransactionRecordResult) result).Balance;
+			}
+		}
+
 		#endregion
 
 		#region Methods

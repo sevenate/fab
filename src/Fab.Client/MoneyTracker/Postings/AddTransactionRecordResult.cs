@@ -5,10 +5,12 @@ namespace Fab.Client.MoneyTracker.Postings
 {
 	public class AddTransactionRecordResult : AddTransactionRecordBaseResult
 	{
+		public decimal Balance { get; private set; }
+
 		public AddTransactionRecordResult(JournalDTO journal, ICategoriesRepository repository, decimal prevBalance)
 			: base(journal, repository)
 		{
-			((PostingRecord)TransactionRecord).Balance = prevBalance;
+			Balance = prevBalance;
 		}
 
 		#region Overrides of AddTransactionRecordBaseResult
@@ -16,7 +18,8 @@ namespace Fab.Client.MoneyTracker.Postings
 		protected override void InitializeTransactionRecorcd()
 		{
 			base.InitializeTransactionRecorcd();
-			((PostingRecord)TransactionRecord).Balance += Journal.Amount;
+			Balance += Journal.Amount;
+			((PostingRecord) TransactionRecord).Balance = Balance;
 		}
 
 		#endregion
