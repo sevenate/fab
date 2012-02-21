@@ -151,8 +151,8 @@ namespace Fab.Client.MoneyTracker.Postings
 			{
 				totalIncome = value;
 				NotifyOfPropertyChange(() => TotalIncome);
-				NotifyOfPropertyChange<decimal>(() => BalanceDiff);
-				NotifyOfPropertyChange<decimal>(() => EndBalance);
+				NotifyOfPropertyChange(() => BalanceDiff);
+				NotifyOfPropertyChange(() => EndBalance);
 			}
 		}
 
@@ -171,8 +171,8 @@ namespace Fab.Client.MoneyTracker.Postings
 			{
 				totalExpense = value;
 				NotifyOfPropertyChange(() => TotalExpense);
-				NotifyOfPropertyChange<decimal>(() => BalanceDiff);
-				NotifyOfPropertyChange<decimal>(() => EndBalance);
+				NotifyOfPropertyChange(() => BalanceDiff);
+				NotifyOfPropertyChange(() => EndBalance);
 			}
 		}
 
@@ -217,19 +217,19 @@ namespace Fab.Client.MoneyTracker.Postings
 		}
 
 		/// <summary>
-		/// Gets or sets account balance at the <see cref="endDate"/> moment.
-		/// </summary>
-		public decimal EndBalance
-		{
-			get { return StartBalance + BalanceDiff; }
-		}
-
-		/// <summary>
 		/// Gets or sets account balance difference for the filtered period.
 		/// </summary>
 		public decimal BalanceDiff
 		{
 			get { return TotalIncome + TotalExpense; }
+		}
+
+		/// <summary>
+		/// Gets or sets account balance at the <see cref="endDate"/> moment.
+		/// </summary>
+		public decimal EndBalance
+		{
+			get { return StartBalance + BalanceDiff; }
 		}
 
 		/// <summary>
@@ -387,11 +387,15 @@ namespace Fab.Client.MoneyTracker.Postings
 				var result = CreateTransactionRecordResult(r);
 				yield return result;
 
-				TransactionRecords.Add(result.TransactionRecord);
-
-				TotalIncome += result.Income;
-				TotalExpense -= result.Expense;
+				PostAction(result);
 			}
+		}
+
+		protected virtual void PostAction(AddTransactionRecordBaseResult result)
+		{
+			TotalIncome += result.Income;
+			TotalExpense -= result.Expense;
+			TransactionRecords.Add(result.TransactionRecord);
 		}
 
 		private TextSearchFilter CreateFilter(int? itemsPerPage = null)

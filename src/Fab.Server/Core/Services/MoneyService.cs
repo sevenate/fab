@@ -803,13 +803,13 @@ namespace Fab.Server.Core.Services
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
 
-			// Check rate positiveness
+			// Check if rate is positive
 			if (rate <= 0)
 			{
 				throw new Exception("Rate must not be less then or equal to 0.");
 			}
 
-			// Check quantity positiveness
+			// Check if quantity  is positive
 			if (quantity <= 0)
 			{
 				throw new Exception("Quantity must not be less then or equal to 0.");
@@ -953,13 +953,13 @@ namespace Fab.Server.Core.Services
 				throw new Exception("Comment is too long. Maximum length is 256.");
 			}
 
-			// Check rate positiveness
+			// Check if rate is positive
 			if (rate <= 0)
 			{
 				throw new Exception("Rate must not be less then or equal to 0.");
 			}
 
-			// Check quantity positiveness
+			// Check if quantity is positive
 			if (quantity <= 0)
 			{
 				throw new Exception("Quantity must not be less then or equal to 0.");
