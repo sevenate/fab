@@ -16,6 +16,9 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
+			<RowDefinition Height="4" />
+			<RowDefinition Height="Auto"
+										 MinHeight="150" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<toolkit:DockPanel>
@@ -214,12 +217,49 @@
 				</sdk:DataGridTemplateColumn>
 			</sdk:DataGrid.Columns>
 		</sdk:DataGrid>
+		<sdk:GridSplitter Grid.Row="2"
+											Background="{StaticResource Brush_WindowBackground}"
+											HorizontalAlignment="Stretch"
+											VerticalAlignment="Center" />
+		<toolkit:Chart Grid.Row="3"
+									 Title="Trends"
+									 LegendTitle="Data">
+			<!-- Income -->
+			<toolkit:AreaSeries Title="Income"
+													IndependentValueBinding="{Binding Path=Date}"
+													DependentValueBinding="{Binding Path=Income}"
+													ItemsSource="{Binding Path=TransactionRecords}">
+			</toolkit:AreaSeries>
+			<!-- Expense -->
+			<toolkit:AreaSeries Title="Expense"
+													IndependentValueBinding="{Binding Path=Date}"
+													DependentValueBinding="{Binding Path=Expense}"
+													ItemsSource="{Binding Path=TransactionRecords}">
+			</toolkit:AreaSeries>
+			<toolkit:Chart.Axes>
+				<!-- Axis for custom range -->
+				<toolkit:LinearAxis Orientation="Y"
+																		
+																		ShowGridLines="True" />
+<!--				Minimum="0"-->
+<!--																		Maximum="100"-->
+				<!-- Axis for custom labels -->
+				<toolkit:DateTimeAxis Orientation="X">
+					<toolkit:DateTimeAxis.AxisLabelStyle>
+						<Style TargetType="toolkit:DateTimeAxisLabel">
+							<Setter Property="StringFormat"
+											Value="{}{0:MMM d}" />
+						</Style>
+					</toolkit:DateTimeAxis.AxisLabelStyle>
+				</toolkit:DateTimeAxis>
+			</toolkit:Chart.Axes>
+		</toolkit:Chart>
 		<ContentControl x:Name="ActiveItem"
-										Grid.Row="2"
+										Grid.Row="4"
 										VerticalContentAlignment="Stretch"
 										HorizontalContentAlignment="Stretch" />
 		<ContentControl x:Name="Dialogs"
-										Grid.RowSpan="3"
+										Grid.RowSpan="5"
 										VerticalContentAlignment="Stretch"
 										HorizontalContentAlignment="Stretch" />
 	</Grid>
