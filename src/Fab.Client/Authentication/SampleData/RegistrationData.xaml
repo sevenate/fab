@@ -1,0 +1,7 @@
+﻿<local:RegistrationViewModel xmlns:local="clr-namespace:Fab.Client.Authentication"
+							 Username="Jim"
+							 Password=""
+							 Status="Signing up..."
+							 ShowStatus="True"
+							 UsernameIsFocused="True"
+							 IsBusy="False" />

@@ -1,0 +1,20 @@
+﻿<local:CategoriesViewModel xmlns:local="clr-namespace:Fab.Client.MoneyTracker.Categories"
+						   xmlns:Single="clr-namespace:Fab.Client.MoneyTracker.Categories.Single">
+	<local:CategoriesViewModel.Items>
+		<Single:CategoryViewModel Id="0"
+								  CategoryTypeWrapper="Deposit"
+								  Popularity="23">
+			<Single:CategoryViewModel.Name>Deposit category</Single:CategoryViewModel.Name>
+		</Single:CategoryViewModel>
+		<Single:CategoryViewModel Id="1"
+								  CategoryTypeWrapper="Common"
+								  Popularity="9">
+			<Single:CategoryViewModel.Name>Common category</Single:CategoryViewModel.Name>
+		</Single:CategoryViewModel>
+		<Single:CategoryViewModel Id="2"
+								  CategoryTypeWrapper="Withdrawal"
+								  Popularity="547">
+			<Single:CategoryViewModel.Name>Withdrawal category</Single:CategoryViewModel.Name>
+		</Single:CategoryViewModel>
+	</local:CategoriesViewModel.Items>
+</local:CategoriesViewModel>

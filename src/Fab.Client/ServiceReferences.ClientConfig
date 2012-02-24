@@ -1,0 +1,35 @@
+﻿<configuration>
+	<system.serviceModel>
+		<extensions />
+		<bindings>
+   <basicHttpBinding>
+    <binding name="UserServiceBasic" closeTimeout="00:01:00" openTimeout="00:01:00"
+     receiveTimeout="00:10:00" sendTimeout="00:01:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="TransportWithMessageCredential" />
+    </binding>
+    <binding name="RegistrationServiceBasic" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="Transport" />
+    </binding>
+    <binding name="MoneyServiceBasic" closeTimeout="00:01:00" openTimeout="00:01:00"
+     receiveTimeout="00:10:00" sendTimeout="00:01:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="TransportWithMessageCredential" />
+    </binding>
+   </basicHttpBinding>
+  </bindings>
+		<client>
+   <endpoint address="https://localhost/StagingFab/UserService.svc" binding="basicHttpBinding"
+    bindingConfiguration="UserServiceBasic" contract="UserServiceReference.IUserService"
+    name="UserServiceBasic" />
+   <endpoint address="https://localhost/StagingFab/RegistrationService.svc"
+    binding="basicHttpBinding" bindingConfiguration="RegistrationServiceBasic"
+    contract="RegistrationServiceReference.IRegistrationService"
+    name="RegistrationServiceBasic" />
+   <endpoint address="https://localhost/StagingFab/MoneyService.svc"
+    binding="basicHttpBinding" bindingConfiguration="MoneyServiceBasic"
+    contract="MoneyServiceReference.IMoneyService" name="MoneyServiceBasic" />
+  </client>
+	</system.serviceModel>
+</configuration>
