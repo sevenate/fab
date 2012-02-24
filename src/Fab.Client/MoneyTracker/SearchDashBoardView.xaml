@@ -36,9 +36,9 @@
 								ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 								ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
 								ItemTemplate="{StaticResource AccountBrief}" />
-			<sdk:DatePicker toolkit:DockPanel.Dock="Right"
+			<sdk:DatePicker x:Name="EndDate"
+											toolkit:DockPanel.Dock="Right"
 											TabIndex="4"
-											SelectedDate="{Binding EndDate, Mode=TwoWay}"
 											IsEnabled="{Binding IsChecked, ElementName=UseEndDate}"
 											SelectedDateFormat="Long" />
 			<CheckBox x:Name="UseEndDate"
@@ -46,9 +46,9 @@
 								TabIndex="3"
 								Content="End"
 								HorizontalAlignment="Left" />
-			<sdk:DatePicker toolkit:DockPanel.Dock="Right"
+			<sdk:DatePicker x:Name="StartDate"
+											toolkit:DockPanel.Dock="Right"
 											TabIndex="2"
-											SelectedDate="{Binding StartDate, Mode=TwoWay}"
 											IsEnabled="{Binding IsChecked, ElementName=UseStartDate}"
 											SelectedDateFormat="Long" />
 			<CheckBox x:Name="UseStartDate"

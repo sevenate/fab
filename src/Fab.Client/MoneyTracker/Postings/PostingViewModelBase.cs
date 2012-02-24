@@ -280,8 +280,8 @@ namespace Fab.Client.MoneyTracker.Postings
 				TransactionRecords.Clear();
 			}
 
-			StartDate = DateTime.Now;
-			EndDate = DateTime.Now;
+			StartDate = DateTime.Now.Date;
+			EndDate = StartDate;
 			UseStartDate = false;
 			UseEndDate = false;
 			ContainsText = string.Empty;
@@ -403,10 +403,10 @@ namespace Fab.Client.MoneyTracker.Postings
 			var filter = new TextSearchFilter
 			             	{
 			             		NotOlderThen = UseStartDate
-			             		               	? StartDate.ToUniversalTime()
+			             		               	? StartDate.ToUniversalTime().Date
 			             		               	: (DateTime?)null,
 			             		Upto = UseEndDate
-										? EndDate.AddDays(1) /*.AddMilliseconds(1)*/.ToUniversalTime()
+										? EndDate.AddDays(1) /*.AddMilliseconds(1)*/.ToUniversalTime().Date
 			             		       	: (DateTime?)null,
 			             		Contains = !string.IsNullOrEmpty(ContainsText)
 			             		           	? ContainsText

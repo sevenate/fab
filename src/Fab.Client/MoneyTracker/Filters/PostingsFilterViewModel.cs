@@ -41,7 +41,7 @@ namespace Fab.Client.MoneyTracker.Filters
 			get { return selectedRange; }
 			set
 			{
-				if (selectedRange != value)
+				if (!selectedRange.Equals(value))
 				{
 					selectedRange = value;
 					NotifyOfPropertyChange(() => SelectedRange);
@@ -72,9 +72,11 @@ namespace Fab.Client.MoneyTracker.Filters
 		[ImportingConstructor]
 		public PostingsFilterViewModel(IEventAggregator eventAggregator)
 		{
+			var dateTime = DateTime.Now.Date;
+			selectedRange = new Tuple<DateTime, DateTime>(dateTime, dateTime);
+			
 			this.eventAggregator = eventAggregator;
 			this.eventAggregator.Subscribe(this);
-			ResetToCurrentDate();
 		}
 
 		#endregion
