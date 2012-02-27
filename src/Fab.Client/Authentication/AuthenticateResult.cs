@@ -5,7 +5,6 @@
 //------------------------------------------------------------
 
 using System;
-using System.ServiceModel;
 using Caliburn.Micro;
 using Fab.Client.Shell;
 
