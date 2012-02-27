@@ -168,6 +168,7 @@
 		        MinWidth="75"
 		        Margin="0,10,0,0"
 		        HorizontalAlignment="Center"
-		        TabIndex="4" Style="{StaticResource LoginButtonStyle}" />
+		        TabIndex="4"
+				Style="{StaticResource LoginButtonStyle}" />
 	</StackPanel>
 </UserControl>
