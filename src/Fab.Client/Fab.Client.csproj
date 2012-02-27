@@ -13,11 +13,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fab.Client</RootNamespace>
-    <AssemblyName>SilverFAB</AssemblyName>
+    <AssemblyName>Fab.Client</AssemblyName>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>
-    </SupportedCultures>
+    <SupportedCultures>en-US;ru-RU</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>SilverFAB.xap</XapFilename>
@@ -168,6 +167,15 @@
     <Compile Include="Framework\Results\Animation.cs" />
     <Compile Include="Framework\Results\AnimationResult.cs" />
     <Compile Include="Framework\Results\SingleResult.cs" />
+    <Compile Include="Localization\LocalizationInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Localization\TranslateExtension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Localization\Translator.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MoneyTracker\Accounts\AccountDeletedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesUpdatedMessage.cs" />
@@ -191,6 +199,11 @@
     </Compile>
     <Compile Include="Resources\Actions\DeleteIcon.xaml.cs">
       <DependentUpon>DeleteIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Service References\RegistrationServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -597,6 +610,14 @@
       <Project>{2833E7CE-248E-4A7C-A5E5-8CFFA544EC67}</Project>
       <Name>Fab.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.ru-ru.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!--
