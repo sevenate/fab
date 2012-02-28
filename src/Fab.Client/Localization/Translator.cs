@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
-using Fab.Client.Resources;
 
 namespace Fab.Client.Localization
 {
@@ -26,69 +25,25 @@ namespace Fab.Client.Localization
 		#region Fields
 
 		/// <summary>
-		/// Fallback culture.
+		/// Default and fallback culture.
 		/// </summary>
-		public static readonly CultureInfo DefaultCulture;
-
-		/// <summary>
-		/// Gets or sets current localization.
-		/// </summary>
-		private static LocalizationInfo currentLocalization;
-
-		#endregion
-
-		#region .Ctors
-
-		/// <summary>
-		/// Initializes static members of the <see cref="Translator"/> class.
-		/// </summary>
-		static Translator()
-		{
-			DefaultCulture = new CultureInfo("en-US");
-		}
+		public static readonly CultureInfo DefaultCulture = new CultureInfo("en-US");
 
 		#endregion
 
 		#region Properties
 
 		/// <summary>
-		/// Gets all available localizations.
+		/// Gets all supported cultures.
 		/// </summary>
-		/// <returns>Enumerates through all available localizations.</returns>
-		public static IEnumerable<LocalizationInfo> AvailableLocalizations
+		/// <returns>Enumerates through all supported cultures.</returns>
+		public static IEnumerable<CultureInfo> SupportedLanguages
 		{
 			get
     		{
-				yield return new LocalizationInfo("English", new CultureInfo("en"));
-				yield return new LocalizationInfo("Русский", new CultureInfo("ru"));
+				yield return DefaultCulture;
+				yield return new CultureInfo("ru-RU");
     		}
-		}
-
-		/// <summary>
-		/// Gets or sets current localization to new value.
-		/// </summary>
-		public static LocalizationInfo CurrentLocalization
-		{
-			get { return currentLocalization; }
-			set
-			{
-				currentLocalization = value;
-
-				if (value != null && value.Culture != null)
-				{
-					Thread.CurrentThread.CurrentUICulture = value.Culture;
-				}
-				else
-				{
-					// fallback to default culture available in resources
-					Thread.CurrentThread.CurrentUICulture = DefaultCulture;
-				}
-
-				if (CultureChanged != null)
-				{
-					CultureChanged(null, EventArgs.Empty);
-				}
-			}
 		}
 
 		/// <summary>
@@ -97,6 +52,11 @@ namespace Fab.Client.Localization
 		public static CultureInfo CurrentUICulture
 		{
 			get { return Thread.CurrentThread.CurrentUICulture; }
+			set
+			{
+				Thread.CurrentThread.CurrentUICulture = value ?? DefaultCulture;
+				CultureChanged(null, EventArgs.Empty);
+			}
 		}
 
 		/// <summary>
@@ -105,20 +65,11 @@ namespace Fab.Client.Localization
 		public static CultureInfo CurrentCulture
 		{
 			get { return Thread.CurrentThread.CurrentCulture; }
-		}
-
-		#endregion
-
-		#region Methods
-
-		/// <summary>
-		/// Gets a localized value for the specified resource key from assembly resources.
-		/// </summary>
-		/// <param name="key">The localized resource key.</param>
-		/// <returns>Localized resource value.</returns>
-		public static object GetValue(string key)
-		{
-			return null; // Strings.ResourceManager.GetString(key);
+			set
+			{
+				Thread.CurrentThread.CurrentCulture = value ?? DefaultCulture;
+				CultureChanged(null, EventArgs.Empty);
+			}
 		}
 
 		#endregion
@@ -128,7 +79,7 @@ namespace Fab.Client.Localization
 		/// <summary>
 		/// Occurs when current application culture was changed.
 		/// </summary>
-		public static event EventHandler CultureChanged;
+		public static event EventHandler CultureChanged = delegate {};
 
 		#endregion
 	}
