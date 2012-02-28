@@ -167,15 +167,10 @@
     <Compile Include="Framework\Results\Animation.cs" />
     <Compile Include="Framework\Results\AnimationResult.cs" />
     <Compile Include="Framework\Results\SingleResult.cs" />
-    <Compile Include="Localization\LocalizationInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Localization\TranslateExtension.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Localization\Translator.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Localization\ViewModelBase.cs" />
     <Compile Include="MoneyTracker\Accounts\AccountDeletedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesRepository.cs" />
     <Compile Include="MoneyTracker\Accounts\AssetTypes\AssetTypesUpdatedMessage.cs" />
@@ -614,7 +609,7 @@
   <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.ru-ru.resx" />
