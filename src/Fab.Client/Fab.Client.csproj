@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fab.Client</RootNamespace>
-    <AssemblyName>Fab.Client</AssemblyName>
+    <AssemblyName>SilverFAB</AssemblyName>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <SilverlightApplication>true</SilverlightApplication>
     <SupportedCultures>en-US;ru-RU</SupportedCultures>
