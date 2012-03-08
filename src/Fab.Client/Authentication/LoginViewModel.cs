@@ -11,6 +11,7 @@ using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Localization;
 using Fab.Core.Framework;
+using Fab.Client.Resources;
 
 namespace Fab.Client.Authentication
 {
@@ -19,7 +20,7 @@ namespace Fab.Client.Authentication
 	/// </summary>
 	[Export(typeof(LoginViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class LoginViewModel : ViewModelBase, ICanBeBusy, IHandle<LoggedOutMessage>
+	public class LoginViewModel : LocalizableScreen, ICanBeBusy, IHandle<LoggedOutMessage>
 	{
 		#region Constants
 
@@ -65,6 +66,9 @@ namespace Fab.Client.Authentication
 		{
 			EventAggregator = eventAggregator;
 			EventAggregator.Subscribe(this);
+
+			displayName = Strings.Login;
+
 #if DEBUG
 			ShowCharacters = true;
 #endif
@@ -85,12 +89,14 @@ namespace Fab.Client.Authentication
 
 		#region Overrides of Screen
 
+		private string displayName;
+
 		/// <summary>
 		/// Gets the Display Name
 		/// </summary>
 		public override string DisplayName
 		{
-			get { return "Login"; }
+			get { return displayName; }
 		}
 
 		#endregion
