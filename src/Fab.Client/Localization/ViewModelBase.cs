@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
+using Caliburn.Micro;
 using Fab.Client.Resources;
 
 namespace Fab.Client.Localization
 {
-	public class ViewModelBase : INotifyPropertyChanged
+	public class ViewModelBase : Screen, INotifyPropertyChanged
 	{
 		#region Implementation of INotifyPropertyChanged
 

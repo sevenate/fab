@@ -135,6 +135,10 @@
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</PasswordBox>
+		<ComboBox x:Name="Cultures"
+				  SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
+				  MinHeight="36"
+				  DisplayMemberPath="NativeName" />
 		<Grid MinHeight="40">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
@@ -165,7 +169,7 @@
 		           Text="{Binding Status}"
 		           Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" MinHeight="14" HorizontalAlignment="Center" />
 		<Button x:Name="Login"
-		        Content="Log in"
+				Content="{Binding Path=LocalizedStrings.Login, FallbackValue=Login}"
 		        MinWidth="75"
 		        Margin="0,10,0,0"
 		        HorizontalAlignment="Center"

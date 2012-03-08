@@ -6,8 +6,10 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Localization;
 using Fab.Core.Framework;
 
 namespace Fab.Client.Authentication
@@ -17,7 +19,7 @@ namespace Fab.Client.Authentication
 	/// </summary>
 	[Export(typeof(LoginViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class LoginViewModel : Screen, ICanBeBusy, IHandle<LoggedOutMessage>
+	public class LoginViewModel : ViewModelBase, ICanBeBusy, IHandle<LoggedOutMessage>
 	{
 		#region Constants
 
@@ -69,6 +71,17 @@ namespace Fab.Client.Authentication
 		}
 
 		#endregion
+
+		public IEnumerable<CultureInfo> Cultures
+		{
+			get { return Translator.SupportedCultures; }
+		}
+
+		public CultureInfo CurrentCulture
+		{
+			get { return Translator.CurrentUICulture; }
+			set { Translator.CurrentUICulture = value; }
+		}
 
 		#region Overrides of Screen
 

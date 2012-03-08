@@ -37,7 +37,7 @@ namespace Fab.Client.Localization
 		/// Gets all supported cultures.
 		/// </summary>
 		/// <returns>Enumerates through all supported cultures.</returns>
-		public static IEnumerable<CultureInfo> SupportedLanguages
+		public static IEnumerable<CultureInfo> SupportedCultures
 		{
 			get
     		{
