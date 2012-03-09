@@ -92,10 +92,10 @@
 	            RenderTransformOrigin="0.5,0.5"
 	            Background="{StaticResource Brush_WindowBackground}">
 		<TextBlock TextWrapping="Wrap"
-		           Text="Sign up"
+				   Text="{Binding Path=LocalizedStrings.RegistrationView_Title, FallbackValue='Sign up'}"
 		           FontSize="21.333"
 		           Margin="2,0,2,2" />
-		<sdk:Label Content="Username"
+		<sdk:Label Content="{Binding Path=LocalizedStrings.RegistrationView_Username, FallbackValue='Username'}"
 				   Target="{Binding ElementName=Username}"
 		           Margin="3,10,0,2" />
 		<TextBox x:Name="Username"
@@ -106,7 +106,7 @@
 				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>
-		<sdk:Label Content="Password"
+		<sdk:Label Content="{Binding Path=LocalizedStrings.RegistrationView_Password, FallbackValue='Password'}"
 				   Target="{Binding ElementName=Password}"
 		           Margin="3,10,0,2" />
 		<PasswordBox x:Name="Password"
@@ -120,7 +120,7 @@
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</PasswordBox>
-		<sdk:Label Content="Password (again)"
+		<sdk:Label Content="{Binding Path=LocalizedStrings.RegistrationView_Password2, FallbackValue='Password (again)'}"
 				   Target="{Binding ElementName=PasswordConfirmation}"
 		           Margin="3,10,0,2" />
 		<PasswordBox x:Name="PasswordConfirmation"
@@ -140,11 +140,12 @@
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 			<CheckBox x:Name="AgreeToTerms"
-					  Content="I agree to the "
-					  TabIndex="3" />
+					  Content="{Binding Path=LocalizedStrings.RegistrationView_Agreement1, FallbackValue='I agree to the'}"
+					  TabIndex="3"
+					  Margin="0,0,3,0"/>
 			<Button Grid.Column="1"
 					TabIndex="4"
-			        Content="nReez terms and conditions"
+					Content="{Binding Path=LocalizedStrings.RegistrationView_Agreement2, FallbackValue='nReez terms and conditions'}"
 			        FontSize="12" Padding="5,10" HorizontalAlignment="Left">
 				<i:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
@@ -155,7 +156,7 @@
 				   Text="{Binding Status}"
 				   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}" MinHeight="14" />
 		<Button x:Name="Register"
-		        Content="Sign up"
+				Content="{Binding Path=LocalizedStrings.RegistrationView_Register, FallbackValue='Sign up'}"
 		        MinWidth="75"
 		        Margin="0,10,0,0"
 		        HorizontalAlignment="Center"

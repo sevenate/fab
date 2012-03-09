@@ -7,8 +7,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
-using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Localization;
 using Fab.Core.Framework;
 
 namespace Fab.Client.Authentication
@@ -18,7 +18,7 @@ namespace Fab.Client.Authentication
 	/// </summary>
 	[Export(typeof(RegistrationViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class RegistrationViewModel : Screen, ICanBeBusy, IHandle<LoggedOutMessage>
+	public class RegistrationViewModel : LocalizableScreen, ICanBeBusy, IHandle<LoggedOutMessage>
 	{
 		#region Constants
 
