@@ -115,6 +115,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sign out.
+        /// </summary>
+        public static string PersonalCornerView_Sign_out {
+            get {
+                return ResourceManager.GetString("PersonalCornerView_Sign_out", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I agree to the.
         /// </summary>
         public static string RegistrationView_Agreement1 {
