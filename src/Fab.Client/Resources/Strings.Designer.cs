@@ -176,5 +176,23 @@ namespace Fab.Client.Resources {
                 return ResourceManager.GetString("RegistrationView_Username", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to « back to Login.
+        /// </summary>
+        public static string StartView_back_to_Login {
+            get {
+                return ResourceManager.GetString("StartView_back_to_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to or Sign up ».
+        /// </summary>
+        public static string StartView_or_Sign_up {
+            get {
+                return ResourceManager.GetString("StartView_or_Sign_up", resourceCulture);
+            }
+        }
     }
 }

@@ -156,4 +156,10 @@
   <data name="RegistrationView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
   </data>
+  <data name="StartView_back_to_Login" xml:space="preserve">
+    <value>« назад на страницу Входа</value>
+  </data>
+  <data name="StartView_or_Sign_up" xml:space="preserve">
+    <value>или Подписаться »</value>
+  </data>
 </root>
