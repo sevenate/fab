@@ -132,6 +132,9 @@
   <data name="LoginView_Show_characters" xml:space="preserve">
     <value>Показывать символы</value>
   </data>
+  <data name="LoginView_Title" xml:space="preserve">
+    <value>Вход</value>
+  </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
   </data>
