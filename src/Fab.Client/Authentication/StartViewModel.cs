@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Localization;
 
 namespace Fab.Client.Authentication
 {
@@ -16,7 +17,7 @@ namespace Fab.Client.Authentication
 	/// </summary>
 	[Export(typeof (IModule))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class StartViewModel : Screen, IStartViewModel, IHandle<LoggedOutMessage>
+	public class StartViewModel : LocalizableScreen, IStartViewModel, IHandle<LoggedOutMessage>
 	{
 		#region Constants
 
