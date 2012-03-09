@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Login" xml:space="preserve">
+  <data name="LoginView_Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="LoginView_Login" xml:space="preserve">
     <value>Вход</value>
+  </data>
+  <data name="LoginView_Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="LoginView_Remember_me" xml:space="preserve">
+    <value>Запомнить меня</value>
+  </data>
+  <data name="LoginView_Show_characters" xml:space="preserve">
+    <value>Показывать символы</value>
+  </data>
+  <data name="LoginView_Username" xml:space="preserve">
+    <value>Имя пользователя</value>
   </data>
 </root>

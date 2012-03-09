@@ -27,7 +27,7 @@ namespace Fab.Client.Localization
 		/// <summary>
 		/// Default and fallback culture.
 		/// </summary>
-		public static readonly CultureInfo DefaultCulture = new CultureInfo("en-US");
+		public static readonly CultureInfo DefaultCulture = new CultureInfo("en");
 
 		#endregion
 
@@ -42,7 +42,8 @@ namespace Fab.Client.Localization
 			get
     		{
 				yield return DefaultCulture;
-				yield return new CultureInfo("ru-RU");
+				yield return new CultureInfo("ru");
+				yield return new CultureInfo("uk");
     		}
 		}
 
