@@ -92,7 +92,7 @@
 	<StackPanel MinWidth="260"
 	            Background="{StaticResource Brush_WindowBackground}">
 		<TextBlock TextWrapping="Wrap"
-		           Text="Login"
+				   Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login'}"
 		           FontSize="21.333"
 		           Margin="2,0,2,2" />
 		<sdk:Label Content="{Binding Path=LocalizedStrings.LoginView_Language, FallbackValue=Language}"

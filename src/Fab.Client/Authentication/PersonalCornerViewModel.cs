@@ -4,7 +4,9 @@
 // </copyright>
 //------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Localization;
@@ -57,6 +59,17 @@ namespace Fab.Client.Authentication
 				username = value;
 				NotifyOfPropertyChange(() => Username);
 			}
+		}
+
+		public IEnumerable<CultureInfo> Cultures
+		{
+			get { return Translator.SupportedCultures; }
+		}
+
+		public CultureInfo CurrentCulture
+		{
+			get { return Translator.CurrentUICulture; }
+			set { Translator.CurrentUICulture = value; }
 		}
 
 		#endregion
