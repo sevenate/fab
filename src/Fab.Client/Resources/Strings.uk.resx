@@ -135,4 +135,25 @@
   <data name="LoginView_Username" xml:space="preserve">
     <value>Ім'я користувача</value>
   </data>
+  <data name="RegistrationView_Agreement1" xml:space="preserve">
+    <value>Я згоден з</value>
+  </data>
+  <data name="RegistrationView_Agreement2" xml:space="preserve">
+    <value>умовами використання сервісу nReez</value>
+  </data>
+  <data name="RegistrationView_Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="RegistrationView_Password2" xml:space="preserve">
+    <value>Пароль (ще раз)</value>
+  </data>
+  <data name="RegistrationView_Register" xml:space="preserve">
+    <value>Підписатися</value>
+  </data>
+  <data name="RegistrationView_Title" xml:space="preserve">
+    <value>Підписатися</value>
+  </data>
+  <data name="RegistrationView_Username" xml:space="preserve">
+    <value>Ім'я користувача</value>
+  </data>
 </root>

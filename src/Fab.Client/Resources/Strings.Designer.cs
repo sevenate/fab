@@ -113,5 +113,68 @@ namespace Fab.Client.Resources {
                 return ResourceManager.GetString("LoginView_Username", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I agree to the.
+        /// </summary>
+        public static string RegistrationView_Agreement1 {
+            get {
+                return ResourceManager.GetString("RegistrationView_Agreement1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nReez terms and conditions.
+        /// </summary>
+        public static string RegistrationView_Agreement2 {
+            get {
+                return ResourceManager.GetString("RegistrationView_Agreement2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string RegistrationView_Password {
+            get {
+                return ResourceManager.GetString("RegistrationView_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password (again).
+        /// </summary>
+        public static string RegistrationView_Password2 {
+            get {
+                return ResourceManager.GetString("RegistrationView_Password2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign up.
+        /// </summary>
+        public static string RegistrationView_Register {
+            get {
+                return ResourceManager.GetString("RegistrationView_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign up.
+        /// </summary>
+        public static string RegistrationView_Title {
+            get {
+                return ResourceManager.GetString("RegistrationView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string RegistrationView_Username {
+            get {
+                return ResourceManager.GetString("RegistrationView_Username", resourceCulture);
+            }
+        }
     }
 }
