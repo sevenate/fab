@@ -67,7 +67,7 @@ namespace Fab.Client.Authentication
 			EventAggregator = eventAggregator;
 			EventAggregator.Subscribe(this);
 
-			displayName = Strings.Login;
+			displayName = Strings.LoginView_Login;
 
 #if DEBUG
 			ShowCharacters = true;
