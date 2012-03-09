@@ -14,7 +14,7 @@
 				Padding="10">
 			<Button.Content>
 				<StackPanel Orientation="Horizontal">
-					<TextBlock Text="Sign out"							   
+					<TextBlock Text="{Binding Path=LocalizedStrings.PersonalCornerView_Sign_out, FallbackValue='Sign out'}"							   
 							   FontSize="16"
 							   VerticalAlignment="Center" />
 					<TextBlock Text="{Binding Username, StringFormat=( \{0\} )}"

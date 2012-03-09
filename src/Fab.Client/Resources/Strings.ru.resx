@@ -135,6 +135,9 @@
   <data name="LoginView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
   </data>
+  <data name="PersonalCornerView_Sign_out" xml:space="preserve">
+    <value>Выход</value>
+  </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
     <value>Я согласен с</value>
   </data>
