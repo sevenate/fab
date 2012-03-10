@@ -132,6 +132,9 @@
   <data name="LoginView_Show_characters" xml:space="preserve">
     <value>Show characters</value>
   </data>
+  <data name="LoginView_Title" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Username</value>
   </data>
