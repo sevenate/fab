@@ -68,8 +68,8 @@ namespace Fab.Client.Authentication
 
 		public CultureInfo CurrentCulture
 		{
-			get { return Translator.CurrentUICulture; }
-			set { Translator.CurrentUICulture = value; }
+			get { return Translator.CurrentCulture; }
+			set { Translator.CurrentCulture = value; }
 		}
 
 		#endregion

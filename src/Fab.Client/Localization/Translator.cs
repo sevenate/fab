@@ -50,24 +50,12 @@ namespace Fab.Client.Localization
 		/// <summary>
 		/// Gets current UI culture.
 		/// </summary>
-		public static CultureInfo CurrentUICulture
+		public static CultureInfo CurrentCulture
 		{
 			get { return Thread.CurrentThread.CurrentUICulture; }
 			set
 			{
 				Thread.CurrentThread.CurrentUICulture = value ?? DefaultCulture;
-				CultureChanged(null, EventArgs.Empty);
-			}
-		}
-
-		/// <summary>
-		/// Gets current culture.
-		/// </summary>
-		public static CultureInfo CurrentCulture
-		{
-			get { return Thread.CurrentThread.CurrentCulture; }
-			set
-			{
 				Thread.CurrentThread.CurrentCulture = value ?? DefaultCulture;
 				CultureChanged(null, EventArgs.Empty);
 			}
