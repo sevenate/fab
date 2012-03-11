@@ -12,6 +12,7 @@ using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Results;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Categories;
@@ -21,7 +22,7 @@ using Fab.Core.Framework;
 
 namespace Fab.Client.MoneyTracker.Postings
 {
-	public class PostingViewModelBase : Conductor<IPostingPanel>.Collection.OneActive,
+	public class PostingViewModelBase : LocalizableConductor<IPostingPanel>,
 										ICanBeBusy,
 										IHandle<CategoryDeletedMessage>,
 										IHandle<AccountUpdatedMessage>

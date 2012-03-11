@@ -33,7 +33,7 @@
 					 HorizontalContentAlignment="Stretch"></ListBox>
 			<Button x:Name="CreateAccount"
 					Grid.Row="1"
-					Content="+ Account"
+					Content="{Binding Path=LocalizedStrings.AccountsDashboardView_CreateAccount, FallbackValue='+ Account'}"
 					MinHeight="23" />
 		</Grid>
 		<sdk:GridSplitter Grid.Column="1"

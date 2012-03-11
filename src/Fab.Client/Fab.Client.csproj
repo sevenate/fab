@@ -167,6 +167,7 @@
     <Compile Include="Framework\Results\Animation.cs" />
     <Compile Include="Framework\Results\AnimationResult.cs" />
     <Compile Include="Framework\Results\SingleResult.cs" />
+    <Compile Include="Localization\LocalizableConductor.cs" />
     <Compile Include="Localization\Translator.cs">
       <SubType>Code</SubType>
     </Compile>

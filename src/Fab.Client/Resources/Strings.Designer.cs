@@ -61,6 +61,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to + Account.
+        /// </summary>
+        public static string AccountsDashboardView_CreateAccount {
+            get {
+                return ResourceManager.GetString("AccountsDashboardView_CreateAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string LoginView_Language {
@@ -192,6 +201,168 @@ namespace Fab.Client.Resources {
         public static string RegistrationView_Username {
             get {
                 return ResourceManager.GetString("RegistrationView_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string SearchDashBoardView_Charts_LegendTitle {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Charts_LegendTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Income.
+        /// </summary>
+        public static string SearchDashBoardView_Charts_Line1 {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Charts_Line1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense.
+        /// </summary>
+        public static string SearchDashBoardView_Charts_Line2 {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Charts_Line2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trends.
+        /// </summary>
+        public static string SearchDashBoardView_Charts_Title {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Charts_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Category {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Comment {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Date {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Delete {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Edit {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Expense {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Id {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Income.
+        /// </summary>
+        public static string SearchDashBoardView_Column_Income {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Column_Income", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difference:.
+        /// </summary>
+        public static string SearchDashBoardView_Difference {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Difference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense:.
+        /// </summary>
+        public static string SearchDashBoardView_Expense {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        public static string SearchDashBoardView_Filter_End {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Filter_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string SearchDashBoardView_Filter_Start {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Filter_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Income:.
+        /// </summary>
+        public static string SearchDashBoardView_Income {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Income", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postings:.
+        /// </summary>
+        public static string SearchDashBoardView_Postings {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Postings", resourceCulture);
             }
         }
         
