@@ -170,6 +170,12 @@
 										 FontWeight="Bold" />
 				</toolkit:DockPanel>
 			</DataTemplate>
+			<Style x:Key="ColumnHeaderStyle" TargetType="TextBlock">
+				<Setter Property="Foreground"
+						Value="White" />
+				<Setter Property="Margin"
+						Value="3" />
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>
