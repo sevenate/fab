@@ -8,6 +8,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Localization;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Filters;
@@ -18,7 +19,7 @@ namespace Fab.Client.MoneyTracker
 	/// Money module dashboard with accounts and transactions.
 	/// </summary>
 	[Export(typeof (IModule))]
-	public class AccountsDashboardViewModel : Conductor<AccountViewModel>.Collection.OneActive,
+	public class AccountsDashboardViewModel : LocalizableConductor<AccountViewModel>,
 	                                      IModule,
 	                                      IHandle<AccountUpdatedMessage>,
 	                                      IHandle<AccountsUpdatedMessage>,
