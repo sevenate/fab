@@ -6,6 +6,7 @@
 
 using System;
 using Caliburn.Micro;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Postings
@@ -13,7 +14,7 @@ namespace Fab.Client.MoneyTracker.Postings
 	/// <summary>
 	/// Simple "income / expense" data object.
 	/// </summary>
-	public class PostingRecordBase : PropertyChangedBase
+	public class PostingRecordBase : LocalizablePropertyChangedBase
 	{
 		private CategoryDTO category;
 
