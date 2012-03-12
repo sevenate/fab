@@ -120,6 +120,21 @@
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
     <value>+ Рахунок</value>
   </data>
+  <data name="CategoriesView_CommonCategories" xml:space="preserve">
+    <value>Загальні категорії</value>
+  </data>
+  <data name="CategoriesView_CreateNew" xml:space="preserve">
+    <value>+ Категория</value>
+  </data>
+  <data name="CategoriesView_DepositCategories" xml:space="preserve">
+    <value>Категорії доходів</value>
+  </data>
+  <data name="CategoriesView_Used" xml:space="preserve">
+    <value>Использованна</value>
+  </data>
+  <data name="CategoriesView_WithdrawalCategories" xml:space="preserve">
+    <value>Категорії витрат</value>
+  </data>
   <data name="LoginView_Language" xml:space="preserve">
     <value>Мова</value>
   </data>

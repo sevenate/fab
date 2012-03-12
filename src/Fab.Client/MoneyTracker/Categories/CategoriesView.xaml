@@ -15,7 +15,7 @@
 		</Grid.RowDefinitions>
 		<Controls:DockPanel Grid.Row="0" Margin="5">
 			<TextBlock Controls:DockPanel.Dock="Right"
-					   Text="Used"
+					   Text="{Binding Path=LocalizedStrings.CategoriesView_Used, FallbackValue='Used'}"
 					   Margin="0,0,30,0"
 					   Foreground="Gray"/>
 			<TextBlock Text="{Binding Path=DisplayName}" />
@@ -35,7 +35,7 @@
 		</toolkit:Chart>
 		<Button x:Name="CreateCategory"
 				Grid.Row="3"
-				Content="Create New"
+				Content="{Binding Path=LocalizedStrings.CategoriesView_CreateNew, FallbackValue='+ Category'}"
 				MinHeight="23" />
 	</Grid>
 </UserControl>

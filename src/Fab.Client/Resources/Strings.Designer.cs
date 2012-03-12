@@ -70,6 +70,51 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Common categories.
+        /// </summary>
+        public static string CategoriesView_CommonCategories {
+            get {
+                return ResourceManager.GetString("CategoriesView_CommonCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to + Category.
+        /// </summary>
+        public static string CategoriesView_CreateNew {
+            get {
+                return ResourceManager.GetString("CategoriesView_CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit categories.
+        /// </summary>
+        public static string CategoriesView_DepositCategories {
+            get {
+                return ResourceManager.GetString("CategoriesView_DepositCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used.
+        /// </summary>
+        public static string CategoriesView_Used {
+            get {
+                return ResourceManager.GetString("CategoriesView_Used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdrawal categories.
+        /// </summary>
+        public static string CategoriesView_WithdrawalCategories {
+            get {
+                return ResourceManager.GetString("CategoriesView_WithdrawalCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string LoginView_Language {

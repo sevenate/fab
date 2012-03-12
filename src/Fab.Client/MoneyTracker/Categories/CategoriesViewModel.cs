@@ -4,10 +4,12 @@
 // </copyright>
 //------------------------------------------------------------
 
+using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Categories.Single;
 
@@ -18,7 +20,7 @@ namespace Fab.Client.MoneyTracker.Categories
 	/// </summary>
 	[Export(typeof (CategoriesViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class CategoriesViewModel : Conductor<CategoryViewModel>.Collection.AllActive,
+	public class CategoriesViewModel : LocalizableConductor<CategoryViewModel>,
 	                                   IHandle<CategoryUpdatedMessage>,
 	                                   IHandle<CategoriesUpdatedMessage>,
 	                                   IHandle<CategoryDeletedMessage>
@@ -72,6 +74,7 @@ namespace Fab.Client.MoneyTracker.Categories
 		public CategoriesViewModel()
 		{
 			eventAggregator.Subscribe(this);
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => DisplayName);
 			ResetCategories();
 		}
 
@@ -84,7 +87,23 @@ namespace Fab.Client.MoneyTracker.Categories
 		/// </summary>
 		public override string DisplayName
 		{
-			get { return CategoryType + " categories (" + Items.Count + ")"; }
+			get
+			{
+				switch (CategoryType)
+				{
+					case CategoryType.Deposit:
+						return Resources.Strings.CategoriesView_DepositCategories + " (" + Items.Count + ")";
+
+					case CategoryType.Withdrawal:
+						return Resources.Strings.CategoriesView_WithdrawalCategories + " (" + Items.Count + ")";
+
+					case CategoryType.Common:
+						return Resources.Strings.CategoriesView_CommonCategories + " (" + Items.Count + ")";
+
+					default:
+						throw new NotSupportedException(CategoryType + " is not supported for DisplayName");
+				}
+			}
 		}
 
 		#endregion
