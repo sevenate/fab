@@ -120,6 +120,21 @@
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
     <value>+ Account</value>
   </data>
+  <data name="CategoriesView_CommonCategories" xml:space="preserve">
+    <value>Common categories</value>
+  </data>
+  <data name="CategoriesView_CreateNew" xml:space="preserve">
+    <value>+ Category</value>
+  </data>
+  <data name="CategoriesView_DepositCategories" xml:space="preserve">
+    <value>Deposit categories</value>
+  </data>
+  <data name="CategoriesView_Used" xml:space="preserve">
+    <value>Used</value>
+  </data>
+  <data name="CategoriesView_WithdrawalCategories" xml:space="preserve">
+    <value>Withdrawal categories</value>
+  </data>
   <data name="LoginView_Language" xml:space="preserve">
     <value>Language</value>
   </data>
