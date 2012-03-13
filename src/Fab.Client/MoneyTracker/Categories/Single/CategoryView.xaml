@@ -39,18 +39,22 @@
 					HorizontalAlignment="Right"
 					VerticalAlignment="Top"
 					Orientation="Horizontal">
-			<Button x:Name="Edit"
-					ToolTipService.ToolTip="Edit"
-					Width="16"
+			<Button x:Name="Edit" Width="16"
 					Height="16"
 					Padding="3">
+				<ToolTipService.ToolTip>
+					<TextBlock Foreground="Black"
+							   Text="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}" />
+				</ToolTipService.ToolTip>
 				<Resources:EditIcon />
 			</Button>
-			<Button x:Name="Delete"
-					ToolTipService.ToolTip="Delete"
-					Width="16"
+			<Button x:Name="Delete" Width="16"
 					Height="16"
 					Padding="3">
+				<ToolTipService.ToolTip>
+					<TextBlock Foreground="Black"
+							   Text="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}" />
+				</ToolTipService.ToolTip>
 				<Resources:DeleteIcon />
 			</Button>
 		</StackPanel>

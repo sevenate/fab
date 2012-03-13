@@ -135,6 +135,12 @@
   <data name="CategoriesView_WithdrawalCategories" xml:space="preserve">
     <value>Withdrawal categories</value>
   </data>
+  <data name="CategoryView_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CategoryView_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="LoginView_Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -155,6 +161,24 @@
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="NewCategoryView_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="NewCategoryView_CategoryName" xml:space="preserve">
+    <value>Category name</value>
+  </data>
+  <data name="NewCategoryView_Edit" xml:space="preserve">
+    <value>Edit category</value>
+  </data>
+  <data name="NewCategoryView_New" xml:space="preserve">
+    <value>Create new category</value>
+  </data>
+  <data name="NewCategoryView_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="NewCategoryView_Type" xml:space="preserve">
+    <value>Type</value>
   </data>
   <data name="PersonalCornerView_Sign_out" xml:space="preserve">
     <value>Sign out</value>

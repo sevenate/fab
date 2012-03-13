@@ -135,6 +135,12 @@
   <data name="CategoriesView_WithdrawalCategories" xml:space="preserve">
     <value>Категории расходов</value>
   </data>
+  <data name="CategoryView_Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="CategoryView_Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
   <data name="LoginView_Language" xml:space="preserve">
     <value>Язык</value>
   </data>
@@ -155,6 +161,24 @@
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
+  </data>
+  <data name="NewCategoryView_Cancel" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="NewCategoryView_CategoryName" xml:space="preserve">
+    <value>Имя категории</value>
+  </data>
+  <data name="NewCategoryView_Edit" xml:space="preserve">
+    <value>Редактировать категорию</value>
+  </data>
+  <data name="NewCategoryView_New" xml:space="preserve">
+    <value>Созданть дефаулт</value>
+  </data>
+  <data name="NewCategoryView_Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="NewCategoryView_Type" xml:space="preserve">
+    <value>Тип</value>
   </data>
   <data name="PersonalCornerView_Sign_out" xml:space="preserve">
     <value>Выход</value>

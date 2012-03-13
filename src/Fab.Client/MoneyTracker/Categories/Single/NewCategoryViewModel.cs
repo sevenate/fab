@@ -1,9 +1,8 @@
-﻿//---------------------------------------------------------------------------
+﻿//------------------------------------------------------------
 // <copyright file="NewCategoryViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2011-09-03" />
-//---------------------------------------------------------------------------
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Core.Framework;
 
@@ -20,7 +20,7 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 	/// View model for new account dialog.
 	/// </summary>
 	[Export(typeof (NewCategoryViewModel))]
-	public class NewCategoryViewModel : Screen, ICanBeBusy
+	public class NewCategoryViewModel : LocalizableScreen, ICanBeBusy
 	{
 		#region Dependency
 
@@ -134,7 +134,7 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 		/// </summary>
 		public override string DisplayName
 		{
-			get { return IsEditMode ? "Edit category" : "Create new category"; }
+			get { return IsEditMode ? Resources.Strings.CategoryView_Edit : Resources.Strings.NewCategoryView_New; }
 		}
 
 		#endregion

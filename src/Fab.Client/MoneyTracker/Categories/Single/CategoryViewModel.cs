@@ -11,6 +11,7 @@ using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Results;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 
 namespace Fab.Client.MoneyTracker.Categories.Single
@@ -20,7 +21,7 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 	/// </summary>
 	[Export(typeof(CategoryViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class CategoryViewModel : Screen
+	public class CategoryViewModel : LocalizableScreen
 	{
 		#region Id
 
