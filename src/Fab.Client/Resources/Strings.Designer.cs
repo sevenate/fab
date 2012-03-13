@@ -115,6 +115,24 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string CategoryView_Delete {
+            get {
+                return ResourceManager.GetString("CategoryView_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string CategoryView_Edit {
+            get {
+                return ResourceManager.GetString("CategoryView_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string LoginView_Language {
@@ -174,6 +192,60 @@ namespace Fab.Client.Resources {
         public static string LoginView_Username {
             get {
                 return ResourceManager.GetString("LoginView_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string NewCategoryView_Cancel {
+            get {
+                return ResourceManager.GetString("NewCategoryView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category name.
+        /// </summary>
+        public static string NewCategoryView_CategoryName {
+            get {
+                return ResourceManager.GetString("NewCategoryView_CategoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit category.
+        /// </summary>
+        public static string NewCategoryView_Edit {
+            get {
+                return ResourceManager.GetString("NewCategoryView_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new category.
+        /// </summary>
+        public static string NewCategoryView_New {
+            get {
+                return ResourceManager.GetString("NewCategoryView_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string NewCategoryView_Save {
+            get {
+                return ResourceManager.GetString("NewCategoryView_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string NewCategoryView_Type {
+            get {
+                return ResourceManager.GetString("NewCategoryView_Type", resourceCulture);
             }
         }
         
