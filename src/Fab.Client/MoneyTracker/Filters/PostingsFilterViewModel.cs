@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
+using Fab.Client.Localization;
 
 namespace Fab.Client.MoneyTracker.Filters
 {
@@ -15,7 +16,7 @@ namespace Fab.Client.MoneyTracker.Filters
 	/// Filter for postings.
 	/// </summary>
 	[Export(typeof(PostingsFilterViewModel))]
-	public class PostingsFilterViewModel : Screen, IHandle<LoggedInMessage>, IHandle<LoggedOutMessage>
+	public class PostingsFilterViewModel : LocalizableScreen, IHandle<LoggedInMessage>, IHandle<LoggedOutMessage>
 	{
 		#region Fields
 
