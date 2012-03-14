@@ -216,6 +216,15 @@
   <data name="PersonalCornerView_Sign_out" xml:space="preserve">
     <value>Sign out</value>
   </data>
+  <data name="PostingActionsView_NewExpense" xml:space="preserve">
+    <value>+ Expense</value>
+  </data>
+  <data name="PostingActionsView_NewIncome" xml:space="preserve">
+    <value>+ Income</value>
+  </data>
+  <data name="PostingActionsView_NewTransfer" xml:space="preserve">
+    <value>+ Transfer</value>
+  </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
     <value>I agree to the</value>
   </data>
