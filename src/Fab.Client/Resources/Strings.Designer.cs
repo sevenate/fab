@@ -385,6 +385,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        public static string PostingsFilterView_Today {
+            get {
+                return ResourceManager.GetString("PostingsFilterView_Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I agree to the.
         /// </summary>
         public static string RegistrationView_Agreement1 {

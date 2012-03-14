@@ -225,6 +225,9 @@
   <data name="PostingActionsView_NewTransfer" xml:space="preserve">
     <value>+ Перевод</value>
   </data>
+  <data name="PostingsFilterView_Today" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
     <value>Я согласен с</value>
   </data>
