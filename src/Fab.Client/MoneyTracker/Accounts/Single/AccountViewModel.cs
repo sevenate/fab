@@ -1,7 +1,8 @@
+//------------------------------------------------------------
 // <copyright file="AccountViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-05-24" />
+//------------------------------------------------------------
 
 using System;
 using System.Linq;
@@ -11,6 +12,7 @@ using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Framework.Results;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Filters;
 using Fab.Client.MoneyTracker.Postings;
@@ -23,7 +25,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 	/// </summary>
 	[Export(typeof(AccountViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class AccountViewModel : Screen, IHandle<PostingsFilterUpdatedMessage>, IHaveShutdownTask
+	public class AccountViewModel : LocalizableScreen, IHandle<PostingsFilterUpdatedMessage>, IHaveShutdownTask
 	{
 		#region Fields
 
@@ -264,6 +266,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			//TODO: Subscription required to listen on any new/updated/deleted postings so that account could update in balance locally.
 			//TODO: This should be implemented later.
 			EventAggregator.Subscribe(this);
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => LastPostingDate);
 		}
 
 		#endregion

@@ -1,25 +1,20 @@
-// <copyright file="CultureSettings.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="CultureSettings.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-06-05</date>
-// </author>
-// <editor name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-06-05</date>
-// </editor>
-// <summary>Used to get <see cref="XmlLanguage"/> for current OS culture.</summary>
+//------------------------------------------------------------
 
 using System.Threading;
 using System.Windows.Markup;
+using Caliburn.Micro;
+using Fab.Client.Localization;
 
 namespace Fab.Client.Framework
 {
 	/// <summary>
 	/// Used to get <see cref="XmlLanguage"/> for current OS culture.
 	/// </summary>
-	public class CultureSettings
+	public class CultureSettings : PropertyChangedBase
 	{
 		/// <summary>
 		/// Gets <see cref="XmlLanguage"/> for current OS culture.
@@ -28,6 +23,11 @@ namespace Fab.Client.Framework
 		public XmlLanguage Language
 		{
 			get { return XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name); }
+		}
+
+		public CultureSettings()
+		{
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => Language);
 		}
 	}
 }

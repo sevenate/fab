@@ -120,6 +120,21 @@
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
     <value>+ Счет</value>
   </data>
+  <data name="AccountView_Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="AccountView_Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="AccountView_FirstPostingOn" xml:space="preserve">
+    <value>Первая транзакция</value>
+  </data>
+  <data name="AccountView_LastPostingOn" xml:space="preserve">
+    <value>Последняя транзакция</value>
+  </data>
+  <data name="AccountView_PostingsCount" xml:space="preserve">
+    <value>Количество транзакций</value>
+  </data>
   <data name="CategoriesView_CommonCategories" xml:space="preserve">
     <value>Общие категории</value>
   </data>

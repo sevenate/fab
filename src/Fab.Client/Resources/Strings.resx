@@ -120,6 +120,21 @@
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
     <value>+ Account</value>
   </data>
+  <data name="AccountView_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="AccountView_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="AccountView_FirstPostingOn" xml:space="preserve">
+    <value>First posting on</value>
+  </data>
+  <data name="AccountView_LastPostingOn" xml:space="preserve">
+    <value>Last posting on</value>
+  </data>
+  <data name="AccountView_PostingsCount" xml:space="preserve">
+    <value>Postings count</value>
+  </data>
   <data name="CategoriesView_CommonCategories" xml:space="preserve">
     <value>Common categories</value>
   </data>

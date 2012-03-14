@@ -70,6 +70,51 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string AccountView_Delete {
+            get {
+                return ResourceManager.GetString("AccountView_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string AccountView_Edit {
+            get {
+                return ResourceManager.GetString("AccountView_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First posting on.
+        /// </summary>
+        public static string AccountView_FirstPostingOn {
+            get {
+                return ResourceManager.GetString("AccountView_FirstPostingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last posting on.
+        /// </summary>
+        public static string AccountView_LastPostingOn {
+            get {
+                return ResourceManager.GetString("AccountView_LastPostingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postings count.
+        /// </summary>
+        public static string AccountView_PostingsCount {
+            get {
+                return ResourceManager.GetString("AccountView_PostingsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Common categories.
         /// </summary>
         public static string CategoriesView_CommonCategories {

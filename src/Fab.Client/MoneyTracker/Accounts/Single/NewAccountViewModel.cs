@@ -1,7 +1,8 @@
-﻿// <copyright file="NewAccountViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+﻿//------------------------------------------------------------
+// <copyright file="NewAccountViewModel.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2011-09-02" />
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Windows.Data;
 using Caliburn.Micro;
-using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts.AssetTypes;
 using Fab.Core.Framework;
@@ -21,7 +22,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 	/// View model for new account dialog.
 	/// </summary>
 	[Export(typeof(NewAccountViewModel))]
-	public class NewAccountViewModel : Screen, ICanBeBusy
+	public class NewAccountViewModel : LocalizableScreen, ICanBeBusy
 	{
 		#region Fields
 

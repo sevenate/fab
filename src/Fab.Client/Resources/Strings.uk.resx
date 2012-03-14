@@ -120,6 +120,21 @@
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
     <value>+ Рахунок</value>
   </data>
+  <data name="AccountView_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="AccountView_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="AccountView_FirstPostingOn" xml:space="preserve">
+    <value>Перша транзакція</value>
+  </data>
+  <data name="AccountView_LastPostingOn" xml:space="preserve">
+    <value>Остання транзакція</value>
+  </data>
+  <data name="AccountView_PostingsCount" xml:space="preserve">
+    <value>Кількість транзакцій</value>
+  </data>
   <data name="CategoriesView_CommonCategories" xml:space="preserve">
     <value>Загальні категорії</value>
   </data>
@@ -259,9 +274,9 @@
     <value>Транзакцій:</value>
   </data>
   <data name="StartView_back_to_Login" xml:space="preserve">
-    <value>« назад на сторінку Входу</value>
+    <value>« назад на сторінку входу</value>
   </data>
   <data name="StartView_or_Sign_up" xml:space="preserve">
-    <value>або Підписатися »</value>
+    <value>або підписатися »</value>
   </data>
 </root>
