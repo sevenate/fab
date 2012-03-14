@@ -3,9 +3,7 @@
 // </copyright>
 // <author name="Andrew Levshoff" email="78@nreez.com" date="2011-08-16" />
 
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Caliburn.Micro;
 using Fab.Client.Localization;
 
 namespace Fab.Client.MoneyTracker.Postings.Actions

@@ -15,6 +15,7 @@
 		<sdk:Calendar x:Name="FromDateCalendar"
 					  SelectionMode="SingleRange"
 					  IsTodayHighlighted="True"
+					  Language="{Binding Language, Source={StaticResource cultureSettings}}"
 					  Height="{Binding ElementName=FromDateCalendar, Path=ActualWidth}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:CalendarLimitedSelectedRangeBehavior MaxSingleRangeLength="-1"
@@ -23,6 +24,6 @@
 		</sdk:Calendar>
 		<Button x:Name="Today"
 				Grid.Row="1"
-				Content="Today" />
+				Content="{Binding Path=LocalizedStrings.PostingsFilterView_Today, FallbackValue='Today'}" />
 	</Grid>
 </UserControl>
