@@ -241,6 +241,60 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account name.
+        /// </summary>
+        public static string NewAccountView_AccountName {
+            get {
+                return ResourceManager.GetString("NewAccountView_AccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asset type.
+        /// </summary>
+        public static string NewAccountView_AssetType {
+            get {
+                return ResourceManager.GetString("NewAccountView_AssetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string NewAccountView_Cancel {
+            get {
+                return ResourceManager.GetString("NewAccountView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string NewAccountView_Edit {
+            get {
+                return ResourceManager.GetString("NewAccountView_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string NewAccountView_New {
+            get {
+                return ResourceManager.GetString("NewAccountView_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string NewAccountView_Save {
+            get {
+                return ResourceManager.GetString("NewAccountView_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string NewCategoryView_Cancel {
@@ -259,7 +313,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit category.
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string NewCategoryView_Edit {
             get {
@@ -268,7 +322,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new category.
+        ///   Looks up a localized string similar to Create.
         /// </summary>
         public static string NewCategoryView_New {
             get {

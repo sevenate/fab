@@ -177,6 +177,24 @@
   <data name="LoginView_Username" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="NewAccountView_AccountName" xml:space="preserve">
+    <value>Account name</value>
+  </data>
+  <data name="NewAccountView_AssetType" xml:space="preserve">
+    <value>Asset type</value>
+  </data>
+  <data name="NewAccountView_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="NewAccountView_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="NewAccountView_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="NewAccountView_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="NewCategoryView_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -184,10 +202,10 @@
     <value>Category name</value>
   </data>
   <data name="NewCategoryView_Edit" xml:space="preserve">
-    <value>Edit category</value>
+    <value>Edit</value>
   </data>
   <data name="NewCategoryView_New" xml:space="preserve">
-    <value>Create new category</value>
+    <value>Create</value>
   </data>
   <data name="NewCategoryView_Save" xml:space="preserve">
     <value>Save</value>

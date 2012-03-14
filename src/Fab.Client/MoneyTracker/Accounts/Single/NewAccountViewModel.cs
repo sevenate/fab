@@ -136,7 +136,7 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		/// </summary>
 		public override string DisplayName
 		{
-			get { return IsEditMode ? "Edit account" : "Create new account"; }
+			get { return IsEditMode ? Resources.Strings.NewAccountView_Edit : Resources.Strings.NewAccountView_New; }
 		}
 
 		#endregion

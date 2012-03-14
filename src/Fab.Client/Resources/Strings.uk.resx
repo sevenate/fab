@@ -177,6 +177,24 @@
   <data name="LoginView_Username" xml:space="preserve">
     <value>Ім'я користувача</value>
   </data>
+  <data name="NewAccountView_AccountName" xml:space="preserve">
+    <value>Ім'я рахунку</value>
+  </data>
+  <data name="NewAccountView_AssetType" xml:space="preserve">
+    <value>Тип рахунку</value>
+  </data>
+  <data name="NewAccountView_Cancel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="NewAccountView_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="NewAccountView_New" xml:space="preserve">
+    <value>Створити</value>
+  </data>
+  <data name="NewAccountView_Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
   <data name="NewCategoryView_Cancel" xml:space="preserve">
     <value>Скасувати</value>
   </data>
@@ -184,10 +202,10 @@
     <value>Ім'я категорії</value>
   </data>
   <data name="NewCategoryView_Edit" xml:space="preserve">
-    <value>Редагувати категорію</value>
+    <value>Редагувати</value>
   </data>
   <data name="NewCategoryView_New" xml:space="preserve">
-    <value>Створити дефаулт</value>
+    <value>Створити</value>
   </data>
   <data name="NewCategoryView_Save" xml:space="preserve">
     <value>Зберегти</value>
