@@ -358,6 +358,33 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to + Expense.
+        /// </summary>
+        public static string PostingActionsView_NewExpense {
+            get {
+                return ResourceManager.GetString("PostingActionsView_NewExpense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to + Income.
+        /// </summary>
+        public static string PostingActionsView_NewIncome {
+            get {
+                return ResourceManager.GetString("PostingActionsView_NewIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to + Transfer.
+        /// </summary>
+        public static string PostingActionsView_NewTransfer {
+            get {
+                return ResourceManager.GetString("PostingActionsView_NewTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I agree to the.
         /// </summary>
         public static string RegistrationView_Agreement1 {

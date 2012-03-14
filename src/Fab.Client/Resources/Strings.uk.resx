@@ -216,6 +216,15 @@
   <data name="PersonalCornerView_Sign_out" xml:space="preserve">
     <value>Вихід</value>
   </data>
+  <data name="PostingActionsView_NewExpense" xml:space="preserve">
+    <value>+ Витрата</value>
+  </data>
+  <data name="PostingActionsView_NewIncome" xml:space="preserve">
+    <value>+ Дохід</value>
+  </data>
+  <data name="PostingActionsView_NewTransfer" xml:space="preserve">
+    <value>+ Переказ</value>
+  </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
     <value>Я згоден з</value>
   </data>

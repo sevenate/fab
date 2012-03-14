@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using Fab.Client.Localization;
 
 namespace Fab.Client.MoneyTracker.Postings.Actions
 {
@@ -14,7 +15,7 @@ namespace Fab.Client.MoneyTracker.Postings.Actions
 	/// </summary>
 	[Export(typeof(PostingActionsViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class PostingActionsViewModel : Screen, IPostingPanel
+	public class PostingActionsViewModel : LocalizableScreen, IPostingPanel
 	{
 		/// <summary>
 		/// Open dialog for creating new income transaction.

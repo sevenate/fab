@@ -8,19 +8,19 @@
 				VerticalAlignment="Center"
 				HorizontalAlignment="Right">
 		<Button x:Name="NewExpense"
-				Content="+ Expense"
+				Content="{Binding Path=LocalizedStrings.PostingActionsView_NewExpense, FallbackValue='+ Expense'}"
 				Padding="10"
 				MinWidth="75"
 				MinHeight="23"
 				Foreground="Red" />
 		<Button x:Name="NewIncome"
-				Content="+ Income"
+				Content="{Binding Path=LocalizedStrings.PostingActionsView_NewIncome, FallbackValue='+ Income'}"
 				Padding="10"
 				MinWidth="75"
 				MinHeight="23"
 				Foreground="#FF00FF00" />
 		<Button x:Name="NewTransfer"
-				Content="+ Transfer"
+				Content="{Binding Path=LocalizedStrings.PostingActionsView_NewTransfer, FallbackValue='+ Transfer'}"
 				Padding="10"
 				MinWidth="75"
 				MinHeight="23"
