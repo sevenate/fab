@@ -15,7 +15,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
-using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;

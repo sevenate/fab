@@ -1,7 +1,8 @@
-﻿// <copyright file="PostingsActionViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+﻿//------------------------------------------------------------
+// <copyright file="PostingActionsViewModel.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-08-16" />
+//------------------------------------------------------------
 
 using System.ComponentModel.Composition;
 using Fab.Client.Localization;
