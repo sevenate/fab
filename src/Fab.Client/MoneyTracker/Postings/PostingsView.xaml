@@ -227,20 +227,20 @@
 				</sdk:DataGridTemplateColumn>
 			</sdk:DataGrid.Columns>
 		</sdk:DataGrid>
-<!--		<sdk:GridSplitter Grid.Row="2"-->
-<!--											Background="{StaticResource Brush_WindowBackground}"-->
-<!--											HorizontalAlignment="Stretch"-->
-<!--											VerticalAlignment="Center" />-->
-<!--		<toolkit:Chart Grid.Row="3"-->
-<!--									 Title="Balance"-->
-<!--									 LegendTitle="Data">-->
-<!--			~1~ Balance @1@-->
-<!--			<toolkit:AreaSeries Title="Balance"-->
-<!--													IndependentValueBinding="{Binding Path=Date}"-->
-<!--													DependentValueBinding="{Binding Path=Balance}"-->
-<!--													ItemsSource="{Binding Path=TransactionRecords}">-->
-<!--			</toolkit:AreaSeries>-->
-<!--		</toolkit:Chart>-->
+		<sdk:GridSplitter Grid.Row="2"
+											Background="{StaticResource Brush_WindowBackground}"
+											HorizontalAlignment="Stretch"
+											VerticalAlignment="Center" />
+		<toolkit:Chart Grid.Row="3"
+									 Title="Balance"
+									 LegendTitle="Data">
+			<!-- Balance -->
+			<toolkit:AreaSeries Title="Balance"
+													IndependentValueBinding="{Binding Path=Date}"
+													DependentValueBinding="{Binding Path=Balance}"
+													ItemsSource="{Binding Path=TransactionRecords}">
+			</toolkit:AreaSeries>
+		</toolkit:Chart>
 		<ContentControl x:Name="ActiveItem"
 						Grid.Row="4"
 						VerticalContentAlignment="Stretch"

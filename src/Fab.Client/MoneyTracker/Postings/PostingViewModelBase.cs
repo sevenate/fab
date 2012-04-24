@@ -404,10 +404,10 @@ namespace Fab.Client.MoneyTracker.Postings
 			var filter = new TextSearchFilter
 			             	{
 			             		NotOlderThen = UseStartDate
-			             		               	? StartDate.ToUniversalTime().Date
+												? StartDate.Date.ToUniversalTime()
 			             		               	: (DateTime?)null,
 			             		Upto = UseEndDate
-										? EndDate.AddDays(1) /*.AddMilliseconds(1)*/.ToUniversalTime().Date
+										? EndDate.Date.AddDays(1).ToUniversalTime()
 			             		       	: (DateTime?)null,
 			             		Contains = !string.IsNullOrEmpty(ContainsText)
 			             		           	? ContainsText
