@@ -59,6 +59,7 @@ namespace Fab.Client.MoneyTracker
 			PostingsFilter = postingsFilterVM;
 			eventAggregator.Subscribe(this);
 			ResetAccounts();
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
 		}
 
 		#endregion
@@ -67,7 +68,7 @@ namespace Fab.Client.MoneyTracker
 
 		public string Name
 		{
-			get { return "Accounts (" + Items.Count + ")"; }
+			get { return string.Format(Resources.Strings.AccountsDashboardView_Name_Counts, Items.Count); }
 		}
 
 		public void Show()

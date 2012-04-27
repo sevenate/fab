@@ -315,6 +315,9 @@
   <data name="SearchDashBoardView_Name_Results" xml:space="preserve">
     <value>Пошук ({0})</value>
   </data>
+  <data name="AccountsDashboardView_Name_Counts" xml:space="preserve">
+    <value>Рахунки ({0})</value>
+  </data>
   <data name="CategoriesDashBoardView_Name_Counts" xml:space="preserve">
     <value>Категорії ({0})</value>
   </data>

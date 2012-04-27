@@ -70,6 +70,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accounts ({0}).
+        /// </summary>
+        public static string AccountsDashboardView_Name_Counts {
+            get {
+                return ResourceManager.GetString("AccountsDashboardView_Name_Counts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string AccountView_Delete {
