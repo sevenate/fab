@@ -115,6 +115,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Categories ({0}).
+        /// </summary>
+        public static string CategoriesDashBoardView_Name_Counts {
+            get {
+                return ResourceManager.GetString("CategoriesDashBoardView_Name_Counts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Common categories.
         /// </summary>
         public static string CategoriesView_CommonCategories {

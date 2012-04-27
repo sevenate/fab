@@ -7,6 +7,7 @@
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Categories;
 
@@ -101,6 +102,7 @@ namespace Fab.Client.MoneyTracker
 			DepositCategories.CategoryType = CategoryType.Deposit;
 
 			repository.Entities.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
 		}
 
 		#endregion
@@ -109,7 +111,7 @@ namespace Fab.Client.MoneyTracker
 
 		public string Name
 		{
-			get { return "Categories (" + repository.Entities.Count + ")"; }
+			get { return string.Format(Resources.Strings.CategoriesDashBoardView_Name_Counts, repository.Entities.Count); }
 		}
 
 		public void Show()
