@@ -36,7 +36,7 @@ namespace Fab.Client.MoneyTracker.Postings
 
 		#region Properties
 
-		private string searchStatus = "Search";
+		private string searchStatus = Resources.Strings.PostingViewModelBase_SearchStatus_Search;
 
 		public string SearchStatus
 		{
@@ -268,6 +268,10 @@ namespace Fab.Client.MoneyTracker.Postings
 			TransferDetails = transferDetails;
 			Init();
 			eventAggregator.Subscribe(this);
+			Translator.CultureChanged += (sender, args) =>
+			                             	{
+			                             		NotifyOfPropertyChange(() => SearchStatus);
+			                             	};
 		}
 
 		protected void Init()
@@ -319,11 +323,11 @@ namespace Fab.Client.MoneyTracker.Postings
 				Action = () =>
 				{
 					IsBusy = true;
-					SearchStatus = "Searching...";
+					SearchStatus = Resources.Strings.PostingViewModelBase_SearchStatus_Searching;
 				}
 			};
-			
-			yield return Loader.Show("Loading...");
+
+			yield return Loader.Show(Resources.Strings.Loader_Loading);
 
 			yield return new SequentialResult(PreAction().GetEnumerator());
 
@@ -331,7 +335,7 @@ namespace Fab.Client.MoneyTracker.Postings
 
 			yield return new SequentialResult(LoadPostings().GetEnumerator());
 
-			SearchStatus = "Search";
+			SearchStatus = Resources.Strings.PostingViewModelBase_SearchStatus_Search;
 			IsBusy = false;
 			IsOutdated = false;
 
@@ -598,7 +602,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			}
 			else
 			{
-				throw new NotSupportedException("Transaction of type " + transactionRecord.Journal.GetType() + " is not editable.");
+				throw new NotSupportedException(string.Format("Transaction of type {0} is not editable.", transactionRecord.Journal.GetType()));
 			}
 		}
 
@@ -607,9 +611,8 @@ namespace Fab.Client.MoneyTracker.Postings
 			var openConfirmationResult = new OpenConfirmationResult(eventAggregator)
 			                             	{
 			                             		Message =
-			                             			"Do you really want to delete the selected posting #" +
-			                             			transactionRecord.TransactionId + " ?",
-			                             		Title = "Confirmation",
+													string.Format(Resources.Strings.PostingViewModelBase_DeleteConfirmation_Message, transactionRecord.TransactionId),
+												Title = Resources.Strings.PostingViewModelBase_DeleteConfirmation_Title,
 			                             		Options = MessageBoxOptions.Yes | MessageBoxOptions.Cancel,
 			                             	};
 
