@@ -11,6 +11,7 @@ using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Postings;
@@ -61,6 +62,7 @@ namespace Fab.Client.MoneyTracker
 			: base(transactionDetails, transferDetails)
 		{
 			TransactionRecords.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
 			InitSourceAccounts();
 		}
 
@@ -73,8 +75,8 @@ namespace Fab.Client.MoneyTracker
 			get
 			{
 				return TransactionRecords.Count > 0
-				       	? "Search (" + TransactionRecords.Count + ")"
-				       	: "Search";
+						? string.Format(Resources.Strings.SearchDashBoardView_Name_Results, TransactionRecords.Count)
+				       	: Resources.Strings.SearchDashBoardView_Name_Empty;
 			}
 		}
 

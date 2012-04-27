@@ -610,6 +610,24 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SearchDashBoardView_Name_Empty {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Name_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search ({0}).
+        /// </summary>
+        public static string SearchDashBoardView_Name_Results {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Name_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Postings:.
         /// </summary>
         public static string SearchDashBoardView_Postings {
