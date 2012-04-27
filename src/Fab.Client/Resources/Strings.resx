@@ -321,4 +321,19 @@
   <data name="CategoriesDashBoardView_Name_Counts" xml:space="preserve">
     <value>Categories ({0})</value>
   </data>
+  <data name="Loader_Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="PostingViewModelBase_DeleteConfirmation_Message" xml:space="preserve">
+    <value>Do you really want to delete the selected posting #{0} ?</value>
+  </data>
+  <data name="PostingViewModelBase_SearchStatus_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="PostingViewModelBase_SearchStatus_Searching" xml:space="preserve">
+    <value>Searching...</value>
+  </data>
+  <data name="PostingViewModelBase_DeleteConfirmation_Title" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
 </root>

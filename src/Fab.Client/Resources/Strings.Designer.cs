@@ -196,6 +196,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Loader_Loading {
+            get {
+                return ResourceManager.GetString("Loader_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string LoginView_Language {
@@ -408,6 +417,42 @@ namespace Fab.Client.Resources {
         public static string PostingsFilterView_Today {
             get {
                 return ResourceManager.GetString("PostingsFilterView_Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete the selected posting #{0} ?.
+        /// </summary>
+        public static string PostingViewModelBase_DeleteConfirmation_Message {
+            get {
+                return ResourceManager.GetString("PostingViewModelBase_DeleteConfirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string PostingViewModelBase_DeleteConfirmation_Title {
+            get {
+                return ResourceManager.GetString("PostingViewModelBase_DeleteConfirmation_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string PostingViewModelBase_SearchStatus_Search {
+            get {
+                return ResourceManager.GetString("PostingViewModelBase_SearchStatus_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching....
+        /// </summary>
+        public static string PostingViewModelBase_SearchStatus_Searching {
+            get {
+                return ResourceManager.GetString("PostingViewModelBase_SearchStatus_Searching", resourceCulture);
             }
         }
         

@@ -321,4 +321,24 @@
   <data name="CategoriesDashBoardView_Name_Counts" xml:space="preserve">
     <value>Категорії ({0})</value>
   </data>
+	<data name="Loader_Loading"
+				xml:space="preserve">
+    <value>Завантаження...</value>
+  </data>
+	<data name="PostingViewModelBase_DeleteConfirmation_Message"
+				xml:space="preserve">
+    <value>Ви дійсно хочете видалити виділену проводку # {0}?</value>
+  </data>
+	<data name="PostingViewModelBase_SearchStatus_Search"
+				xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+	<data name="PostingViewModelBase_SearchStatus_Searching"
+				xml:space="preserve">
+    <value>Идет пошук...</value>
+  </data>
+	<data name="PostingViewModelBase_DeleteConfirmation_Title"
+				xml:space="preserve">
+    <value>Підтвердження</value>
+  </data>
 </root>
