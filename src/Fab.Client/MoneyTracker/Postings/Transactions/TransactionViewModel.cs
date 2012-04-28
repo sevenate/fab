@@ -266,10 +266,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 									return false;
 			                 	};
-			Translator.CultureChanged += delegate
-			                             	{
-			                             		OperationDate = DateTime.Now;
-			                             	};
+			Translator.CultureChanged += (sender, args) => OperationDate = DateTime.Now;
 		}
 
 		#endregion

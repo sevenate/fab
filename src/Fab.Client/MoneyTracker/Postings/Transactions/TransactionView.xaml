@@ -329,7 +329,7 @@
 						 TabIndex="3">
 			<ToolTipService.ToolTip>
 				<TextBlock Foreground="Black"
-						   Text="{Binding Path=LocalizedStrings.TransactionView_Comment, FallbackValue='Comment'}" />
+						   Text="{Binding Path=LocalizedStrings.TransactionView_Comment, FallbackValue='Notes'}" />
 			</ToolTipService.ToolTip>
 			<TextBox.Style>
 				<Style TargetType="TextBox">
