@@ -4,6 +4,7 @@
 // </copyright>
 //------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
@@ -62,7 +63,12 @@ namespace Fab.Client.MoneyTracker
 			: base(transactionDetails, transferDetails)
 		{
 			TransactionRecords.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
-			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
+			Translator.CultureChanged += delegate
+			{
+				StartDate = DateTime.Now;
+				EndDate = StartDate;
+				NotifyOfPropertyChange(() => Name);
+			};
 			InitSourceAccounts();
 		}
 

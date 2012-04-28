@@ -4,7 +4,6 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-			 xmlns:local="clr-namespace:Fab.Client.Common"
 			 xmlns:Controls="clr-namespace:Fab.Client.Framework.Controls"
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -183,7 +182,6 @@
 		<!--				</Setter.Value>-->
 		<!--			</Setter>-->
 		<!--		</Style>-->
-		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
@@ -230,7 +228,7 @@
 						SelectedDateFormat="Long"
 						SelectedDate="{Binding Path=OperationDate,
 												   Mode=TwoWay,
-												   Converter={StaticResource DateTimeUtcToLocalConverter}}"
+												   Converter={StaticResource dateTimeUtcToLocal}}"
 						VerticalAlignment="Center"
 						TabIndex="6"
 						IsTabStop="True" />

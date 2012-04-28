@@ -266,7 +266,10 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 									return false;
 			                 	};
-//			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => OperationDate);
+			Translator.CultureChanged += delegate
+			                             	{
+			                             		OperationDate = DateTime.Now;
+			                             	};
 		}
 
 		#endregion
