@@ -16,6 +16,7 @@ using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Categories;
@@ -28,7 +29,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 	/// </summary>
 	[Export(typeof(TransactionViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class TransactionViewModel : Screen, ICanBeBusy, IPostingPanel
+	public class TransactionViewModel : LocalizableScreen, ICanBeBusy, IPostingPanel
 	{
 		#region Fields
 
@@ -265,6 +266,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 									return false;
 			                 	};
+//			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => OperationDate);
 		}
 
 		#endregion

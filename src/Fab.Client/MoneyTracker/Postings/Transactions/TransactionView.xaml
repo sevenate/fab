@@ -204,29 +204,28 @@
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<TextBlock Text="Date"
+		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Date, FallbackValue='Date'}"
 				   VerticalAlignment="Bottom"
 				   Margin="3,0,0,0" />
 		<TextBlock Grid.Column="1"
-				   Text="Category"
+				   Text="{Binding Path=LocalizedStrings.TransactionView_Category, FallbackValue='Category'}"
 				   VerticalAlignment="Bottom"
 				   Margin="8,0,0,0" />
 		<TextBlock Grid.Column="2"
-				   Text="Price"
+				   Text="{Binding Path=LocalizedStrings.TransactionView_Price, FallbackValue='Price'}"
 				   VerticalAlignment="Bottom"
 				   Margin="8,0,0,0" />
 		<TextBlock Grid.Column="4"
-				   Text="Quantity"
+				   Text="{Binding Path=LocalizedStrings.TransactionView_Quantity, FallbackValue='Quantity'}"
 				   VerticalAlignment="Bottom"
 				   Margin="8,0,0,0" />
 		<TextBlock Grid.Column="6"
-				   Text="Amount"
+				   Text="{Binding Path=LocalizedStrings.TransactionView_Amount, FallbackValue='Amount'}"
 				   VerticalAlignment="Bottom"
 				   Margin="8,0,0,0" />
 		<sdk:DatePicker Grid.Column="0"
 						Grid.Row="1"
 						x:Name="OperationDate"
-						ToolTipService.ToolTip="Operation Date"
 						IsTodayHighlighted="True"
 						SelectedDateFormat="Long"
 						SelectedDate="{Binding Path=OperationDate,
@@ -235,24 +234,9 @@
 						VerticalAlignment="Center"
 						TabIndex="6"
 						IsTabStop="True" />
-		<!--			<sdk:AutoCompleteBox ItemsSource="{Binding Categories}"-->
-		<!--								 ValueMemberBinding="{Binding Name}"-->
-		<!--								 MinimumPrefixLength="0"-->
-		<!--								 IsTextCompletionEnabled="True"-->
-		<!--								 FilterMode="Custom"-->
-		<!--								 ItemFilter="{Binding CategoryFilter}"-->
-		<!--								 SelectedItem="{Binding CurrentCategory, Mode=TwoWay}"-->
-		<!--								 Style="{StaticResource EditableComboStyle}">-->
-		<!--				<sdk:AutoCompleteBox.ItemTemplate>-->
-		<!--					<DataTemplate>-->
-		<!--						<TextBlock Text="{Binding Name}" />-->
-		<!--					</DataTemplate>-->
-		<!--				</sdk:AutoCompleteBox.ItemTemplate>-->
-		<!--			</sdk:AutoCompleteBox>-->
 		<Controls:AutoCompleteComboBox Grid.Column="1"
 									   Grid.Row="1"
 									   ItemsSource="{Binding Path=Categories}"
-									   ToolTipService.ToolTip="Category"
 									   ValueMemberBinding="{Binding Path=Name}"
 									   MinimumPrefixLength="0"
 									   Margin="5,0"
@@ -279,7 +263,6 @@
 				 Grid.Row="1"
 				 Grid.Column="2"
 		         MaxLength="13"
-		         ToolTipService.ToolTip="Price"
 		         common:BindingHelper.UpdateSourceOnChange="True"
 		         Text="{Binding Path=Price,
 					 Mode=TwoWay,
@@ -307,7 +290,6 @@
 		<TextBox x:Name="Quantity"
 				 Grid.Row="1"
 				 Grid.Column="4"
-				 ToolTipService.ToolTip="Quantity"
 		         MaxLength="13"
 		         common:BindingHelper.UpdateSourceOnChange="True"
 		         Text="{Binding Path=Quantity,
@@ -337,7 +319,6 @@
 				   Grid.Row="1"
 		           Foreground="{Binding Path=Amount, Converter={StaticResource balanceToColor}}"
 				   Text="{Binding Path=Amount, Converter={StaticResource nullToQuestion}, StringFormat=n}"
-		           ToolTipService.ToolTip="Amount"
 		           VerticalAlignment="Center"
 				   MinWidth="50"
 				   FontSize="16"
@@ -347,8 +328,11 @@
 						 Grid.ColumnSpan="7"
 						 Text="{Binding Path=Comment, Mode=TwoWay}"
 						 VerticalAlignment="Center"
-						 TabIndex="3"
-						 ToolTipService.ToolTip="Comment">
+						 TabIndex="3">
+			<ToolTipService.ToolTip>
+				<TextBlock Foreground="Black"
+						   Text="{Binding Path=LocalizedStrings.TransactionView_Comment, FallbackValue='Comment'}" />
+			</ToolTipService.ToolTip>
 			<TextBox.Style>
 				<Style TargetType="TextBox">
 					<Setter Property="MaxLength"
@@ -371,7 +355,7 @@
 		<Button x:Name="Save"
 				Grid.Column="8"
 				Grid.RowSpan="3"
-				Content="Save"
+				Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
 				MinWidth="75"
 				MinHeight="23"
 				Margin="5,0"
@@ -379,7 +363,7 @@
 		<Button x:Name="Cancel"
 				Grid.Column="9"
 				Grid.RowSpan="3"
-		        Content="Cancel"
+				Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
 		        MinWidth="75"
 		        MinHeight="23"
 		        TabIndex="5" />
