@@ -788,5 +788,68 @@ namespace Fab.Client.Resources {
                 return ResourceManager.GetString("TransactionView_Save", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string TransferView_Amount {
+            get {
+                return ResourceManager.GetString("TransferView_Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string TransferView_Cancel {
+            get {
+                return ResourceManager.GetString("TransferView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string TransferView_Comment {
+            get {
+                return ResourceManager.GetString("TransferView_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string TransferView_Date {
+            get {
+                return ResourceManager.GetString("TransferView_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Account.
+        /// </summary>
+        public static string TransferView_From_Account {
+            get {
+                return ResourceManager.GetString("TransferView_From_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string TransferView_Save {
+            get {
+                return ResourceManager.GetString("TransferView_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Account.
+        /// </summary>
+        public static string TransferView_To_Account {
+            get {
+                return ResourceManager.GetString("TransferView_To_Account", resourceCulture);
+            }
+        }
     }
 }

@@ -360,4 +360,25 @@
   <data name="TransactionView_Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="TransferView_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="TransferView_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TransferView_Comment" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="TransferView_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="TransferView_From_Account" xml:space="preserve">
+    <value>From Account</value>
+  </data>
+  <data name="TransferView_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="TransferView_To_Account" xml:space="preserve">
+    <value>To Account</value>
+  </data>
 </root>

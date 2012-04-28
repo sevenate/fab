@@ -360,4 +360,25 @@
   <data name="TransactionView_Save" xml:space="preserve">
     <value>Зберегти</value>
   </data>
+  <data name="TransferView_Amount" xml:space="preserve">
+    <value>Сума</value>
+  </data>
+  <data name="TransferView_Cancel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="TransferView_Comment" xml:space="preserve">
+    <value>Нотатки</value>
+  </data>
+  <data name="TransferView_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="TransferView_From_Account" xml:space="preserve">
+    <value>З рахунку</value>
+  </data>
+  <data name="TransferView_Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="TransferView_To_Account" xml:space="preserve">
+    <value>На рахунок</value>
+  </data>
 </root>

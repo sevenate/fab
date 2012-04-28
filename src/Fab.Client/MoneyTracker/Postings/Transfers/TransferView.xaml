@@ -1,21 +1,18 @@
 ﻿<UserControl x:Class="Fab.Client.MoneyTracker.Postings.Transfers.TransferView"
-						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-						 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-						 xmlns:local="clr-namespace:Fab.Client.Common"
-						 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
-						 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-						 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-						 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
-						 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
-						 mc:Ignorable="d">
-	<UserControl.Resources>
-		<local:DateTimeUtcToLocalConverter x:Key="DateTimeUtcToLocalConverter" />
-	</UserControl.Resources>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
+			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
+			 mc:Ignorable="d">
 	<Grid Background="{StaticResource Brush_WindowBackground}">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
@@ -26,126 +23,147 @@
 			<ColumnDefinition />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
+		<TextBlock Grid.Column="0"
+				   Text="{Binding Path=LocalizedStrings.TransferView_Date, FallbackValue='Date'}"
+				   VerticalAlignment="Bottom"
+				   Margin="3,0,0,0" />
+		<TextBlock Grid.Column="1"
+				   Text="{Binding Path=LocalizedStrings.TransferView_From_Account, FallbackValue='From Account'}"
+				   VerticalAlignment="Bottom"
+				   Margin="8,0,0,0" />
+		<TextBlock Grid.Column="3"
+				   Text="{Binding Path=LocalizedStrings.TransferView_To_Account, FallbackValue='To Account'}"
+				   VerticalAlignment="Bottom"
+				   Margin="8,0,0,0" />
+		<TextBlock Grid.Column="4"
+				   Text="{Binding Path=LocalizedStrings.TransferView_Amount, FallbackValue='Amount'}"
+				   VerticalAlignment="Bottom"
+				   Margin="8,0,0,0" />
 		<sdk:DatePicker x:Name="OperationDate"
-										Grid.Column="0"
-										ToolTipService.ToolTip="Operation date"
-										IsTodayHighlighted="True"
-										SelectedDateFormat="Long"
-										SelectedDate="{Binding Path=OperationDate,
+						Grid.Column="0"
+						Grid.Row="1"
+						IsTodayHighlighted="True"
+						SelectedDateFormat="Long"
+						SelectedDate="{Binding Path=OperationDate,
 												   Mode=TwoWay,
-												   Converter={StaticResource DateTimeUtcToLocalConverter}}"
-										VerticalAlignment="Center"
-										IsTabStop="True"
-										TabIndex="5" />
+												   Converter={StaticResource dateTimeUtcToLocal}}"
+						VerticalAlignment="Center"
+						IsTabStop="True"
+						TabIndex="5" />
 		<ComboBox x:Name="SourceAccounts"
-							Grid.Column="1"
-							MinWidth="150"
-							Margin="5,0"
-							ToolTipService.ToolTip="From Account"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							HorizontalContentAlignment="Stretch"
-							TabIndex="0"
-							ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
-							ItemTemplate="{StaticResource AccountBrief}" />
+				  Grid.Column="1"
+				  Grid.Row="1"
+				  MinWidth="150"
+				  Margin="5,0"
+				  VerticalAlignment="Center"
+				  HorizontalAlignment="Stretch"
+				  HorizontalContentAlignment="Stretch"
+				  TabIndex="0"
+				  ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
+				  ItemTemplate="{StaticResource AccountBrief}" />
 		<TextBlock Grid.Column="2"
-							 VerticalAlignment="Center"
-							 Text="->" />
+				   Grid.Row="1"
+				   VerticalAlignment="Center"
+				   Text="->" />
 		<ComboBox x:Name="TargetAccounts"
-							Grid.Column="3"
-							MinWidth="150"
-							Margin="5,0"
-							ToolTipService.ToolTip="To Account"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							HorizontalContentAlignment="Stretch"
-							TabIndex="1"
-							ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
+				  Grid.Column="3"
+				  Grid.Row="1"
+				  MinWidth="150"
+				  Margin="5,0"
+				  VerticalAlignment="Center"
+				  HorizontalAlignment="Stretch"
+				  HorizontalContentAlignment="Stretch"
+				  TabIndex="1"
+				  ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<toolkit:DockPanel HorizontalAlignment="Stretch">
 						<TextBlock toolkit:DockPanel.Dock="Right"
-											 Margin="5,0,0,0"
-											 MinWidth="20"
-											 Text="{Binding Path=AssetTypeId, Converter={StaticResource assetTypeIdToString}}"
-											 VerticalAlignment="Center"
-											 HorizontalAlignment="Left" />
+								   Margin="5,0,0,0"
+								   MinWidth="20"
+								   Text="{Binding Path=AssetTypeId, Converter={StaticResource assetTypeIdToString}}"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Left" />
 						<TextBlock toolkit:DockPanel.Dock="Right"
-											 Text="{Binding Path=Balance, StringFormat=\{0:N\}}"
-											 Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
-											 Margin="5,0,0,0"
-											 HorizontalAlignment="Right"
-											 VerticalAlignment="Center" />
+								   Text="{Binding Path=Balance, StringFormat=\{0:N\}}"
+								   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
+								   Margin="5,0,0,0"
+								   HorizontalAlignment="Right"
+								   VerticalAlignment="Center" />
 						<TextBlock Text="{Binding Path=Name}"
-											 FontWeight="Bold" />
+								   FontWeight="Bold" />
 					</toolkit:DockPanel>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 		<TextBox x:Name="Amount"
-						 Grid.Column="4"
-						 ToolTipService.ToolTip="Amount"
-						 MaxLength="50"
-						 MinWidth="50"
-						 Margin="5,0"
-						 common:BindingHelper.UpdateSourceOnChange="True"
-						 Text="{Binding Path=Amount,
+				 Grid.Column="4"
+				 Grid.Row="1"
+				 MaxLength="50"
+				 MinWidth="50"
+				 Margin="5,0"
+				 common:BindingHelper.UpdateSourceOnChange="True"
+				 Text="{Binding Path=Amount,
 							Mode=TwoWay,
 							UpdateSourceTrigger=Explicit,
 							ValidatesOnDataErrors=True,
 							ValidatesOnExceptions=True,
 							ValidatesOnNotifyDataErrors=True,
 							NotifyOnValidationError=True}"
-						 VerticalAlignment="Center"
-						 TabIndex="4"
-						 CaretBrush="Yellow">
+				 VerticalAlignment="Center"
+				 TabIndex="4"
+				 CaretBrush="Yellow">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>
 		<toolkit:DockPanel Grid.ColumnSpan="5"
-											 Grid.Row="1">
+						   Grid.Row="2">
 			<Button x:Name="Cancel"
-							toolkit:DockPanel.Dock="Right"
-							Content="Cancel"
-							MinWidth="75"
-							MinHeight="23"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Center"
-							TabIndex="7" />
+					toolkit:DockPanel.Dock="Right"
+					Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
+					MinWidth="75"
+					MinHeight="23"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					TabIndex="7" />
 			<Button x:Name="Save"
-							toolkit:DockPanel.Dock="Right"
-							Content="Save"
-							MinWidth="75"
-							MinHeight="23"
-							Margin="5,0"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Center"
-							TabIndex="6" />
+					toolkit:DockPanel.Dock="Right"
+					Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
+					MinWidth="75"
+					MinHeight="23"
+					Margin="5,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					TabIndex="6" />
 			<TextBox x:Name="Comment"
-							 Text="{Binding Path=Comment, Mode=TwoWay}"
-							 VerticalAlignment="Center"
-							 IsTabStop="True"
-							 TabIndex="5">
+					 Text="{Binding Path=Comment, Mode=TwoWay}"
+					 VerticalAlignment="Center"
+					 IsTabStop="True"
+					 TabIndex="5">
 				<TextBox.Style>
 					<Style TargetType="TextBox">
 						<Setter Property="MaxLength"
-										Value="255" />
+								Value="255" />
 						<Setter Property="TextWrapping"
-										Value="Wrap" />
+								Value="Wrap" />
 						<Setter Property="MaxHeight"
-										Value="100" />
+								Value="100" />
 						<Setter Property="AcceptsReturn"
-										Value="True" />
+								Value="True" />
 						<Setter Property="Foreground"
-										Value="White" />
+								Value="White" />
 						<Setter Property="CaretBrush"
-										Value="White" />
+								Value="White" />
 						<Setter Property="Background"
-										Value="{StaticResource Brush_WindowBackground}" />
+								Value="{StaticResource Brush_WindowBackground}" />
 					</Style>
 				</TextBox.Style>
+				<ToolTipService.ToolTip>
+					<TextBlock Foreground="Black"
+							   Text="{Binding Path=LocalizedStrings.TransferView_Comment, FallbackValue='Notes'}" />
+				</ToolTipService.ToolTip>
 			</TextBox>
 		</toolkit:DockPanel>
 	</Grid>

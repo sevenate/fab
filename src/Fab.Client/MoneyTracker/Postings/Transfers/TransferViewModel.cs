@@ -14,6 +14,7 @@ using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Core.Framework;
@@ -25,7 +26,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 	/// </summary>
 	[Export(typeof(TransferViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class TransferViewModel : Screen, ICanBeBusy, IPostingPanel
+	public class TransferViewModel : LocalizableScreen, ICanBeBusy, IPostingPanel
 	{
 		#region Fields
 
@@ -139,6 +140,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		[ImportingConstructor]
 		public TransferViewModel()
 		{
+			Translator.CultureChanged += (sender, args) => OperationDate = DateTime.Now;
 		}
 
 		#endregion
