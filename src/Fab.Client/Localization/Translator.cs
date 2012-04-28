@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 
 namespace Fab.Client.Localization
@@ -71,5 +72,15 @@ namespace Fab.Client.Localization
 		public static event EventHandler CultureChanged = delegate {};
 
 		#endregion
+
+		/// <summary>
+		/// Initializes static members of the <see cref="Translator"/> class.
+		/// </summary>
+		static Translator()
+		{
+			// Determine user's current culture setting and if it is in the supported list - use it, or fallback to default culture
+			var culture = SupportedCultures.FirstOrDefault(info => info.TwoLetterISOLanguageName == CurrentCulture.TwoLetterISOLanguageName);
+			CurrentCulture = culture ?? DefaultCulture;
+		}
 	}
 }
