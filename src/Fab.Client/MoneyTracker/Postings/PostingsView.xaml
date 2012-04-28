@@ -14,8 +14,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
-			<RowDefinition Height="4" />
-			<RowDefinition MinHeight="150" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Controls:GroupBox Margin="5">
@@ -227,26 +226,12 @@
 				</sdk:DataGridTemplateColumn>
 			</sdk:DataGrid.Columns>
 		</sdk:DataGrid>
-		<sdk:GridSplitter Grid.Row="2"
-											Background="{StaticResource Brush_WindowBackground}"
-											HorizontalAlignment="Stretch"
-											VerticalAlignment="Center" />
-		<toolkit:Chart Grid.Row="3"
-									 Title="Balance"
-									 LegendTitle="Data">
-			<!-- Balance -->
-			<toolkit:AreaSeries Title="Balance"
-													IndependentValueBinding="{Binding Path=Date}"
-													DependentValueBinding="{Binding Path=Balance}"
-													ItemsSource="{Binding Path=TransactionRecords}">
-			</toolkit:AreaSeries>
-		</toolkit:Chart>
 		<ContentControl x:Name="ActiveItem"
-						Grid.Row="4"
+						Grid.Row="2"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
 		<ContentControl x:Name="Dialogs"
-						Grid.RowSpan="5"
+						Grid.RowSpan="3"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
 	</Grid>
