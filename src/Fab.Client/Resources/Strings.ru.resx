@@ -145,7 +145,7 @@
     <value>Категории доходов</value>
   </data>
   <data name="CategoriesView_Used" xml:space="preserve">
-    <value>Использованна</value>
+    <value>Использована</value>
   </data>
   <data name="CategoriesView_WithdrawalCategories" xml:space="preserve">
     <value>Категории расходов</value>
@@ -321,24 +321,43 @@
   <data name="CategoriesDashBoardView_Name_Counts" xml:space="preserve">
     <value>Категории ({0})</value>
   </data>
-	<data name="Loader_Loading"
-				xml:space="preserve">
+  <data name="Loader_Loading" xml:space="preserve">
     <value>Загрузка...</value>
   </data>
-	<data name="PostingViewModelBase_DeleteConfirmation_Message"
-				xml:space="preserve">
+  <data name="PostingViewModelBase_DeleteConfirmation_Message" xml:space="preserve">
     <value>Вы действительно хотите удалить выделенную проводку #{0} ?</value>
   </data>
-	<data name="PostingViewModelBase_SearchStatus_Search"
-				xml:space="preserve">
+  <data name="PostingViewModelBase_SearchStatus_Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
-	<data name="PostingViewModelBase_SearchStatus_Searching"
-				xml:space="preserve">
+  <data name="PostingViewModelBase_SearchStatus_Searching" xml:space="preserve">
     <value>Идет поиск...</value>
   </data>
-	<data name="PostingViewModelBase_DeleteConfirmation_Title"
-				xml:space="preserve">
+  <data name="PostingViewModelBase_DeleteConfirmation_Title" xml:space="preserve">
     <value>Подтверждение</value>
+  </data>
+  <data name="TransactionView_Amount" xml:space="preserve">
+    <value>Сумма</value>
+  </data>
+  <data name="TransactionView_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="TransactionView_Category" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="TransactionView_Comment" xml:space="preserve">
+    <value>Заметки</value>
+  </data>
+  <data name="TransactionView_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="TransactionView_Price" xml:space="preserve">
+    <value>Цена</value>
+  </data>
+  <data name="TransactionView_Quantity" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="TransactionView_Save" xml:space="preserve">
+    <value>Сохранить</value>
   </data>
 </root>

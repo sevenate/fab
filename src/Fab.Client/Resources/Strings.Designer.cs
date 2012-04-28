@@ -716,5 +716,77 @@ namespace Fab.Client.Resources {
                 return ResourceManager.GetString("StartView_or_Sign_up", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string TransactionView_Amount {
+            get {
+                return ResourceManager.GetString("TransactionView_Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string TransactionView_Cancel {
+            get {
+                return ResourceManager.GetString("TransactionView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string TransactionView_Category {
+            get {
+                return ResourceManager.GetString("TransactionView_Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string TransactionView_Comment {
+            get {
+                return ResourceManager.GetString("TransactionView_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string TransactionView_Date {
+            get {
+                return ResourceManager.GetString("TransactionView_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string TransactionView_Price {
+            get {
+                return ResourceManager.GetString("TransactionView_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string TransactionView_Quantity {
+            get {
+                return ResourceManager.GetString("TransactionView_Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string TransactionView_Save {
+            get {
+                return ResourceManager.GetString("TransactionView_Save", resourceCulture);
+            }
+        }
     }
 }
