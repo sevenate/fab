@@ -75,6 +75,8 @@ namespace Fab.Client.MoneyTracker.Filters
 		{
 			var dateTime = DateTime.Now.Date;
 			selectedRange = new Tuple<DateTime, DateTime>(dateTime, dateTime);
+
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => SelectedRange);
 			
 			this.eventAggregator = eventAggregator;
 			this.eventAggregator.Subscribe(this);
