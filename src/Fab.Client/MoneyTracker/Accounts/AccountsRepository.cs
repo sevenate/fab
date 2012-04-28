@@ -280,7 +280,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 			                 {
 			                 	AssetTypeId = assetTypeId,
 			                 	Balance = 0,
-			                 	Created = DateTime.UtcNow,
+			                 	Created = DateTime.Now,
 			                 	FirstPostingDate = null,
 			                 	Id = 0,
 			                 	LastPostingDate = null,
