@@ -15,7 +15,6 @@
 		<sdk:Calendar x:Name="FromDateCalendar"
 					  SelectionMode="SingleRange"
 					  IsTodayHighlighted="True"
-					  Language="{Binding Language, Source={StaticResource cultureSettings}}"
 					  Height="{Binding ElementName=FromDateCalendar, Path=ActualWidth}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:CalendarLimitedSelectedRangeBehavior MaxSingleRangeLength="-1"
