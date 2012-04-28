@@ -266,7 +266,11 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 			//TODO: Subscription required to listen on any new/updated/deleted postings so that account could update in balance locally.
 			//TODO: This should be implemented later.
 			EventAggregator.Subscribe(this);
-			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => LastPostingDate);
+			Translator.CultureChanged += (sender, args) =>
+			                             	{
+			                             		NotifyOfPropertyChange(() => FirstPostingDate);
+			                             		NotifyOfPropertyChange(() => LastPostingDate);
+			                             	};
 		}
 
 		#endregion
