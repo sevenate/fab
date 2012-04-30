@@ -381,4 +381,49 @@
   <data name="TransferView_To_Account" xml:space="preserve">
     <value>На рахунок</value>
   </data>
+  <data name="PostingsView_Column_Balance" xml:space="preserve">
+    <value>Баланс</value>
+  </data>
+  <data name="PostingsView_Column_Category" xml:space="preserve">
+    <value>Категорія</value>
+  </data>
+  <data name="PostingsView_Column_Comment" xml:space="preserve">
+    <value>Нотатки</value>
+  </data>
+  <data name="PostingsView_Column_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="PostingsView_Column_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="PostingsView_Column_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="PostingsView_Column_Expense" xml:space="preserve">
+    <value>Витрата</value>
+  </data>
+  <data name="PostingsView_Column_Id" xml:space="preserve">
+    <value>№</value>
+  </data>
+  <data name="PostingsView_Column_Income" xml:space="preserve">
+    <value>Доход</value>
+  </data>
+  <data name="PostingsView_Difference" xml:space="preserve">
+    <value>Разница:</value>
+  </data>
+  <data name="PostingsView_End_Balance" xml:space="preserve">
+    <value>Кінцевий баланс:</value>
+  </data>
+  <data name="PostingsView_Expense" xml:space="preserve">
+    <value>Витрата:</value>
+  </data>
+  <data name="PostingsView_Income" xml:space="preserve">
+    <value>Дохід:</value>
+  </data>
+  <data name="PostingsView_Postings" xml:space="preserve">
+    <value>Транзакцій:</value>
+  </data>
+  <data name="PostingsView_Start_Balance" xml:space="preserve">
+    <value>Початковий баланс:</value>
+  </data>
 </root>

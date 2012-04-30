@@ -10,7 +10,7 @@
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 			 mc:Ignorable="d"
-			 d:DesignHeight="187"
+			 d:DesignHeight="362"
 			 d:DesignWidth="980">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -287,7 +287,8 @@
 									Padding="3"
 									cal:Message.Attach="DeleteTransaction($dataContext)">
 								<ToolTipService.ToolTip>
-									<TextBlock Foreground="Black" Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Column_Delete, FallbackValue='Delete'}" />
+									<TextBlock Foreground="Black"
+											   Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Column_Delete, FallbackValue='Delete'}" />
 								</ToolTipService.ToolTip>
 								<Button.Content>
 									<Resources:DeleteIcon />

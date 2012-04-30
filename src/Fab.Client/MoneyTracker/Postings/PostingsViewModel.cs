@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
+using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Postings.Actions;
 using Fab.Client.MoneyTracker.Postings.Transactions;
@@ -59,8 +60,9 @@ namespace Fab.Client.MoneyTracker.Postings
 			UseEndDate = true;
 
 			PostingsActions = postingsActions;
-
 			ActivationProcessed += (sender, args) => { IsDirty = (args.Item != PostingsActions); };
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => Period);
+
 		}
 
 		#endregion

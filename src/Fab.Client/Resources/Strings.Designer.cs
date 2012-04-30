@@ -421,6 +421,141 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        public static string PostingsView_Column_Balance {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string PostingsView_Column_Category {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        public static string PostingsView_Column_Comment {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string PostingsView_Column_Date {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string PostingsView_Column_Delete {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string PostingsView_Column_Edit {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense.
+        /// </summary>
+        public static string PostingsView_Column_Expense {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string PostingsView_Column_Id {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Income.
+        /// </summary>
+        public static string PostingsView_Column_Income {
+            get {
+                return ResourceManager.GetString("PostingsView_Column_Income", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difference:.
+        /// </summary>
+        public static string PostingsView_Difference {
+            get {
+                return ResourceManager.GetString("PostingsView_Difference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End balance:.
+        /// </summary>
+        public static string PostingsView_End_Balance {
+            get {
+                return ResourceManager.GetString("PostingsView_End_Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense:.
+        /// </summary>
+        public static string PostingsView_Expense {
+            get {
+                return ResourceManager.GetString("PostingsView_Expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Income:.
+        /// </summary>
+        public static string PostingsView_Income {
+            get {
+                return ResourceManager.GetString("PostingsView_Income", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postings:.
+        /// </summary>
+        public static string PostingsView_Postings {
+            get {
+                return ResourceManager.GetString("PostingsView_Postings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start balance:.
+        /// </summary>
+        public static string PostingsView_Start_Balance {
+            get {
+                return ResourceManager.GetString("PostingsView_Start_Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you really want to delete the selected posting #{0} ?.
         /// </summary>
         public static string PostingViewModelBase_DeleteConfirmation_Message {
