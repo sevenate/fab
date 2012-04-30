@@ -381,4 +381,49 @@
   <data name="TransferView_To_Account" xml:space="preserve">
     <value>To Account</value>
   </data>
+  <data name="PostingsView_Column_Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="PostingsView_Column_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="PostingsView_Column_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="PostingsView_Column_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="PostingsView_Column_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PostingsView_Column_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="PostingsView_Column_Expense" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="PostingsView_Column_Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="PostingsView_Column_Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="PostingsView_Difference" xml:space="preserve">
+    <value>Difference:</value>
+  </data>
+  <data name="PostingsView_End_Balance" xml:space="preserve">
+    <value>End balance:</value>
+  </data>
+  <data name="PostingsView_Expense" xml:space="preserve">
+    <value>Expense:</value>
+  </data>
+  <data name="PostingsView_Income" xml:space="preserve">
+    <value>Income:</value>
+  </data>
+  <data name="PostingsView_Postings" xml:space="preserve">
+    <value>Postings:</value>
+  </data>
+  <data name="PostingsView_Start_Balance" xml:space="preserve">
+    <value>Start balance:</value>
+  </data>
 </root>

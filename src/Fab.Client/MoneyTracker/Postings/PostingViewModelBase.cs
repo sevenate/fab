@@ -268,10 +268,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			TransferDetails = transferDetails;
 			Init();
 			eventAggregator.Subscribe(this);
-			Translator.CultureChanged += (sender, args) =>
-			                             	{
-			                             		NotifyOfPropertyChange(() => SearchStatus);
-			                             	};
+			Translator.CultureChanged += (sender, args) => NotifyOfPropertyChange(() => SearchStatus);
 		}
 
 		protected void Init()
