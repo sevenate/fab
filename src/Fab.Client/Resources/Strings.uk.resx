@@ -426,4 +426,19 @@
   <data name="PostingsView_Start_Balance" xml:space="preserve">
     <value>Початковий баланс:</value>
   </data>
+  <data name="ScreensBootstrapper_Close_Notification_Message" xml:space="preserve">
+    <value>Вам доведеться закрити програму вручну, оскількі програма НЕ має Elevated Permissions, необхідніх для самостійного завершення роботи.</value>
+  </data>
+  <data name="ScreensBootstrapper_Close_Notification_Title" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Error" xml:space="preserve">
+    <value>Доступна нова версія програми, але вона вимагає оновлення версії середовища виконання Silverlight. Будь ласка зв'яжіться з технічною підтримкою для подальших інструкцій.</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Message" xml:space="preserve">
+    <value>Програму було поновлено! Будь ласка закрийте його і запустіть заново, що б завершити оновлення.</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Title" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
 </root>

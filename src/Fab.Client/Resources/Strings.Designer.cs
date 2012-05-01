@@ -655,6 +655,51 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have to close application window manually, since the application does not have the Elevated Permissions (required to close its main window by himself)..
+        /// </summary>
+        public static string ScreensBootstrapper_Close_Notification_Message {
+            get {
+                return ResourceManager.GetString("ScreensBootstrapper_Close_Notification_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string ScreensBootstrapper_Close_Notification_Title {
+            get {
+                return ResourceManager.GetString("ScreensBootstrapper_Close_Notification_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An application update is available, but it requires a new version of Silverlight. Please contact tech support for further instructions..
+        /// </summary>
+        public static string ScreensBootstrapper_Update_Notification_Error {
+            get {
+                return ResourceManager.GetString("ScreensBootstrapper_Update_Notification_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application has been updated! Please close and reopen it to load the new version..
+        /// </summary>
+        public static string ScreensBootstrapper_Update_Notification_Message {
+            get {
+                return ResourceManager.GetString("ScreensBootstrapper_Update_Notification_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string ScreensBootstrapper_Update_Notification_Title {
+            get {
+                return ResourceManager.GetString("ScreensBootstrapper_Update_Notification_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data.
         /// </summary>
         public static string SearchDashBoardView_Charts_LegendTitle {
