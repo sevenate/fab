@@ -85,6 +85,33 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Called when activating.
+		/// </summary>
+		protected override void OnActivate()
+		{
+			base.OnActivate();
+			LoginForm.ActivateWith(this);
+		}
+
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Called when deactivating.
+		/// </summary>
+		/// <param name="close">Indicates whether this instance will be closed.</param>
+		protected override void OnDeactivate(bool close)
+		{
+			base.OnDeactivate(close);
+			LoginForm.DeactivateWith(this);
+		}
+
+		#endregion
+
+		#endregion
+
 		#region Implementation of IHandle<in LoggedOutMessage>
 
 		/// <summary>

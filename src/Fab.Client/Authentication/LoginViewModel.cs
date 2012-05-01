@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
+using System.IO.IsolatedStorage;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Localization;
@@ -232,6 +233,53 @@ namespace Fab.Client.Authentication
 				NotifyOfPropertyChange(() => RememberMe);
 			}
 		}
+
+		#endregion
+
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Called when activating.
+		/// </summary>
+		protected override void OnActivate()
+		{
+			base.OnActivate();
+
+			if (IsolatedStorageSettings.ApplicationSettings.Contains("Login_ShowCharacters"))
+			{
+				ShowCharacters = (bool)IsolatedStorageSettings.ApplicationSettings["Login_ShowCharacters"];
+			}
+
+			if (IsolatedStorageSettings.ApplicationSettings.Contains("Login_RememberMe"))
+			{
+				RememberMe = (bool) IsolatedStorageSettings.ApplicationSettings["Login_RememberMe"];
+				
+				if (RememberMe)
+				{
+					Username = (string)IsolatedStorageSettings.ApplicationSettings["Login_Username"];
+				}
+			}
+		}
+
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Called when deactivating.
+		/// </summary>
+		/// <param name="close">Indicates whether this instance will be closed.</param>
+		protected override void OnDeactivate(bool close)
+		{
+			base.OnDeactivate(close);
+			IsolatedStorageSettings.ApplicationSettings["Login_ShowCharacters"] = ShowCharacters;
+			IsolatedStorageSettings.ApplicationSettings["Login_RememberMe"] = RememberMe;
+
+			if (RememberMe)
+			{
+				IsolatedStorageSettings.ApplicationSettings["Login_Username"] = Username;
+			}
+		}
+
+		#endregion
 
 		#endregion
 
