@@ -1,9 +1,8 @@
-﻿//---------------------------------------------------------------------------
+﻿//------------------------------------------------------------
 // <copyright file="CategoryViewModel.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrey Levshov" email="78@nreez.com" date="2011-09-03" />
-//---------------------------------------------------------------------------
+//------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -160,9 +159,8 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 		{
 			var openConfirmationResult = new OpenConfirmationResult(EventAggregator)
 			{
-				Message =
-					"Do you really want to delete '" + Name + "' category?",
-				Title = "Confirmation",
+				Message = string.Format(Resources.Strings.CategoryView_Delete_Confirmation_Message, Name),
+				Title = Resources.Strings.CategoryView_Delete_Confirmation_Title,
 				Options = MessageBoxOptions.Yes | MessageBoxOptions.Cancel,
 			};
 

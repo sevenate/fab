@@ -441,4 +441,16 @@
   <data name="ScreensBootstrapper_Update_Notification_Title" xml:space="preserve">
     <value>Повідомлення</value>
   </data>
+  <data name="AccountView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Ви дійсно хочете видалити рахунок '{0}'?</value>
+  </data>
+  <data name="AccountView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Підтвердження</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Ви дійсно хочете видалити категорію '{0}'?</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Підтвердження</value>
+  </data>
 </root>

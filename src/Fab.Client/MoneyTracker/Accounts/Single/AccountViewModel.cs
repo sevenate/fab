@@ -364,8 +364,8 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 
 			var openConfirmationResult = new OpenConfirmationResult(EventAggregator)
 			{
-				Message = "Do you really want to delete '" + Name + "' account?",
-				Title = "Confirmation",
+				Message = string.Format(Resources.Strings.AccountView_Delete_Confirmation_Message, Name),
+				Title = Resources.Strings.AccountView_Delete_Confirmation_Title,
 				Options = MessageBoxOptions.Yes | MessageBoxOptions.Cancel,
 			};
 
