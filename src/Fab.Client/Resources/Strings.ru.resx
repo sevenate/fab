@@ -426,6 +426,18 @@
   <data name="PostingsView_Start_Balance" xml:space="preserve">
     <value>Начальный баланс:</value>
   </data>
+  <data name="AccountView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Вы действительно хотите удалить счет '{0}'?</value>
+  </data>
+  <data name="AccountView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Подтверждение</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Вы действительно хотите удалить категорию '{0}'?</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Подтверждение</value>
+  </data>
   <data name="ScreensBootstrapper_Close_Notification_Message" xml:space="preserve">
     <value>Вам придется закрыть приложение вручную, поскольку приложение не имеет Elevated Permissions, необходимых для самостоятельного завершения работы.</value>
   </data>

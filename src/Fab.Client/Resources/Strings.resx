@@ -426,6 +426,18 @@
   <data name="PostingsView_Start_Balance" xml:space="preserve">
     <value>Start balance:</value>
   </data>
+  <data name="AccountView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Do you really want to delete account '{0}'?</value>
+  </data>
+  <data name="AccountView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Do you really want to delete category '{0}'?</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="ScreensBootstrapper_Close_Notification_Message" xml:space="preserve">
     <value>You have to close application window manually, since the application does not have the Elevated Permissions (required to close its main window by himself).</value>
   </data>

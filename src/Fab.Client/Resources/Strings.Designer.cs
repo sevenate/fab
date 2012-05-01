@@ -88,6 +88,24 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete account &apos;{0}&apos;?.
+        /// </summary>
+        public static string AccountView_Delete_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("AccountView_Delete_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string AccountView_Delete_Confirmation_Title {
+            get {
+                return ResourceManager.GetString("AccountView_Delete_Confirmation_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string AccountView_Edit {
@@ -183,6 +201,24 @@ namespace Fab.Client.Resources {
         public static string CategoryView_Delete {
             get {
                 return ResourceManager.GetString("CategoryView_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete category &apos;{0}&apos;?.
+        /// </summary>
+        public static string CategoryView_Delete_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("CategoryView_Delete_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string CategoryView_Delete_Confirmation_Title {
+            get {
+                return ResourceManager.GetString("CategoryView_Delete_Confirmation_Title", resourceCulture);
             }
         }
         
