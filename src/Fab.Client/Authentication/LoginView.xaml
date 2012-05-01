@@ -160,8 +160,7 @@
 					  Content="{Binding Path=LocalizedStrings.LoginView_Remember_me, FallbackValue='Remember me'}"
 			          HorizontalAlignment="Right"
 			          TabIndex="3"
-			          IsEnabled="False"
-			          ToolTipService.ToolTip="Not implemented yet" VerticalContentAlignment="Stretch">
+			          VerticalContentAlignment="Stretch">
 				<Interactivity:Interaction.Behaviors>
 					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
 				</Interactivity:Interaction.Behaviors>
