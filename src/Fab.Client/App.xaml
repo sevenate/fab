@@ -22,6 +22,7 @@
 			<shell:ScreensBootstrapper x:Key="bootstrapper" />
 			<framework:CultureSettings x:Key="cultureSettings" />
 			<mirco:BooleanToVisibilityConverter x:Key="boolToVisibility" />
+			<converters:CultureToFlagImagePathConverter x:Key="cultureFlagPath" />
 			<converters:BooleanToNotBooleanConverter x:Key="boolToNotBool" />
 			<converters:BooleanToVisibilityInvertConverter x:Key="boolToVisibilityInvert" />
 			<converters:BooleanToOpacityConverter x:Key="boolToOpacity" />
@@ -169,6 +170,14 @@
 					<TextBlock Text="{Binding Path=Name}"
 										 FontWeight="Bold" />
 				</toolkit:DockPanel>
+			</DataTemplate>
+			<DataTemplate x:Key="LanguageItem">
+				<StackPanel Orientation="Horizontal">
+					<Image Source="{Binding Converter={StaticResource cultureFlagPath}}"
+						   Stretch="Uniform"
+						   Margin="0,0,3,0" />
+					<TextBlock Text="{Binding Path=NativeName}" />
+				</StackPanel>
 			</DataTemplate>
 			<Style x:Key="ColumnHeaderStyle" TargetType="TextBlock">
 				<Setter Property="Foreground"
