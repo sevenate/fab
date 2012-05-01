@@ -149,8 +149,8 @@ namespace Fab.Client.Shell
 															else
 															{
 																shell.Dialogs.ShowMessageBox(
-																	"You have to close application window manually, since the application does not have the Elevated Permissions (required to close its main window by himself).",
-																	"Notification");
+																	Resources.Strings.ScreensBootstrapper_Close_Notification_Message,
+																	Resources.Strings.ScreensBootstrapper_Close_Notification_Title);
 																e.Cancel = false;
 															}
 														}
@@ -165,14 +165,14 @@ namespace Fab.Client.Shell
 			// http://nerddawg.blogspot.com/2009/07/silverlight-out-of-browser-apps-how.html
 			if (args.UpdateAvailable)
 			{
-				shell.Dialogs.ShowMessageBox("The application has been updated! Please close and reopen it to load the new version.",
-											 "Notification");
+				shell.Dialogs.ShowMessageBox(Resources.Strings.ScreensBootstrapper_Update_Notification_Message,
+											 Resources.Strings.ScreensBootstrapper_Update_Notification_Title);
 				//MessageBox.Show("Application updated, please restart to apply changes.");
 			}
 			else if (args.Error != null && args.Error is PlatformNotSupportedException)
 			{
 				shell.Dialogs.ShowMessageBox(
-					"An application update is available, but it requires a new version of Silverlight. Please contact tech support for further instructions.");
+					Resources.Strings.ScreensBootstrapper_Update_Notification_Error);
 			}
 
 

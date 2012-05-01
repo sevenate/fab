@@ -426,4 +426,19 @@
   <data name="PostingsView_Start_Balance" xml:space="preserve">
     <value>Start balance:</value>
   </data>
+  <data name="ScreensBootstrapper_Close_Notification_Message" xml:space="preserve">
+    <value>You have to close application window manually, since the application does not have the Elevated Permissions (required to close its main window by himself).</value>
+  </data>
+  <data name="ScreensBootstrapper_Close_Notification_Title" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Error" xml:space="preserve">
+    <value>An application update is available, but it requires a new version of Silverlight. Please contact tech support for further instructions.</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Message" xml:space="preserve">
+    <value>The application has been updated! Please close and reopen it to load the new version.</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Title" xml:space="preserve">
+    <value>Notification</value>
+  </data>
 </root>
