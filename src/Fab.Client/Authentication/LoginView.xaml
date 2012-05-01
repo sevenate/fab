@@ -101,7 +101,7 @@
 		<ComboBox x:Name="Cultures"
 				  SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
 				  MinHeight="36"
-				  DisplayMemberPath="NativeName" />
+				  ItemTemplate="{StaticResource LanguageItem}" />
 		<sdk:Label Content="{Binding Path=LocalizedStrings.LoginView_Username, FallbackValue=Username}"
 				   Target="{Binding ElementName=Username}"
 		           Margin="3,10,3,2" />

@@ -17,7 +17,8 @@
 					<ComboBox x:Name="Cultures"
 							  SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
 							  MinHeight="26"
-							  DisplayMemberPath="NativeName" />
+							  ItemTemplate="{StaticResource LanguageItem}" 
+							  Margin="0,0,5,0" />
 					<TextBlock Text="{Binding Path=LocalizedStrings.PersonalCornerView_Sign_out, FallbackValue='Sign out'}"							   
 							   FontSize="16"
 							   VerticalAlignment="Center" />

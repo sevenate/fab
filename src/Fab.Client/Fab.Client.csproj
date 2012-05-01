@@ -161,6 +161,7 @@
     <Compile Include="Framework\Behaviors\SelectTextOnFocusBehavior.cs" />
     <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
+    <Compile Include="Framework\Converters\CultureToFlagImagePathConverter.cs" />
     <Compile Include="Framework\Converters\DebugConverter.cs" />
     <Compile Include="Framework\Extensions\ColorFromString.cs" />
     <Compile Include="Framework\Extensions\FrameworkElementExtensions.cs" />
@@ -573,6 +574,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Flag.en.png" />
+    <Resource Include="Resources\Flag.ru.png" />
+    <Resource Include="Resources\Flag.uk.png" />
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
