@@ -68,6 +68,7 @@ namespace Fab.Client.MoneyTracker
 				StartDate = DateTime.Now;
 				EndDate = StartDate;
 				NotifyOfPropertyChange(() => Name);
+				SearchStatus = Resources.Strings.PostingViewModelBase_SearchStatus_Search;
 			};
 			InitSourceAccounts();
 		}
