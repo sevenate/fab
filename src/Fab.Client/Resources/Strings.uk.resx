@@ -166,10 +166,10 @@
     <value>Пароль</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Запам'ятати мене</value>
+    <value>Запам'ятати ім'я</value>
   </data>
   <data name="LoginView_Show_characters" xml:space="preserve">
-    <value>Показувати символи</value>
+    <value>Показувати пароль</value>
   </data>
   <data name="LoginView_Title" xml:space="preserve">
     <value>Вхід</value>

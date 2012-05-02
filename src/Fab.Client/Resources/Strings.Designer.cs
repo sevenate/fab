@@ -268,7 +268,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remember me.
+        ///   Looks up a localized string similar to Remember name.
         /// </summary>
         public static string LoginView_Remember_me {
             get {
@@ -277,7 +277,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show characters.
+        ///   Looks up a localized string similar to Show password.
         /// </summary>
         public static string LoginView_Show_characters {
             get {
