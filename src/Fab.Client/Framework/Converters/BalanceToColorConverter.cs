@@ -32,20 +32,16 @@ namespace Fab.Client.Framework.Converters
 		{
 			if (value is decimal)
 			{
-				var balance = (decimal) value;
+				var balance = (decimal)value;
 
+				string resourceName = balance < 0 ? "NegativeBalanceBrush"
+												  : balance == 0 ? "NeutralBalanceBrush"
+																 : "PositiveBalanceBrush";
 #if SILVERLIGHT
-				var positiveBrush = Application.Current.Resources["PositiveBalanceBrush"];
-				var negativeBrush = Application.Current.Resources["NegativeBalanceBrush"];
-				var neutralBrush = Application.Current.Resources["NeutralBalanceBrush"];
+				return Application.Current.Resources[resourceName];
 #else
-				var positiveBrush = Application.Current.FindResource("PositiveBalanceBrush");
-				var negativeBrush = Application.Current.FindResource("NegativeBalanceBrush");
-				var neutralBrush = Application.Current.FindResource("NeutralBalanceBrush");
+				return Application.Current.FindResource(resourceName);
 #endif
-				return balance < 0 ? negativeBrush != null ? negativeBrush : new SolidColorBrush(Colors.Red)
-					: balance == 0 ? neutralBrush != null ? neutralBrush : new SolidColorBrush(Colors.Yellow)
-					: positiveBrush != null ? positiveBrush : new SolidColorBrush(new Color { A = 0xFF, R = 0, G = 0xFF, B = 0 });
 			}
 
 			return value;

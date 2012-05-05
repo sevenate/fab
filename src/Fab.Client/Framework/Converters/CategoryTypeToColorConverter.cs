@@ -1,16 +1,17 @@
-// <copyright file="BalanceToColorConverter.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="CategoryTypeToColorConverter.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="alevshoff@hd.com" />
-// <summary>Convert negative <see cref="decimal"/> value to <see cref="Colors.Red"/>.</summary>
+//------------------------------------------------------------
 
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using Fab.Client.MoneyServiceReference;
 
-namespace Fab.Client.MoneyTracker.Categories
+namespace Fab.Client.Framework.Converters
 {
 	/// <summary>
 	/// Convert <see cref="CategoryType"/> enumeration into <see cref="Color"/>.
@@ -32,17 +33,26 @@ namespace Fab.Client.MoneyTracker.Categories
 			if (value is CategoryType)
 			{
 				var categoryType = (CategoryType)value;
+				
+				string resourceName = string.Empty;
 
-				//TODO: move colors values to resources.
 				switch (categoryType)
 				{
 					case CategoryType.Common:
-						return new SolidColorBrush(Colors.Yellow);
+						resourceName = "CommonCategoryBrush";
+						break;
 					case CategoryType.Deposit:
-						return new SolidColorBrush(new Color { A = 0xFF, R = 0, G = 0xFF, B = 0 });
+						resourceName = "DepositCategoryBrush";
+						break;
 					case CategoryType.Withdrawal:
-						return new SolidColorBrush(Colors.Red);
+						resourceName = "WithdrawalCategoryBrush";
+						break;
 				}
+#if SILVERLIGHT
+				return Application.Current.Resources[resourceName];
+#else
+				return Application.Current.FindResource(resourceName);
+#endif
 			}
 
 			return value;

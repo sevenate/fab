@@ -271,7 +271,6 @@
 					 NotifyOnValidationError=True,
 					 StringFormat=n}"
 				 MinWidth="50"
-				 CaretBrush="Yellow"
 				 VerticalAlignment="Center"
 		         TabIndex="1"
 				 Margin="5,0">
@@ -299,7 +298,6 @@
 								NotifyOnValidationError=True,
 								StringFormat=n}"
 		         MinWidth="50"
-				 CaretBrush="Yellow"
 		         VerticalAlignment="Center"
 		         TabIndex="2"
 				 Margin="5,0">
@@ -341,12 +339,6 @@
 									Value="100" />
 					<Setter Property="AcceptsReturn"
 									Value="True" />
-					<Setter Property="Foreground"
-									Value="White" />
-					<Setter Property="CaretBrush"
-									Value="White" />
-					<Setter Property="Background"
-									Value="{StaticResource Brush_WindowBackground}" />
 				</Style>
 			</TextBox.Style>
 		</TextBox>

@@ -7,16 +7,15 @@
 			 xmlns:shell="clr-namespace:Fab.Client.Shell"
 			 xmlns:framework="clr-namespace:Fab.Client.Framework"
 			 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
-			 xmlns:Common="clr-namespace:Fab.Client.Common" xmlns:Categories="clr-namespace:Fab.Client.MoneyTracker.Categories"
-             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" mc:Ignorable="d">
+			 xmlns:Common="clr-namespace:Fab.Client.Common"
+			 xmlns:Categories="clr-namespace:Fab.Client.MoneyTracker.Categories"
+			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+			 mc:Ignorable="d">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Themes/AutoCompleteComboBox.xaml" />
 				<ResourceDictionary Source="Themes/TransitioningFrame.xaml" />
-				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Basic.xaml" />
-				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Advanced.xaml" />
-				<ResourceDictionary Source="Themes/BS_ResourceDictionary_Brushes.xaml" />
 				<ResourceDictionary Source="Themes/generic.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<shell:ScreensBootstrapper x:Key="bootstrapper" />
@@ -30,49 +29,67 @@
 			<converters:NullToQuestionMarkConverter x:Key="nullToQuestion" />
 			<converters:ZeroToVisibilityConverter x:Key="zeroToVisibility" />
 			<converters:BalanceToColorConverter x:Key="balanceToColor" />
+			<converters:CategoryTypeToColorConverter x:Key="categoryTypeToColor" />
 			<converters:DebugConverter x:Key="debugConverter" />
 			<converters:BooleanToColorConverter x:Key="boolToColor" />
 			<converters:AssetTypeIdToStringConverter x:Key="assetTypeIdToString" />
 			<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
 			<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
-			<Categories:CategoryTypeToColorConverter x:Key="categoryTypeToColor" />
-			<SolidColorBrush Color="#FF00FF00"
-											 x:Key="PositiveBalanceBrush" />
-			<SolidColorBrush Color="Red"
-											 x:Key="NegativeBalanceBrush" />
-			<SolidColorBrush Color="White"
-											 x:Key="NeutralBalanceBrush" />
+			<SolidColorBrush x:Key="PositiveBalanceBrush"
+							 Color="#00C000" />
+			<SolidColorBrush x:Key="NegativeBalanceBrush"
+							 Color="#C00000" />
+			<SolidColorBrush x:Key="NeutralBalanceBrush"
+							 Color="Black" />
+			<SolidColorBrush x:Key="IncomeBrush"
+							 Color="#00C000" />
+			<SolidColorBrush x:Key="ExpenceBrush"
+							 Color="#C00000" />
+			<SolidColorBrush x:Key="TransferBrush"
+							 Color="Black" />
+			<SolidColorBrush x:Key="DepositCategoryBrush"
+							 Color="#00C000" />
+			<SolidColorBrush x:Key="WithdrawalCategoryBrush"
+							 Color="#C00000" />
+			<SolidColorBrush x:Key="CommonCategoryBrush"
+							 Color="Black" />
+			<SolidColorBrush x:Key="StatusMessageTextBrush"
+							 Color="Gray" />
+			<SolidColorBrush x:Key="StatusMessagesCountBrush"
+							 Color="Black" />
+			<SolidColorBrush x:Key="CategoryTextColorBrush"
+							 Color="White" />
 			<Style x:Key="NumbersStyle"
-						 TargetType="TextBlock">
+				   TargetType="TextBlock">
 				<Setter Property="HorizontalAlignment"
-								Value="Right" />
+						Value="Right" />
 			</Style>
 			<Style x:Key="ExpenceStyle"
-						 TargetType="TextBlock"
-						 BasedOn="{StaticResource NumbersStyle}">
+				   TargetType="TextBlock"
+				   BasedOn="{StaticResource NumbersStyle}">
 				<Setter Property="Foreground"
-								Value="Red" />
+						Value="#C00000" />
 			</Style>
 			<Style x:Key="IncomeStyle"
-						 TargetType="TextBlock"
-						 BasedOn="{StaticResource NumbersStyle}">
+				   TargetType="TextBlock"
+				   BasedOn="{StaticResource NumbersStyle}">
 				<Setter Property="Foreground"
-								Value="#FF00FF00" />
+						Value="#00C000" />
 			</Style>
 			<Style x:Key="ComboBoxItemStyle"
-						 TargetType="ComboBoxItem">
+				   TargetType="ComboBoxItem">
 				<Setter Property="Padding"
-								Value="3" />
+						Value="3" />
 				<Setter Property="HorizontalContentAlignment"
-								Value="Left" />
+						Value="Left" />
 				<Setter Property="VerticalContentAlignment"
-								Value="Top" />
+						Value="Top" />
 				<Setter Property="Background"
-								Value="Transparent" />
+						Value="Transparent" />
 				<Setter Property="BorderThickness"
-								Value="1" />
+						Value="1" />
 				<Setter Property="TabNavigation"
-								Value="Local" />
+						Value="Local" />
 				<Setter Property="Template">
 					<Setter.Value>
 						<ControlTemplate TargetType="ComboBoxItem">
@@ -83,17 +100,17 @@
 										<VisualState x:Name="MouseOver">
 											<Storyboard>
 												<DoubleAnimation Duration="0"
-																				 To=".35"
-																				 Storyboard.TargetProperty="Opacity"
-																				 Storyboard.TargetName="fillColor" />
+																 To=".35"
+																 Storyboard.TargetProperty="Opacity"
+																 Storyboard.TargetName="fillColor" />
 											</Storyboard>
 										</VisualState>
 										<VisualState x:Name="Disabled">
 											<Storyboard>
 												<DoubleAnimation Duration="0"
-																				 To=".55"
-																				 Storyboard.TargetProperty="Opacity"
-																				 Storyboard.TargetName="contentPresenter" />
+																 To=".55"
+																 Storyboard.TargetProperty="Opacity"
+																 Storyboard.TargetName="contentPresenter" />
 											</Storyboard>
 										</VisualState>
 									</VisualStateGroup>
@@ -102,9 +119,9 @@
 										<VisualState x:Name="Selected">
 											<Storyboard>
 												<DoubleAnimation Duration="0"
-																				 To=".75"
-																				 Storyboard.TargetProperty="Opacity"
-																				 Storyboard.TargetName="fillColor2" />
+																 To=".75"
+																 Storyboard.TargetProperty="Opacity"
+																 Storyboard.TargetName="fillColor2" />
 											</Storyboard>
 										</VisualState>
 									</VisualStateGroup>
@@ -112,8 +129,8 @@
 										<VisualState x:Name="Focused">
 											<Storyboard>
 												<ObjectAnimationUsingKeyFrames Duration="0"
-																											 Storyboard.TargetProperty="Visibility"
-																											 Storyboard.TargetName="FocusVisualElement">
+																			   Storyboard.TargetProperty="Visibility"
+																			   Storyboard.TargetName="FocusVisualElement">
 													<DiscreteObjectKeyFrame KeyTime="0">
 														<DiscreteObjectKeyFrame.Value>
 															<Visibility>Visible</Visibility>
@@ -126,28 +143,28 @@
 									</VisualStateGroup>
 								</VisualStateManager.VisualStateGroups>
 								<Rectangle x:Name="fillColor"
-													 Fill="#FFBADDE9"
-													 IsHitTestVisible="False"
-													 Opacity="0"
-													 RadiusY="1"
-													 RadiusX="1" />
+										   Fill="#FFBADDE9"
+										   IsHitTestVisible="False"
+										   Opacity="0"
+										   RadiusY="1"
+										   RadiusX="1" />
 								<Rectangle x:Name="fillColor2"
-													 Fill="#FFBADDE9"
-													 IsHitTestVisible="False"
-													 Opacity="0"
-													 RadiusY="1"
-													 RadiusX="1" />
+										   Fill="#FFBADDE9"
+										   IsHitTestVisible="False"
+										   Opacity="0"
+										   RadiusY="1"
+										   RadiusX="1" />
 								<ContentPresenter x:Name="contentPresenter"
-																	ContentTemplate="{TemplateBinding ContentTemplate}"
-																	Content="{TemplateBinding Content}"
-																	HorizontalAlignment="Stretch"
-																	Margin="{TemplateBinding Padding}" />
+												  ContentTemplate="{TemplateBinding ContentTemplate}"
+												  Content="{TemplateBinding Content}"
+												  HorizontalAlignment="Stretch"
+												  Margin="{TemplateBinding Padding}" />
 								<Rectangle x:Name="FocusVisualElement"
-													 RadiusY="1"
-													 RadiusX="1"
-													 Stroke="#FF6DBDD1"
-													 StrokeThickness="1"
-													 Visibility="Collapsed" />
+										   RadiusY="1"
+										   RadiusX="1"
+										   Stroke="#FF6DBDD1"
+										   StrokeThickness="1"
+										   Visibility="Collapsed" />
 							</Grid>
 						</ControlTemplate>
 					</Setter.Value>
@@ -156,20 +173,33 @@
 			<DataTemplate x:Key="AccountBrief">
 				<toolkit:DockPanel HorizontalAlignment="Stretch">
 					<TextBlock toolkit:DockPanel.Dock="Right"
-										 Margin="5,0,0,0"
-										 MinWidth="20"
-										 Text="{Binding Path=AssetTypeId, Converter={StaticResource assetTypeIdToString}}"
-										 VerticalAlignment="Center"
-										 HorizontalAlignment="Left" />
+							   Margin="5,0,0,0"
+							   MinWidth="20"
+							   Text="{Binding Path=AssetTypeId, Converter={StaticResource assetTypeIdToString}}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left" />
 					<TextBlock toolkit:DockPanel.Dock="Right"
-										 Text="{Binding Path=Balance, StringFormat=\{0:N\}}"
-										 Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
-										 Margin="5,0,0,0"
-										 HorizontalAlignment="Right"
-										 VerticalAlignment="Center" />
+							   Text="{Binding Path=Balance, StringFormat=\{0:N\}}"
+							   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
+							   Margin="5,0,0,0"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Center" />
 					<TextBlock Text="{Binding Path=Name}"
-										 FontWeight="Bold" />
+							   FontWeight="Bold" />
 				</toolkit:DockPanel>
+			</DataTemplate>
+			<DataTemplate x:Key="CategoryBrief">
+				<Border CornerRadius="3"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						Background="{Binding Path=Category.CategoryType, Converter={StaticResource categoryTypeToColor}}"
+						Padding="4,3"
+						Visibility="{Binding Path=Category, Converter={StaticResource nullToCollapsed}}">
+					<TextBlock VerticalAlignment="Center"
+							   Foreground="{StaticResource CategoryTextColorBrush}"
+							   Text="{Binding Path=Category.Name}"
+							   TextTrimming="WordEllipsis" />
+				</Border>
 			</DataTemplate>
 			<DataTemplate x:Key="LanguageItem">
 				<StackPanel Orientation="Horizontal">
@@ -179,9 +209,8 @@
 					<TextBlock Text="{Binding Path=NativeName}" />
 				</StackPanel>
 			</DataTemplate>
-			<Style x:Key="ColumnHeaderStyle" TargetType="TextBlock">
-				<Setter Property="Foreground"
-						Value="White" />
+			<Style x:Key="ColumnHeaderStyle"
+				   TargetType="TextBlock">
 				<Setter Property="Margin"
 						Value="3" />
 			</Style>

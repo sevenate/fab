@@ -22,7 +22,6 @@
 				<TextBlock Text="{Binding Path=Period}"
 						   FontWeight="Bold"
 						   TextWrapping="Wrap"
-						   Foreground="#FFE5E500"
 						   HorizontalAlignment="Right" />
 			</Controls:GroupBox.Header>
 			<Grid>
@@ -42,16 +41,13 @@
 				</Grid.RowDefinitions>
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Income, FallbackValue='Income:'}"
 						   Grid.Column="1"
-						   Grid.Row="0"
-						   Foreground="White" />
+						   Grid.Row="0" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Expense, FallbackValue='Expense:'}"
 						   Grid.Column="1"
-						   Grid.Row="1"
-						   Foreground="White" />
+						   Grid.Row="1" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Postings, FallbackValue='Postings:'}"
 						   Grid.Column="1"
-						   Grid.Row="2"
-						   Foreground="White" />
+						   Grid.Row="2"  />
 				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
 						   Grid.Column="2"
 						   Grid.Row="0"
@@ -65,20 +61,16 @@
 				<TextBlock Text="{Binding Path=TransactionRecords.Count}"
 						   Grid.Column="2"
 						   Grid.Row="2"
-						   Foreground="#FFE5E500"
 						   HorizontalAlignment="Right" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Start_Balance, FallbackValue='Start balance:'}"
 						   Grid.Column="4"
-						   Grid.Row="0"
-						   Foreground="White" />
+						   Grid.Row="0" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Difference, FallbackValue='Difference:'}"
 						   Grid.Column="4"
-						   Grid.Row="1"
-						   Foreground="White" />
+						   Grid.Row="1" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_End_Balance, FallbackValue='End balance:'}"
 						   Grid.Column="4"
-						   Grid.Row="2"
-						   Foreground="White" />
+						   Grid.Row="2" />
 				<TextBlock Foreground="{Binding Path=StartBalance, Converter={StaticResource balanceToColor}}"
 						   Grid.Column="5"
 						   Grid.Row="0"
@@ -156,7 +148,8 @@
 				<sdk:DataGridTemplateColumn MinWidth="75"
 											IsReadOnly="True"
 											CanUserSort="False"
-											CanUserResize="False">
+											CanUserResize="False"
+											CellTemplate="{StaticResource CategoryBrief}">
 					<sdk:DataGridTemplateColumn.HeaderStyle>
 						<Style TargetType="sdk:DataGridColumnHeader">
 							<Setter Property="Template">
@@ -169,21 +162,6 @@
 							</Setter>
 						</Style>
 					</sdk:DataGridTemplateColumn.HeaderStyle>
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Border CornerRadius="3"
-									Background="White"
-									HorizontalAlignment="Left"
-									VerticalAlignment="Center"
-									Padding="4,3"
-									Visibility="{Binding Path=Category, Converter={StaticResource nullToCollapsed}}">
-								<TextBlock VerticalAlignment="Center"
-										   Foreground="Black"
-										   Text="{Binding Path=Category.Name}"
-										   TextTrimming="WordEllipsis" />
-							</Border>
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
 				<sdk:DataGridTemplateColumn Width="*"
 											IsReadOnly="True"

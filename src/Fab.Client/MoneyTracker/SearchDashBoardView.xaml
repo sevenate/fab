@@ -64,15 +64,13 @@
 							   toolkit:DockPanel.Dock="Left"
 							   VerticalAlignment="Center">
 				<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Income, FallbackValue='Income:'}"
-						   Margin="5"
-						   Foreground="White" />
+						   Margin="5" />
 				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
 						   Margin="5"
 						   Text="{Binding Path=TotalIncome, StringFormat=n}"
 						   HorizontalAlignment="Right" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Expense, FallbackValue='Expense:'}"
-						   Margin="5"
-						   Foreground="White" />
+						   Margin="5" />
 				<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColor}}"
 						   Margin="5"
 						   Text="{Binding Path=TotalExpense, StringFormat=n}"
@@ -85,11 +83,9 @@
 						   Text="{Binding Path=BalanceDiff, StringFormat=n}"
 						   HorizontalAlignment="Right" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Postings, FallbackValue='Postings:'}"
-						   Margin="5"
-						   Foreground="White" />
+						   Margin="5" />
 				<TextBlock Text="{Binding Path=TransactionRecords.Count}"
 						   Margin="5"
-						   Foreground="#FFE5E500"
 						   HorizontalAlignment="Right" />
 			</toolkit:WrapPanel>
 			<TextBox x:Name="ContainsText"
@@ -165,7 +161,8 @@
 				<sdk:DataGridTemplateColumn MinWidth="75"
 											IsReadOnly="True"
 											CanUserSort="False"
-											CanUserResize="False">
+											CanUserResize="False"
+											CellTemplate="{StaticResource CategoryBrief}">
 					<sdk:DataGridTemplateColumn.HeaderStyle>
 						<Style TargetType="sdk:DataGridColumnHeader">
 							<Setter Property="Template">
@@ -178,21 +175,6 @@
 							</Setter>
 						</Style>
 					</sdk:DataGridTemplateColumn.HeaderStyle>
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Border CornerRadius="3"
-									Background="White"
-									HorizontalAlignment="Left"
-									VerticalAlignment="Center"
-									Padding="4,3"
-									Visibility="{Binding Path=Category, Converter={StaticResource nullToCollapsed}}">
-								<TextBlock VerticalAlignment="Center"
-										   Foreground="Black"
-										   Text="{Binding Path=Category.Name}"
-										   TextTrimming="WordEllipsis" />
-							</Border>
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
 				<sdk:DataGridTemplateColumn Width="*"
 											IsReadOnly="True"
@@ -300,7 +282,6 @@
 			</sdk:DataGrid.Columns>
 		</sdk:DataGrid>
 		<sdk:GridSplitter Grid.Row="2"
-						  Background="{StaticResource Brush_WindowBackground}"
 						  HorizontalAlignment="Stretch"
 						  VerticalAlignment="Center" />
 		<toolkit:Chart Grid.Row="3"

@@ -10,8 +10,7 @@
 			 mc:Ignorable="d"
 			 Language="{Binding Language, Source={StaticResource cultureSettings}}">
 	<Controls:BusyIndicator>
-		<Grid x:Name="LayoutRoot"
-			  Background="{StaticResource Brush_WindowBackground}">
+		<Grid x:Name="LayoutRoot">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />

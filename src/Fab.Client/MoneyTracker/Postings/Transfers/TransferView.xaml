@@ -10,7 +10,7 @@
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 			 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 			 mc:Ignorable="d">
-	<Grid Background="{StaticResource Brush_WindowBackground}">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
@@ -111,8 +111,7 @@
 							ValidatesOnNotifyDataErrors=True,
 							NotifyOnValidationError=True}"
 				 VerticalAlignment="Center"
-				 TabIndex="4"
-				 CaretBrush="Yellow">
+				 TabIndex="4">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
 				<Behaviors:SelectTextOnFocusBehavior />
@@ -152,12 +151,6 @@
 								Value="100" />
 						<Setter Property="AcceptsReturn"
 								Value="True" />
-						<Setter Property="Foreground"
-								Value="White" />
-						<Setter Property="CaretBrush"
-								Value="White" />
-						<Setter Property="Background"
-								Value="{StaticResource Brush_WindowBackground}" />
 					</Style>
 				</TextBox.Style>
 				<ToolTipService.ToolTip>
