@@ -29,9 +29,7 @@
 												 AnimationSequence="FirstToLast"
 												 Title="Title"
 												 IsSelectionEnabled="True"
-												 Visibility="Visible"
-												 Background="Transparent"
-												 Foreground="White" />
+												 Visibility="Visible" />
 		</toolkit:Chart>
 		<Button x:Name="CreateCategory"
 				Grid.Row="3"

@@ -32,7 +32,7 @@
 	<Border BorderBrush="{Binding Path=PostingsVM.IsDirty, Converter={StaticResource boolToColor}, ConverterParameter=Red}"
 			CornerRadius="3"
 			BorderThickness="2">
-		<Grid Background="{StaticResource Brush_WindowBackground}">
+		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition />
 				<RowDefinition />

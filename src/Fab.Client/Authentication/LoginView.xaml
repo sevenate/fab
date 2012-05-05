@@ -12,10 +12,6 @@
 			 d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}" MinWidth="280">
 	<UserControl.Resources>
 		<Style x:Key="LoginButtonStyle" TargetType="Button">
-			<Setter Property="Foreground"
-				Value="{StaticResource Brush_Foreground}" />
-			<Setter Property="FontFamily"
-				Value="{StaticResource MainFontFamily}" />
 			<Setter Property="FontSize"
 				Value="16" />
 			<Setter Property="Template">
@@ -62,9 +58,7 @@
 									<VisualState x:Name="Focused" />
 								</VisualStateGroup>
 							</VisualStateManager.VisualStateGroups>
-							<Rectangle x:Name="blackframe"
-								Stroke="{StaticResource Brush_BorderOuter}"
-								Fill="{StaticResource Brush_BorderInner}" />
+							<Rectangle x:Name="blackframe" />
 							<Rectangle x:Name="background"
 								Margin="2"
 								Fill="#FF4D90FE" />
@@ -89,8 +83,7 @@
 			<Setter Property="Padding" Value="10"/>
 		</Style>
 	</UserControl.Resources>
-	<StackPanel MinWidth="260"
-	            Background="{StaticResource Brush_WindowBackground}">
+	<StackPanel MinWidth="260">
 		<TextBlock TextWrapping="Wrap"
 				   Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login'}"
 		           FontSize="21.333"
@@ -107,7 +100,6 @@
 		           Margin="3,10,3,2" />
 		<TextBox x:Name="Username"
 		         TabIndex="0"
-		         CaretBrush="Yellow"
 		         MaxLength="50">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
@@ -121,7 +113,6 @@
 		<TextBox x:Name="Password"
 		         TabIndex="1"
 		         MaxLength="256"
-		         CaretBrush="Yellow"
 		         Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibility}, ElementName=ShowCharacters}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
@@ -131,8 +122,6 @@
 		</TextBox>
 		<PasswordBox x:Name="PasswordHiden"
 		             TabIndex="1"
-		             Foreground="Yellow"
-		             CaretBrush="Yellow"
 		             Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibilityInvert}, ElementName=ShowCharacters}"
 		             MaxLength="256" FontSize="15">
 			<Interactivity:Interaction.Behaviors>

@@ -91,6 +91,9 @@
     <Reference Include="Caliburn.Micro">
       <HintPath>..\..\ext\Silverlight 4\Caliburn.Micro.dll</HintPath>
     </Reference>
+    <Reference Include="MenuControl">
+      <HintPath>..\..\ext\Silverlight 4\MenuControl.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Silverlight.Controls.ToolTips">
       <HintPath>..\..\ext\Silverlight 4\Silverlight.Controls.ToolTips.dll</HintPath>
@@ -181,7 +184,7 @@
     <Compile Include="MoneyTracker\Accounts\AccountUpdatedMessage.cs" />
     <Compile Include="MoneyTracker\Accounts\Single\NewAccountViewModel.cs" />
     <Compile Include="MoneyTracker\CategoriesDashBoardViewModel.cs" />
-    <Compile Include="MoneyTracker\Categories\CategoryTypeToColorConverter.cs" />
+    <Compile Include="Framework\Converters\CategoryTypeToColorConverter.cs" />
     <Compile Include="MoneyTracker\Categories\CategoryDeletedMessage.cs" />
     <Compile Include="MoneyTracker\Categories\Single\NewCategoryViewModel.cs" />
     <Compile Include="MoneyTracker\Categories\Single\CategoryViewModel.cs" />
@@ -229,9 +232,6 @@
     <Compile Include="Framework\CultureSettings.cs" />
     <Compile Include="Framework\Converters\DateTimeUtcToLocalConverter.cs" />
     <Compile Include="Framework\Controls\AutoCompleteComboBox.cs" />
-    <Compile Include="Framework\Controls\WatermarkedTextbox.xaml.cs">
-      <DependentUpon>WatermarkedTextbox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Framework\ApplicationCloseCheck.cs" />
     <Compile Include="Framework\Filters\AsyncAttribute.cs" />
     <Compile Include="Framework\Filters\IContextAware.cs" />
@@ -343,10 +343,6 @@
     <DesignData Include="Authentication\SampleData\RegistrationData.xaml">
       <SubType>Designer</SubType>
     </DesignData>
-    <Page Include="Framework\Controls\WatermarkedTextbox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MoneyTracker\Accounts\Single\AccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -436,18 +432,6 @@
       <SubType>Designer</SubType>
     </DesignData>
     <Page Include="Shell\ErrorDialogView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\BS_ResourceDictionary_Advanced.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\BS_ResourceDictionary_Basic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\BS_ResourceDictionary_Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

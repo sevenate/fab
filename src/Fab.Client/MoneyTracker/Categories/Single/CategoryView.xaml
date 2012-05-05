@@ -31,8 +31,7 @@
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</UserControl.Resources>
-	<toolkit:DockPanel VerticalAlignment="Center"
-					   Background="{StaticResource Brush_WindowBackground}">
+	<toolkit:DockPanel VerticalAlignment="Center">
 		<StackPanel x:Name="actionsPanel"
 					toolkit:DockPanel.Dock="Right"
 					Opacity="0"
@@ -43,8 +42,7 @@
 					Height="16"
 					Padding="3">
 				<ToolTipService.ToolTip>
-					<TextBlock Foreground="Black"
-							   Text="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}" />
+					<TextBlock Text="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}" />
 				</ToolTipService.ToolTip>
 				<Resources:EditIcon />
 			</Button>
@@ -52,8 +50,7 @@
 					Height="16"
 					Padding="3">
 				<ToolTipService.ToolTip>
-					<TextBlock Foreground="Black"
-							   Text="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}" />
+					<TextBlock Text="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}" />
 				</ToolTipService.ToolTip>
 				<Resources:DeleteIcon />
 			</Button>
@@ -87,8 +84,7 @@
 						</Storyboard>
 					</ToolTips:ToolTip.OpenAnimation>
 					<ToolTips:ToolTip.Content>
-						<TextBlock Text="{Binding Path=Id, StringFormat=#\{0\}}"
-								   Foreground="Black" />
+						<TextBlock Text="{Binding Path=Id, StringFormat=#\{0\}}" />
 					</ToolTips:ToolTip.Content>
 				</ToolTips:ToolTip>
 			</ToolTipService.ToolTip>

@@ -38,7 +38,6 @@
 		</Grid>
 		<sdk:GridSplitter Grid.Column="1"
 						  Grid.RowSpan="2"
-						  Background="{StaticResource Brush_WindowBackground}"
 						  HorizontalAlignment="Center"
 						  VerticalAlignment="Stretch" />
 		<ContentControl Grid.Column="2"

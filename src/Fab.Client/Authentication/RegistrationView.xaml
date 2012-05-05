@@ -12,10 +12,6 @@
 			 d:DataContext="{d:DesignData Source=./SampleData/RegistrationData.xaml}" MinWidth="280">
 	<UserControl.Resources>
 		<Style x:Key="RegisterButtonStyle" TargetType="Button">
-			<Setter Property="Foreground"
-				Value="{StaticResource Brush_Foreground}" />
-			<Setter Property="FontFamily"
-				Value="{StaticResource MainFontFamily}" />
 			<Setter Property="FontSize"
 				Value="16" />
 			<Setter Property="Template">
@@ -62,9 +58,7 @@
 									<VisualState x:Name="Focused" />
 								</VisualStateGroup>
 							</VisualStateManager.VisualStateGroups>
-							<Rectangle x:Name="blackframe"
-								Stroke="{StaticResource Brush_BorderOuter}"
-								Fill="{StaticResource Brush_BorderInner}" />
+							<Rectangle x:Name="blackframe" />
 							<Rectangle x:Name="background"
 								Margin="2"
 								Fill="#FFD14836" />
@@ -89,8 +83,7 @@
 		</Style>
 	</UserControl.Resources>
 	<StackPanel MinWidth="260"
-	            RenderTransformOrigin="0.5,0.5"
-	            Background="{StaticResource Brush_WindowBackground}">
+	            RenderTransformOrigin="0.5,0.5">
 		<TextBlock TextWrapping="Wrap"
 				   Text="{Binding Path=LocalizedStrings.RegistrationView_Title, FallbackValue='Sign up'}"
 		           FontSize="21.333"
@@ -99,8 +92,7 @@
 				   Target="{Binding ElementName=Username}"
 		           Margin="3,10,0,2" />
 		<TextBox x:Name="Username"
-				 TabIndex="0"
-				 CaretBrush="Yellow">
+				 TabIndex="0">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
 				<Behaviors:SelectTextOnFocusBehavior />
@@ -111,9 +103,8 @@
 		           Margin="3,10,0,2" />
 		<PasswordBox x:Name="Password"
 					 TabIndex="1"
-					 Foreground="Yellow"
-					 CaretBrush="Yellow"
-					 MaxLength="256" FontSize="16">
+					 MaxLength="256"
+					 FontSize="16">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
@@ -125,9 +116,8 @@
 		           Margin="3,10,0,2" />
 		<PasswordBox x:Name="PasswordConfirmation"
 					 TabIndex="2"
-					 Foreground="Yellow"
-					 CaretBrush="Yellow"
-					 MaxLength="256" FontSize="16">
+					 MaxLength="256"
+					 FontSize="16">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding PasswordConfirmation, Mode=TwoWay}" />

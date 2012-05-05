@@ -205,7 +205,7 @@
 			</ObjectAnimationUsingKeyFrames>
 		</Storyboard>
 	</UserControl.Resources>
-	<Grid Background="{StaticResource Brush_WindowBackground}">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />

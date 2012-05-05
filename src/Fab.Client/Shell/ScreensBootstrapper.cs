@@ -14,7 +14,6 @@ using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
 using Fab.Client.Framework;
-using Fab.Client.Framework.Controls;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Categories;
 
@@ -46,8 +45,6 @@ namespace Fab.Client.Shell
 			batch.AddExportedValue(container);
 
 			container.Compose(batch);
-
-			ConventionManager.AddElementConvention<WatermarkedTextbox>(WatermarkedTextbox.TextProperty, "Text", "TextChanged");
 
 			FilterFramework.Configure();
 		}

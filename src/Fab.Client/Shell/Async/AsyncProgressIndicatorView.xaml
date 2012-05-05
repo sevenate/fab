@@ -6,26 +6,25 @@
 			 mc:Ignorable="d"
 			 d:DataContext="{d:DesignData Source=./SampleData/AsyncData.xaml}">
 	<StackPanel Orientation="Horizontal"
-				Background="{StaticResource Brush_WindowBackground}"
 				HorizontalAlignment="Left"
 				Visibility="{Binding Path=HasBackgroundOperation, Converter={StaticResource boolToVisibility}}">
 		<TextBlock Text="("
 				   VerticalAlignment="Center"
-				   Foreground="Gray"></TextBlock>
+				   Foreground="{StaticResource StatusMessageTextBrush}"></TextBlock>
 		<TextBlock Text="{Binding Path=BackgroundTasksCount}"
 				   VerticalAlignment="Center"
-				   Foreground="Yellow"
+				   Foreground="{StaticResource StatusMessagesCountBrush}"
 				   Margin="5,0"
 				   FontWeight="Bold" />
 		<TextBlock Text=")"
 				   VerticalAlignment="Center"
-				   Foreground="Gray" />
+				   Foreground="{StaticResource StatusMessageTextBrush}" />
 		<TextBlock Text="{Binding Path=LastStartedOperation}"
 				   VerticalAlignment="Center"
 				   Margin="10,0,0,0"
-				   Foreground="Gray" />
+				   Foreground="{StaticResource StatusMessageTextBrush}" />
 		<TextBlock Text="..."
 				   VerticalAlignment="Center"
-				   Foreground="Gray" />
+				   Foreground="{StaticResource StatusMessageTextBrush}" />
 	</StackPanel>
 </UserControl>
