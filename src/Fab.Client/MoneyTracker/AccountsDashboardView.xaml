@@ -30,10 +30,11 @@
 			<ListBox x:Name="Items"
 					 Grid.Row="0"
 					 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-					 HorizontalContentAlignment="Stretch"></ListBox>
+					 HorizontalContentAlignment="Stretch"
+					 ItemContainerStyle="{StaticResource ListBoxItemStyle}" />
 			<Button x:Name="CreateAccount"
 					Grid.Row="1"
-					Content="{Binding Path=LocalizedStrings.AccountsDashboardView_CreateAccount, FallbackValue='+ Account'}"
+					Content="{Binding Path=LocalizedStrings.AccountsDashboardView_CreateAccount, FallbackValue=+ Account}"
 					MinHeight="23" />
 		</Grid>
 		<sdk:GridSplitter Grid.Column="1"

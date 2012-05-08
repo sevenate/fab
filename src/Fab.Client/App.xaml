@@ -8,7 +8,6 @@
 			 xmlns:framework="clr-namespace:Fab.Client.Framework"
 			 xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
 			 xmlns:Common="clr-namespace:Fab.Client.Common"
-			 xmlns:Categories="clr-namespace:Fab.Client.MoneyTracker.Categories"
 			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 			 mc:Ignorable="d">
 	<Application.Resources>
@@ -75,6 +74,128 @@
 				   BasedOn="{StaticResource NumbersStyle}">
 				<Setter Property="Foreground"
 						Value="#00C000" />
+			</Style>
+			<Style TargetType="Button">
+				<Setter Property="MinWidth"
+						Value="75" />
+				<Setter Property="FontSize"
+						Value="16" />
+				<Setter Property="Padding"
+						Value="10" />
+			</Style>
+			<Style TargetType="ComboBox">
+				<Setter Property="MinWidth"
+						Value="20" />
+				<Setter Property="FontSize"
+						Value="14" />
+				<Setter Property="Padding"
+						Value="10,10,25,10" />
+			</Style>
+			<Style x:Key="ListBoxItemStyle"
+				   TargetType="ListBoxItem">
+				<Setter Property="Padding"
+						Value="3" />
+				<Setter Property="HorizontalContentAlignment"
+						Value="Stretch" />
+				<Setter Property="VerticalContentAlignment"
+						Value="Top" />
+				<Setter Property="Background"
+						Value="Transparent" />
+				<Setter Property="BorderThickness"
+						Value="1" />
+				<Setter Property="TabNavigation"
+						Value="Local" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="ListBoxItem">
+							<Grid Background="{TemplateBinding Background}">
+								<VisualStateManager.VisualStateGroups>
+									<VisualStateGroup x:Name="CommonStates">
+										<VisualState x:Name="Normal" />
+										<VisualState x:Name="MouseOver">
+											<Storyboard>
+												<DoubleAnimation Duration="0"
+																 To=".35"
+																 Storyboard.TargetProperty="Opacity"
+																 Storyboard.TargetName="fillColor" />
+											</Storyboard>
+										</VisualState>
+										<VisualState x:Name="Disabled">
+											<Storyboard>
+												<DoubleAnimation Duration="0"
+																 To=".55"
+																 Storyboard.TargetProperty="Opacity"
+																 Storyboard.TargetName="contentPresenter" />
+											</Storyboard>
+										</VisualState>
+									</VisualStateGroup>
+									<VisualStateGroup x:Name="SelectionStates">
+										<VisualState x:Name="Unselected" />
+										<VisualState x:Name="Selected">
+											<Storyboard>
+												<DoubleAnimation Duration="0"
+																 To=".75"
+																 Storyboard.TargetProperty="Opacity"
+																 Storyboard.TargetName="fillColor2" />
+											</Storyboard>
+										</VisualState>
+									</VisualStateGroup>
+									<VisualStateGroup x:Name="FocusStates">
+										<VisualState x:Name="Focused">
+											<Storyboard>
+												<ObjectAnimationUsingKeyFrames Duration="0"
+																			   Storyboard.TargetProperty="Visibility"
+																			   Storyboard.TargetName="FocusVisualElement">
+													<DiscreteObjectKeyFrame KeyTime="0">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Visible</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+												</ObjectAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualState>
+										<VisualState x:Name="Unfocused" />
+									</VisualStateGroup>
+								</VisualStateManager.VisualStateGroups>
+								<Rectangle x:Name="fillColor"
+										   Fill="#FFBADDE9"
+										   IsHitTestVisible="False"
+										   Opacity="0"
+										   RadiusY="1"
+										   RadiusX="1" />
+								<Rectangle x:Name="fillColor2"
+										   Fill="#FFBADDE9"
+										   IsHitTestVisible="False"
+										   Opacity="0"
+										   RadiusY="1"
+										   RadiusX="1" />
+								<ContentPresenter x:Name="contentPresenter"
+												  ContentTemplate="{TemplateBinding ContentTemplate}"
+												  Content="{TemplateBinding Content}"
+												  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+												  Margin="{TemplateBinding Padding}" />
+								<Rectangle x:Name="FocusVisualElement"
+										   RadiusY="1"
+										   RadiusX="1"
+										   Stroke="#FF6DBDD1"
+										   StrokeThickness="1"
+										   Visibility="Collapsed" />
+							</Grid>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style TargetType="TextBox">
+				<Setter Property="FontSize"
+						Value="14" />
+			</Style>
+			<Style TargetType="PasswordBox">
+				<Setter Property="FontSize"
+						Value="14" />
+			</Style>
+			<Style TargetType="TextBlock">
+				<Setter Property="FontSize"
+						Value="14" />
 			</Style>
 			<Style x:Key="ComboBoxItemStyle"
 				   TargetType="ComboBoxItem">
@@ -190,10 +311,11 @@
 			</DataTemplate>
 			<DataTemplate x:Key="CategoryBrief">
 				<Border CornerRadius="3"
-						HorizontalAlignment="Left"
+						HorizontalAlignment="Center"
 						VerticalAlignment="Center"
 						Background="{Binding Path=Category.CategoryType, Converter={StaticResource categoryTypeToColor}}"
 						Padding="4,3"
+						Margin="2"
 						Visibility="{Binding Path=Category, Converter={StaticResource nullToCollapsed}}">
 					<TextBlock VerticalAlignment="Center"
 							   Foreground="{StaticResource CategoryTextColorBrush}"
@@ -211,6 +333,8 @@
 			</DataTemplate>
 			<Style x:Key="ColumnHeaderStyle"
 				   TargetType="TextBlock">
+				<Setter Property="HorizontalAlignment"
+						Value="Center" />
 				<Setter Property="Margin"
 						Value="3" />
 			</Style>
