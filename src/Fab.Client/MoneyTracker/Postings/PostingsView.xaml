@@ -258,7 +258,10 @@
 											IsReadOnly="True">
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button MaxHeight="24" Padding="3"
+							<Button Style="{x:Null}"
+									Width="24"
+									Height="24"
+									Padding="3"
 									cal:Message.Attach="EditPosting($dataContext)">
 								<ToolTipService.ToolTip>
 									<TextBlock Foreground="Black"
@@ -277,8 +280,9 @@
 											IsReadOnly="True">
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button MaxHeight="24"
-									Padding="3"
+							<Button Style="{x:Null}"
+									Width="24"
+									Height="24"
 									cal:Message.Attach="DeleteTransaction($dataContext)">
 								<ToolTipService.ToolTip>
 									<TextBlock Foreground="Black"
