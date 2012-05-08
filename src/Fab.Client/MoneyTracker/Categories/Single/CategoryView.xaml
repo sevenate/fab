@@ -36,19 +36,23 @@
 					toolkit:DockPanel.Dock="Right"
 					Opacity="0"
 					HorizontalAlignment="Right"
-					VerticalAlignment="Top"
+					VerticalAlignment="Center"
 					Orientation="Horizontal">
-			<Button x:Name="Edit" Width="16"
+			<Button x:Name="Edit"
+					Width="16"
 					Height="16"
-					Padding="3">
+					Style="{x:Null}"
+					Padding="2">
 				<ToolTipService.ToolTip>
 					<TextBlock Text="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}" />
 				</ToolTipService.ToolTip>
 				<Resources:EditIcon />
 			</Button>
-			<Button x:Name="Delete" Width="16"
+			<Button x:Name="Delete"
+					Width="16"
 					Height="16"
-					Padding="3">
+					Style="{x:Null}"
+					Padding="2">
 				<ToolTipService.ToolTip>
 					<TextBlock Text="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}" />
 				</ToolTipService.ToolTip>
