@@ -38,16 +38,15 @@
 				<RowDefinition />
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<TextBlock Grid.Column="0"
 					   Text="{Binding Path=Name}"
-					   TextWrapping="Wrap"
+					   TextTrimming="WordEllipsis"
 					   ToolTipService.ToolTip="{Binding Path=Id}"
-					   HorizontalAlignment="Left"
 					   Margin="2,0,10,0"
 					   VerticalAlignment="Center" />
 			<TextBlock Grid.Column="1"
@@ -69,7 +68,9 @@
 						HorizontalAlignment="Right"
 						VerticalAlignment="Center"
 						Orientation="Vertical">
-				<Button x:Name="Delete" Width="16"
+				<Button x:Name="Delete"
+						Style="{x:Null}"
+						Width="16"
 						Height="16"
 						Padding="2">
 					<ToolTipService.ToolTip>
@@ -78,8 +79,10 @@
 					</ToolTipService.ToolTip>
 					<Resources:DeleteIcon />
 				</Button>
-				<Button x:Name="Edit" Width="16"
+				<Button x:Name="Edit"
+						Width="16"
 						Height="16"
+						Style="{x:Null}"
 						Padding="2">
 					<ToolTipService.ToolTip>
 						<TextBlock Foreground="Black"
@@ -91,7 +94,8 @@
 			<Controls:DockPanel Grid.Row="1"
 								Grid.ColumnSpan="3"
 								Margin="2,0">
-				<TextBlock Text="{Binding PostingsCount, Converter={StaticResource zeroToEmptyString}}" FontSize="10"
+				<TextBlock Text="{Binding PostingsCount, Converter={StaticResource zeroToEmptyString}}"
+						   FontSize="10"
 						   Foreground="Gray"
 						   FontStyle="Italic"
 						   Margin="0,0,10,0"
@@ -107,7 +111,7 @@
 						   Foreground="Gray"
 						   FontStyle="Italic"
 						   Text="{Binding LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
-				           VerticalAlignment="Center"
+						   VerticalAlignment="Center"
 						   Height="11.5">
 					<ToolTipService.ToolTip>
 						<StackPanel Orientation="Horizontal">
@@ -126,7 +130,7 @@
 						   Foreground="Gray"
 						   FontStyle="Italic"
 						   Text="{Binding FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=\{0:d\} -}"
-				           VerticalAlignment="Center">
+						   VerticalAlignment="Center">
 					<ToolTipService.ToolTip>
 						<StackPanel Orientation="Horizontal">
 							<TextBlock Foreground="Black"
