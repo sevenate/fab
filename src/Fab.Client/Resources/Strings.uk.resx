@@ -453,4 +453,7 @@
   <data name="CategoryView_Delete_Confirmation_Title" xml:space="preserve">
     <value>Підтвердження</value>
   </data>
+  <data name="SearchDashBoardView_Contains" xml:space="preserve">
+    <value>Містить текст:</value>
+  </data>
 </root>

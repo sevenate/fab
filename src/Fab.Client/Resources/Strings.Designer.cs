@@ -844,6 +844,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains text:.
+        /// </summary>
+        public static string SearchDashBoardView_Contains {
+            get {
+                return ResourceManager.GetString("SearchDashBoardView_Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difference:.
         /// </summary>
         public static string SearchDashBoardView_Difference {
