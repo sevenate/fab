@@ -453,4 +453,7 @@
   <data name="ScreensBootstrapper_Update_Notification_Title" xml:space="preserve">
     <value>Уведомление</value>
   </data>
+  <data name="SearchDashBoardView_Contains" xml:space="preserve">
+    <value>Содержит текст:</value>
+  </data>
 </root>
