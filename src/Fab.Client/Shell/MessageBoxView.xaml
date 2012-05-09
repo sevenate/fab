@@ -12,22 +12,22 @@
                     Margin="2 0 0 0"
 					MinWidth="75"
                     Visibility="{Binding OkVisible, Converter={StaticResource boolToVisibility}}"
-                    Content="Ok" />
+					Content="{Binding Path=LocalizedStrings.MessageBoxView_Ok, FallbackValue='Ok'}" />
             <Button x:Name="Yes"
                     Margin="2 0 0 0"
 					MinWidth="75"
 					Visibility="{Binding YesVisible, Converter={StaticResource boolToVisibility}}"
-                    Content="Yes" />
+					Content="{Binding Path=LocalizedStrings.MessageBoxView_Yes, FallbackValue='Yes'}" />
             <Button x:Name="No"
                     Margin="2 0 0 0"
 					MinWidth="75"
 					Visibility="{Binding NoVisible, Converter={StaticResource boolToVisibility}}"
-                    Content="No" />
+					Content="{Binding Path=LocalizedStrings.MessageBoxView_No, FallbackValue='No'}" />
             <Button x:Name="Cancel"
                     Margin="2 0 0 0"
 					MinWidth="75"
 					Visibility="{Binding CancelVisible, Converter={StaticResource boolToVisibility}}"
-                    Content="Cancel" />
+					Content="{Binding Path=LocalizedStrings.MessageBoxView_Cancel, FallbackValue='Cancel'}" />
         </StackPanel>
     </StackPanel>
 </UserControl>
