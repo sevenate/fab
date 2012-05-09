@@ -101,7 +101,7 @@ namespace Fab.Server.Core.Services
 		{
 			if (string.IsNullOrWhiteSpace(login))
 			{
-				throw new ArgumentException("Login must not be empty.");
+				throw new ArgumentException("Username must not be empty.");
 			}
 
 			if (string.IsNullOrWhiteSpace(password))
@@ -115,13 +115,13 @@ namespace Fab.Server.Core.Services
 			// Check login min length
 			if (newLogin.Length < 5)
 			{
-				throw new Exception("Login name is too short. Minimum length is 5.");
+				throw new Exception("Username is too short. Minimum length is 5.");
 			}
 
 			// Check login max length
 			if (newLogin.Length > 50)
 			{
-				throw new Exception("Login name is too long. Maximum length is 50.");
+				throw new Exception("Username is too long. Maximum length is 50.");
 			}
 
 			// Check password min length
@@ -143,7 +143,7 @@ namespace Fab.Server.Core.Services
 
 				var faultDetail = new FaultDetail
 				{
-					ErrorCode = "AUTH-2",
+					ErrorCode = "ERR-REGS-0",
 					ErrorMessage = "Registration failed.",
 					Description = "Registration is temporarily closed. Please, try again later."
 				};
@@ -165,9 +165,9 @@ namespace Fab.Server.Core.Services
 				{
 					var faultDetail = new FaultDetail
 					{
-						ErrorCode = "AUTH-3",
+						ErrorCode = "ERR-REGS-1",
 						ErrorMessage = "Registration failed.",
-						Description = string.Format("Login name \"{0}\" is already used. Please use another one.", newLogin)
+						Description = string.Format("Username \"{0}\" is already used. Please use another one.", newLogin)
 					};
 
 					throw new FaultException<FaultDetail>(

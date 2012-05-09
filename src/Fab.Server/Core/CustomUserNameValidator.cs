@@ -17,8 +17,8 @@ namespace Fab.Server.Core
 	/// <summary>
 	/// Validate each WCF service call with username and password.
 	/// </summary>
-    public class CustomUserNameValidator : UserNamePasswordValidator
-    {
+	public class CustomUserNameValidator : UserNamePasswordValidator
+	{
 		#region Overrides of UserNamePasswordValidator
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace Fab.Server.Core
 			{
 				throw new SecurityTokenException("Username and password should not be empty.");
 			}
-			
+
 			var client = new UserService();
 
 			bool isAuthenticated;
@@ -51,18 +51,18 @@ namespace Fab.Server.Core
 			{
 				var log = LogManager.GetCurrentClassLogger();
 				log.Warn("Authentication failed. Attempt to use username: " + userName);
-				
-//				throw new SecurityTokenException("Username or password is incorrect");
+
+				//throw new SecurityTokenException("Username or password is incorrect");
 
 				// To provide detailed information about failed validation use FaultException
 				// Note: this is NOT recommended for production by security reason
 
 				var faultDetail = new FaultDetail
-				                  {
-				                  	ErrorCode = "AUTH-1",
-				                  	ErrorMessage = "Authentication failed.",
-				                  	Description = "Username or password is incorrect."
-				                  };
+								  {
+									  ErrorCode = "ERR-AUTH-1",
+									  ErrorMessage = "Authentication failed.",
+									  Description = "Username or password is incorrect."
+								  };
 
 				throw new FaultException<FaultDetail>(
 					faultDetail,
@@ -72,5 +72,5 @@ namespace Fab.Server.Core
 		}
 
 		#endregion
-    }
+	}
 }

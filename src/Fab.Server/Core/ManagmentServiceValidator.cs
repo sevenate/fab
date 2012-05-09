@@ -52,9 +52,9 @@ namespace Fab.Server.Core
 
 				var faultDetail = new FaultDetail
 				{
-					ErrorCode = "AUTH-0",
-					ErrorMessage = "Authentication failed.",
-					Description = "Username or password is incorrect."
+					ErrorCode = "ERR-AUTH-0",
+					ErrorMessage = "Management authentication failed.",
+					Description = "Management username or password is incorrect."
 				};
 
 				throw new FaultException<FaultDetail>(
