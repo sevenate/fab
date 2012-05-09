@@ -52,7 +52,7 @@ namespace Fab.Server.Core
 
 				var faultDetail = new FaultDetail
 				{
-					ErrorCode = "AUTH-1",
+					ErrorCode = "AUTH-0",
 					ErrorMessage = "Authentication failed.",
 					Description = "Username or password is incorrect."
 				};
