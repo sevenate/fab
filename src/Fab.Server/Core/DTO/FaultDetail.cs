@@ -43,7 +43,7 @@ namespace Fab.Server.Core.DTO
 		/// </summary>
 		public FaultDetail()
 		{
-			ErrorCode = "UNKN-0";
+			ErrorCode = "ERR-UNKN-0";
 			ErrorMessage = "Service encountered an error.";
 			Description = "Internal service error. Please, try again later.";
 		}
