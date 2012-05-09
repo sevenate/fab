@@ -96,8 +96,6 @@ namespace Fab.Client.Authentication
 			LoginForm.ActivateWith(this);
 		}
 
-		#region Overrides of Screen
-
 		/// <summary>
 		/// Called when deactivating.
 		/// </summary>
@@ -107,8 +105,6 @@ namespace Fab.Client.Authentication
 			base.OnDeactivate(close);
 			LoginForm.DeactivateWith(this);
 		}
-
-		#endregion
 
 		#endregion
 
