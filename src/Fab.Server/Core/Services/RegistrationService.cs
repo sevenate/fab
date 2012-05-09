@@ -135,6 +135,11 @@ namespace Fab.Server.Core.Services
 				throw new Exception("New password is too long. Maximum length is 255.");
 			}
 
+			if (Properties.Settings.Default.Registration_Disabled)
+			{
+				throw new Exception("Registration is temporarily closed. Please, try again later.");
+			}
+
 			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
 
 			using (var mc = new MasterEntities(masterConnection))
