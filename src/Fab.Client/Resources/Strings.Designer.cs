@@ -232,6 +232,24 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Service is not responding. Please try again later..
+        /// </summary>
+        public static string Error_Service_Is_Not_Responding {
+            get {
+                return ResourceManager.GetString("Error_Service_Is_Not_Responding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service is too busy. Please try again later..
+        /// </summary>
+        public static string Error_Service_Is_Too_Busy {
+            get {
+                return ResourceManager.GetString("Error_Service_Is_Too_Busy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loader_Loading {

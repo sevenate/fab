@@ -468,4 +468,10 @@
   <data name="MessageBoxView_Yes" xml:space="preserve">
     <value>Так</value>
   </data>
+  <data name="Error_Service_Is_Not_Responding" xml:space="preserve">
+    <value>Служба не відповідає. Будь ласка, спробуйте пізніше.</value>
+  </data>
+  <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
+    <value>Служба занадто зайнята. Будь ласка, спробуйте пізніше.</value>
+  </data>
 </root>
