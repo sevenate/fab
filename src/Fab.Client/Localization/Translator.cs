@@ -6,10 +6,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Threading;
+using Caliburn.Micro;
 
 namespace Fab.Client.Localization
 {
@@ -84,7 +86,11 @@ namespace Fab.Client.Localization
 		/// </summary>
 		static Translator()
 		{
-			LoadCulture();
+			//if (!Execute.InDesignMode)
+			if (!DesignerProperties.IsInDesignTool)
+			{
+				LoadCulture();
+			}
 		}
 
 		#endregion
