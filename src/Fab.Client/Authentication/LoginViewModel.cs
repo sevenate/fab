@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.IO.IsolatedStorage;
-using System.Linq;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Localization;
@@ -86,11 +85,7 @@ namespace Fab.Client.Authentication
 		public CultureInfo CurrentCulture
 		{
 			get { return Translator.CurrentCulture; }
-			set
-			{
-				Translator.CurrentCulture = value;
-				NotifyOfPropertyChange(() => CurrentCulture);
-			}
+			set { Translator.CurrentCulture = value; }
 		}
 
 		#region Overrides of Screen
@@ -264,15 +259,7 @@ namespace Fab.Client.Authentication
 					Username = (string)IsolatedStorageSettings.ApplicationSettings["Login_Username"];
 				}
 			}
-
-			if (IsolatedStorageSettings.ApplicationSettings.Contains("CurrentCulture"))
-			{
-				var savedCulture = (string)IsolatedStorageSettings.ApplicationSettings["CurrentCulture"];
-				CurrentCulture = Cultures.SingleOrDefault(info => info.ToString() == savedCulture);
-			}
 		}
-
-		#region Overrides of Screen
 
 		/// <summary>
 		/// Called when deactivating.
@@ -283,15 +270,12 @@ namespace Fab.Client.Authentication
 			base.OnDeactivate(close);
 			IsolatedStorageSettings.ApplicationSettings["Login_ShowCharacters"] = ShowCharacters;
 			IsolatedStorageSettings.ApplicationSettings["Login_RememberMe"] = RememberMe;
-			IsolatedStorageSettings.ApplicationSettings["CurrentCulture"] = CurrentCulture.ToString();
 
 			if (RememberMe)
 			{
 				IsolatedStorageSettings.ApplicationSettings["Login_Username"] = Username;
 			}
 		}
-
-		#endregion
 
 		#endregion
 
