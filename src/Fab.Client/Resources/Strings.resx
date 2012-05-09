@@ -468,4 +468,10 @@
   <data name="MessageBoxView_Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="Error_Service_Is_Not_Responding" xml:space="preserve">
+    <value>Service is not responding. Please try again later.</value>
+  </data>
+  <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
+    <value>Service is too busy. Please try again later.</value>
+  </data>
 </root>

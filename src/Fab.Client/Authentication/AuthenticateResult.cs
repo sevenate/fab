@@ -5,6 +5,7 @@
 //------------------------------------------------------------
 
 using System;
+using System.ServiceModel;
 using Caliburn.Micro;
 using Fab.Client.Shell;
 
@@ -45,14 +46,19 @@ namespace Fab.Client.Authentication
 												{
 													if (args.Error is TimeoutException)
 													{
-														Status = "Service is not responding. Please try again later.";
+														Status = Resources.Strings.Error_Service_Is_Not_Responding;
 														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
 													}
-//													if (args.Error.InnerException is FaultException)
-//													{
-//														Status = args.Error.InnerException.Message;
-//														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
-//													}
+													if (args.Error is ServerTooBusyException)
+													{
+														Status = Resources.Strings.Error_Service_Is_Too_Busy;
+														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
+													}
+													if (args.Error.InnerException is FaultException)
+													{
+														Status = args.Error.InnerException.Message;
+														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs()));
+													}
 													else
 													{
 														Caliburn.Micro.Execute.OnUIThread(() => Completed(this, new ResultCompletionEventArgs { Error = args.Error }));
