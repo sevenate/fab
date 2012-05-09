@@ -112,6 +112,7 @@ namespace Fab.Client.Authentication
 		public void Handle(LoggedInMessage message)
 		{
 			Username = message.Credentials.UserName;
+			NotifyOfPropertyChange(() => CurrentCulture);
 		}
 
 		#endregion
