@@ -6,6 +6,7 @@
 
 using System;
 using System.ServiceModel;
+using Common.Logging;
 using EmitMapper;
 using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
@@ -137,7 +138,20 @@ namespace Fab.Server.Core.Services
 
 			if (Properties.Settings.Default.Registration_Disabled)
 			{
-				throw new Exception("Registration is temporarily closed. Please, try again later.");
+				var log = LogManager.GetCurrentClassLogger();
+				log.Warn("Registration failed. Attempt to use username: " + login);
+
+				var faultDetail = new FaultDetail
+				{
+					ErrorCode = "AUTH-2",
+					ErrorMessage = "Registration failed.",
+					Description = "Registration is temporarily closed. Please, try again later."
+				};
+
+				throw new FaultException<FaultDetail>(
+					faultDetail,
+					new FaultReason(faultDetail.Description),
+					new FaultCode("Receiver"));
 			}
 
 			var masterConnection = dbManager.GetMasterConnection(DefaultFolder);
