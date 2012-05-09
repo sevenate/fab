@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
+using Fab.Client.Localization;
 
 namespace Fab.Client.Shell
 {
 	[Export(typeof (IMessageBox))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class MessageBoxViewModel : Screen, IMessageBox
+	public class MessageBoxViewModel : LocalizableScreen, IMessageBox
 	{
 		private MessageBoxOptions selection;
 

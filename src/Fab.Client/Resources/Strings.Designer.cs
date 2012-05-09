@@ -304,6 +304,42 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MessageBoxView_Cancel {
+            get {
+                return ResourceManager.GetString("MessageBoxView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string MessageBoxView_No {
+            get {
+                return ResourceManager.GetString("MessageBoxView_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string MessageBoxView_Ok {
+            get {
+                return ResourceManager.GetString("MessageBoxView_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string MessageBoxView_Yes {
+            get {
+                return ResourceManager.GetString("MessageBoxView_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account name.
         /// </summary>
         public static string NewAccountView_AccountName {

@@ -456,4 +456,16 @@
   <data name="SearchDashBoardView_Contains" xml:space="preserve">
     <value>Містить текст:</value>
   </data>
+  <data name="MessageBoxView_Cancel" xml:space="preserve">
+    <value>Вiдмiна</value>
+  </data>
+  <data name="MessageBoxView_No" xml:space="preserve">
+    <value>Ні</value>
+  </data>
+  <data name="MessageBoxView_Ok" xml:space="preserve">
+    <value>Підтвердити</value>
+  </data>
+  <data name="MessageBoxView_Yes" xml:space="preserve">
+    <value>Так</value>
+  </data>
 </root>
