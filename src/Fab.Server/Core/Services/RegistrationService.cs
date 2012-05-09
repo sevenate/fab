@@ -165,7 +165,7 @@ namespace Fab.Server.Core.Services
 				{
 					var faultDetail = new FaultDetail
 					{
-						ErrorCode = "AUTH-2",
+						ErrorCode = "AUTH-3",
 						ErrorMessage = "Registration failed.",
 						Description = string.Format("Login name \"{0}\" is already used. Please use another one.", newLogin)
 					};
