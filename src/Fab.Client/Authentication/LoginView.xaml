@@ -83,11 +83,11 @@
 		</Grid>
 		<TextBlock Text="{Binding Status}"
 		           Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}"
-				   Margin="0,5"
+				   Margin="5,10,5,0"
+				   MinHeight="24"
 				   MaxWidth="350"
 				   TextWrapping="Wrap"
 				   TextTrimming="WordEllipsis"
-				   MinHeight="24"
 				   HorizontalAlignment="Center" />
 		<Button x:Name="Login"
 				Content="{Binding Path=LocalizedStrings.LoginView_Login, FallbackValue='Login'}"
