@@ -480,4 +480,7 @@
   <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
     <value>Реєстрація...</value>
   </data>
+  <data name="PostingsView_Filter_Days" xml:space="preserve">
+    <value>днів</value>
+  </data>
 </root>

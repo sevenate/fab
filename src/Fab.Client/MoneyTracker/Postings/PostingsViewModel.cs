@@ -34,10 +34,10 @@ namespace Fab.Client.MoneyTracker.Postings
 			get
 			{
 				return startDate.Date == endDate.Date
-				       	? startDate.Date.ToLongDateString()
+				       	? startDate.Date.ToShortDateString()
 				       	: startDate.Month == endDate.Month
-							? startDate.Day + " - " + endDate.Day + " " + startDate.ToString("MMMM yyyy ã.") + " (" + ((endDate - startDate).TotalDays + 1) + " days)"
-							: startDate.Date.ToLongDateString() + " - " + endDate.Date.ToLongDateString() + " (" + ((endDate - startDate).TotalDays + 1) + " days)";
+							? string.Format("{0} - {1} {2} ({3} " + Resources.Strings.PostingsView_Filter_Days + ")", startDate.Day, endDate.Day, startDate.ToString("MMMM yyyy"), ((endDate - startDate).TotalDays + 1))
+							: string.Format("{0} - {1} ({2} " + Resources.Strings.PostingsView_Filter_Days + ")", startDate.Date.ToShortDateString(), endDate.Date.ToShortDateString(), ((endDate - startDate).TotalDays + 1));
 			}
 		}
 

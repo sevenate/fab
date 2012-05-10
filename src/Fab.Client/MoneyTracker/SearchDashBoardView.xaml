@@ -247,7 +247,6 @@
 					  Grid.Row="1"
 					  Content="{Binding Path=LocalizedStrings.SearchDashBoardView_Filter_Start, FallbackValue='Start'}" />
 			<sdk:DatePicker IsTodayHighlighted="True"
-			                VerticalAlignment="Center"
 			                Grid.Column="1"
 							Grid.Row="1"
 			                TabIndex="2"
@@ -290,45 +289,46 @@
 					<Behaviors:SelectTextOnFocusBehavior />
 				</i:Interaction.Behaviors>
 			</TextBox>
-			<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Income, FallbackValue='Income:'}"
+			<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Postings, FallbackValue='Postings:'}"
 					   Grid.Column="0"
 					   Grid.Row="4"
+					   Margin="5" />
+			<TextBlock Text="{Binding Path=TransactionRecords.Count}"
+					   Margin="5"
+					   Grid.Column="1"
+					   Grid.Row="4"
+					   HorizontalAlignment="Right" />
+			<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Income, FallbackValue='Income:'}"
+					   Grid.Column="0"
+					   Grid.Row="5"
 					   Margin="5" />
 			<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
 			           Margin="5"
 			           Text="{Binding Path=TotalIncome, StringFormat=n}"
 					   Grid.Column="1"
-					   Grid.Row="4"
+					   Grid.Row="5"
 					   HorizontalAlignment="Right" />
 			<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Expense, FallbackValue='Expense:'}"
 					   Grid.Column="0"
-					   Grid.Row="5"
+					   Grid.Row="6"
 			           Margin="5" />
 			<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColor}}"
 			           Margin="5"
 					   Grid.Column="1"
-					   Grid.Row="5"
+					   Grid.Row="6"
 			           Text="{Binding Path=TotalExpense, StringFormat=n}"
 			           HorizontalAlignment="Right" />
 			<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Difference, FallbackValue='Difference:'}"
 			           Margin="5"
 					   Grid.Column="0"
-					   Grid.Row="6" />
+					   Grid.Row="7" />
 			<TextBlock Margin="5"
 			           Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColor}}"
 					   Grid.Column="1"
-					   Grid.Row="6"
+					   Grid.Row="7"
 			           Text="{Binding Path=BalanceDiff, StringFormat=n}"
 			           HorizontalAlignment="Right" />
-			<TextBlock Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Postings, FallbackValue='Postings:'}"
-					   Grid.Column="0"
-					   Grid.Row="7"
-			           Margin="5" />
-			<TextBlock Text="{Binding Path=TransactionRecords.Count}"
-			           Margin="5"
-					   Grid.Column="1"
-					   Grid.Row="7"
-			           HorizontalAlignment="Right" />
+			
 			<toolkit:Chart Grid.ColumnSpan="2"
 						   Grid.Row="8"
 						   Title="{Binding Path=LocalizedStrings.SearchDashBoardView_Charts_Title, FallbackValue='Trends'}"
