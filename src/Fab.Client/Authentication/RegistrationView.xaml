@@ -73,7 +73,13 @@
 			</Button>
 		</Grid>
 		<TextBlock Text="{Binding Status}"
-				   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}"/>
+				   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}"
+				   Margin="5,10, 5, 0"
+				   MinHeight="24"
+				   MaxWidth="350"
+				   TextWrapping="Wrap"
+				   TextTrimming="WordEllipsis"
+				   HorizontalAlignment="Center" />
 		<Button x:Name="Register"
 				Content="{Binding Path=LocalizedStrings.RegistrationView_Register, FallbackValue='Sign up'}"
 		        Margin="0,10,0,0"
