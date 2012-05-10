@@ -32,11 +32,6 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		private const int MinimumPasswordLength = 5;
 
-		/// <summary>
-		/// Authorization in progress message.
-		/// </summary>
-		private const string RegistrationInProgress = "Signing up...";
-
 		#endregion
 
 		#region Private Properties
@@ -259,7 +254,7 @@ namespace Fab.Client.Authentication
 		[Dependencies("Username", "Password", "PasswordConfirmation", "AgreeToTerms")]
 		public IEnumerable<IResult> Register()
 		{
-			Status = RegistrationInProgress;
+			Status = Resources.Strings.RegistrationView_Registration_In_Progress;
 			ShowStatus = true;
 
 			var registerationResult = new RegisterationResult(Username, Password);
