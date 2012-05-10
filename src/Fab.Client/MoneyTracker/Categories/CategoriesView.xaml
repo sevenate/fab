@@ -12,7 +12,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
-			<RowDefinition Height="Auto" />
+			<RowDefinition Height="200" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Controls:DockPanel Grid.Row="0"
