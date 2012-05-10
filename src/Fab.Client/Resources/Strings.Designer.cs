@@ -259,6 +259,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authenticating....
+        /// </summary>
+        public static string LoginView_Authorization_In_Progress {
+            get {
+                return ResourceManager.GetString("LoginView_Authorization_In_Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string LoginView_Language {
@@ -723,6 +732,15 @@ namespace Fab.Client.Resources {
         public static string RegistrationView_Register {
             get {
                 return ResourceManager.GetString("RegistrationView_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signing up....
+        /// </summary>
+        public static string RegistrationView_Registration_In_Progress {
+            get {
+                return ResourceManager.GetString("RegistrationView_Registration_In_Progress", resourceCulture);
             }
         }
         

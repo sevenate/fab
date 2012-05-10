@@ -36,11 +36,6 @@ namespace Fab.Client.Authentication
 		private const int MinimumPasswordLength = 5;
 
 		/// <summary>
-		/// Authorization in progress message.
-		/// </summary>
-		private const string AuthenticationInProgress = "Authenticating...";
-
-		/// <summary>
 		/// Authorization failed message.
 		/// </summary>
 		private const string AuthenticationFailed = "The username or password provided is incorrect.";
@@ -288,7 +283,7 @@ namespace Fab.Client.Authentication
 		[Dependencies("Username", "Password")]
 		public IEnumerable<IResult> Login()
 		{
-			Status = AuthenticationInProgress;
+			Status = Strings.LoginView_Authorization_In_Progress;
 			ShowStatus = true;
 
 			var authenticateResult = new AuthenticateResult(Username, Password);

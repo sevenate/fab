@@ -244,7 +244,7 @@
     <value>Подписаться</value>
   </data>
   <data name="RegistrationView_Title" xml:space="preserve">
-    <value>Подписаться</value>
+    <value>Регистрация</value>
   </data>
   <data name="RegistrationView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
@@ -473,5 +473,11 @@
   </data>
   <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
     <value>Служба слишком занята. Пожалуйста, повторите попытку позже.</value>
+  </data>
+  <data name="LoginView_Authorization_In_Progress" xml:space="preserve">
+    <value>Аутентификация...</value>
+  </data>
+  <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
+    <value>Регистрация...</value>
   </data>
 </root>
