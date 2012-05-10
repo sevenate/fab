@@ -997,7 +997,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to « back to Login.
+        ///   Looks up a localized string similar to « Login.
         /// </summary>
         public static string StartView_back_to_Login {
             get {
@@ -1006,7 +1006,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to or Sign up ».
+        ///   Looks up a localized string similar to Sign up ».
         /// </summary>
         public static string StartView_or_Sign_up {
             get {

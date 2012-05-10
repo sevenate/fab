@@ -304,10 +304,10 @@
     <value>Postings:</value>
   </data>
   <data name="StartView_back_to_Login" xml:space="preserve">
-    <value>« back to Login</value>
+    <value>« Login</value>
   </data>
   <data name="StartView_or_Sign_up" xml:space="preserve">
-    <value>or Sign up »</value>
+    <value>Sign up »</value>
   </data>
   <data name="SearchDashBoardView_Name_Empty" xml:space="preserve">
     <value>Search</value>
