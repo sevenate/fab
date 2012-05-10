@@ -240,6 +240,8 @@
 					  TabIndex="5"
 					  MinWidth="180"
 					  Margin="5"
+					  HorizontalAlignment="Stretch"
+					  HorizontalContentAlignment="Stretch"
 					  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 					  ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
 					  ItemTemplate="{StaticResource AccountBrief}" />
