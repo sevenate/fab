@@ -241,7 +241,7 @@
     <value>Пароль (еще раз)</value>
   </data>
   <data name="RegistrationView_Register" xml:space="preserve">
-    <value>Подписаться</value>
+    <value>Зарегистрироваться</value>
   </data>
   <data name="RegistrationView_Title" xml:space="preserve">
     <value>Регистрация</value>
@@ -304,10 +304,10 @@
     <value>Транзакций:</value>
   </data>
   <data name="StartView_back_to_Login" xml:space="preserve">
-    <value>« назад на страницу Входа</value>
+    <value>« Вход</value>
   </data>
   <data name="StartView_or_Sign_up" xml:space="preserve">
-    <value>или Подписаться »</value>
+    <value>Регистрация »</value>
   </data>
   <data name="SearchDashBoardView_Name_Empty" xml:space="preserve">
     <value>Поиск</value>
