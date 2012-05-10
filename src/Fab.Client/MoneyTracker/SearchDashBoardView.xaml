@@ -19,8 +19,6 @@
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition />
-			<RowDefinition Height="4" />
-			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<sdk:DataGrid x:Name="TransactionsGrid"
@@ -32,6 +30,7 @@
 										CanUserResize="False"
 										CanUserReorder="False"
 										Binding="{Binding Path=TransactionId}"
+										Visibility="Collapsed"
 										ElementStyle="{StaticResource NumbersStyle}">
 					<sdk:DataGridTextColumn.HeaderStyle>
 						<Style TargetType="sdk:DataGridColumnHeader">
@@ -208,11 +207,8 @@
 				</sdk:DataGridTemplateColumn>
 			</sdk:DataGrid.Columns>
 		</sdk:DataGrid>
-		<sdk:GridSplitter Grid.Row="1"
-						  HorizontalAlignment="Stretch"
-						  VerticalAlignment="Center" />
 		<ContentControl x:Name="ActiveItem"
-						Grid.Row="3"
+						Grid.Row="1"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
 		<Grid Grid.Column="1"
@@ -239,7 +235,6 @@
 					  VerticalAlignment="Center"
 					  TabIndex="5"
 					  MinWidth="180"
-					  Margin="5"
 					  HorizontalAlignment="Stretch"
 					  HorizontalContentAlignment="Stretch"
 					  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -376,7 +371,7 @@
 					MinWidth="75" />
 		</Grid>
 		<ContentControl x:Name="Dialogs"
-						Grid.RowSpan="4"
+						Grid.RowSpan="2"
 						Grid.ColumnSpan="2"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
