@@ -628,6 +628,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to days.
+        /// </summary>
+        public static string PostingsView_Filter_Days {
+            get {
+                return ResourceManager.GetString("PostingsView_Filter_Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Income:.
         /// </summary>
         public static string PostingsView_Income {

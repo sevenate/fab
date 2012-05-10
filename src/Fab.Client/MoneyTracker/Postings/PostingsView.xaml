@@ -13,21 +13,24 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
-			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Controls:GroupBox Grid.Column="1"
-						   Grid.RowSpan="2">
-			<Controls:GroupBox.Header>
-				<TextBlock Text="{Binding Path=Period}"
-						   FontWeight="Bold"
-						   TextWrapping="Wrap"
-						   HorizontalAlignment="Right" />
-			</Controls:GroupBox.Header>
-			<Grid>
+		<Grid Grid.Column="1"
+			  Grid.RowSpan="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0"
+					   Text="{Binding Path=Period}"
+					   FontWeight="Bold"
+					   TextWrapping="Wrap"
+					   HorizontalAlignment="Center" />
+			<Grid Grid.Row="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
 					<ColumnDefinition />
@@ -39,58 +42,56 @@
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
-				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Income, FallbackValue='Income:'}"
-						   Grid.Column="0"
-						   Grid.Row="0" />
-				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Expense, FallbackValue='Expense:'}"
-						   Grid.Column="0"
-						   Grid.Row="1" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Postings, FallbackValue='Postings:'}"
 						   Grid.Column="0"
-						   Grid.Row="2"  />
-				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
-						   Grid.Column="1"
-						   Grid.Row="0"
-						   Text="{Binding Path=TotalIncome, StringFormat=n}"
-						   HorizontalAlignment="Right" />
-				<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColor}}"
-						   Grid.Column="1"
-						   Grid.Row="1"
-						   Text="{Binding Path=TotalExpense, StringFormat=n}"
-						   HorizontalAlignment="Right" />
+						   Grid.Row="0" />
 				<TextBlock Text="{Binding Path=TransactionRecords.Count}"
 						   Grid.Column="1"
+						   Grid.Row="0"
+						   HorizontalAlignment="Right" />
+				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Income, FallbackValue='Income:'}"
+						   Grid.Column="0"
+						   Grid.Row="1" />
+				<TextBlock Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
+						   Grid.Column="1"
+						   Grid.Row="1"
+						   Text="{Binding Path=TotalIncome, StringFormat=n}"
+						   HorizontalAlignment="Right" />
+				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Expense, FallbackValue='Expense:'}"
+						   Grid.Column="0"
+						   Grid.Row="2" />
+				<TextBlock Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColor}}"
+						   Grid.Column="1"
 						   Grid.Row="2"
+						   Text="{Binding Path=TotalExpense, StringFormat=n}"
 						   HorizontalAlignment="Right" />
 				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Start_Balance, FallbackValue='Start balance:'}"
 						   Grid.Column="0"
 						   Grid.Row="3" />
-				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Difference, FallbackValue='Difference:'}"
-						   Grid.Column="0"
-						   Grid.Row="4" />
-				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_End_Balance, FallbackValue='End balance:'}"
-						   Grid.Column="0"
-						   Grid.Row="5" />
 				<TextBlock Foreground="{Binding Path=StartBalance, Converter={StaticResource balanceToColor}}"
 						   Grid.Column="1"
 						   Grid.Row="3"
 						   Text="{Binding Path=StartBalance, StringFormat=n}"
 						   HorizontalAlignment="Right" />
+				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_Difference, FallbackValue='Difference:'}"
+						   Grid.Column="0"
+						   Grid.Row="4" />
 				<TextBlock Grid.Column="1"
 						   Grid.Row="4"
 						   Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColor}}"
 						   Text="{Binding Path=BalanceDiff, StringFormat=n}"
 						   HorizontalAlignment="Right" />
+				<TextBlock Text="{Binding Path=LocalizedStrings.PostingsView_End_Balance, FallbackValue='End balance:'}"
+						   Grid.Column="0"
+						   Grid.Row="5" />
 				<TextBlock Foreground="{Binding Path=EndBalance, Converter={StaticResource balanceToColor}}"
 						   Grid.Column="1"
 						   Grid.Row="5"
 						   Text="{Binding Path=EndBalance, StringFormat=n}"
 						   HorizontalAlignment="Right" />
 			</Grid>
-		</Controls:GroupBox>
+		</Grid>
 		<sdk:DataGrid x:Name="TransactionsGrid"
 					  Grid.Row="0"
 					  AutoGenerateColumns="False"
