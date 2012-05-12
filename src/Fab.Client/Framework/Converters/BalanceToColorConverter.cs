@@ -30,21 +30,21 @@ namespace Fab.Client.Framework.Converters
 		/// <param name="culture">The culture of the conversion.</param>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			string resourceName = "NeutralBalanceBrush";
+
 			if (value is decimal)
 			{
 				var balance = (decimal)value;
-
-				string resourceName = balance < 0 ? "NegativeBalanceBrush"
+				resourceName = balance < 0 ? "NegativeBalanceBrush"
 												  : balance == 0 ? "NeutralBalanceBrush"
 																 : "PositiveBalanceBrush";
+			}
+
 #if SILVERLIGHT
 				return Application.Current.Resources[resourceName];
 #else
 				return Application.Current.FindResource(resourceName);
 #endif
-			}
-
-			return value;
 		}
 
 		/// <summary>
