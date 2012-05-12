@@ -10,8 +10,8 @@
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 			 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 			 mc:Ignorable="d"
-			 d:DesignHeight="113"
-			 d:DesignWidth="830">
+			 d:DesignHeight="280"
+			 d:DesignWidth="900">
 	<UserControl.Resources>
 		<!--		<Style x:Key="ComboToggleButton"-->
 		<!--			   TargetType="ToggleButton">-->
@@ -183,62 +183,127 @@
 		<!--			</Setter>-->
 		<!--		</Style>-->
 	</UserControl.Resources>
-	<Grid x:Name="LayoutRoot">
+	<Grid x:Name="LayoutRoot"
+		  Background="White">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition MaxWidth="230" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2.5*" />
-			<ColumnDefinition Width="4*" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
 		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Date, FallbackValue='Date'}"
-				   VerticalAlignment="Bottom"
-				   Margin="3,0,0,0" />
-		<TextBlock Grid.Column="1"
-				   Text="{Binding Path=LocalizedStrings.TransactionView_Category, FallbackValue='Category'}"
-				   VerticalAlignment="Bottom"
-				   Margin="8,0,0,0" />
-		<TextBlock Grid.Column="2"
-				   Text="{Binding Path=LocalizedStrings.TransactionView_Price, FallbackValue='Price'}"
-				   VerticalAlignment="Bottom"
-				   Margin="8,0,0,0" />
-		<TextBlock Grid.Column="4"
-				   Text="{Binding Path=LocalizedStrings.TransactionView_Quantity, FallbackValue='Quantity'}"
-				   VerticalAlignment="Bottom"
-				   Margin="8,0,0,0" />
-		<TextBlock Grid.Column="6"
-				   Text="{Binding Path=LocalizedStrings.TransactionView_Amount, FallbackValue='Amount'}"
-				   VerticalAlignment="Bottom"
-				   Margin="8,0,0,0" />
-		<sdk:DatePicker Grid.Column="0"
-						Grid.Row="1"
-						x:Name="OperationDate"
+				   ToolTipService.ToolTip="{Binding Path=LocalizedStrings.TransactionView_Date, FallbackValue='Date'}"
+				   Margin="5"
+				   TextTrimming="WordEllipsis" />
+		<sdk:DatePicker x:Name="OperationDate"
 						IsTodayHighlighted="True"
 						SelectedDateFormat="Long"
 						SelectedDate="{Binding Path=OperationDate,
 												   Mode=TwoWay,
 												   Converter={StaticResource dateTimeUtcToLocal}}"
-						VerticalAlignment="Center"
+		                Grid.Row="1"
 						TabIndex="6"
-						IsTabStop="True" />
-		<Controls:AutoCompleteComboBox Grid.Column="1"
-									   Grid.Row="1"
-									   ItemsSource="{Binding Path=Categories}"
+						IsTabStop="True"
+						Margin="5">
+		</sdk:DatePicker>
+		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Price, FallbackValue='Price'}"
+		           ToolTipService.ToolTip="{Binding Path=LocalizedStrings.TransactionView_Price, FallbackValue='Price'}"
+				   Grid.Column="1"
+		           Margin="5"
+		           TextTrimming="WordEllipsis" />
+		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Quantity, FallbackValue='Quantity'}"
+		           ToolTipService.ToolTip="{Binding Path=LocalizedStrings.TransactionView_Quantity, FallbackValue='Quantity'}"
+				   Grid.Column="3"
+				   Margin="5"
+		           TextTrimming="WordEllipsis" />
+		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Amount, FallbackValue='Amount'}"
+		           ToolTipService.ToolTip="{Binding Path=LocalizedStrings.TransactionView_Amount, FallbackValue='Amount'}"
+				   Grid.Column="5"
+				   Margin="5"
+		           TextTrimming="WordEllipsis" />
+		<TextBox x:Name="Price"
+				 Grid.Column="1"
+		         Grid.Row="1"
+		         MaxLength="13"
+		         common:BindingHelper.UpdateSourceOnChange="True"
+		         Text="{Binding Path=Price,
+					 Mode=TwoWay,
+					 UpdateSourceTrigger=Explicit,
+					 ValidatesOnDataErrors=True,
+					 ValidatesOnExceptions=True,
+					 ValidatesOnNotifyDataErrors=True,
+					 NotifyOnValidationError=True,
+					 StringFormat=n}"
+		         TabIndex="1"
+		         Margin="5">
+			<i:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				<Behaviors:SelectTextOnFocusBehavior />
+			</i:Interaction.Behaviors>
+		</TextBox>
+		<TextBlock Text="X"
+				   Grid.Column="2"
+				   Grid.Row="1"
+				   Margin="5"
+		           VerticalAlignment="Center" />
+		<TextBox x:Name="Quantity"
+		         Grid.Column="3"
+		         Grid.Row="1"
+		         MaxLength="13"
+		         common:BindingHelper.UpdateSourceOnChange="True"
+		         Text="{Binding Path=Quantity,
+								Mode=TwoWay,
+								UpdateSourceTrigger=Explicit,
+								ValidatesOnDataErrors=True,
+								ValidatesOnExceptions=True,
+								ValidatesOnNotifyDataErrors =True,
+								NotifyOnValidationError=True,
+								StringFormat=n}"
+		         TabIndex="2"
+		         Margin="5">
+			<i:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				<Behaviors:SelectTextOnFocusBehavior />
+			</i:Interaction.Behaviors>
+		</TextBox>
+		<TextBlock Text="="
+				   Grid.Column="4"
+				   Grid.Row="1"
+				   Margin="5"
+		           VerticalAlignment="Center" />
+		<TextBox Text="{Binding Path=Amount, Converter={StaticResource nullToQuestion}, StringFormat=n}"
+				 Foreground="{Binding Path=Amount, Converter={StaticResource balanceToColor}}"
+				 Grid.Column="5"
+		         Grid.Row="1"
+		         IsReadOnly="True"
+		         MinWidth="60"
+		         Margin="5" />
+		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Category, FallbackValue='Category'}"
+				   ToolTipService.ToolTip="{Binding Path=LocalizedStrings.TransactionView_Category, FallbackValue='Category'}"
+				   Grid.Row="2"
+				   Margin="5"
+				   TextTrimming="WordEllipsis" />
+		<Controls:AutoCompleteComboBox ItemsSource="{Binding Path=Categories}"
 									   ValueMemberBinding="{Binding Path=Name}"
-									   MinimumPrefixLength="0"
-									   Margin="5,0"
-									   IsTextCompletionEnabled="True"
-									   FilterMode="Custom"
 									   ItemFilter="{Binding Path=CategoryFilter}"
 									   SelectedItemBinding="{Binding Path=CurrentCategory, Mode=TwoWay}"
-									   VerticalAlignment="Center"
+									   Grid.ColumnSpan="6"
+									   Grid.Row="3"
+									   MinimumPrefixLength="0"
+									   IsTextCompletionEnabled="True"
+									   FilterMode="Custom"
+									   Margin="5"
 									   TabIndex="0"
 									   IsTabStop="True">
 			<Controls:AutoCompleteComboBox.ItemTemplate>
@@ -252,93 +317,36 @@
 				</DataTemplate>
 			</Controls:AutoCompleteComboBox.ItemTemplate>
 		</Controls:AutoCompleteComboBox>
-		<TextBox x:Name="Price"
-				 Grid.Row="1"
-				 Grid.Column="2"
-		         MaxLength="13"
-		         common:BindingHelper.UpdateSourceOnChange="True"
-		         Text="{Binding Path=Price,
-					 Mode=TwoWay,
-					 UpdateSourceTrigger=Explicit,
-					 ValidatesOnDataErrors=True,
-					 ValidatesOnExceptions=True,
-					 ValidatesOnNotifyDataErrors=True,
-					 NotifyOnValidationError=True,
-					 StringFormat=n}"
-				 VerticalAlignment="Center"
-		         TabIndex="1"
-				 Margin="5,0">
-			<i:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
-				<Behaviors:SelectTextOnFocusBehavior />
-			</i:Interaction.Behaviors>
-		</TextBox>
-		<TextBlock Grid.Row="1"
-				   Grid.Column="3"
-				   Text="X"
-		           Margin="5,0"
-		           VerticalAlignment="Center" />
-		<TextBox x:Name="Quantity"
-				 Grid.Row="1"
-				 Grid.Column="4"
-		         MaxLength="13"
-		         common:BindingHelper.UpdateSourceOnChange="True"
-		         Text="{Binding Path=Quantity,
-								Mode=TwoWay,
-								UpdateSourceTrigger=Explicit,
-								ValidatesOnDataErrors=True,
-								ValidatesOnExceptions=True,
-								ValidatesOnNotifyDataErrors =True,
-								NotifyOnValidationError=True,
-								StringFormat=n}"
-		         MinWidth="50"
-		         VerticalAlignment="Center"
-		         TabIndex="2"
-				 Margin="5,0">
-			<i:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
-				<Behaviors:SelectTextOnFocusBehavior />
-			</i:Interaction.Behaviors>
-		</TextBox>
-		<TextBlock Grid.Row="1"
-				   Grid.Column="5"
-				   Text="="
-		           Margin="5,0"
-		           VerticalAlignment="Center" />
-		<TextBlock Grid.Column="6"
-				   Grid.Row="1"
-		           Foreground="{Binding Path=Amount, Converter={StaticResource balanceToColor}}"
-				   Text="{Binding Path=Amount, Converter={StaticResource nullToQuestion}, StringFormat=n}"
-		           VerticalAlignment="Center"
-				   MinWidth="50"
-				   FontSize="16"
-				   Margin="5,0" />
+		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Comment, FallbackValue='Notes'}"
+				   ToolTipService.ToolTip="{Binding Path=LocalizedStrings.TransactionView_Comment, FallbackValue='Notes'}"
+				   Grid.ColumnSpan="6"
+				   Grid.Row="4"
+				   Margin="5"
+				   TextTrimming="WordEllipsis" />
 		<TextBox x:Name="Comment"
-						 Grid.Row="2"
-						 Grid.ColumnSpan="3"
-						 Text="{Binding Path=Comment, Mode=TwoWay}"
-						 VerticalAlignment="Center"
+				 Text="{Binding Path=Comment, Mode=TwoWay}"
+				 Grid.ColumnSpan="6"
+				 Grid.Row="5"
+				 VerticalAlignment="Stretch"
 				 MaxLength="255"
+				 Margin="5"
 				 TextWrapping="Wrap"
 				 AcceptsReturn="True"
 				 MaxHeight="100"
-						 TabIndex="3">
-			<ToolTipService.ToolTip>
-				<TextBlock Foreground="Black"
-						   Text="{Binding Path=LocalizedStrings.TransactionView_Comment, FallbackValue='Notes'}" />
-			</ToolTipService.ToolTip>
+				 TabIndex="3">
 		</TextBox>
-		<Button x:Name="Save"
-				Grid.Column="3"
-				Grid.ColumnSpan="2"
-				Grid.Row="2"
-				Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
-				TabIndex="4" />
-		<Button x:Name="Cancel"
-				Grid.Column="5"
-				Grid.ColumnSpan="2"
-				Grid.Row="2"
-				Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
-		        TabIndex="5" />
+		<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Right"
+					Grid.ColumnSpan="6"
+					Grid.Row="6"
+					Margin="5">
+			<Button x:Name="Save"
+					Margin="0,0,5,0"
+					Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
+					TabIndex="4" />
+			<Button x:Name="Cancel"
+					Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
+					TabIndex="5" />
+		</StackPanel>
 	</Grid>
 </UserControl>
