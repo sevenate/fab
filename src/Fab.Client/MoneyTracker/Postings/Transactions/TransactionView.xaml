@@ -190,17 +190,13 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2.5*" />
+			<ColumnDefinition Width="4*" />
+			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition />
-			<ColumnDefinition Width="Auto"
-							  MinWidth="147" />
+			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Date, FallbackValue='Date'}"
 				   VerticalAlignment="Bottom"
@@ -242,7 +238,6 @@
 									   FilterMode="Custom"
 									   ItemFilter="{Binding Path=CategoryFilter}"
 									   SelectedItemBinding="{Binding Path=CurrentCategory, Mode=TwoWay}"
-									   MinWidth="100"
 									   VerticalAlignment="Center"
 									   TabIndex="0"
 									   IsTabStop="True">
@@ -270,7 +265,6 @@
 					 ValidatesOnNotifyDataErrors=True,
 					 NotifyOnValidationError=True,
 					 StringFormat=n}"
-				 MinWidth="50"
 				 VerticalAlignment="Center"
 		         TabIndex="1"
 				 Margin="5,0">
@@ -321,41 +315,30 @@
 				   Margin="5,0" />
 		<TextBox x:Name="Comment"
 						 Grid.Row="2"
-						 Grid.ColumnSpan="7"
+						 Grid.ColumnSpan="3"
 						 Text="{Binding Path=Comment, Mode=TwoWay}"
 						 VerticalAlignment="Center"
+				 MaxLength="255"
+				 TextWrapping="Wrap"
+				 AcceptsReturn="True"
+				 MaxHeight="100"
 						 TabIndex="3">
 			<ToolTipService.ToolTip>
 				<TextBlock Foreground="Black"
 						   Text="{Binding Path=LocalizedStrings.TransactionView_Comment, FallbackValue='Notes'}" />
 			</ToolTipService.ToolTip>
-			<TextBox.Style>
-				<Style TargetType="TextBox">
-					<Setter Property="MaxLength"
-									Value="255" />
-					<Setter Property="TextWrapping"
-									Value="Wrap" />
-					<Setter Property="MaxHeight"
-									Value="100" />
-					<Setter Property="AcceptsReturn"
-									Value="True" />
-				</Style>
-			</TextBox.Style>
 		</TextBox>
 		<Button x:Name="Save"
-				Grid.Column="8"
-				Grid.RowSpan="3"
+				Grid.Column="3"
+				Grid.ColumnSpan="2"
+				Grid.Row="2"
 				Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
-				MinWidth="75"
-				MinHeight="23"
-				Margin="5,0"
 				TabIndex="4" />
 		<Button x:Name="Cancel"
-				Grid.Column="9"
-				Grid.RowSpan="3"
+				Grid.Column="5"
+				Grid.ColumnSpan="2"
+				Grid.Row="2"
 				Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
-		        MinWidth="75"
-		        MinHeight="23"
 		        TabIndex="5" />
 	</Grid>
 </UserControl>

@@ -87,6 +87,14 @@ namespace Fab.Client.MoneyTracker
 			}
 		}
 
+		/// <summary>
+		/// Determine order in UI representation (like position in ItemsControl.Items).
+		/// </summary>
+		public int Order
+		{
+			get { return 3; }
+		}
+
 		public void Show()
 		{
 			if (!Accounts.IsEmpty && Accounts.CurrentItem == null)

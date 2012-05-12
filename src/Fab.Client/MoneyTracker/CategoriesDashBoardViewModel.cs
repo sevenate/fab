@@ -114,6 +114,14 @@ namespace Fab.Client.MoneyTracker
 			get { return string.Format(Resources.Strings.CategoriesDashBoardView_Name_Counts, repository.Entities.Count); }
 		}
 
+		/// <summary>
+		/// Determine order in UI representation (like position in ItemsControl.Items).
+		/// </summary>
+		public int Order
+		{
+			get { return 2; }
+		}
+
 		public void Show()
 		{
 			//TODO: make this method common for all IModels
