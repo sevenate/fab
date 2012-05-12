@@ -71,6 +71,14 @@ namespace Fab.Client.MoneyTracker
 			get { return string.Format(Resources.Strings.AccountsDashboardView_Name_Counts, Items.Count); }
 		}
 
+		/// <summary>
+		/// Determine order in UI representation (like position in ItemsControl.Items).
+		/// </summary>
+		public int Order
+		{
+			get { return 1; }
+		}
+
 		public void Show()
 		{
 			//TODO: make this method common for all IModels

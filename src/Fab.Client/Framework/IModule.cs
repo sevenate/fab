@@ -1,18 +1,31 @@
-// <copyright file="ITestItem.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+//------------------------------------------------------------
+// <copyright file="IModule.cs" company="nReez">
+// 	Copyright (c) 2011 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2010-03-31" />
+//------------------------------------------------------------
 
 using Caliburn.Micro;
 
 namespace Fab.Client.Framework
 {
 	/// <summary>
-	/// Screen part service.
+	/// Contract for standalone application functionality group that could be presented on single "tab" screen.
 	/// </summary>
 	public interface IModule : IScreen
 	{
+		/// <summary>
+		/// Module name.
+		/// </summary>
 		string Name { get; }
+
+		/// <summary>
+		/// Determine order in UI representation (like position in ItemsControl.Items).
+		/// </summary>
+		int Order { get; }
+
+		/// <summary>
+		/// Show module to user.
+		/// </summary>
 		void Show();
 	}
 }

@@ -128,6 +128,14 @@ namespace Fab.Client.Authentication
 			get { return "Start"; }
 		}
 
+		/// <summary>
+		/// Determine order in UI representation (like position in ItemsControl.Items).
+		/// </summary>
+		public int Order
+		{
+			get { return 0; }
+		}
+
 		public void Show()
 		{
 			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)

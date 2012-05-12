@@ -82,7 +82,7 @@ namespace Fab.Client.Shell
 			StartScreen = modules.OfType<IStartViewModel>().Single();
 
 			// exclude login module from other modules
-			Items.AddRange(modules.OrderBy(module => module.Name)
+			Items.AddRange(modules.OrderBy(module => module.Order)
 								  .Except(Enumerable.Repeat<IModule>(StartScreen, 1)));
 			PersonalCorner = corner;
 			AsyncProgressIndicator = asyncProgressIndicator;
