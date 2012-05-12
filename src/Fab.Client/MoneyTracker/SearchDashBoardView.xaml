@@ -25,10 +25,8 @@
 					  AutoGenerateColumns="False"
 					  ItemsSource="{Binding Path=TransactionRecords}">
 			<sdk:DataGrid.Columns>
-				<sdk:DataGridTextColumn IsReadOnly="True"
-										CanUserSort="False"
-										CanUserResize="False"
-										CanUserReorder="False"
+				<sdk:DataGridTextColumn MinWidth="20"
+										IsReadOnly="True"
 										Binding="{Binding Path=TransactionId}"
 										Visibility="Collapsed"
 										ElementStyle="{StaticResource NumbersStyle}">
@@ -47,9 +45,7 @@
 					</sdk:DataGridTextColumn.HeaderStyle>
 				</sdk:DataGridTextColumn>
 				<sdk:DataGridTemplateColumn MinWidth="75"
-											IsReadOnly="True"
-											CanUserSort="False"
-											CanUserResize="False">
+											IsReadOnly="True">
 					<sdk:DataGridTemplateColumn.HeaderStyle>
 						<Style TargetType="sdk:DataGridColumnHeader">
 							<Setter Property="Template">
@@ -81,8 +77,6 @@
 				</sdk:DataGridTemplateColumn>
 				<sdk:DataGridTemplateColumn MinWidth="75"
 											IsReadOnly="True"
-											CanUserSort="False"
-											CanUserResize="False"
 											CellTemplate="{StaticResource CategoryBrief}">
 					<sdk:DataGridTemplateColumn.HeaderStyle>
 						<Style TargetType="sdk:DataGridColumnHeader">
@@ -98,8 +92,7 @@
 					</sdk:DataGridTemplateColumn.HeaderStyle>
 				</sdk:DataGridTemplateColumn>
 				<sdk:DataGridTemplateColumn Width="*"
-											IsReadOnly="True"
-											CanUserSort="False">
+											IsReadOnly="True">
 					<sdk:DataGridTemplateColumn.HeaderStyle>
 						<Style TargetType="sdk:DataGridColumnHeader">
 							<Setter Property="Template">
@@ -125,7 +118,6 @@
 				</sdk:DataGridTemplateColumn>
 				<sdk:DataGridTextColumn MinWidth="75"
 										IsReadOnly="True"
-										CanUserSort="False"
 										ElementStyle="{StaticResource ExpenceStyle}"
 										Binding="{Binding Path=Expense, Converter={StaticResource zeroToEmptyString}, StringFormat=n}">
 					<sdk:DataGridTextColumn.HeaderStyle>
@@ -144,7 +136,6 @@
 				</sdk:DataGridTextColumn>
 				<sdk:DataGridTextColumn MinWidth="75"
 										IsReadOnly="True"
-										CanUserSort="False"
 										ElementStyle="{StaticResource IncomeStyle}"
 										Binding="{Binding Path=Income, Converter={StaticResource zeroToEmptyString}, StringFormat=n}">
 					<sdk:DataGridTextColumn.HeaderStyle>
