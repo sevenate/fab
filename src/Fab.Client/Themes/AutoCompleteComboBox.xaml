@@ -4,8 +4,12 @@
 	<!-- Custom toggle button template -->
 	<Style x:Name="ComboToggleButton"
 		   TargetType="ToggleButton">
+		<Setter Property="Foreground"
+				Value="#FF333333" />
 		<Setter Property="IsTabStop"
 				Value="False" />
+		<Setter Property="Background"
+				Value="#FF1F3B53" />
 		<Setter Property="Padding"
 				Value="0" />
 		<Setter Property="Template">
@@ -35,16 +39,34 @@
 		<Setter Property="MinimumPrefixLength"
 				Value="0" />
 		<!-- Regular template values -->
+		<Setter Property="Background"
+				Value="#FF1F3B53" />
 		<Setter Property="IsTabStop"
 				Value="False" />
 		<Setter Property="HorizontalContentAlignment"
 				Value="Left" />
+		<Setter Property="BorderBrush">
+			<Setter.Value>
+				<LinearGradientBrush EndPoint="0.5,1"
+									 StartPoint="0.5,0">
+					<GradientStop Color="#FFA3AEB9"
+								  Offset="0" />
+					<GradientStop Color="#FF8399A9"
+								  Offset="0.375" />
+					<GradientStop Color="#FF718597"
+								  Offset="0.375" />
+					<GradientStop Color="#FF617584"
+								  Offset="1" />
+				</LinearGradientBrush>
+			</Setter.Value>
+		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="myCtrls:AutoCompleteComboBox">
 					<Grid Margin="{TemplateBinding Padding}">
 						<TextBox IsTabStop="True"
 								 x:Name="Text"
+								 Style="{TemplateBinding TextBoxStyle}"
 								 Margin="0" />
 						<ToggleButton x:Name="DropDownToggle"
 									  HorizontalAlignment="Right"
@@ -67,7 +89,7 @@
 									  HorizontalAlignment="Right">
 									<Path.Fill>
 										<SolidColorBrush x:Name="BtnArrowColor"
-														 Color="#FFFFFFFF" />
+														 Color="#FF333333" />
 									</Path.Fill>
 								</Path>
 							</ToggleButton.Content>
@@ -82,9 +104,15 @@
 									<TranslateTransform X="2"
 														Y="2" />
 								</Border.RenderTransform>
+								<Border.Background>
+									<SolidColorBrush Color="#11000000" />
+								</Border.Background>
 								<Border HorizontalAlignment="Stretch"
 										BorderThickness="0"
 										CornerRadius="3">
+									<Border.Background>
+										<SolidColorBrush Color="#11000000" />
+									</Border.Background>
 									<Border.RenderTransform>
 										<TransformGroup>
 											<ScaleTransform />
@@ -109,6 +137,15 @@
 																	Y="-2" />
 											</TransformGroup>
 										</Border.RenderTransform>
+										<Border.Background>
+											<LinearGradientBrush EndPoint="0.5,1"
+																 StartPoint="0.5,0">
+												<GradientStop Color="#FFDDDDDD"
+															  Offset="0" />
+												<GradientStop Color="#AADDDDDD"
+															  Offset="1" />
+											</LinearGradientBrush>
+										</Border.Background>
 										<ListBox x:Name="Selector"
 												 Height="200"
 												 ScrollViewer.HorizontalScrollBarVisibility="Auto"
