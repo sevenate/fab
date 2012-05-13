@@ -1,0 +1,2 @@
+﻿<local:PersonalCornerViewModel xmlns:local="clr-namespace:Fab.Client.Authentication"
+							   Username="Jim" />

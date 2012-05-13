@@ -1,0 +1,10 @@
+﻿<local:AccountViewModel xmlns:local="clr-namespace:Fab.Client.MoneyTracker.Accounts.Single"
+						Id="7"
+						Name="Cash"
+						AssetTypeId="1"
+						Created="4/13/2009"
+						FirstPostingDate="4/13/2009"
+						LastPostingDate="8/27/2011"
+						Balance="50000000"
+						PostingsCount="15837">
+</local:AccountViewModel>

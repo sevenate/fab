@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d8b31082-e6ce-4923-aec2-c20515a1efb3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://thor/StagingFab/UserService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="UserService1.xsd" MetadataType="Schema" ID="a6fcaf04-e100-4fa5-a839-09634079fe74" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?xsd=xsd1" />
+    <MetadataFile FileName="UserService11.xsd" MetadataType="Schema" ID="4b0c7593-c455-434d-b7ca-672fc98a7712" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?xsd=xsd2" />
+    <MetadataFile FileName="UserService12.xsd" MetadataType="Schema" ID="94f89e56-c410-425e-92dd-270a9f346a8d" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="5872f9fd-fec5-40a7-b912-62b3cd71efec" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

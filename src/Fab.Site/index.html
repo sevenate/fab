@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>nReez - Your personal assistant for tracking and planning family assets.</title>
+    <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="keywords" content="finance, money, asset, budget, planning, tracking, report, nreez" />
+    <meta name="description" content="Easy track your daily expense, plan family budget and achieve your financial goals!" />
+    <meta name="robots" content="noarchive,index,follow" />
+    <meta name="googlebot" content="noarchive,index,follow" />
+    <meta name="revisit-after" content="7 days" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="alternate" type="application/atom+xml" href="http://feeds.nreez.com/nreez" title="nReez News (Atom 1.0)" />
+    <style type="text/css">
+      html, body
+      {
+        height: 100%;
+        overflow: auto;
+      }
+      body
+      {
+        background-color: #434343;
+        padding: 0;
+        margin: 0;
+      }
+      h1 {
+        font-family: Verdana, Tahoma, Geneva, sans-serif;
+        font-size: 400%;
+        text-align: center;
+        color: #222;
+        text-shadow: 0px 2px 3px #555;
+      }
+      p {
+        font-family: Verdana, Tahoma, Geneva, sans-serif;
+        font-size: 130%;
+        text-align: center;
+        color: #222;
+        text-shadow: 0px 2px 3px #555;
+      }
+
+      .copyright {
+        margin: 0px 5px 5px 0px;
+        bottom: 0px;
+        text-align: center;
+        width: 100%;
+        position: fixed;
+        font-family: Verdana, Tahoma, Geneva, sans-serif;
+        font-size: 75%;
+        text-align: center;
+        vertical-align: middle;
+        text-align: center;
+        color: #222;
+        text-shadow: 0px 2px 3px #555;
+      }
+
+      img {
+        vertical-align: middle;
+        border-width: 0px;
+      }
+
+      .text {
+        font-family: Verdana, Tahoma, Geneva, sans-serif;
+        text-align: center;
+        font-weight: bold;
+        vertical-align: middle;
+        text-align: center;
+        color: #222;
+        text-shadow: 0px 2px 3px #555;
+      }
+
+      a.button {
+        margin-left:auto;
+        margin-right:auto;
+        margin-top: 50px;
+        font-size: 150%;
+        color:#000;
+        text-decoration:none;
+        display:block;
+        width:200px;
+        padding:5px;
+        border:1px solid #303030;
+        text-align:center;
+
+        -moz-border-radius:5px;
+        -webkit-border-radius:5px;
+        -o-border-radius:5px;
+        border-radius:5px;
+
+        background:#737373;
+        background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#737373), to(#535353));
+        background:-moz-linear-gradient(0% 90% 90deg, #535353, #737373);
+      }
+
+      a.button:hover {
+        background:#636363;
+        background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#636363), to(#434343));
+        background:-moz-linear-gradient(0% 90% 90deg, #434343, #636363);
+      }
+
+    a.button:hover span{
+      color: #fff;
+      text-shadow: 0px 2px 3px #777;
+    }
+      a.button:active {
+        background:#434343;
+        background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#434343), to(#636363));
+        background:-moz-linear-gradient(0% 90% 90deg, #636363, #434343);
+      }
+
+      #outer {height: 100%; overflow: visible;}/* /* or without overflow */
+
+      #outer[id] {display: table; position: static;}
+
+      #middle {position: absolute; top: 30%;} /* for explorer only*/
+      #middle[id] {display: table-cell; vertical-align: middle; width: 100%;}
+
+      #inner {position: relative; top: -30%} /* for explorer only */
+      /* optional: #inner[id] {position: static;} */
+
+    </style>
+    
+    <script type="text/javascript">
+      getSLVersion = function()
+      {
+        var version = 'not installed';
+        var product = 'Silverlight ';
+
+        try
+        {
+          if (window.ActiveXObject)
+          {
+            var control = new ActiveXObject('AgControl.AgControl');
+
+            if (control != null)
+            {
+              if (control.isVersionSupported('5.0'))
+                version = product + '5';
+              else if (control.isVersionSupported('4.0'))
+                version = product + '4';
+              else if (control.isVersionSupported('3.0'))
+                version = product + '3';
+              else if (control.isVersionSupported('2.0'))
+                version = product + '2';
+              else if (control.isVersionSupported('1.0'))
+                version = product + '1';
+              else
+                version = product + '(unknown)';
+
+              control = null;
+            }
+          }
+          else
+          {
+            if (navigator.userAgent.indexOf('Linux') != -1)
+              product = 'Moonlight ';
+
+            var plugin = navigator.plugins['Silverlight Plug-In'];
+
+            if (plugin)
+            {
+              if (plugin.description === '1.0.30226.2')
+                version = product + '2';
+              else
+                version = product + parseInt(plugin.description[0]);
+            }
+          }
+        }
+        catch (e) { }
+
+        return version;
+      }
+    </script>
+
+    <script type="text/javascript">
+      var uvOptions = {};
+      (function() {
+        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/HigsxZC4GyI3X29uzoUk3g.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+      })();
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-9962509-1']);
+      _gaq.push(['_trackPageview']);
+
+      _gaq.push(['_setCustomVar',
+          1,
+          'SL version',
+          getSLVersion(),
+          1
+       ]);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="outer">
+      <div id="middle">
+        <div id="inner">
+          <h1><img src="images/logo.png" width="48" height="48" alt="nReez" title="nReez" /> Coming Soon</h1>
+          <p>We are currently tuning here and fixing there and soon will be publicly available.</p>
+          <a class="button" href="http://feeds.nreez.com/nreez">
+            <img src="images/feed.png" alt="atom" title="News feed" />
+            <span class="text" title="News feed">Stay Tuned!</span>
+          </a>
+        </div>
+      </div>
+      <span class="copyright">&copy; 2012 nReez</span>
+    </div>
+  </body>
+</html>

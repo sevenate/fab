@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5d38dc97-b9df-41d8-8429-73315f815d03" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://thor/StagingFab/RegistrationService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RegistrationService.xsd" MetadataType="Schema" ID="3e6d52dd-1035-477f-8678-fd80e6e3e414" SourceId="1" SourceUrl="https://thor/StagingFab/RegistrationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="RegistrationService1.xsd" MetadataType="Schema" ID="d836a105-f151-4b99-92e5-62e62da7109e" SourceId="1" SourceUrl="https://thor/StagingFab/RegistrationService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RegistrationService.disco" MetadataType="Disco" ID="ab9dd035-44c4-4cce-8821-79466cabf421" SourceId="1" SourceUrl="https://thor/StagingFab/RegistrationService.svc?disco" />
+    <MetadataFile FileName="RegistrationService.wsdl" MetadataType="Wsdl" ID="f62b6d7c-5689-45a5-91a6-d937861b2bfe" SourceId="1" SourceUrl="https://thor/StagingFab/RegistrationService.svc?wsdl" />
+    <MetadataFile FileName="RegistrationService2.xsd" MetadataType="Schema" ID="dc47a4e2-1c74-4cb0-b849-4c984d2091a7" SourceId="1" SourceUrl="https://thor/StagingFab/RegistrationService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
