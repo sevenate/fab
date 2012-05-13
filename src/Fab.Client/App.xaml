@@ -13,6 +13,8 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Themes/Cosmopolitan/assets/CoreStyles.xaml" />
+				<ResourceDictionary Source="Themes/Cosmopolitan/assets/SDKStyles.xaml" />
 				<ResourceDictionary Source="Themes/AutoCompleteComboBox.xaml" />
 				<ResourceDictionary Source="Themes/TransitioningFrame.xaml" />
 				<ResourceDictionary Source="Themes/generic.xaml" />
@@ -59,7 +61,8 @@
 			<SolidColorBrush x:Key="CategoryTextColorBrush"
 							 Color="White" />
 			<Style x:Key="NumbersStyle"
-				   TargetType="TextBlock">
+				   TargetType="TextBlock"
+				   BasedOn="{StaticResource DefaultTextBlockStyle}">
 				<Setter Property="HorizontalAlignment"
 						Value="Right" />
 			</Style>
@@ -75,7 +78,8 @@
 				<Setter Property="Foreground"
 						Value="#00C000" />
 			</Style>
-			<Style TargetType="Button">
+			<Style TargetType="Button"
+				   BasedOn="{StaticResource DefaultButtonStyle}">
 				<Setter Property="MinWidth"
 						Value="75" />
 				<Setter Property="FontSize"
@@ -83,7 +87,8 @@
 				<Setter Property="Padding"
 						Value="10" />
 			</Style>
-			<Style TargetType="ComboBox">
+			<Style TargetType="ComboBox"
+				   BasedOn="{StaticResource DefaultComboBoxStyle}">
 				<Setter Property="MinWidth"
 						Value="20" />
 				<Setter Property="FontSize"
@@ -92,7 +97,8 @@
 						Value="10,10,25,10" />
 			</Style>
 			<Style x:Key="ListBoxItemStyle"
-				   TargetType="ListBoxItem">
+				   TargetType="ListBoxItem"
+				   BasedOn="{StaticResource DefaultListBoxItemStyle}">
 				<Setter Property="Padding"
 						Value="3" />
 				<Setter Property="HorizontalContentAlignment"
@@ -185,20 +191,24 @@
 					</Setter.Value>
 				</Setter>
 			</Style>
-			<Style TargetType="TextBox">
+			<Style TargetType="TextBox"
+				   BasedOn="{StaticResource DefaultTextBoxStyle}">
 				<Setter Property="FontSize"
 						Value="14" />
 			</Style>
-			<Style TargetType="PasswordBox">
+			<Style TargetType="PasswordBox"
+				   BasedOn="{StaticResource DefaultPasswordBoxStyle}">
 				<Setter Property="FontSize"
 						Value="14" />
 			</Style>
-			<Style TargetType="TextBlock">
+			<Style TargetType="TextBlock"
+				   BasedOn="{StaticResource DefaultTextBlockStyle}">
 				<Setter Property="FontSize"
 						Value="14" />
 			</Style>
 			<Style x:Key="ComboBoxItemStyle"
-				   TargetType="ComboBoxItem">
+				   TargetType="ComboBoxItem"
+				   BasedOn="{StaticResource DefaultComboBoxItemStyle}">
 				<Setter Property="Padding"
 						Value="3" />
 				<Setter Property="HorizontalContentAlignment"
@@ -332,7 +342,8 @@
 				</StackPanel>
 			</DataTemplate>
 			<Style x:Key="ColumnHeaderStyle"
-				   TargetType="TextBlock">
+				   TargetType="TextBlock"
+				   BasedOn="{StaticResource DefaultTextBlockStyle}">
 				<Setter Property="HorizontalAlignment"
 						Value="Center" />
 				<Setter Property="Margin"
