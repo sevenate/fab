@@ -230,12 +230,14 @@ namespace Fab.Client.Shell
 		/// <param name="message">The message.</param>
 		public void Handle(ApplicationErrorMessage message)
 		{
-			var errorDialog = IoC.Get<ErrorDialogViewModel>();
-			errorDialog.Error = message.Error.ToString();
-			errorDialog.DisplayName = "Application Error";
+			var errorViewModel = IoC.Get<ErrorDialogViewModel>();
+			errorViewModel.DisplayName = Resources.Strings.ErrorDialogView_Title;
+			errorViewModel.Error = message.Error.ToString();
 
-			//TODO: show desktop "toast" notification here (if possible)
-			Dialogs.ShowDialog(errorDialog);
+			//TODO: show "toast" notification for muted exceptions
+			// when in out-of-browser mode
+			var windowManager = IoC.Get<IWindowManager>();
+			windowManager.ShowDialog(errorViewModel);
 		}
 
 		#endregion
