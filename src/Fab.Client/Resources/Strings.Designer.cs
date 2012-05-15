@@ -250,6 +250,24 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Try to continue.
+        /// </summary>
+        public static string ErrorDialogView_Close {
+            get {
+                return ResourceManager.GetString("ErrorDialogView_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Аn unexpected error :(.
+        /// </summary>
+        public static string ErrorDialogView_Title {
+            get {
+                return ResourceManager.GetString("ErrorDialogView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loader_Loading {

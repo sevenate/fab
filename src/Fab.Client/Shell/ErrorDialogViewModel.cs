@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.Composition;
-using Caliburn.Micro;
+﻿using System.ComponentModel.Composition;
+using Fab.Client.Localization;
 
 namespace Fab.Client.Shell
 {
 	[Export(typeof (ErrorDialogViewModel))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class ErrorDialogViewModel : Screen
+	public class ErrorDialogViewModel : LocalizableScreen
 	{
 		[ImportingConstructor]
 		public ErrorDialogViewModel()
@@ -14,11 +13,6 @@ namespace Fab.Client.Shell
 		}
 
 		public string Error { get; set; }
-
-		public void Report()
-		{
-			throw new NotImplementedException();
-		}
 
 		public void Close()
 		{

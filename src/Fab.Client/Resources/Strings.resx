@@ -483,4 +483,10 @@
   <data name="PostingsView_Filter_Days" xml:space="preserve">
     <value>days</value>
   </data>
+  <data name="ErrorDialogView_Close" xml:space="preserve">
+    <value>Try to continue</value>
+  </data>
+  <data name="ErrorDialogView_Title" xml:space="preserve">
+    <value>Аn unexpected error :(</value>
+  </data>
 </root>
