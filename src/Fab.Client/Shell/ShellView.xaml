@@ -5,36 +5,286 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 d:DesignHeight="300"
-			 d:DesignWidth="400"
+			 d:DesignWidth="450"
 			 mc:Ignorable="d"
 			 Language="{Binding Language, Source={StaticResource cultureSettings}}">
+	<UserControl.Resources>
+		<Style x:Key="ListBoxStyle1"
+			   TargetType="ListBox"
+			   BasedOn="{StaticResource DefaultListBoxStyle}" />
+		<DataTemplate x:Key="DataTemplate1">
+			<TextBlock Text="{Binding Name}"
+					   cal:Action.Target="{Binding}"
+					   VerticalAlignment="Center"
+					   cal:Message.Attach="Show"
+					   ToolTipService.ToolTip="{Binding Name}" />
+		</DataTemplate>
+		<Style x:Key="ListBoxItemStyle1"
+			   TargetType="ListBoxItem">
+			<Setter Property="FontFamily"
+					Value="{StaticResource ContentFontFamily}" />
+			<Setter Property="FontSize"
+					Value="{StaticResource ControlTitleFontSize}" />
+			<Setter Property="Cursor"
+					Value="Hand" />
+			<Setter Property="TextOptions.TextHintingMode"
+					Value="Animated" />
+			<Setter Property="IsTabStop"
+					Value="False" />
+			<Setter Property="Background"
+					Value="{StaticResource TransparentWhiteBrush}" />
+			<Setter Property="BorderBrush">
+				<Setter.Value>
+					<SolidColorBrush Color="{StaticResource Gray1}" />
+				</Setter.Value>
+			</Setter>
+			<Setter Property="BorderThickness"
+					Value="1" />
+			<Setter Property="Padding"
+					Value="6,2,6,2" />
+			<Setter Property="HorizontalContentAlignment"
+					Value="Stretch" />
+			<Setter Property="VerticalContentAlignment"
+					Value="Stretch" />
+			<Setter Property="MinWidth"
+					Value="5" />
+			<Setter Property="MinHeight"
+					Value="5" />
+			<Setter Property="TabNavigation"
+					Value="Local" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Grid Background="{TemplateBinding Background}">
+<!--							<VisualStateManager.VisualStateGroups>-->
+<!--								<VisualStateGroup x:Name="CommonStates">-->
+<!--									<VisualState x:Name="Normal" />-->
+<!--									<VisualState x:Name="MouseOver">-->
+<!--										<Storyboard>-->
+<!--											<DoubleAnimation Duration="0"-->
+<!--															 To=".35"-->
+<!--															 Storyboard.TargetProperty="Opacity"-->
+<!--															 Storyboard.TargetName="fillColor" />-->
+<!--										</Storyboard>-->
+<!--									</VisualState>-->
+<!--									<VisualState x:Name="Disabled">-->
+<!--										<Storyboard>-->
+<!--											<DoubleAnimation Duration="0"-->
+<!--															 To=".55"-->
+<!--															 Storyboard.TargetProperty="Opacity"-->
+<!--															 Storyboard.TargetName="contentPresenter" />-->
+<!--										</Storyboard>-->
+<!--									</VisualState>-->
+<!--								</VisualStateGroup>-->
+<!--								<VisualStateGroup x:Name="SelectionStates">-->
+<!--									<VisualState x:Name="Unselected" />-->
+<!--									<VisualState x:Name="Selected">-->
+<!--										<Storyboard>-->
+<!--											<DoubleAnimation Duration="0"-->
+<!--															 To=".75"-->
+<!--															 Storyboard.TargetProperty="Opacity"-->
+<!--															 Storyboard.TargetName="fillColor2" />-->
+<!--										</Storyboard>-->
+<!--									</VisualState>-->
+<!--								</VisualStateGroup>-->
+<!--								<VisualStateGroup x:Name="FocusStates">-->
+<!--									<VisualState x:Name="Focused">-->
+<!--										<Storyboard>-->
+<!--											<ObjectAnimationUsingKeyFrames Duration="0"-->
+<!--																		   Storyboard.TargetProperty="Visibility"-->
+<!--																		   Storyboard.TargetName="FocusVisualElement">-->
+<!--												<DiscreteObjectKeyFrame KeyTime="0">-->
+<!--													<DiscreteObjectKeyFrame.Value>-->
+<!--														<Visibility>Visible</Visibility>-->
+<!--													</DiscreteObjectKeyFrame.Value>-->
+<!--												</DiscreteObjectKeyFrame>-->
+<!--											</ObjectAnimationUsingKeyFrames>-->
+<!--										</Storyboard>-->
+<!--									</VisualState>-->
+<!--									<VisualState x:Name="Unfocused" />-->
+<!--								</VisualStateGroup>-->
+<!--							</VisualStateManager.VisualStateGroups>-->
+<!--							<Rectangle x:Name="fillColor"-->
+<!--									   Fill="#FFBADDE9"-->
+<!--									   IsHitTestVisible="False"-->
+<!--									   Opacity="0"-->
+<!--									   RadiusY="1"-->
+<!--									   RadiusX="1" />-->
+<!--							<Rectangle x:Name="fillColor2"-->
+<!--									   Fill="#FFBADDE9"-->
+<!--									   IsHitTestVisible="False"-->
+<!--									   Opacity="0"-->
+<!--									   RadiusY="1"-->
+<!--									   RadiusX="1" />-->
+<!--							<ContentPresenter x:Name="contentPresenter"-->
+<!--											  ContentTemplate="{TemplateBinding ContentTemplate}"-->
+<!--											  Content="{TemplateBinding Content}"-->
+<!--											  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"-->
+<!--											  Margin="{TemplateBinding Padding}" />-->
+<!--							<Rectangle x:Name="FocusVisualElement_org"-->
+<!--									   RadiusY="1"-->
+<!--									   RadiusX="1"-->
+<!--									   Stroke="#FF6DBDD1"-->
+<!--									   StrokeThickness="1"-->
+<!--									   Visibility="Collapsed" />-->
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0" />
+										<VisualTransition GeneratedDuration="0:0:0.1"
+														  To="MouseOver" />
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Normal" />
+									<VisualState x:Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+																		   Storyboard.TargetName="TopBorder">
+												<EasingDoubleKeyFrame KeyTime="0"
+																	  Value="0.6" />
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+																		   Storyboard.TargetName="HeaderTopUnselected">
+												<EasingDoubleKeyFrame KeyTime="0"
+																	  Value="0.3" />
+											</DoubleAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+																		   Storyboard.TargetName="HeaderTopSelected">
+												<EasingDoubleKeyFrame KeyTime="0"
+																	  Value="0.3" />
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Unselected">
+										<Storyboard>
+<!--											<DoubleAnimation Duration="0"-->
+<!--															 To=".75"-->
+<!--															 Storyboard.TargetProperty="Opacity"-->
+<!--															 Storyboard.TargetName="TemplateTopUnselected" />-->
+											<ObjectAnimationUsingKeyFrames Duration="0"
+																		   Storyboard.TargetProperty="Visibility"
+																		   Storyboard.TargetName="TemplateTopUnselected">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Selected">
+										<Storyboard>
+<!--											<DoubleAnimation Duration="0"-->
+<!--															 To=".75"-->
+<!--															 Storyboard.TargetProperty="Opacity"-->
+<!--															 Storyboard.TargetName="TemplateTopUnselected" />-->
+											<ObjectAnimationUsingKeyFrames Duration="0"
+															 Storyboard.TargetProperty="Visibility"
+															 Storyboard.TargetName="TemplateTopSelected">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="FocusStates">
+									<VisualState x:Name="Focused">
+										<Storyboard />
+									</VisualState>
+									<VisualState x:Name="Unfocused">
+										<Storyboard />
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+
+							<Grid x:Name="TemplateTopSelected"
+								  Visibility="Collapsed"
+								  Canvas.ZIndex="1">
+								<Border BorderThickness="1,0,1,0"
+										BorderBrush="{TemplateBinding BorderBrush}"
+										Background="{StaticResource WhiteBrush}">
+									<ContentControl x:Name="HeaderTopSelected"
+													ContentTemplate="{TemplateBinding ContentTemplate}"
+													Content="{TemplateBinding Content}"
+													Cursor="{TemplateBinding Cursor}"
+													Foreground="{TemplateBinding Foreground}"
+													FontSize="{TemplateBinding FontSize}"
+													HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+													IsTabStop="False"
+													Margin="{TemplateBinding Padding}"
+													VerticalAlignment="{TemplateBinding VerticalAlignment}"
+													FontWeight="Bold" />
+								</Border>
+							</Grid>
+							<Grid x:Name="TemplateTopUnselected"
+								  Visibility="Collapsed">
+								<Border x:Name="TopBorder"
+										BorderThickness="0,0,0,1"
+										Background="Transparent"
+										BorderBrush="{TemplateBinding BorderBrush}">
+									<ContentControl x:Name="HeaderTopUnselected"
+													ContentTemplate="{TemplateBinding ContentTemplate}"
+													Content="{TemplateBinding Content}"
+													Cursor="{TemplateBinding Cursor}"
+													Foreground="{StaticResource CheckBoxBrush}"
+													FontSize="{TemplateBinding FontSize}"
+													HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+													IsTabStop="False"
+													Margin="{TemplateBinding Padding}"
+													VerticalAlignment="{TemplateBinding VerticalAlignment}" />
+								</Border>
+							</Grid>
+							<Border x:Name="FocusVisualElement"
+									BorderBrush="{StaticResource HighlightBrush}"
+									BorderThickness="1"
+									CornerRadius="3,3,0,0"
+									IsHitTestVisible="false"
+									Margin="-1"
+									Visibility="Collapsed" />
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Foreground"
+					Value="{StaticResource TextBrush}" />
+		</Style>
+	</UserControl.Resources>
 	<Controls:BusyIndicator>
-		<Grid x:Name="LayoutRoot">
+		<Grid x:Name="LayoutRoot"
+			  Background="White">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<Controls:DockPanel Visibility="{Binding Path=IsAuthenticated, Converter={StaticResource boolToVisibility}}">
-				<ItemsControl x:Name="Items"
-							  Controls:DockPanel.Dock="Left">
-					<ItemsControl.ItemsPanel>
+				<ListBox x:Name="Items"
+						 Margin="5,2,2,-2"
+						 Canvas.ZIndex="100"
+						 Controls:DockPanel.Dock="Left"
+						 Style="{StaticResource ListBoxStyle1}"
+						 SelectedIndex="1"
+						 ItemTemplate="{StaticResource DataTemplate1}"
+						 ItemContainerStyle="{StaticResource ListBoxItemStyle1}">
+					<ListBox.ItemsPanel>
 						<ItemsPanelTemplate>
 							<StackPanel Orientation="Horizontal" />
 						</ItemsPanelTemplate>
-					</ItemsControl.ItemsPanel>
-					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<Button cal:Action.Target="{Binding}"
-									cal:Message.Attach="Show"
-									ToolTipService.ToolTip="{Binding Name}"
-									MinWidth="75"
-									MinHeight="23"
-									Content="{Binding Name}"
-									IsEnabled="{Binding Path=IsActive, Converter={StaticResource boolToNotBool}}" />
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
+					</ListBox.ItemsPanel>
+					<ListBoxItem Content="Accounts (5)" />
+					<ListBoxItem Content="Categories (28)" />
+					<ListBoxItem Content="Search (45)" />
+					<ListBoxItem Content="Reports" />
+				</ListBox>
 				<ContentControl x:Name="PersonalCorner"
 								Controls:DockPanel.Dock="Right"
 								VerticalContentAlignment="Stretch"
@@ -44,11 +294,20 @@
 								VerticalContentAlignment="Stretch"
 								HorizontalContentAlignment="Stretch" />
 			</Controls:DockPanel>
-			<ContentControl x:Name="ActiveItem"
-							Grid.Row="1"
+			<Border Background="{x:Null}"
+					MinWidth="10"
+					MinHeight="10"
+					Grid.Row="1"
+					Canvas.ZIndex="-200"
+					BorderThickness="0,1,0,0">
+				<Border.BorderBrush>
+					<SolidColorBrush Color="{StaticResource Gray1}" />
+				</Border.BorderBrush>
+				<ContentControl x:Name="ActiveItem"
 							VerticalContentAlignment="Stretch"
 							HorizontalContentAlignment="Stretch"
 							Template="{StaticResource TransitioningFrame}" />
+			</Border>
 			<ContentControl x:Name="Dialogs"
 							Grid.RowSpan="2"
 							VerticalContentAlignment="Stretch"
