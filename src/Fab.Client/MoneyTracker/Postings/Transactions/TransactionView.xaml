@@ -213,7 +213,7 @@
 												   Mode=TwoWay,
 												   Converter={StaticResource dateTimeUtcToLocal}}"
 		                Grid.Row="1"
-						TabIndex="6"
+						TabIndex="0"
 						IsTabStop="True"
 						Margin="5">
 		</sdk:DatePicker>
@@ -287,6 +287,8 @@
 				 Grid.Column="5"
 		         Grid.Row="1"
 		         IsReadOnly="True"
+				 IsTabStop="False"
+				 BorderBrush="Transparent"
 		         MinWidth="60"
 		         Margin="5" />
 		<TextBlock Text="{Binding Path=LocalizedStrings.TransactionView_Category, FallbackValue='Category'}"
@@ -304,7 +306,7 @@
 									   IsTextCompletionEnabled="True"
 									   FilterMode="Custom"
 									   Margin="5"
-									   TabIndex="0"
+									   TabIndex="3"
 									   IsTabStop="True">
 			<Controls:AutoCompleteComboBox.ItemTemplate>
 				<DataTemplate>
@@ -333,7 +335,7 @@
 				 TextWrapping="Wrap"
 				 AcceptsReturn="True"
 				 MaxHeight="100"
-				 TabIndex="3">
+				 TabIndex="4">
 		</TextBox>
 		<StackPanel Orientation="Horizontal"
 					HorizontalAlignment="Right"
@@ -343,10 +345,10 @@
 			<Button x:Name="Save"
 					Margin="0,0,5,0"
 					Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
-					TabIndex="4" />
+					TabIndex="5" />
 			<Button x:Name="Cancel"
 					Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
-					TabIndex="5" />
+					TabIndex="6" />
 		</StackPanel>
 	</Grid>
 </UserControl>
