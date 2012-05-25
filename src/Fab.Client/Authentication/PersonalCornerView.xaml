@@ -3,66 +3,14 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:MenuControl;assembly=MenuControl"
 			 mc:Ignorable="d"
 			 d:DataContext="{d:DesignData Source=./SampleData/PersonalData.xaml}">
-	<UserControl.Resources>
-		<Style x:Key="MenuBarItemStyle" TargetType="local:MenuBarItem">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="local:MenuBarItem">
-						<Grid>
-							<VisualStateManager.VisualStateGroups>
-								<VisualStateGroup x:Name="menuNavigationMBI">
-									<VisualState x:Name="ItemHighlightedMBI">
-										<Storyboard>
-											<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ItemHighlightMBI">
-												<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-											</DoubleAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualState>
-									<VisualState x:Name="noneHighlightedMBI"/>
-								</VisualStateGroup>
-							</VisualStateManager.VisualStateGroups>
-							<Canvas x:Name="LayoutRootMBI" Background="Transparent" Height="25" Width="36">
-								<Rectangle x:Name="ItemrMBI" Fill="#FF3A3A3A" Height="25" Opacity="1" Stroke="{x:Null}" Width="36"/>
-								<TextBlock x:Name="ItemTextMBI" Foreground="#FFFFFFFF" Height="15" Canvas.Left="6" TextWrapping="Wrap" Text="NaN" Canvas.Top="5" Width="25" Canvas.ZIndex="0"/>
-								<Canvas x:Name="ItemHighlightMBI" Height="25" Canvas.Left="0" Opacity="0" Canvas.Top="0" Width="36">
-									<Rectangle x:Name="ItemHighlightrMBI" Fill="#FF8A8C8C" Height="25" Opacity="1" Stroke="{x:Null}" Width="36"/>
-									<TextBlock x:Name="ItemText_copyMBI" Foreground="#FFFFFFFF" Height="15" Canvas.Left="6" TextWrapping="Wrap" Text="NaN" Canvas.Top="5" Width="25" Canvas.ZIndex="0"/>
-								</Canvas>
-							</Canvas>
-							<Canvas>
-								<Canvas x:Name="ItemDropDownMBI" Height="92" Canvas.Left="0" Opacity="1" Canvas.Top="26" Visibility="Collapsed" Width="166" Background="White">
-									<Rectangle x:Name="baseRectMBI" Fill="#FF3A3A3A" Height="87.334" Canvas.Left="0" Stroke="#FFFFFFFF" Canvas.Top="0" Width="166" Canvas.ZIndex="1"/>
-									<StackPanel x:Name="itemHolderMBI" Canvas.Left="0" Orientation="Vertical" Canvas.Top="0" Canvas.ZIndex="2"/>
-								</Canvas>
-							</Canvas>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-	</UserControl.Resources>
 	<StackPanel Orientation="Horizontal"
 				HorizontalAlignment="Right">
-		<local:MenuBar MinWidth="100">
-			<local:MenuBarItem MenuText="File" >
-				<local:MenuItem MenuText="New" />
-				<local:MenuItem MenuText="Open" />
-				<local:MenuItem MenuText="A quick brown fox jumped over the lazy fox." />
-				<local:MenuItem MenuText="test1" />
-				<local:MenuItem MenuText="test2" />
-			</local:MenuBarItem>
-		</local:MenuBar>
 		<ComboBox x:Name="Cultures"
 				  SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
-				  MinHeight="26"
 				  ItemTemplate="{StaticResource LanguageItem}" />
-		<Button x:Name="Logout"
-				MinWidth="75"
-				TabIndex="0"
-				Padding="10">
+		<Button x:Name="Logout">
 			<Button.Content>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="{Binding Path=LocalizedStrings.PersonalCornerView_Sign_out, FallbackValue='Sign out'}"							   
@@ -70,15 +18,15 @@
 							   VerticalAlignment="Center" />
 					<TextBlock Text="{Binding Username, StringFormat=( \{0\} )}"
 							   VerticalAlignment="Center"
-							   Foreground="Gray"
+							   Foreground="{StaticResource GrayBrush2}"
 							   Margin="5,0"
 							   FontSize="12" />
 					<TextBlock x:Name="Version"
-							   ToolTipService.ToolTip="Client version"
+							   ToolTipService.ToolTip="{Binding Path=LocalizedStrings.PersonalCornerView_Client_Version, FallbackValue='Client version'}"
 							   TextWrapping="Wrap"
 							   HorizontalAlignment="Right"
 							   VerticalAlignment="Center"
-							   Foreground="#FF868686" />
+							   Foreground="{StaticResource GrayBrush4}" />
 				</StackPanel>
 			</Button.Content>
 		</Button>

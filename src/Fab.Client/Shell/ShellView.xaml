@@ -5,23 +5,18 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 			 d:DesignHeight="300"
 			 d:DesignWidth="450"
 			 mc:Ignorable="d"
 			 Language="{Binding Language, Source={StaticResource cultureSettings}}">
 	<UserControl.Resources>
-		<Style x:Key="ListBoxStyle1"
-			   TargetType="ListBox"
-			   BasedOn="{StaticResource DefaultListBoxStyle}" />
-		<DataTemplate x:Key="DataTemplate1">
+		<DataTemplate x:Key="ModuleDataTemplate">
 			<TextBlock Text="{Binding Name}"
 					   cal:Action.Target="{Binding}"
 					   VerticalAlignment="Center"
-					   cal:Message.Attach="Show"
-					   ToolTipService.ToolTip="{Binding Name}" />
+					   cal:Message.Attach="Show" />
 		</DataTemplate>
-		<Style x:Key="ListBoxItemStyle1"
+		<Style x:Key="ModuleListBoxItemStyle"
 			   TargetType="ListBoxItem">
 			<Setter Property="FontFamily"
 					Value="{StaticResource ContentFontFamily}" />
@@ -43,9 +38,9 @@
 			<Setter Property="BorderThickness"
 					Value="1" />
 			<Setter Property="Padding"
-					Value="6,2,6,2" />
+					Value="10,2,10,2" />
 			<Setter Property="HorizontalContentAlignment"
-					Value="Stretch" />
+					Value="Center" />
 			<Setter Property="VerticalContentAlignment"
 					Value="Stretch" />
 			<Setter Property="MinWidth"
@@ -58,77 +53,6 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="ListBoxItem">
 						<Grid Background="{TemplateBinding Background}">
-<!--							<VisualStateManager.VisualStateGroups>-->
-<!--								<VisualStateGroup x:Name="CommonStates">-->
-<!--									<VisualState x:Name="Normal" />-->
-<!--									<VisualState x:Name="MouseOver">-->
-<!--										<Storyboard>-->
-<!--											<DoubleAnimation Duration="0"-->
-<!--															 To=".35"-->
-<!--															 Storyboard.TargetProperty="Opacity"-->
-<!--															 Storyboard.TargetName="fillColor" />-->
-<!--										</Storyboard>-->
-<!--									</VisualState>-->
-<!--									<VisualState x:Name="Disabled">-->
-<!--										<Storyboard>-->
-<!--											<DoubleAnimation Duration="0"-->
-<!--															 To=".55"-->
-<!--															 Storyboard.TargetProperty="Opacity"-->
-<!--															 Storyboard.TargetName="contentPresenter" />-->
-<!--										</Storyboard>-->
-<!--									</VisualState>-->
-<!--								</VisualStateGroup>-->
-<!--								<VisualStateGroup x:Name="SelectionStates">-->
-<!--									<VisualState x:Name="Unselected" />-->
-<!--									<VisualState x:Name="Selected">-->
-<!--										<Storyboard>-->
-<!--											<DoubleAnimation Duration="0"-->
-<!--															 To=".75"-->
-<!--															 Storyboard.TargetProperty="Opacity"-->
-<!--															 Storyboard.TargetName="fillColor2" />-->
-<!--										</Storyboard>-->
-<!--									</VisualState>-->
-<!--								</VisualStateGroup>-->
-<!--								<VisualStateGroup x:Name="FocusStates">-->
-<!--									<VisualState x:Name="Focused">-->
-<!--										<Storyboard>-->
-<!--											<ObjectAnimationUsingKeyFrames Duration="0"-->
-<!--																		   Storyboard.TargetProperty="Visibility"-->
-<!--																		   Storyboard.TargetName="FocusVisualElement">-->
-<!--												<DiscreteObjectKeyFrame KeyTime="0">-->
-<!--													<DiscreteObjectKeyFrame.Value>-->
-<!--														<Visibility>Visible</Visibility>-->
-<!--													</DiscreteObjectKeyFrame.Value>-->
-<!--												</DiscreteObjectKeyFrame>-->
-<!--											</ObjectAnimationUsingKeyFrames>-->
-<!--										</Storyboard>-->
-<!--									</VisualState>-->
-<!--									<VisualState x:Name="Unfocused" />-->
-<!--								</VisualStateGroup>-->
-<!--							</VisualStateManager.VisualStateGroups>-->
-<!--							<Rectangle x:Name="fillColor"-->
-<!--									   Fill="#FFBADDE9"-->
-<!--									   IsHitTestVisible="False"-->
-<!--									   Opacity="0"-->
-<!--									   RadiusY="1"-->
-<!--									   RadiusX="1" />-->
-<!--							<Rectangle x:Name="fillColor2"-->
-<!--									   Fill="#FFBADDE9"-->
-<!--									   IsHitTestVisible="False"-->
-<!--									   Opacity="0"-->
-<!--									   RadiusY="1"-->
-<!--									   RadiusX="1" />-->
-<!--							<ContentPresenter x:Name="contentPresenter"-->
-<!--											  ContentTemplate="{TemplateBinding ContentTemplate}"-->
-<!--											  Content="{TemplateBinding Content}"-->
-<!--											  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"-->
-<!--											  Margin="{TemplateBinding Padding}" />-->
-<!--							<Rectangle x:Name="FocusVisualElement_org"-->
-<!--									   RadiusY="1"-->
-<!--									   RadiusX="1"-->
-<!--									   Stroke="#FF6DBDD1"-->
-<!--									   StrokeThickness="1"-->
-<!--									   Visibility="Collapsed" />-->
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
 									<VisualStateGroup.Transitions>
@@ -164,10 +88,6 @@
 								<VisualStateGroup x:Name="SelectionStates">
 									<VisualState x:Name="Unselected">
 										<Storyboard>
-<!--											<DoubleAnimation Duration="0"-->
-<!--															 To=".75"-->
-<!--															 Storyboard.TargetProperty="Opacity"-->
-<!--															 Storyboard.TargetName="TemplateTopUnselected" />-->
 											<ObjectAnimationUsingKeyFrames Duration="0"
 																		   Storyboard.TargetProperty="Visibility"
 																		   Storyboard.TargetName="TemplateTopUnselected">
@@ -181,10 +101,6 @@
 									</VisualState>
 									<VisualState x:Name="Selected">
 										<Storyboard>
-<!--											<DoubleAnimation Duration="0"-->
-<!--															 To=".75"-->
-<!--															 Storyboard.TargetProperty="Opacity"-->
-<!--															 Storyboard.TargetName="TemplateTopUnselected" />-->
 											<ObjectAnimationUsingKeyFrames Duration="0"
 															 Storyboard.TargetProperty="Visibility"
 															 Storyboard.TargetName="TemplateTopSelected">
@@ -206,7 +122,6 @@
 									</VisualState>
 								</VisualStateGroup>
 							</VisualStateManager.VisualStateGroups>
-
 							<Grid x:Name="TemplateTopSelected"
 								  Visibility="Collapsed"
 								  Canvas.ZIndex="1">
@@ -223,6 +138,7 @@
 													IsTabStop="False"
 													Margin="{TemplateBinding Padding}"
 													VerticalAlignment="{TemplateBinding VerticalAlignment}"
+													VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
 													FontWeight="Bold" />
 								</Border>
 							</Grid>
@@ -241,7 +157,8 @@
 													HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
 													IsTabStop="False"
 													Margin="{TemplateBinding Padding}"
-													VerticalAlignment="{TemplateBinding VerticalAlignment}" />
+													VerticalAlignment="{TemplateBinding VerticalAlignment}"
+													VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
 								</Border>
 							</Grid>
 							<Border x:Name="FocusVisualElement"
@@ -271,23 +188,19 @@
 						 Margin="5,2,2,-2"
 						 Canvas.ZIndex="100"
 						 Controls:DockPanel.Dock="Left"
-						 Style="{StaticResource ListBoxStyle1}"
 						 SelectedIndex="1"
-						 ItemTemplate="{StaticResource DataTemplate1}"
-						 ItemContainerStyle="{StaticResource ListBoxItemStyle1}">
+						 ItemTemplate="{StaticResource ModuleDataTemplate}"
+						 ItemContainerStyle="{StaticResource ModuleListBoxItemStyle}">
 					<ListBox.ItemsPanel>
 						<ItemsPanelTemplate>
 							<StackPanel Orientation="Horizontal" />
 						</ItemsPanelTemplate>
 					</ListBox.ItemsPanel>
-					<ListBoxItem Content="Accounts (5)" />
-					<ListBoxItem Content="Categories (28)" />
-					<ListBoxItem Content="Search (45)" />
-					<ListBoxItem Content="Reports" />
 				</ListBox>
 				<ContentControl x:Name="PersonalCorner"
+								Margin="0,0,0,5"
 								Controls:DockPanel.Dock="Right"
-								VerticalContentAlignment="Stretch"
+								VerticalContentAlignment="Center"
 								HorizontalContentAlignment="Stretch" />
 				<ContentControl x:Name="AsyncProgressIndicator"
 								Margin="20,0,0,0"
@@ -306,6 +219,7 @@
 				<ContentControl x:Name="ActiveItem"
 							VerticalContentAlignment="Stretch"
 							HorizontalContentAlignment="Stretch"
+							Padding="0,5,0,0"
 							Template="{StaticResource TransitioningFrame}" />
 			</Border>
 			<ContentControl x:Name="Dialogs"

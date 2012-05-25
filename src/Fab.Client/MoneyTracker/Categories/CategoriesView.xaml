@@ -12,8 +12,8 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
-			<RowDefinition Height="200" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="200" />
 		</Grid.RowDefinitions>
 		<Controls:DockPanel Grid.Row="0"
 							Margin="5">
@@ -27,7 +27,11 @@
 				 Grid.Row="1"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource ListBoxItemStyle}" />
-		<toolkit:Chart Grid.Row="2">
+		<Button x:Name="CreateCategory"
+				Grid.Row="2"
+				Margin="0,5"
+				Content="{Binding Path=LocalizedStrings.CategoriesView_CreateNew, FallbackValue='+ Category'}" />
+		<toolkit:Chart Grid.Row="3">
 			<toolkit:PieSeries IndependentValueBinding="{Binding Path=Name}"
 							   DependentValueBinding="{Binding Path=Popularity}"
 							   ItemsSource="{Binding Path=Items}"
@@ -36,9 +40,5 @@
 							   IsSelectionEnabled="True"
 							   Visibility="Visible" />
 		</toolkit:Chart>
-		<Button x:Name="CreateCategory"
-				Grid.Row="3"
-				Content="{Binding Path=LocalizedStrings.CategoriesView_CreateNew, FallbackValue='+ Category'}"
-				MinHeight="23" />
 	</Grid>
 </UserControl>

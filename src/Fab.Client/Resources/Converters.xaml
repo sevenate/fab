@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:Common="clr-namespace:Fab.Client.Common"
+					xmlns:converters="clr-namespace:Fab.Client.Framework.Converters"
+					xmlns:cal="http://www.caliburnproject.org">
+	<cal:BooleanToVisibilityConverter x:Key="boolToVisibility" />
+	<converters:CultureToFlagImagePathConverter x:Key="cultureFlagPath" />
+	<converters:BooleanToNotBooleanConverter x:Key="boolToNotBool" />
+	<converters:BooleanToVisibilityInvertConverter x:Key="boolToVisibilityInvert" />
+	<converters:BooleanToOpacityConverter x:Key="boolToOpacity" />
+	<converters:NullToCollapsedConverter x:Key="nullToCollapsed" />
+	<converters:NullToQuestionMarkConverter x:Key="nullToQuestion" />
+	<converters:ZeroToVisibilityConverter x:Key="zeroToVisibility" />
+	<converters:BalanceToColorConverter x:Key="balanceToColor" />
+	<converters:CategoryTypeToColorConverter x:Key="categoryTypeToColor" />
+	<converters:DebugConverter x:Key="debugConverter" />
+	<converters:BooleanToColorConverter x:Key="boolToColor" />
+	<converters:AssetTypeIdToStringConverter x:Key="assetTypeIdToString" />
+	<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
+	<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
+</ResourceDictionary>

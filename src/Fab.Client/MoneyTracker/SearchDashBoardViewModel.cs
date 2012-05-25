@@ -25,7 +25,7 @@ namespace Fab.Client.MoneyTracker
 	/// General search screen model.
 	/// </summary>
 	[Export(typeof (IModule))]
-	public class SearchDashBoardViewModel : PostingViewModelBase, IModule, IHandle<LoggedOutMessage>
+	public class SearchDashBoardViewModel : PostingViewModelBase, IModule, IHandle<LoggedOutMessage>, IHandle<AccountsUpdatedMessage>
 	{
 		#region Fields
 
@@ -45,8 +45,6 @@ namespace Fab.Client.MoneyTracker
 
 		private void InitSourceAccounts()
 		{
-			sourceAccountsViewSource.Source = accountsRepository.Entities;
-
 			if (!Accounts.IsEmpty)
 			{
 				Accounts.MoveCurrentToFirst();
@@ -70,7 +68,18 @@ namespace Fab.Client.MoneyTracker
 				NotifyOfPropertyChange(() => Name);
 				SearchStatus = Resources.Strings.PostingViewModelBase_SearchStatus_Search;
 			};
-			InitSourceAccounts();
+			sourceAccountsViewSource.Source = accountsRepository.Entities;
+		}
+
+		#endregion
+
+		#region Overrides of PostingViewModelBase
+
+		protected override IEnumerable<IResult> PreAction()
+		{
+			// Initialize account for search postings
+			AccountId = ((AccountDTO)Accounts.CurrentItem).Id;
+			yield break;
 		}
 
 		#endregion
@@ -128,13 +137,15 @@ namespace Fab.Client.MoneyTracker
 
 		#endregion
 
-		#region Overrides of PostingViewModelBase
+		#region Implementation of IHandle<AccountsUpdatedMessage>
 
-		protected override IEnumerable<IResult> PreAction()
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(AccountsUpdatedMessage message)
 		{
-			// Initialize account for search postings
-			AccountId = ((AccountDTO)Accounts.CurrentItem).Id;
-			yield break;
+			InitSourceAccounts();
 		}
 
 		#endregion

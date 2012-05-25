@@ -13,13 +13,156 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto"
+							  MinWidth="180" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Grid Grid.Column="1"
-			  Grid.RowSpan="2">
+		<sdk:DataGrid x:Name="TransactionsGrid"
+					  Grid.Row="0"
+					  AutoGenerateColumns="False"
+					  ItemsSource="{Binding Path=TransactionRecords}">
+			<sdk:DataGrid.Columns>
+				<sdk:DataGridTextColumn IsReadOnly="True"
+										CanUserSort="False"
+										CanUserResize="False"
+										CanUserReorder="False"
+										Visibility="Collapsed"
+										Binding="{Binding Path=TransactionId}"
+										ElementStyle="{StaticResource NumbersStyle}">
+					<sdk:DataGridTextColumn.HeaderStyle>
+						<Style TargetType="sdk:DataGridColumnHeader">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate>
+										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
+												   TextAlignment="Right"
+												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Id, FallbackValue='ID'}" />
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</sdk:DataGridTextColumn.HeaderStyle>
+				</sdk:DataGridTextColumn>
+				<sdk:DataGridTemplateColumn MinWidth="75"
+											IsReadOnly="True"
+											CanUserSort="False"
+											CanUserResize="False"
+											HeaderStyle="{StaticResource DateColumnHeaderStyle}">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock VerticalAlignment="Center"
+									   Text="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
+									   ToolTipService.ToolTip="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn MinWidth="75"
+											IsReadOnly="True"
+											CanUserSort="False"
+											CanUserResize="False"
+											HeaderStyle="{StaticResource CategoryColumnHeaderStyle}"
+											CellTemplate="{StaticResource CategoryBrief}">
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn Width="*"
+											IsReadOnly="True"
+											CanUserSort="False"
+											HeaderStyle="{StaticResource CommentColumnHeaderStyle}">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock VerticalAlignment="Center"
+									   Text="{Binding Path=Comment}"
+									   Margin="3,0"
+									   TextTrimming="WordEllipsis">
+								<ToolTipService.ToolTip>
+									<TextBlock Text="{Binding Path=Comment}" />
+								</ToolTipService.ToolTip>
+							</TextBlock>
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTextColumn MinWidth="75"
+										IsReadOnly="True"
+										CanUserSort="False"
+										ElementStyle="{StaticResource ExpenceStyle}"
+										HeaderStyle="{StaticResource ExpenseColumnHeaderStyle}"
+										Binding="{Binding Path=Expense, Converter={StaticResource zeroToEmptyString}, StringFormat=n}">
+				</sdk:DataGridTextColumn>
+				<sdk:DataGridTextColumn MinWidth="75"
+										IsReadOnly="True"
+										CanUserSort="False"
+										ElementStyle="{StaticResource IncomeStyle}"
+										HeaderStyle="{StaticResource IncomeColumnHeaderStyle}"
+										Binding="{Binding Path=Income, Converter={StaticResource zeroToEmptyString}, StringFormat=n}">
+				</sdk:DataGridTextColumn>
+				<sdk:DataGridTemplateColumn MinWidth="75"
+											IsReadOnly="True"
+											CanUserSort="False"
+											HeaderStyle="{StaticResource BalanceColumnHeaderStyle}">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource NumbersStyle}"
+									   VerticalAlignment="Center"
+									   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
+									   Text="{Binding Path=Balance, StringFormat=n}" />
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn CanUserResize="False"
+											CanUserReorder="False"
+											CanUserSort="False"
+											IsReadOnly="True"
+											HeaderStyle="{StaticResource ButtonColumnHeaderStyle}">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button Style="{x:Null}"
+									Width="24"
+									Height="24"
+									Padding="3"
+									Margin="5,0,0,0"
+									cal:Message.Attach="EditPosting($dataContext)"
+									ToolTipService.ToolTip="{Binding Path=LocalizedStrings.PostingsView_Column_Edit, FallbackValue='Edit'}">
+								<Button.Content>
+									<Resources:EditIcon />
+								</Button.Content>
+							</Button>
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+				<sdk:DataGridTemplateColumn CanUserResize="False"
+											CanUserReorder="False"
+											CanUserSort="False"
+											IsReadOnly="True"
+											HeaderStyle="{StaticResource ButtonColumnHeaderStyle}">
+					<sdk:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button Style="{x:Null}"
+									Width="24"
+									Height="24"
+									Margin="5,0,0,0"
+									cal:Message.Attach="DeleteTransaction($dataContext)">
+								<ToolTipService.ToolTip>
+									<TextBlock Foreground="Black"
+											   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Delete, FallbackValue='Delete'}" />
+								</ToolTipService.ToolTip>
+								<Button.Content>
+									<Resources:DeleteIcon />
+								</Button.Content>
+							</Button>
+						</DataTemplate>
+					</sdk:DataGridTemplateColumn.CellTemplate>
+				</sdk:DataGridTemplateColumn>
+			</sdk:DataGrid.Columns>
+		</sdk:DataGrid>
+		<sdk:GridSplitter Grid.Column="1"
+						  Grid.RowSpan="2"
+						  HorizontalAlignment="Center"
+						  VerticalAlignment="Stretch" />
+		<Grid Grid.Column="2"
+			  Grid.RowSpan="2"
+			  Margin="5">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition />
@@ -91,221 +234,12 @@
 						   HorizontalAlignment="Right" />
 			</Grid>
 		</Grid>
-		<sdk:DataGrid x:Name="TransactionsGrid"
-					  Grid.Row="0"
-					  AutoGenerateColumns="False"
-					  ItemsSource="{Binding Path=TransactionRecords}">
-			<sdk:DataGrid.Columns>
-				<sdk:DataGridTextColumn IsReadOnly="True"
-										CanUserSort="False"
-										CanUserResize="False"
-										CanUserReorder="False"
-										Visibility="Collapsed"
-										Binding="{Binding Path=TransactionId}"
-										ElementStyle="{StaticResource NumbersStyle}">
-					<sdk:DataGridTextColumn.HeaderStyle>
-						<Style TargetType="sdk:DataGridColumnHeader">
-							<Setter Property="Template">
-								<Setter.Value>
-									<ControlTemplate>
-										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
-												   TextAlignment="Right"
-												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Id, FallbackValue='ID'}" />
-									</ControlTemplate>
-								</Setter.Value>
-							</Setter>
-						</Style>
-					</sdk:DataGridTextColumn.HeaderStyle>
-				</sdk:DataGridTextColumn>
-				<sdk:DataGridTemplateColumn MinWidth="75"
-											IsReadOnly="True"
-											CanUserSort="False"
-											CanUserResize="False">
-					<sdk:DataGridTemplateColumn.HeaderStyle>
-						<Style TargetType="sdk:DataGridColumnHeader">
-							<Setter Property="Template">
-								<Setter.Value>
-									<ControlTemplate>
-										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
-												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Date, FallbackValue='Date'}" />
-									</ControlTemplate>
-								</Setter.Value>
-							</Setter>
-						</Style>
-					</sdk:DataGridTemplateColumn.HeaderStyle>
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock VerticalAlignment="Center"
-									   Text="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
-									   ToolTipService.ToolTip="{Binding Path=Date, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=F}" />
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
-					<sdk:DataGridTemplateColumn.CellEditingTemplate>
-						<DataTemplate>
-							<sdk:DatePicker VerticalAlignment="Center"
-											IsTodayHighlighted="True"
-											SelectedDateFormat="Long"
-											SelectedDate="{Binding Path=Date, Mode=TwoWay, Converter={StaticResource dateTimeUtcToLocal}}" />
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellEditingTemplate>
-				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn MinWidth="75"
-											IsReadOnly="True"
-											CanUserSort="False"
-											CanUserResize="False"
-											CellTemplate="{StaticResource CategoryBrief}">
-					<sdk:DataGridTemplateColumn.HeaderStyle>
-						<Style TargetType="sdk:DataGridColumnHeader">
-							<Setter Property="Template">
-								<Setter.Value>
-									<ControlTemplate>
-										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
-												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Category, FallbackValue='Category'}" />
-									</ControlTemplate>
-								</Setter.Value>
-							</Setter>
-						</Style>
-					</sdk:DataGridTemplateColumn.HeaderStyle>
-				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn Width="*"
-											IsReadOnly="True"
-											CanUserSort="False">
-					<sdk:DataGridTemplateColumn.HeaderStyle>
-						<Style TargetType="sdk:DataGridColumnHeader">
-							<Setter Property="Template">
-								<Setter.Value>
-									<ControlTemplate>
-										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
-												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Comment, FallbackValue='Comment'}" />
-									</ControlTemplate>
-								</Setter.Value>
-							</Setter>
-						</Style>
-					</sdk:DataGridTemplateColumn.HeaderStyle>
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock VerticalAlignment="Center"
-									   Text="{Binding Path=Comment}"
-									   Margin="3,0"
-									   TextTrimming="WordEllipsis"
-									   ToolTipService.ToolTip="{Binding Path=Comment}">
-							</TextBlock>
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
-				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTextColumn MinWidth="75"
-										IsReadOnly="True"
-										CanUserSort="False"
-										ElementStyle="{StaticResource ExpenceStyle}"
-										Binding="{Binding Path=Expense, Converter={StaticResource zeroToEmptyString}, StringFormat=n}">
-					<sdk:DataGridTextColumn.HeaderStyle>
-						<Style TargetType="sdk:DataGridColumnHeader">
-							<Setter Property="Template">
-								<Setter.Value>
-									<ControlTemplate>
-										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
-												   TextAlignment="Right"
-												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Expense, FallbackValue='Expense'}" />
-									</ControlTemplate>
-								</Setter.Value>
-							</Setter>
-						</Style>
-					</sdk:DataGridTextColumn.HeaderStyle>
-				</sdk:DataGridTextColumn>
-				<sdk:DataGridTextColumn MinWidth="75"
-										IsReadOnly="True"
-										CanUserSort="False"
-										ElementStyle="{StaticResource IncomeStyle}"
-										Binding="{Binding Path=Income, Converter={StaticResource zeroToEmptyString}, StringFormat=n}">
-					<sdk:DataGridTextColumn.HeaderStyle>
-						<Style TargetType="sdk:DataGridColumnHeader">
-							<Setter Property="Template">
-								<Setter.Value>
-									<ControlTemplate>
-										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
-												   TextAlignment="Right"
-												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Income, FallbackValue='Income'}" />
-									</ControlTemplate>
-								</Setter.Value>
-							</Setter>
-						</Style>
-					</sdk:DataGridTextColumn.HeaderStyle>
-				</sdk:DataGridTextColumn>
-				<sdk:DataGridTemplateColumn MinWidth="75"
-											IsReadOnly="True"
-											CanUserSort="False">
-					<sdk:DataGridTemplateColumn.HeaderStyle>
-						<Style TargetType="sdk:DataGridColumnHeader">
-							<Setter Property="Template">
-								<Setter.Value>
-									<ControlTemplate>
-										<TextBlock Style="{StaticResource ColumnHeaderStyle}"
-												   TextAlignment="Right"
-												   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Balance, FallbackValue='Balance'}" />
-									</ControlTemplate>
-								</Setter.Value>
-							</Setter>
-						</Style>
-					</sdk:DataGridTemplateColumn.HeaderStyle>
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock Style="{StaticResource NumbersStyle}"
-									   VerticalAlignment="Center"
-									   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
-									   Text="{Binding Path=Balance, StringFormat=n}" />
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
-				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn CanUserResize="False"
-											CanUserReorder="False"
-											CanUserSort="False"
-											IsReadOnly="True">
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Button Style="{x:Null}"
-									Width="24"
-									Height="24"
-									Padding="3"
-									cal:Message.Attach="EditPosting($dataContext)">
-								<ToolTipService.ToolTip>
-									<TextBlock Foreground="Black"
-											   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Edit, FallbackValue='Edit'}" />
-								</ToolTipService.ToolTip>
-								<Button.Content>
-									<Resources:EditIcon />
-								</Button.Content>
-							</Button>
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
-				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn CanUserResize="False"
-											CanUserReorder="False"
-											CanUserSort="False"
-											IsReadOnly="True">
-					<sdk:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Button Style="{x:Null}"
-									Width="24"
-									Height="24"
-									cal:Message.Attach="DeleteTransaction($dataContext)">
-								<ToolTipService.ToolTip>
-									<TextBlock Foreground="Black"
-											   Text="{Binding Path=LocalizedStrings.PostingsView_Column_Delete, FallbackValue='Delete'}" />
-								</ToolTipService.ToolTip>
-								<Button.Content>
-									<Resources:DeleteIcon />
-								</Button.Content>
-							</Button>
-						</DataTemplate>
-					</sdk:DataGridTemplateColumn.CellTemplate>
-				</sdk:DataGridTemplateColumn>
-			</sdk:DataGrid.Columns>
-		</sdk:DataGrid>
 		<ContentControl x:Name="ActiveItem"
 						Grid.Row="1"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />
 		<ContentControl x:Name="Dialogs"
+						Grid.ColumnSpan="3"
 						Grid.RowSpan="2"
 						VerticalContentAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" />

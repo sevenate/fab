@@ -584,7 +584,7 @@
 
     <!--CalendarItem Style-->
     <Style TargetType="System_Windows_Controls_Primitives:CalendarItem" x:Key="DefaultCalendarItemStyle">
-        <Setter Property="Template">
+		<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="System_Windows_Controls_Primitives:CalendarItem">
                     <Grid>
@@ -625,7 +625,7 @@
                                         </Grid>
                                     </ControlTemplate>
                                     <DataTemplate x:Name="DayTitleTemplate">
-                                        <TextBlock Foreground="{StaticResource TextBoxMouseOverBorderBrush}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,4" Text="{Binding}" VerticalAlignment="Center"/>
+										<TextBlock Foreground="{StaticResource TextBoxMouseOverBorderBrush}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,4" Text="{Binding}" VerticalAlignment="Center" />
                                     </DataTemplate>
                                     <ControlTemplate x:Key="PreviousButtonTemplate" TargetType="Button">
                                         <Grid Cursor="Hand">
@@ -680,7 +680,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Button x:Name="PreviousButton" Cursor="Hand" HorizontalAlignment="Left" Height="24" Visibility="Collapsed" Width="24" Margin="13,0,0,0" Style="{StaticResource ImageButton}">
@@ -688,41 +688,41 @@
                                         <Path x:Name="PreviousIconPath" Data="M288.75,232.25 L288.75,240.625 L283,236.625 z" Fill="{StaticResource CheckBoxMouseOverBrush}" HorizontalAlignment="Left" Height="10" Stretch="Fill" VerticalAlignment="Center" Width="6" Opacity="0.7"/>
                                     </Grid>
                                 </Button>
-                                <Button x:Name="HeaderButton" Foreground="{StaticResource HighlightBrush}" Grid.Column="1" FontWeight="Bold" FontSize="13.333" HorizontalAlignment="Center" Cursor="Hand" Height="30" VerticalAlignment="Center" FontFamily="Segoe UI" Width="120"/>
+                                <Button x:Name="HeaderButton" Padding="0" Foreground="{StaticResource HighlightBrush}" Grid.Column="1" FontWeight="Bold" FontSize="13.333" HorizontalAlignment="Center" Cursor="Hand" Height="30" VerticalAlignment="Center" FontFamily="Segoe UI" Width="120"/>
                                 <Button x:Name="NextButton" Grid.Column="2" HorizontalAlignment="Right" Height="24" Visibility="Collapsed" Width="24" Cursor="Hand" Margin="0,0,13,0" Style="{StaticResource ImageButton}">
                                     <Path x:Name="NextIconPath" Data="M282.875,231.875 L282.875,240.375 L288.625,236 z" Fill="{StaticResource CheckBoxMouseOverBrush}" HorizontalAlignment="Right" Height="10" Stretch="Fill" VerticalAlignment="Center" Width="6" Opacity="0.7"/>
                                 </Button>
                                 <Grid x:Name="MonthView" Grid.ColumnSpan="3" Margin="15,7,15,6" Grid.Row="1" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                 </Grid>
                                 <Grid x:Name="YearView" Grid.ColumnSpan="3" Margin="6,7,7,6" Grid.Row="1" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                 </Grid>
                             </Grid>
@@ -742,15 +742,17 @@
         <Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
         <Setter Property="TextOptions.TextHintingMode" Value="Animated"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="15"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:Calendar">
-                    <StackPanel x:Name="Root" HorizontalAlignment="Center">
+                    <Grid x:Name="Root"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch">
                         <System_Windows_Controls_Primitives:CalendarItem x:Name="CalendarItem" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="0" Padding="0"/>
-                    </StackPanel>
+					</Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -794,7 +796,6 @@
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-
                                         <DoubleAnimation Duration="0" To=".35" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Content"/>
                                     </Storyboard>
                                 </VisualState>
@@ -1790,6 +1791,7 @@
     <!--GridSplitter Style-->
     <Style TargetType="controls:GridSplitter" x:Key="DefaultGridSplitterStyle">
         <Setter Property="Background" Value="{StaticResource WhiteColorBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="IsTabStop" Value="true"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="PreviewStyle">
@@ -1838,7 +1840,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle Fill="{TemplateBinding Background}" StrokeThickness="0"/>
                         <Grid x:Name="HorizontalTemplate" Height="10">
-                            <Border BorderThickness="1" BorderBrush="{StaticResource TextBoxBorderBrush}" >
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{StaticResource TextBoxBorderBrush}" >
                                 <Canvas Height="6" VerticalAlignment="Center" Width="12">
                                     <Path Data="M405.14063,248.65625 L405.14063,250.01588" Fill="White" Height="2.36" Stretch="Fill" UseLayoutRounding="False" Width="1" StrokeThickness="0.25" Canvas.Left="1" Canvas.Top="0.29">
                                         <Path.Stroke>
@@ -1924,7 +1926,7 @@
                             </Border>
                         </Grid>
                         <Grid x:Name="VerticalTemplate" Visibility="Collapsed" Width="10">
-                            <Border BorderThickness="1" BorderBrush="{StaticResource TextBoxBorderBrush}" >
+							<Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{StaticResource TextBoxBorderBrush}" >
                                 <Canvas Width="6" Height="12" >
                                     <Path Data="M405.14063,248.65625 L405.14063,250.01588" Fill="White" Height="2.36" Stretch="Fill" UseLayoutRounding="False" Width="1" StrokeThickness="0.25" Canvas.Left="1" Canvas.Top="0.29">
                                         <Path.Stroke>
