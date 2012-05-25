@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit">
+	<DataTemplate x:Key="AccountBrief">
+		<toolkit:DockPanel HorizontalAlignment="Stretch">
+			<TextBlock toolkit:DockPanel.Dock="Right"
+					   Margin="5,0,0,0"
+					   MinWidth="20"
+					   Text="{Binding Path=AssetTypeId, Converter={StaticResource assetTypeIdToString}}"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Left" />
+			<TextBlock toolkit:DockPanel.Dock="Right"
+					   Text="{Binding Path=Balance, StringFormat=\{0:N\}}"
+					   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
+					   Margin="5,0,0,0"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center" />
+			<TextBlock Text="{Binding Path=Name}"
+					   FontWeight="Bold" />
+		</toolkit:DockPanel>
+	</DataTemplate>
+	<DataTemplate x:Key="CategoryBrief">
+		<Border CornerRadius="3"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Background="{Binding Path=Category.CategoryType, Converter={StaticResource categoryTypeToColor}}"
+				Padding="4,3"
+				Margin="2"
+				Visibility="{Binding Path=Category, Converter={StaticResource nullToCollapsed}}">
+			<TextBlock VerticalAlignment="Center"
+					   Foreground="{StaticResource CategoryTextColorBrush}"
+					   Text="{Binding Path=Category.Name}"
+					   TextTrimming="WordEllipsis" />
+		</Border>
+	</DataTemplate>
+	<DataTemplate x:Key="LanguageItem">
+		<StackPanel Orientation="Horizontal">
+			<Image Source="{Binding Converter={StaticResource cultureFlagPath}}"
+				   Stretch="Uniform"
+				   Margin="0,0,3,0" />
+			<TextBlock Text="{Binding Path=NativeName}" />
+		</StackPanel>
+	</DataTemplate>
+</ResourceDictionary>

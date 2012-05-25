@@ -493,6 +493,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client version.
+        /// </summary>
+        public static string PersonalCornerView_Client_Version {
+            get {
+                return ResourceManager.GetString("PersonalCornerView_Client_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign out.
         /// </summary>
         public static string PersonalCornerView_Sign_out {

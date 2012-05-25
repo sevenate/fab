@@ -324,7 +324,7 @@ namespace Fab.Client.MoneyTracker.Postings
 				}
 			};
 
-			yield return Loader.Show(Resources.Strings.Loader_Loading);
+//			yield return Loader.Show(Resources.Strings.Loader_Loading);
 
 			yield return new SequentialResult(PreAction().GetEnumerator());
 
@@ -336,7 +336,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			IsBusy = false;
 			IsOutdated = false;
 
-			yield return Loader.Hide();
+//			yield return Loader.Hide();
 		}
 
 		private IEnumerable<IResult> DeterminePagesCount()

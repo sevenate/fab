@@ -17,7 +17,6 @@
 					HorizontalAlignment="Right"
 					Margin="0 8 0 0">
 			<Button x:Name="Close"
-					MinWidth="75"
 					Content="{Binding Path=LocalizedStrings.ErrorDialogView_Close, FallbackValue='Try to continue'}" />
 		</StackPanel>
 	</Grid>
