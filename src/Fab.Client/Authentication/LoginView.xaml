@@ -29,7 +29,7 @@
 		         MaxLength="50">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-				<Behaviors:FocusBehavior HasInitialFocus="True" />
+				<Behaviors:FocusBehavior IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
 				<Behaviors:SelectTextOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</TextBox>
@@ -42,7 +42,7 @@
 		         Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibility}, ElementName=ShowCharacters}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-				<Behaviors:FocusBehavior IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
+				<Behaviors:FocusBehavior IsFocused="{Binding PasswordTextIsFocused, Mode=TwoWay}" />
 				<Behaviors:SelectTextOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</TextBox>
@@ -52,6 +52,7 @@
 		             MaxLength="256">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
+				<Behaviors:FocusBehavior IsFocused="{Binding PasswordIsFocused, Mode=TwoWay}" />
 				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
