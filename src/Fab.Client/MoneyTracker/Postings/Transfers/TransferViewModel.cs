@@ -110,6 +110,28 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			}
 		}
 
+		#region Price is focused DP
+
+		/// <summary>
+		/// Specify whether a <see cref="Amount"/> field is focused.
+		/// </summary>
+		private bool amountIsFocused;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a <see cref="Amount"/> field is focused.
+		/// </summary>
+		public bool AmountIsFocused
+		{
+			get { return amountIsFocused; }
+			set
+			{
+				amountIsFocused = value;
+				NotifyOfPropertyChange(() => AmountIsFocused);
+			}
+		}
+
+		#endregion
+
 		public string Comment
 		{
 			get { return comment; }
@@ -167,14 +189,21 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 			InitSourceAccounts();
 			InitTargetAccounts();
 
-			var newAccount = accountsRepository.ByKey(accountId);
-			SourceAccounts.MoveCurrentTo(newAccount);
-
+			var sourceAccount = accountsRepository.ByKey(accountId);
+			SourceAccounts.MoveCurrentTo(sourceAccount);
 			prevSourceAccont = (AccountDTO)SourceAccounts.CurrentItem;
-			prevTargetAccont = (AccountDTO)TargetAccounts.CurrentItem;
+
+			var targetAccount = accountsRepository.Entities.Where(dto => dto.AssetTypeId == sourceAccount.AssetTypeId).Skip(1).FirstOrDefault();
+
+			if (targetAccount != null)
+			{
+				TargetAccounts.MoveCurrentTo(targetAccount);
+				prevTargetAccont = (AccountDTO)TargetAccounts.CurrentItem;
+			}
 
 			OperationDate = date;
 			Amount = string.Empty;
+			AmountIsFocused = true;
 			Comment = string.Empty;
 
 			IsEditMode = false;
@@ -222,6 +251,8 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 					TargetAccounts.MoveCurrentTo(secondAccount);
 				}
 			}
+			
+			AmountIsFocused = true;
 
 			prevSourceAccont = (AccountDTO)SourceAccounts.CurrentItem;
 			prevTargetAccont = (AccountDTO)TargetAccounts.CurrentItem;
