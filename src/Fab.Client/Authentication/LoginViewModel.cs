@@ -143,6 +143,72 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		#region Username is focused DP
+
+		/// <summary>
+		/// Specify whether a <see cref="Username"/> field is focused.
+		/// </summary>
+		private bool usernameIsFocused;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a <see cref="Username"/> field is focused.
+		/// </summary>
+		public bool UsernameIsFocused
+		{
+			get { return usernameIsFocused; }
+			set
+			{
+				usernameIsFocused = value;
+				NotifyOfPropertyChange(() => UsernameIsFocused);
+			}
+		}
+
+		#endregion
+
+		#region Password is focused DP
+
+		/// <summary>
+		/// Specify whether a <see cref="Password"/> field is focused.
+		/// </summary>
+		private bool passwordIsFocused;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a <see cref="Password"/> field is focused.
+		/// </summary>
+		public bool PasswordIsFocused
+		{
+			get { return passwordIsFocused; }
+			set
+			{
+				passwordIsFocused = value;
+				NotifyOfPropertyChange(() => PasswordIsFocused);
+			}
+		}
+
+		#endregion
+
+		#region Password is focused DP
+
+		/// <summary>
+		/// Specify whether a <see cref="Password"/> field with clear text is focused.
+		/// </summary>
+		private bool passwordTextIsFocused;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a <see cref="Password"/> field clear text is focused.
+		/// </summary>
+		public bool PasswordTextIsFocused
+		{
+			get { return passwordTextIsFocused; }
+			set
+			{
+				passwordTextIsFocused = value;
+				NotifyOfPropertyChange(() => PasswordTextIsFocused);
+			}
+		}
+
+		#endregion
+
 		#region Status DP
 
 		/// <summary>
@@ -252,6 +318,15 @@ namespace Fab.Client.Authentication
 				if (RememberMe)
 				{
 					Username = (string)IsolatedStorageSettings.ApplicationSettings["Login_Username"];
+					
+					if (ShowCharacters)
+					{
+						PasswordTextIsFocused = true;
+					}
+					else
+					{
+						PasswordIsFocused = true;
+					}
 				}
 			}
 		}
@@ -311,28 +386,6 @@ namespace Fab.Client.Authentication
 			       && !string.IsNullOrWhiteSpace(Password)
 			       && Username.Length >= MinimumUsernameLength
 			       && Password.Length >= MinimumPasswordLength;
-		}
-
-		#endregion
-
-		#region Username is focused DP
-
-		/// <summary>
-		/// Specify whether a <see cref="Username"/> field is focused.
-		/// </summary>
-		private bool usernameIsFocused;
-
-		/// <summary>
-		/// Gets or sets a value indicating whether a <see cref="Username"/> field is focused.
-		/// </summary>
-		public bool UsernameIsFocused
-		{
-			get { return usernameIsFocused; }
-			set
-			{
-				usernameIsFocused = value;
-				NotifyOfPropertyChange(() => UsernameIsFocused);
-			}
 		}
 
 		#endregion
