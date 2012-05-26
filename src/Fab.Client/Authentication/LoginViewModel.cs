@@ -187,7 +187,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Password is focused DP
+		#region Password text is focused DP
 
 		/// <summary>
 		/// Specify whether a <see cref="Password"/> field with clear text is focused.

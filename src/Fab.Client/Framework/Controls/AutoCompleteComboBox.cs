@@ -1,14 +1,10 @@
-﻿// <copyright file="AutoCompleteComboBox.cs" company="HD">
-// 	Copyright (c) 2010 HD. All rights reserved.
+﻿// <copyright file="AutoCompleteComboBox.cs" company="nReez">
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
 // <author name="Syed Mehroz Alam">
 // 	<url>http://www.codeproject.com/KB/silverlight/AutoComplete_ComboBox.aspx</url>
 // 	<date>2010-02-17</date>
 // </author>
-// <editor name="Andrew Levshoff">
-// 	<email>alevshoff@hd.com</email>
-// 	<date>2010-06-02</date>
-// </editor>
 
 using System;
 using System.Windows;

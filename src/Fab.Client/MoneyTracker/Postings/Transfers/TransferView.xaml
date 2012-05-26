@@ -113,6 +113,7 @@
 				 TabIndex="4">
 			<i:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Save}" />
+				<Behaviors:FocusBehavior IsFocused="{Binding Path=AmountIsFocused, Mode=TwoWay}" />
 				<Behaviors:SelectTextOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</TextBox>

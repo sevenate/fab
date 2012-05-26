@@ -184,6 +184,28 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			}
 		}
 
+		#region Price is focused DP
+
+		/// <summary>
+		/// Specify whether a <see cref="Price"/> field is focused.
+		/// </summary>
+		private bool priceIsFocused;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether a <see cref="Price"/> field is focused.
+		/// </summary>
+		public bool PriceIsFocused
+		{
+			get { return priceIsFocused; }
+			set
+			{
+				priceIsFocused = value;
+				NotifyOfPropertyChange(() => PriceIsFocused);
+			}
+		}
+
+		#endregion
+
 		[Required]
 		public string Quantity
 		{
@@ -294,6 +316,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			OperationDate = date;
 			CurrentCategory = null;
 			Price = string.Empty;
+			PriceIsFocused = true;
 			Quantity = "1";
 			Comment = string.Empty;
 
@@ -328,6 +351,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			OperationDate = transaction.Date.ToLocalTime();
 			CurrentCategory = Categories.Cast<CategoryDTO>().Where(c => c.Id == transaction.CategoryId).SingleOrDefault();
 			Price = transaction.Rate.ToString("n");
+			PriceIsFocused = true;
 			Quantity = transaction.Quantity.ToString("0.####");
 			Comment = transaction.Comment;
 

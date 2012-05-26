@@ -65,6 +65,7 @@
 				<ControlTemplate TargetType="myCtrls:AutoCompleteComboBox">
 					<Grid Margin="{TemplateBinding Padding}">
 						<TextBox IsTabStop="True"
+								 TabIndex="0"
 								 x:Name="Text"
 								 Style="{TemplateBinding TextBoxStyle}"
 								 Margin="0" />
@@ -73,6 +74,7 @@
 									  VerticalAlignment="Center"
 									  Style="{StaticResource ComboToggleButton}"
 									  Margin="0"
+									  TabIndex="1"
 									  HorizontalContentAlignment="Center"
 									  Background="{TemplateBinding Background}"
 									  BorderThickness="0"
