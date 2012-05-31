@@ -4,8 +4,12 @@
 // </copyright>
 //------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
+using System.Reflection;
+using System.Windows;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Localization;
@@ -287,6 +291,32 @@ namespace Fab.Client.Authentication
 				   && Password.Length >= MinimumPasswordLength
 				   && PasswordConfirmation.Length >= MinimumPasswordLength
 				   && Password == PasswordConfirmation;
+		}
+
+		/// <summary>
+		/// Show window with "Terms of Use" agreement.
+		/// </summary>
+		public void Terms()
+		{
+			var assemblyName = Assembly.GetExecutingAssembly().GetAssemblyName(); // "SilverFAB"
+
+			// Try to find culture specific Terms text first and fallback to default one in "not found" case
+			var resource = Application.GetResourceStream(new Uri(string.Format(@"/{0};component/Resources/Terms.{1}.txt", assemblyName, Translator.CurrentCulture.TwoLetterISOLanguageName), UriKind.Relative)) ??
+			               Application.GetResourceStream(new Uri(string.Format(@"/{0};component/Resources/Terms.txt", assemblyName), UriKind.Relative));
+
+			var streamReader = new StreamReader(resource.Stream);
+			string termsText = streamReader.ReadToEnd();
+
+			var termsViewModel = IoC.Get<TermsViewModel>();
+			termsViewModel.DisplayName = Resources.Strings.TermsView_Title;
+			termsViewModel.Text = termsText;
+
+			var windowManager = IoC.Get<IWindowManager>();
+			// It is required to "manually" pass style here so that Caliburn could apply it to newly created ChildWindow
+			windowManager.ShowDialog(termsViewModel, settings: new Dictionary<string, object>
+			                                                   	{
+			                                                   		{"Style", Application.Current.Resources["ChildWindowStyle"]}
+			                                                   	});
 		}
 
 		#region Implementation of IHandle<in LoggedOutMessage>

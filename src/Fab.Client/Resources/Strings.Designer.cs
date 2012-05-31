@@ -727,7 +727,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I agree to the.
+        ///   Looks up a localized string similar to Yes, I agree to the.
         /// </summary>
         public static string RegistrationView_Agreement1 {
             get {
@@ -736,7 +736,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to nReez terms and conditions.
+        ///   Looks up a localized string similar to  Terms of Use.
         /// </summary>
         public static string RegistrationView_Agreement2 {
             get {
@@ -1047,6 +1047,24 @@ namespace Fab.Client.Resources {
         public static string StartView_or_Sign_up {
             get {
                 return ResourceManager.GetString("StartView_or_Sign_up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string TermsView_Close {
+            get {
+                return ResourceManager.GetString("TermsView_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms of Use.
+        /// </summary>
+        public static string TermsView_Title {
+            get {
+                return ResourceManager.GetString("TermsView_Title", resourceCulture);
             }
         }
         

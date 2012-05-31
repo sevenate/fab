@@ -229,10 +229,10 @@
     <value>Today</value>
   </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
-    <value>I agree to the</value>
+    <value>Yes, I agree to the</value>
   </data>
   <data name="RegistrationView_Agreement2" xml:space="preserve">
-    <value>nReez terms and conditions</value>
+    <value> Terms of Use</value>
   </data>
   <data name="RegistrationView_Password" xml:space="preserve">
     <value>Password</value>
@@ -491,5 +491,11 @@
   </data>
   <data name="PersonalCornerView_Client_Version" xml:space="preserve">
     <value>Client version</value>
+  </data>
+  <data name="TermsView_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="TermsView_Title" xml:space="preserve">
+    <value>Terms of Use</value>
   </data>
 </root>
