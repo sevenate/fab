@@ -1328,7 +1328,7 @@
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="4,1,0,0"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{StaticResource CheckBoxBrush}"/>
@@ -1430,7 +1430,7 @@
                             <ColumnDefinition Width="16"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Grid x:Name="grid" Height="14" Width="14" Opacity="0.7">
                                 <Rectangle x:Name="Background" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" />
                                 <Rectangle x:Name="MouseOverRectangle" Stroke="{StaticResource CheckBoxMouseOverBrush}" Opacity="0" />

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Windows;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
 using Fab.Client.Framework;
@@ -237,7 +238,11 @@ namespace Fab.Client.Shell
 			//TODO: show "toast" notification for muted exceptions
 			// when in out-of-browser mode
 			var windowManager = IoC.Get<IWindowManager>();
-			windowManager.ShowDialog(errorViewModel);
+			// It is required to "manually" pass style here so that Caliburn could apply it to newly created ChildWindow
+			windowManager.ShowDialog(errorViewModel, settings: new Dictionary<string, object>
+			                                                   	{
+			                                                   		{"Style", Application.Current.Resources["ChildWindowStyle"]}
+			                                                   	});
 		}
 
 		#endregion

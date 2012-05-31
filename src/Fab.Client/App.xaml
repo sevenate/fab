@@ -35,6 +35,13 @@
 				<Setter Property="Margin"
 						Value="5" />
 			</Style>
+			<Style TargetType="HyperlinkButton"
+				   BasedOn="{StaticResource DefaultHyperlinkButtonStyle}">
+				<Setter Property="Padding"
+						Value="5,10" />
+				<Setter Property="Margin"
+						Value="5" />
+			</Style>
 			<Style TargetType="ComboBox"
 				   BasedOn="{StaticResource DefaultComboBoxStyle}">
 				<Setter Property="FontSize"

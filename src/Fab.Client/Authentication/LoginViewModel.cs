@@ -367,7 +367,16 @@ namespace Fab.Client.Authentication
 			if (!authenticateResult.Succeeded)
 			{
 				Status = authenticateResult.Status;// AuthenticationFailed;
-				UsernameIsFocused = true;
+				
+				if (ShowCharacters)
+				{
+					PasswordTextIsFocused = true;
+				}
+				else
+				{
+					PasswordIsFocused = true;
+				}
+
 				yield break;
 			}
 

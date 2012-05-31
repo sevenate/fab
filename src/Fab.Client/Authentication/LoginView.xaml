@@ -10,9 +10,8 @@
 			 xmlns:Controls="clr-namespace:Fab.Client.Shell.Controls"
 			 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
 			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}"
-			 MinWidth="280">
-	<StackPanel MinWidth="260">
+			 d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}">
+	<StackPanel>
 		<TextBlock TextWrapping="Wrap"
 				   Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login'}"
 				   FontSize="21.333"
@@ -62,6 +61,8 @@
 		<Grid Margin="5,10,5,2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
+				<ColumnDefinition Width="*"
+								  MinWidth="20"/>
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 			<CheckBox x:Name="ShowCharacters"
@@ -75,7 +76,7 @@
 				</Interactivity:Interaction.Behaviors>
 			</CheckBox>
 			<CheckBox IsChecked="{Binding RememberMe, Mode=TwoWay}"
-					  Grid.Column="1"
+					  Grid.Column="2"
 					  Content="{Binding Path=LocalizedStrings.LoginView_Remember_me, FallbackValue='Remember me'}"
 					  HorizontalAlignment="Right"
 					  TabIndex="3"
@@ -102,7 +103,6 @@
 			<Button x:Name="Login"
 					Grid.Column="1"
 					Content="{Binding Path=LocalizedStrings.LoginView_Login, FallbackValue='Login'}"
-					HorizontalAlignment="Center"
 					TabIndex="4" />
 			<Controls:Spinner Grid.Column="2"
 							  HorizontalAlignment="Left"
