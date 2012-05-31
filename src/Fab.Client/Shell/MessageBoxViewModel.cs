@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.Composition;
-using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Localization;
 

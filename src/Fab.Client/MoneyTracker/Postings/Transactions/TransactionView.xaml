@@ -8,7 +8,7 @@
 			 xmlns:common="clr-namespace:Fab.Client.Framework.Common"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
-			 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
+             xmlns:Controls1="clr-namespace:Fab.Client.Shell.Controls"
 			 mc:Ignorable="d"
 			 d:DesignHeight="280"
 			 d:DesignWidth="900">
@@ -343,12 +343,14 @@
 					Grid.ColumnSpan="6"
 					Grid.Row="6"
 					Margin="5">
+			<Controls1:Spinner Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
 			<Button x:Name="Save"
-					Margin="0,0,5,0"
 					Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
+					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 					TabIndex="5" />
 			<Button x:Name="Cancel"
 					Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
+					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 					TabIndex="6" />
 		</StackPanel>
 	</Grid>
