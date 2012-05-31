@@ -11,6 +11,7 @@ using System.ComponentModel.Composition;
 using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Framework.Results;
 using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts.AssetTypes;
@@ -181,25 +182,30 @@ namespace Fab.Client.MoneyTracker.Accounts.Single
 		[Dependencies("AccountName")]
 		public IEnumerable<IResult> Save()
 		{
-			if (IsEditMode)
+			IsBusy = true;
+			yield return new SingleResult{Action = () =>
 			{
-				if (AccountId.HasValue)
+				if (IsEditMode)
 				{
-					accounts.Update(AccountId.Value, AccountName.Trim());
+					if (AccountId.HasValue)
+					{
+						accounts.Update(AccountId.Value, AccountName.Trim());
+					}
+					else
+					{
+						throw new Exception("Category ID is not specified for \"Update\" operation.");
+					}
 				}
 				else
 				{
-					throw new Exception("Category ID is not specified for \"Update\" operation.");
+					int assetTypeId = ((AssetTypeDTO)Assets.CurrentItem).Id;
+					accounts.Create(AccountName.Trim(), assetTypeId);
 				}
-			}
-			else
-			{
-				int assetTypeId = ((AssetTypeDTO)Assets.CurrentItem).Id;
-				accounts.Create(AccountName.Trim(), assetTypeId);
-			}
+			}};
+
+			IsBusy = false;
 
 			Close();
-			yield break;
 		}
 
 		/// <summary>

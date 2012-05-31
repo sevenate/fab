@@ -8,8 +8,7 @@
 			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
-			 IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
-			 mc:Ignorable="d">
+             xmlns:Controls1="clr-namespace:Fab.Client.Shell.Controls" mc:Ignorable="d">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
@@ -138,12 +137,14 @@
 					Grid.Row="4"
 					HorizontalAlignment="Right"
 					Margin="5">
+			<Controls1:Spinner Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
 			<Button x:Name="Save"
 					Content="{Binding Path=LocalizedStrings.TransactionView_Save, FallbackValue='Save'}"
-					Margin="0,0,5,0"
+					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 					TabIndex="6" />
 			<Button x:Name="Cancel"
 					Content="{Binding Path=LocalizedStrings.TransactionView_Cancel, FallbackValue='Cancel'}"
+					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
 					TabIndex="7" />
 		</StackPanel>
 	</Grid>

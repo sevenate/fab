@@ -10,6 +10,7 @@ using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Framework.Results;
 using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Core.Framework;
@@ -179,24 +180,34 @@ namespace Fab.Client.MoneyTracker.Categories.Single
 		[Dependencies("CategoryName")]
 		public IEnumerable<IResult> Save()
 		{
-			if (IsEditMode)
-			{
-				if (CategoryId.HasValue)
-				{
-					repository.Update(CategoryId.Value, CategoryName.Trim(), SelectedCategoryType);
-				}
-				else
-				{
-					throw new Exception("Category ID is not specified for \"Update\" operation.");
-				}
-			}
-			else
-			{
-				repository.Create(CategoryName.Trim(), SelectedCategoryType);
-			}
+			IsBusy = true;
+			yield return new SingleResult
+			             	{
+			             		Action = () =>
+			             		         	{
+			             		         		if (IsEditMode)
+			             		         		{
+			             		         			if (CategoryId.HasValue)
+			             		         			{
+			             		         				repository.Update(CategoryId.Value, CategoryName.Trim(),
+			             		         				                  SelectedCategoryType);
+			             		         			}
+			             		         			else
+			             		         			{
+			             		         				throw new Exception(
+			             		         					"Category ID is not specified for \"Update\" operation.");
+			             		         			}
+			             		         		}
+			             		         		else
+			             		         		{
+			             		         			repository.Create(CategoryName.Trim(), SelectedCategoryType);
+			             		         		}
+			             		         	}
+			             	};
+
+			IsBusy = false;
 
 			Close();
-			yield break;
 		}
 
 		/// <summary>
