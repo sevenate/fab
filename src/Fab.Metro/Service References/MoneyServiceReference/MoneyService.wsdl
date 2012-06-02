@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MoneyService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="MoneyServiceBasic_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Lax />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss10>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd3" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
+      <xsd:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Filters" />
+      <xsd:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMoneyService_CreateAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAccount" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_CreateAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_CreateAccount_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q1:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccount" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAccount_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q2:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAccount" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateAccount_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q3:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccount" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteAccount_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q4:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAccounts" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllAccounts_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q5:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAccountBalance_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountBalance" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAccountBalance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAccountBalance_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q6:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_CreateCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateCategory" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_CreateCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_CreateCategory_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q7:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategory" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetCategory_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q8:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCategory" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateCategory_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q9:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCategory" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteCategory_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q10:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllCategories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCategories" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllCategories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCategoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllCategories_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q11:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteJournal_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteJournal" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteJournal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteJournalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_DeleteJournal_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q12:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournal_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetJournal" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetJournalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournal_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q13:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournalsCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetJournalsCount" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournalsCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetJournalsCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournalsCount_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q14:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournals_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetJournals" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournals_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetJournalsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetJournals_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q15:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllAssetTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetTypes" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllAssetTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_GetAllAssetTypes_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q16:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Deposit_InputMessage">
+    <wsdl:part name="parameters" element="tns:Deposit" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Deposit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DepositResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Deposit_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q17:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Withdrawal_InputMessage">
+    <wsdl:part name="parameters" element="tns:Withdrawal" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Withdrawal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WithdrawalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Withdrawal_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q18:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateTransaction_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransaction" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateTransaction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateTransaction_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q19:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Transfer_InputMessage">
+    <wsdl:part name="parameters" element="tns:Transfer" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Transfer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_Transfer_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q20:FaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateTransfer_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransfer" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateTransfer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransferResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoneyService_UpdateTransfer_FaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" name="detail" element="q21:FaultDetail" />
+  </wsdl:message>
+  <wsdl:portType name="IMoneyService">
+    <wsdl:operation name="CreateAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/CreateAccount" message="tns:IMoneyService_CreateAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/CreateAccountResponse" message="tns:IMoneyService_CreateAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/CreateAccountFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_CreateAccount_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetAccount" message="tns:IMoneyService_GetAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetAccountResponse" message="tns:IMoneyService_GetAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetAccountFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetAccount_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/UpdateAccount" message="tns:IMoneyService_UpdateAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/UpdateAccountResponse" message="tns:IMoneyService_UpdateAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/UpdateAccountFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_UpdateAccount_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/DeleteAccount" message="tns:IMoneyService_DeleteAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/DeleteAccountResponse" message="tns:IMoneyService_DeleteAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/DeleteAccountFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_DeleteAccount_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetAllAccounts" message="tns:IMoneyService_GetAllAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetAllAccountsResponse" message="tns:IMoneyService_GetAllAccounts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetAllAccountsFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetAllAccounts_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountBalance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetAccountBalance" message="tns:IMoneyService_GetAccountBalance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetAccountBalanceResponse" message="tns:IMoneyService_GetAccountBalance_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetAccountBalanceFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetAccountBalance_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/CreateCategory" message="tns:IMoneyService_CreateCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/CreateCategoryResponse" message="tns:IMoneyService_CreateCategory_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/CreateCategoryFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_CreateCategory_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetCategory" message="tns:IMoneyService_GetCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetCategoryResponse" message="tns:IMoneyService_GetCategory_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetCategoryFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetCategory_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/UpdateCategory" message="tns:IMoneyService_UpdateCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/UpdateCategoryResponse" message="tns:IMoneyService_UpdateCategory_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/UpdateCategoryFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_UpdateCategory_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/DeleteCategory" message="tns:IMoneyService_DeleteCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/DeleteCategoryResponse" message="tns:IMoneyService_DeleteCategory_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/DeleteCategoryFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_DeleteCategory_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCategories">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetAllCategories" message="tns:IMoneyService_GetAllCategories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetAllCategoriesResponse" message="tns:IMoneyService_GetAllCategories_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetAllCategoriesFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetAllCategories_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteJournal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/DeleteJournal" message="tns:IMoneyService_DeleteJournal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/DeleteJournalResponse" message="tns:IMoneyService_DeleteJournal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/DeleteJournalFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_DeleteJournal_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJournal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetJournal" message="tns:IMoneyService_GetJournal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetJournalResponse" message="tns:IMoneyService_GetJournal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetJournalFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetJournal_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJournalsCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetJournalsCount" message="tns:IMoneyService_GetJournalsCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetJournalsCountResponse" message="tns:IMoneyService_GetJournalsCount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetJournalsCountFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetJournalsCount_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJournals">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetJournals" message="tns:IMoneyService_GetJournals_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetJournalsResponse" message="tns:IMoneyService_GetJournals_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetJournalsFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetJournals_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAssetTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/GetAllAssetTypes" message="tns:IMoneyService_GetAllAssetTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/GetAllAssetTypesResponse" message="tns:IMoneyService_GetAllAssetTypes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/GetAllAssetTypesFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_GetAllAssetTypes_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Deposit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/Deposit" message="tns:IMoneyService_Deposit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/DepositResponse" message="tns:IMoneyService_Deposit_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/DepositFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_Deposit_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Withdrawal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/Withdrawal" message="tns:IMoneyService_Withdrawal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/WithdrawalResponse" message="tns:IMoneyService_Withdrawal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/WithdrawalFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_Withdrawal_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransaction">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/UpdateTransaction" message="tns:IMoneyService_UpdateTransaction_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/UpdateTransactionResponse" message="tns:IMoneyService_UpdateTransaction_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/UpdateTransactionFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_UpdateTransaction_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Transfer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/Transfer" message="tns:IMoneyService_Transfer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/TransferResponse" message="tns:IMoneyService_Transfer_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/TransferFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_Transfer_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransfer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoneyService/UpdateTransfer" message="tns:IMoneyService_UpdateTransfer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoneyService/UpdateTransferResponse" message="tns:IMoneyService_UpdateTransfer_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMoneyService/UpdateTransferFaultDetailFault" name="FaultDetailFault" message="tns:IMoneyService_UpdateTransfer_FaultDetailFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MoneyServiceBasic" type="tns:IMoneyService">
+    <wsp:PolicyReference URI="#MoneyServiceBasic_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateAccount">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/CreateAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccount">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccount">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/UpdateAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccount">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/DeleteAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAccounts">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetAllAccounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountBalance">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetAccountBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateCategory">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/CreateCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCategory">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCategory">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/UpdateCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCategory">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/DeleteCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCategories">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetAllCategories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteJournal">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/DeleteJournal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetJournal">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetJournal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetJournalsCount">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetJournalsCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetJournals">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetJournals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAssetTypes">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/GetAllAssetTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Deposit">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/Deposit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Withdrawal">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/Withdrawal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransaction">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/UpdateTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Transfer">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/Transfer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransfer">
+      <soap:operation soapAction="http://tempuri.org/IMoneyService/UpdateTransfer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailFault">
+        <soap:fault use="literal" name="FaultDetailFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MoneyService">
+    <wsdl:port name="MoneyServiceBasic" binding="tns:MoneyServiceBasic">
+      <soap:address location="https://localhost/StagingFab/MoneyService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

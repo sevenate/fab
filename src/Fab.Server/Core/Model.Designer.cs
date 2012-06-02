@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -204,6 +205,7 @@ namespace Fab.Server.Core
         private ObjectSet<Setting> _Settings;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -271,11 +273,11 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -312,6 +314,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -558,6 +561,7 @@ namespace Fab.Server.Core
         partial void OnLastPostingDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -644,6 +648,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -670,6 +675,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -724,6 +730,7 @@ namespace Fab.Server.Core
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -794,6 +801,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -824,6 +832,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -950,6 +959,7 @@ namespace Fab.Server.Core
         partial void OnDeletedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -998,6 +1008,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1028,6 +1039,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1154,6 +1166,7 @@ namespace Fab.Server.Core
         partial void OnQuantityChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1218,6 +1231,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1248,6 +1262,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1350,6 +1365,7 @@ namespace Fab.Server.Core
         partial void OnDeletedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1468,6 +1484,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1498,6 +1515,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1624,6 +1642,7 @@ namespace Fab.Server.Core
         partial void OnQuantityChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1688,6 +1707,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1716,6 +1736,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1794,6 +1815,7 @@ namespace Fab.Server.Core
         partial void OnAmountChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1912,6 +1934,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1938,6 +1961,7 @@ namespace Fab.Server.Core
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2016,9 +2040,11 @@ namespace Fab.Server.Core
         partial void OnValueChanged();
 
         #endregion
+
     
     }
 
     #endregion
+
     
 }
