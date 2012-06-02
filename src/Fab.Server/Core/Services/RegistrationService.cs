@@ -167,7 +167,7 @@ namespace Fab.Server.Core.Services
 					{
 						ErrorCode = "ERR-REGS-1",
 						ErrorMessage = "Registration failed.",
-						Description = string.Format("Username \"{0}\" is already used. Please use another one.", newLogin)
+						Description = string.Format("Username \"{0}\" is already used.\nPlease use another one.", newLogin)
 					};
 
 					throw new FaultException<FaultDetail>(
