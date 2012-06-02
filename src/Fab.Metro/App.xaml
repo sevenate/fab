@@ -18,7 +18,7 @@
 
             <!-- Application-specific resources -->
 
-            <x:String x:Key="AppName">Fab.Metro</x:String>
+            <x:String x:Key="AppName">FAB Client</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
