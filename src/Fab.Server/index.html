@@ -1,13 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Fab Client</title>
+	
+	<title>nReez Client</title>
+	
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<meta name="description" content="Online money tracker tool." />
+	<meta name="keywords" content="nReez, Money, Finance, Tracker, Online, Windows 8, Metro, Silverlight" />
+	<meta name="copyright" content="&copy; 2012 nReez.com" />
+	<meta name="robots" content="noarchive,index,follow" />
+	<meta name="googlebot" content="noarchive,index,follow" />
+
 	<link type="image/x-icon" rel="shortcut icon" href="favicon.png" />
+	<link type="application/atom+xml" rel="alternate" href="http://feeds.nreez.com/nreez" title="nReez.com News (Atom 1.0)" />
+	
 	<style type="text/css">
 		html, body
 		{
 			height: 100%;
-			overflow: hidden;
+			overflow: hidden; //auto
 		}
 		body
 		{
@@ -18,6 +29,22 @@
 		{
 			height: 100%;
 			text-align: center;
+		}
+		.noJS
+		{
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			text-align: center;
+			font-family: Arial;
+			font-size: 1.1em;
+		}
+		#_sl_historyFrame
+		{
+			visibility: hidden;
+			height: 0px;
+			width: 0px;
+			border: 0px
 		}
 	</style>
 	<script type="text/javascript" src="Scripts/Silverlight.js"></script>
@@ -106,7 +133,37 @@
 	</script>
 </head>
 <body onload="getXapSize('ClientBin/SilverFAB.xap')">
-	<form id="form1" runat="server" style="height: 100%">
+<!--
+	<body onload="pageLoaded()">
+-->>
+	<div id="silverlightControlHost">
+		<div class="noJS">
+			<noscript>
+				This website requires JavaScript to be enabled in your browser to function properly.
+				Please enable it and <%= Html.ActionLink("click here", "", "Home")%> to continue.
+			</noscript>
+		</div>
+	</div>
+
+	<iframe id="_sl_historyFrame"></iframe>
+	
+	<script type="text/javascript">
+		startSilverlight();
+		
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	
+	<script type="text/javascript">
+		try
+		{
+			var pageTracker = _gat._getTracker("UA-9962509-1");
+			addCustomSEToGA();
+			pageTracker._trackPageview();
+			pageTracker._setVar(getSilverlightVersion());
+		} catch (err) { }
+	</script>
+
 	<div id="silverlightControlHost">
 		<object data="data:application/x-silverlight-2," type="application/x-silverlight-2"
 			width="100%" height="100%">
@@ -119,6 +176,5 @@
 			<param name="onSourceDownloadProgressChanged" value="downloadProgress" />
 		</object>
 	</div>
-	</form>
 </body>
 </html>
