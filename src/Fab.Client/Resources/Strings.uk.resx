@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
+    <value>+ Рахунок</value>
+  </data>
+  <data name="AccountView_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="AccountView_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="AccountView_FirstPostingOn" xml:space="preserve">
+    <value>Перша транзакція</value>
+  </data>
+  <data name="AccountView_LastPostingOn" xml:space="preserve">
+    <value>Остання транзакція</value>
+  </data>
+  <data name="AccountView_PostingsCount" xml:space="preserve">
+    <value>Кількість транзакцій</value>
+  </data>
+  <data name="CategoriesView_CommonCategories" xml:space="preserve">
+    <value>Загальні категорії</value>
+  </data>
+  <data name="CategoriesView_CreateNew" xml:space="preserve">
+    <value>+ Категорія</value>
+  </data>
+  <data name="CategoriesView_DepositCategories" xml:space="preserve">
+    <value>Категорії доходів</value>
+  </data>
+  <data name="CategoriesView_Used" xml:space="preserve">
+    <value>Використана</value>
+  </data>
+  <data name="CategoriesView_WithdrawalCategories" xml:space="preserve">
+    <value>Категорії витрат</value>
+  </data>
+  <data name="CategoryView_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="CategoryView_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="LoginView_Language" xml:space="preserve">
+    <value>Мова</value>
+  </data>
+  <data name="LoginView_Login" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
+  <data name="LoginView_Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="LoginView_Remember_me" xml:space="preserve">
+    <value>Запам'ятати ім'я</value>
+  </data>
+  <data name="LoginView_Show_characters" xml:space="preserve">
+    <value>Показувати пароль</value>
+  </data>
+  <data name="LoginView_Title" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
+  <data name="LoginView_Username" xml:space="preserve">
+    <value>Ім'я користувача</value>
+  </data>
+  <data name="NewAccountView_AccountName" xml:space="preserve">
+    <value>Ім'я рахунку</value>
+  </data>
+  <data name="NewAccountView_AssetType" xml:space="preserve">
+    <value>Тип рахунку</value>
+  </data>
+  <data name="NewAccountView_Cancel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="NewAccountView_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="NewAccountView_New" xml:space="preserve">
+    <value>Створити</value>
+  </data>
+  <data name="NewAccountView_Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="NewCategoryView_Cancel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="NewCategoryView_CategoryName" xml:space="preserve">
+    <value>Ім'я категорії</value>
+  </data>
+  <data name="NewCategoryView_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="NewCategoryView_New" xml:space="preserve">
+    <value>Створити</value>
+  </data>
+  <data name="NewCategoryView_Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="NewCategoryView_Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="PersonalCornerView_Sign_out" xml:space="preserve">
+    <value>Вихід</value>
+  </data>
+  <data name="PostingActionsView_NewExpense" xml:space="preserve">
+    <value>+ Витрата</value>
+  </data>
+  <data name="PostingActionsView_NewIncome" xml:space="preserve">
+    <value>+ Дохід</value>
+  </data>
+  <data name="PostingActionsView_NewTransfer" xml:space="preserve">
+    <value>+ Переказ</value>
+  </data>
+  <data name="PostingsFilterView_Today" xml:space="preserve">
+    <value>Сьогодні</value>
+  </data>
+  <data name="RegistrationView_Agreement1" xml:space="preserve">
+    <value>Так, я згоден з</value>
+  </data>
+  <data name="RegistrationView_Agreement2" xml:space="preserve">
+    <value> умовами використання</value>
+  </data>
+  <data name="RegistrationView_Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="RegistrationView_Password2" xml:space="preserve">
+    <value>Пароль (ще раз)</value>
+  </data>
+  <data name="RegistrationView_Register" xml:space="preserve">
+    <value>Зареєструватися</value>
+  </data>
+  <data name="RegistrationView_Title" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="RegistrationView_Username" xml:space="preserve">
+    <value>Ім'я користувача</value>
+  </data>
+  <data name="SearchDashBoardView_Charts_LegendTitle" xml:space="preserve">
+    <value>Дані</value>
+  </data>
+  <data name="SearchDashBoardView_Charts_Line1" xml:space="preserve">
+    <value>Доход</value>
+  </data>
+  <data name="SearchDashBoardView_Charts_Line2" xml:space="preserve">
+    <value>Витрата</value>
+  </data>
+  <data name="SearchDashBoardView_Charts_Title" xml:space="preserve">
+    <value>Тенденції</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Category" xml:space="preserve">
+    <value>Категорія</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Comment" xml:space="preserve">
+    <value>Коментар</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Expense" xml:space="preserve">
+    <value>Витрата</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Id" xml:space="preserve">
+    <value>№</value>
+  </data>
+  <data name="SearchDashBoardView_Column_Income" xml:space="preserve">
+    <value>Доход</value>
+  </data>
+  <data name="SearchDashBoardView_Difference" xml:space="preserve">
+    <value>Різниця:</value>
+  </data>
+  <data name="SearchDashBoardView_Expense" xml:space="preserve">
+    <value>Витрати:</value>
+  </data>
+  <data name="SearchDashBoardView_Filter_End" xml:space="preserve">
+    <value>Кінець</value>
+  </data>
+  <data name="SearchDashBoardView_Filter_Start" xml:space="preserve">
+    <value>Початок</value>
+  </data>
+  <data name="SearchDashBoardView_Income" xml:space="preserve">
+    <value>Доход:</value>
+  </data>
+  <data name="SearchDashBoardView_Postings" xml:space="preserve">
+    <value>Транзакцій:</value>
+  </data>
+  <data name="StartView_back_to_Login" xml:space="preserve">
+    <value>« Вход</value>
+  </data>
+  <data name="StartView_or_Sign_up" xml:space="preserve">
+    <value>Реєстрація »</value>
+  </data>
+  <data name="SearchDashBoardView_Name_Empty" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="SearchDashBoardView_Name_Results" xml:space="preserve">
+    <value>Пошук ({0})</value>
+  </data>
+  <data name="AccountsDashboardView_Name_Counts" xml:space="preserve">
+    <value>Рахунки ({0})</value>
+  </data>
+  <data name="CategoriesDashBoardView_Name_Counts" xml:space="preserve">
+    <value>Категорії ({0})</value>
+  </data>
+  <data name="Loader_Loading" xml:space="preserve">
+    <value>Завантаження...</value>
+  </data>
+  <data name="PostingViewModelBase_DeleteConfirmation_Message" xml:space="preserve">
+    <value>Ви дійсно хочете видалити виділену проводку # {0}?</value>
+  </data>
+  <data name="PostingViewModelBase_SearchStatus_Search" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="PostingViewModelBase_SearchStatus_Searching" xml:space="preserve">
+    <value>Идет пошук...</value>
+  </data>
+  <data name="PostingViewModelBase_DeleteConfirmation_Title" xml:space="preserve">
+    <value>Підтвердження</value>
+  </data>
+  <data name="TransactionView_Amount" xml:space="preserve">
+    <value>Сума</value>
+  </data>
+  <data name="TransactionView_Cancel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="TransactionView_Category" xml:space="preserve">
+    <value>Категорія</value>
+  </data>
+  <data name="TransactionView_Comment" xml:space="preserve">
+    <value>Нотатки</value>
+  </data>
+  <data name="TransactionView_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="TransactionView_Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="TransactionView_Quantity" xml:space="preserve">
+    <value>Кількість</value>
+  </data>
+  <data name="TransactionView_Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="TransferView_Amount" xml:space="preserve">
+    <value>Сума</value>
+  </data>
+  <data name="TransferView_Cancel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="TransferView_Comment" xml:space="preserve">
+    <value>Нотатки</value>
+  </data>
+  <data name="TransferView_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="TransferView_From_Account" xml:space="preserve">
+    <value>З рахунку</value>
+  </data>
+  <data name="TransferView_Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="TransferView_To_Account" xml:space="preserve">
+    <value>На рахунок</value>
+  </data>
+  <data name="PostingsView_Column_Balance" xml:space="preserve">
+    <value>Баланс</value>
+  </data>
+  <data name="PostingsView_Column_Category" xml:space="preserve">
+    <value>Категорія</value>
+  </data>
+  <data name="PostingsView_Column_Comment" xml:space="preserve">
+    <value>Нотатки</value>
+  </data>
+  <data name="PostingsView_Column_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="PostingsView_Column_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="PostingsView_Column_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="PostingsView_Column_Expense" xml:space="preserve">
+    <value>Витрата</value>
+  </data>
+  <data name="PostingsView_Column_Id" xml:space="preserve">
+    <value>№</value>
+  </data>
+  <data name="PostingsView_Column_Income" xml:space="preserve">
+    <value>Доход</value>
+  </data>
+  <data name="PostingsView_Difference" xml:space="preserve">
+    <value>Разница:</value>
+  </data>
+  <data name="PostingsView_End_Balance" xml:space="preserve">
+    <value>Кінцевий баланс:</value>
+  </data>
+  <data name="PostingsView_Expense" xml:space="preserve">
+    <value>Витрата:</value>
+  </data>
+  <data name="PostingsView_Income" xml:space="preserve">
+    <value>Дохід:</value>
+  </data>
+  <data name="PostingsView_Postings" xml:space="preserve">
+    <value>Транзакцій:</value>
+  </data>
+  <data name="PostingsView_Start_Balance" xml:space="preserve">
+    <value>Початковий баланс:</value>
+  </data>
+  <data name="ScreensBootstrapper_Close_Notification_Message" xml:space="preserve">
+    <value>Вам доведеться закрити програму вручну, оскількі програма НЕ має Elevated Permissions, необхідніх для самостійного завершення роботи.</value>
+  </data>
+  <data name="ScreensBootstrapper_Close_Notification_Title" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Error" xml:space="preserve">
+    <value>Доступна нова версія програми, але вона вимагає оновлення версії середовища виконання Silverlight. Будь ласка зв'яжіться з технічною підтримкою для подальших інструкцій.</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Message" xml:space="preserve">
+    <value>Програму було поновлено! Будь ласка закрийте його і запустіть заново, що б завершити оновлення.</value>
+  </data>
+  <data name="ScreensBootstrapper_Update_Notification_Title" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
+  <data name="AccountView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Ви дійсно хочете видалити рахунок '{0}'?</value>
+  </data>
+  <data name="AccountView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Підтвердження</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Ви дійсно хочете видалити категорію '{0}'?</value>
+  </data>
+  <data name="CategoryView_Delete_Confirmation_Title" xml:space="preserve">
+    <value>Підтвердження</value>
+  </data>
+  <data name="SearchDashBoardView_Contains" xml:space="preserve">
+    <value>Містить текст:</value>
+  </data>
+  <data name="MessageBoxView_Cancel" xml:space="preserve">
+    <value>Вiдмiна</value>
+  </data>
+  <data name="MessageBoxView_No" xml:space="preserve">
+    <value>Ні</value>
+  </data>
+  <data name="MessageBoxView_Ok" xml:space="preserve">
+    <value>Підтвердити</value>
+  </data>
+  <data name="MessageBoxView_Yes" xml:space="preserve">
+    <value>Так</value>
+  </data>
+  <data name="Error_Service_Is_Not_Responding" xml:space="preserve">
+    <value>Служба не відповідає. Будь ласка, спробуйте пізніше.</value>
+  </data>
+  <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
+    <value>Служба занадто зайнята. Будь ласка, спробуйте пізніше.</value>
+  </data>
+  <data name="LoginView_Authorization_In_Progress" xml:space="preserve">
+    <value>Перевірка пароля...</value>
+  </data>
+  <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
+    <value>Реєстрація...</value>
+  </data>
+  <data name="PostingsView_Filter_Days" xml:space="preserve">
+    <value>днів</value>
+  </data>
+  <data name="ErrorDialogView_Close" xml:space="preserve">
+    <value>Спробувати продовжити</value>
+  </data>
+  <data name="ErrorDialogView_Title" xml:space="preserve">
+    <value>Непередбачена помилка :(</value>
+  </data>
+  <data name="PersonalCornerView_Client_Version" xml:space="preserve">
+    <value>Версія програми</value>
+  </data>
+  <data name="TermsView_Close" xml:space="preserve">
+    <value>Закрити</value>
+  </data>
+  <data name="TermsView_Title" xml:space="preserve">
+    <value>Угода користувача</value>
+  </data>
+</root>

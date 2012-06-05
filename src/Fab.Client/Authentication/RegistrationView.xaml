@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="Fab.Client.Authentication.RegistrationView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+			 xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
+			 xmlns:Controls="clr-namespace:Fab.Client.Shell.Controls"
+			 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
+			 mc:Ignorable="d"
+			 d:DataContext="{d:DesignData Source=./SampleData/RegistrationData.xaml}"
+			 MinWidth="280">
+	<StackPanel>
+		<TextBlock TextWrapping="Wrap"
+				   Text="{Binding Path=LocalizedStrings.RegistrationView_Title, FallbackValue='Sign up'}"
+				   FontSize="21.333"
+				   Margin="5,0,5,2" />
+		<sdk:Label Content="{Binding Path=LocalizedStrings.RegistrationView_Username, FallbackValue='Username'}"
+				   Target="{Binding ElementName=Username}"
+				   Margin="5,10,0,2" />
+		<TextBox x:Name="Username"
+				 TabIndex="0">
+			<i:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
+				<Behaviors:SelectTextOnFocusBehavior />
+			</i:Interaction.Behaviors>
+		</TextBox>
+		<sdk:Label Content="{Binding Path=LocalizedStrings.RegistrationView_Password, FallbackValue='Password'}"
+				   Target="{Binding ElementName=Password}"
+				   Margin="5,10,0,2" />
+		<PasswordBox x:Name="Password"
+					 TabIndex="1"
+					 MaxLength="256"
+					 FontSize="16">
+			<i:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
+				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
+				<Behaviors:SelectPasswordOnFocusBehavior />
+			</i:Interaction.Behaviors>
+		</PasswordBox>
+		<sdk:Label Content="{Binding Path=LocalizedStrings.RegistrationView_Password2, FallbackValue='Password (again)'}"
+				   Target="{Binding ElementName=PasswordConfirmation}"
+				   Margin="5,10,0,2" />
+		<PasswordBox x:Name="PasswordConfirmation"
+					 TabIndex="2"
+					 MaxLength="256"
+					 FontSize="16">
+			<i:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
+				<Authentication:PasswordBindBehavior BoundPassword="{Binding PasswordConfirmation, Mode=TwoWay}" />
+				<Behaviors:SelectPasswordOnFocusBehavior />
+			</i:Interaction.Behaviors>
+		</PasswordBox>
+		<Grid Margin="0,10,0,2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<CheckBox x:Name="AgreeToTerms"
+					  VerticalAlignment="Center"
+					  VerticalContentAlignment="Center"
+					  Content="{Binding Path=LocalizedStrings.RegistrationView_Agreement1, FallbackValue='Yes, I agree to the'}"
+					  TabIndex="3"
+					  Margin="5,0,0,0" />
+			<HyperlinkButton x:Name="Terms"
+							 Grid.Column="1"
+							 TabIndex="4"
+							 Padding="0,10"
+							 HorizontalAlignment="Left"
+							 Margin="0,2,5,0"
+							 Content="{Binding Path=LocalizedStrings.RegistrationView_Agreement2, FallbackValue=' Terms of Use'}">
+				<i:Interaction.Behaviors>
+					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Register}" />
+				</i:Interaction.Behaviors>
+			</HyperlinkButton>
+		</Grid>
+		<TextBlock Text="{Binding Status}"
+				   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}"
+				   Margin="5,10, 5, 0"
+				   MinHeight="24"
+				   MaxWidth="350"
+				   TextWrapping="Wrap"
+				   TextTrimming="WordEllipsis"
+				   HorizontalAlignment="Center" />
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Button x:Name="Register"
+					Grid.Column="1"
+					Content="{Binding Path=LocalizedStrings.RegistrationView_Register, FallbackValue='Sign up'}"
+					TabIndex="5" />
+			<Controls:Spinner Grid.Column="2"
+							  HorizontalAlignment="Left"
+							  Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
+		</Grid>
+	</StackPanel>
+</UserControl>

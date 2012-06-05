@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+***********************************************************************************************
+deploy.targets
+
+This file contains all deployment tasks for FAB project.
+
+Copyright (C) 2009-2011 nReez Software. All rights reserved.
+***********************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+		 ToolsVersion="3.5"
+		 DefaultTargets="Deploy">
+
+	<UsingTask TaskName="MSBuild.Community.Tasks.Xml.XmlMassUpdate" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Unzip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Zip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
+	<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
+
+	<PropertyGroup>
+		<SourceRoot>.\src</SourceRoot>
+		<BinRoot>.\bin</BinRoot>
+		<DeployRoot>.\deploy</DeployRoot>
+	</PropertyGroup>
+
+	<Target Name="Deploy">
+		<CallTarget Targets="Prepare" />
+		<CallTarget Targets="DeployFAB" />
+		<CallTarget Targets="DeployManagementTool" />
+	</Target>
+
+	<Target Name="Prepare">
+		<RemoveDir Condition="Exists('$(DeployRoot)')"
+				   Directories="$(DeployRoot)" />
+		<MakeDir Directories="$(DeployRoot)" />
+	</Target>
+
+	<Target Name="DeployFAB">
+		<PropertyGroup>
+			<SourceFolder>$(SourceRoot)\Fab.Server</SourceFolder>
+			<DeployFolder>$(DeployRoot)\Fab</DeployFolder>
+			<SilverSourceFolder>$(SourceRoot)\Fab.Client</SilverSourceFolder>
+		</PropertyGroup>
+
+		<Message Text="Deploying FAB..." />
+
+		<RemoveDir Condition="Exists('$(DeployFolder)')"
+				   Directories="$(DeployFolder)" />
+		<MakeDir Directories="$(DeployFolder)" />
+
+		<CreateItem Include="$(SourceFolder)\**\*.*"
+					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\*.resx;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\Bin\Resources\*.*;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\**\*.mdf;$(SourceFolder)\**\*_log.ldf;$(SourceFolder)\**\*.sdf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\**\*.sqlce;$(SourceFolder)\Web*.config;$(SourceFolder)\**\README_ENU.txt;;$(SourceFolder)\**\*.settings;$(SourceFolder)\**\*.svclog;$(SourceFolder)\**\*.log;">
+			<Output TaskParameter="Include"
+					ItemName="ServerReleaseFiles"/>
+		</CreateItem>
+
+		<Copy SourceFiles="@(ServerReleaseFiles)"
+			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
+
+		<TransformXml Source="$(SourceFolder)\Web.Config" Transform="$(SourceFolder)\Web.$(Configuration).config" Destination="$(DeployFolder)\Web.config" StackTrace="true" />
+	</Target>
+
+	<Target Name="DeployManagementTool">
+		<PropertyGroup>
+			<BinFolder>$(BinRoot)\Fab.Management</BinFolder>
+			<SourceFolder>$(SourceRoot)\Fab.Management</SourceFolder>
+			<DeployFolder>$(DeployRoot)\AdminTool</DeployFolder>
+		</PropertyGroup>
+
+		<Message Text="Deploying FAB Management Tool..." />
+
+		<RemoveDir Condition="Exists('$(DeployFolder)')"
+				   Directories="$(DeployFolder)" />
+		<MakeDir Directories="$(DeployFolder)" />
+
+		<CreateItem Include="$(BinFolder)\**\*.*"
+					Exclude="$(BinFolder)\**\*.vshost.*;$(BinFolder)\**\*.pdb;$(BinFolder)\**\*.xml;">
+			<Output TaskParameter="Include"
+					ItemName="ImportReleaseFiles"/>
+		</CreateItem>
+
+		<Copy SourceFiles="@(ImportReleaseFiles)"
+			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
+
+	</Target>
+
+</Project>

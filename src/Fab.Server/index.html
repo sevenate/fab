@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Fab Client</title>
+	<link type="image/x-icon" rel="shortcut icon" href="favicon.png" />
+	<style type="text/css">
+		html, body
+		{
+			height: 100%;
+			overflow: hidden;
+		}
+		body
+		{
+			padding: 0;
+			margin: 0;
+		}
+		#silverlightControlHost
+		{
+			height: 100%;
+			text-align: center;
+		}
+	</style>
+	<script type="text/javascript" src="Scripts/Silverlight.js"></script>
+	<script type="text/javascript">
+		var fileSize = null;
+
+		function onSilverlightError(sender, args) {
+			var appSource = "";
+			if (sender != null && sender != 0) {
+				appSource = sender.getHost().Source;
+			}
+
+			var errorType = args.ErrorType;
+			var iErrorCode = args.ErrorCode;
+
+			if (errorType == "ImageError" || errorType == "MediaError") {
+				return;
+			}
+
+			var errMsg = "Unhandled Error in Silverlight Application " + appSource + "\n";
+
+			errMsg += "Code: " + iErrorCode + "    \n";
+			errMsg += "Category: " + errorType + "       \n";
+			errMsg += "Message: " + args.ErrorMessage + "     \n";
+
+			if (errorType == "ParserError") {
+				errMsg += "File: " + args.xamlFile + "     \n";
+				errMsg += "Line: " + args.lineNumber + "     \n";
+				errMsg += "Position: " + args.charPosition + "     \n";
+			}
+			else if (errorType == "RuntimeError") {
+				if (args.lineNumber != 0) {
+					errMsg += "Line: " + args.lineNumber + "     \n";
+					errMsg += "Position: " + args.charPosition + "     \n";
+				}
+				errMsg += "MethodName: " + args.methodName + "     \n";
+			}
+
+			throw new Error(errMsg);
+		}
+		function addSeparatorsNF(nStr, inD, outD, sep) {
+			nStr += '';
+			var dpos = nStr.indexOf(inD);
+			var nStrEnd = '';
+			if (dpos != -1) {
+				nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
+				nStr = nStr.substring(0, dpos);
+			}
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(nStr)) {
+				nStr = nStr.replace(rgx, '$1' + sep + '$2');
+			}
+			return nStr + nStrEnd;
+		}
+		function getXapSize(url) {
+			var self = this;
+
+			// Mozilla/Safari
+			if (window.XMLHttpRequest) {
+				self.xmlHttpReq = new XMLHttpRequest();
+			}
+			// IE
+			else if (window.ActiveXObject) {
+				self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			self.xmlHttpReq.open('HEAD', url, true);
+			self.xmlHttpReq.onreadystatechange = function() {
+				if (self.xmlHttpReq.readyState == 4) {
+					fileSize = self.xmlHttpReq.getResponseHeader('Content-Length');
+				}
+			};
+
+			self.xmlHttpReq.send(null);
+		}
+		function downloadProgress(sender, eventArgs) {
+			sender.findName("loadingProgress").Text = Math.round(eventArgs.progress * 100) + "%";
+			sender.findName("progressBarScale").ScaleX = eventArgs.progress;
+			if (fileSize != null) {
+				sender.findName("loadingText").Text = "Downloaded ";
+				sender.findName("downloadedBytes").Text = addSeparatorsNF((eventArgs.progress * fileSize).toFixed(0), ',', ',', ' ');
+				sender.findName("totalBytes").Text = addSeparatorsNF((fileSize / 1).toFixed(0), ',', ',', ' ');
+				sender.findName("downloadDetails").Visibility = 'Visible';
+			}
+		}
+	</script>
+</head>
+<body onload="getXapSize('ClientBin/SilverFAB.xap')">
+	<form id="form1" runat="server" style="height: 100%">
+	<div id="silverlightControlHost">
+		<object data="data:application/x-silverlight-2," type="application/x-silverlight-2"
+			width="100%" height="100%">
+			<param name="source" value="ClientBin/SilverFAB.xap" />
+			<param name="onError" value="onSilverlightError" />
+			<param name="background" value="white" />
+			<param name="minRuntimeVersion" value="5.0.61118.0" />
+			<param name="autoUpgrade" value="true" />
+			<param name="SplashScreenSource" value="splash.xaml" />
+			<param name="onSourceDownloadProgressChanged" value="downloadProgress" />
+		</object>
+	</div>
+	</form>
+</body>
+</html>

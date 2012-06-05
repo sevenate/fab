@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Fab.Client.Authentication.PersonalCornerView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d"
+			 d:DataContext="{d:DesignData Source=./SampleData/PersonalData.xaml}">
+	<StackPanel Orientation="Horizontal"
+				HorizontalAlignment="Right">
+		<ComboBox x:Name="Cultures"
+				  SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
+				  ItemTemplate="{StaticResource LanguageItem}" />
+		<Button x:Name="Logout">
+			<Button.Content>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="{Binding Path=LocalizedStrings.PersonalCornerView_Sign_out, FallbackValue='Sign out'}"							   
+							   FontSize="16"
+							   VerticalAlignment="Center" />
+					<TextBlock Text="{Binding Username, StringFormat=( \{0\} )}"
+							   VerticalAlignment="Center"
+							   Foreground="{StaticResource GrayBrush2}"
+							   Margin="5,0"
+							   FontSize="12" />
+					<TextBlock x:Name="Version"
+							   ToolTipService.ToolTip="{Binding Path=LocalizedStrings.PersonalCornerView_Client_Version, FallbackValue='Client version'}"
+							   TextWrapping="Wrap"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Center"
+							   Foreground="{StaticResource GrayBrush4}" />
+				</StackPanel>
+			</Button.Content>
+		</Button>
+	</StackPanel>
+</UserControl>
