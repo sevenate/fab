@@ -16,6 +16,13 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+using System.ServiceModel;
+using System.ServiceModel.Description;
+using System.Windows;
+
+using Fab.Metro.DataModel;
+
+
 // The Grid Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234226
 
 namespace Fab.Metro
@@ -45,8 +52,7 @@ namespace Fab.Metro
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            // TODO: Create a data model appropriate for your problem domain to replace the sample data
-            var sampleData = new SampleDataSource();
+            var sampleData = new LoginViewModel();
 
             if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
@@ -57,11 +63,36 @@ namespace Fab.Metro
             // configuring the new page by passing required information as a navigation
             // parameter
             var rootFrame = new Frame();
-            rootFrame.Navigate(typeof(GroupedItemsPage), sampleData.ItemGroups);
+            rootFrame.Navigate(typeof(LoginPage), sampleData);
 
             // Place the frame in the current Window and ensure that it is active
             Window.Current.Content = rootFrame;
             Window.Current.Activate();
+        }
+
+        /// <summary>
+        /// Change development service url to the relative to host from where the xap was loaded.
+        /// </summary>
+        /// <param name="serviceEndpoint">Original service endpoint whose address should be updated.</param>
+        private static void SetupServiceUri(ServiceEndpoint serviceEndpoint)
+        {
+#if DEBUG
+			var serviceName = serviceEndpoint.Address.Uri.LocalPath.Split('/').Last();
+// ReSharper disable AssignNullToNotNullAttribute
+// ReSharper restore AssignNullToNotNullAttribute
+            serviceEndpoint.Address = new EndpointAddress(@"https://orion/StagingFab/MoneyService.svc");
+#endif
+        }
+
+        private async void LoadAccounts()
+        {
+            var service = new MoneyServiceReference.MoneyServiceClient();
+            service.ClientCredentials.UserName.UserName = "demo1";
+            service.ClientCredentials.UserName.Password = "demo1";
+
+            SetupServiceUri(service.Endpoint);
+
+            var accountsResult = await service.GetAllAccountsAsync(Guid.NewGuid());
         }
 
         /// <summary>

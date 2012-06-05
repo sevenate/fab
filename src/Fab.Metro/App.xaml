@@ -18,7 +18,11 @@
 
             <!-- Application-specific resources -->
 
-            <x:String x:Key="AppName">FAB Client</x:String>
+            <x:String x:Key="AppName">nReez Client</x:String>
+            <Style x:Name="TextBoxStyle" TargetType="TextBox">
+                <Setter Property="Margin"
+                        Value="0,5" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
