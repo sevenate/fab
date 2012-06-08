@@ -117,12 +117,12 @@ Silverlight.supportedUserAgent = function (version, userAgent) {
                             }
                         }
                     }
-                    // Win 7 and Win 2008 R2 Supported
-                    if (ua.indexOf('Windows NT 6.1') >= 0) {
-                        if (ieVer >= 7) {
-                            slua.Browser = 'MSIE';
-                        }
-                    }
+                    // Win 7, Win 2008 R2, Win 8 and latest supported
+                    if (ua.indexOf('Windows NT 6') >= 0 && (minor > 0)) {
+						if (ieVer >= 7) {
+							slua.Browser = 'MSIE';
+						}
+					}
                 }
             }
             // no other browsers support 64 bit

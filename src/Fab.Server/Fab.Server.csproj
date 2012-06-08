@@ -93,7 +93,28 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Master.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Content\blank.gif" />
+    <Content Include="Content\ie6.css" />
+    <Content Include="Content\iepngfix.htc" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\slInstall.css" />
+    <Content Include="Content\slInstallNarrow.css" />
+    <Content Include="Content\slInstallSmall.css" />
+    <Content Include="Content\slInstallWide.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\narrow\divider.png" />
+    <Content Include="Images\narrow\panel_bottom.png" />
+    <Content Include="Images\narrow\panel_loop.png" />
+    <Content Include="Images\narrow\panel_top.png" />
+    <Content Include="Images\small\gradient.jpg" />
+    <Content Include="Images\small\powered_by_sl.jpg" />
+    <Content Include="Images\wide\button.png" />
+    <Content Include="Images\wide\divider.png" />
+    <Content Include="Images\wide\logo.jpg" />
+    <Content Include="Images\wide\panel_bottom.png" />
+    <Content Include="Images\wide\panel_loop.png" />
+    <Content Include="Images\wide\panel_top.png" />
+    <Content Include="Images\wide\screen_chrome.png" />
     <Content Include="log4net.config" />
     <Content Include="ClientBin\web.config" />
     <None Include="Properties\Settings.settings">
@@ -105,7 +126,12 @@
     <Content Include="favicon.png" />
     <Content Include="index.html" />
     <Content Include="maintenance.html" />
+    <Content Include="Scripts\AgInstall.debug.js" />
+    <Content Include="Scripts\AgInstall.js" />
+    <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\Silverlight.js" />
+    <Content Include="Scripts\Silverlight.supportedUserAgent.debug.js" />
+    <Content Include="Scripts\Silverlight.supportedUserAgent.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
