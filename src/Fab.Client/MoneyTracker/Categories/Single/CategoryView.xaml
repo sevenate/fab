@@ -42,20 +42,16 @@
 					Width="16"
 					Height="16"
 					Style="{x:Null}"
-					Padding="2">
-				<ToolTipService.ToolTip>
-					<TextBlock Text="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}" />
-				</ToolTipService.ToolTip>
+					Padding="2"
+					ToolTipService.ToolTip="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}">
 				<Resources:EditIcon />
 			</Button>
 			<Button x:Name="Delete"
 					Width="16"
 					Height="16"
 					Style="{x:Null}"
-					Padding="2">
-				<ToolTipService.ToolTip>
-					<TextBlock Text="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}" />
-				</ToolTipService.ToolTip>
+					Padding="2"
+					ToolTipService.ToolTip="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}">
 				<Resources:DeleteIcon />
 			</Button>
 		</StackPanel>
