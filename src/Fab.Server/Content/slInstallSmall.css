@@ -1,0 +1,33 @@
+.slInstallSmall  {
+	border: 0px solid #494949;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	background: url(../images/small/gradient.jpg) repeat-x #fff;
+	text-align:center;
+	height:125px;
+}	
+.slInstallContentSmall   {
+	color: #333;
+	overflow: hidden;
+	height: 61px; /* Javascript calculate: SlInstallSmall height - 59 */ 
+	font-size: 14px;
+	visibility: visible;
+	padding-top: 20px;
+}
+
+.slInstallLogoSmall{
+	width: 150px;
+	height:13px;
+	margin-top: 7px;
+
+}
+.slInstallUpdateLinkSmall 
+{
+	text-decoration: underline;
+	height:19px;
+}
+.slInstallUpdateLinkSmall a {
+	color: #000;
+	text-decoration: underline;
+	font-size: 14px;
+	font-weight:bold;
+}

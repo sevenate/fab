@@ -36,7 +36,7 @@ window.AgInstall = {
         {
             install:
             {
-                wide: "<p>The application you are trying to use requires that you update  your Web browser with Microsoft Silverlight.</p><p>Silverlight delivers amazing Web experiences across leading news, sports, and entertainment sites.</p><p>Silverlight brings Web experiences to life with:</p><ul><li>Amazing 2D/3D animations and special effects</li><li>Smooth, high-quality video that includes HD video</li><li>Enhanced security, fast performance, and a quick install in seconds</li></ul>",
+                wide: "<p>The application you are trying to use requires that you update your Web browser with Microsoft Silverlight.</p><p>Silverlight delivers amazing Web experiences across leading news, sports, and entertainment sites.</p><p>Silverlight brings Web experiences to life with:</p><ul><li>Amazing 2D/3D animations and special effects</li><li>Smooth, high-quality video that includes HD video</li><li>Enhanced security, fast performance, and a quick install in seconds</li></ul>",
                 narrow: "<p>The application you are trying to use requires that you update your Web browser with Microsoft Silverlight.</p><p>Silverlight brings Web experiences to life through 2D/3D animations, HD video, fast performance, enhanced security, and a quick install.</p>",
                 small: "<p>The application you are trying to use requires that you update your Web browser with Microsoft Silverlight.</p>",
                 encoder: "<p>The media you are trying to play requires updating your browser with Microsoft Silverlight technology.</p>"
