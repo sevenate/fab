@@ -6,6 +6,7 @@
 			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
 			 xmlns:Resources="clr-namespace:Fab.Client.Resources.Actions"
 			 xmlns:cal="http://www.caliburnproject.org"
+			 xmlns:ToolTips="clr-namespace:Silverlight.Controls.ToolTips;assembly=Silverlight.Controls.ToolTips"
 			 mc:Ignorable="d"
 			 cal:Message.Attach="[Event MouseEnter] = [Action ShowActions()]; [Event MouseLeave] = [Action HideActions()]"
 			 d:DataContext="{d:DesignData Source=./SampleData/Account.xaml}">
@@ -46,9 +47,9 @@
 			<TextBlock Grid.Column="0"
 					   Text="{Binding Path=Name}"
 					   TextTrimming="WordEllipsis"
-					   ToolTipService.ToolTip="{Binding Path=Id}"
 					   Margin="2,0,10,0"
-					   VerticalAlignment="Center" />
+					   VerticalAlignment="Center"
+					   ToolTipService.ToolTip="{Binding Path=Id, StringFormat=#\{0\}}" />
 			<TextBlock Grid.Column="1"
 					   Foreground="{Binding Path=Balance, Converter={StaticResource balanceToColor}}"
 					   Text="{Binding Path=Balance, StringFormat=N}"
@@ -72,20 +73,16 @@
 						Style="{x:Null}"
 						Width="16"
 						Height="16"
-						Padding="2">
-					<ToolTipService.ToolTip>
-						<TextBlock Text="{Binding Path=LocalizedStrings.AccountView_Delete, FallbackValue='Delete'}" />
-					</ToolTipService.ToolTip>
+						Padding="2"
+						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Delete, FallbackValue='Delete'}">
 					<Resources:DeleteIcon />
 				</Button>
 				<Button x:Name="Edit"
 						Width="16"
 						Height="16"
 						Style="{x:Null}"
-						Padding="2">
-					<ToolTipService.ToolTip>
-						<TextBlock Text="{Binding Path=LocalizedStrings.AccountView_Edit, FallbackValue='Edit'}" />
-					</ToolTipService.ToolTip>
+						Padding="2"
+						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Edit, FallbackValue='Edit'}">
 					<Resources:EditIcon />
 				</Button>
 			</StackPanel>
@@ -97,23 +94,21 @@
 						   Foreground="Gray"
 						   FontStyle="Italic"
 						   Margin="0,0,10,0"
-						   VerticalAlignment="Center">
-					<ToolTipService.ToolTip>
-						<TextBlock Text="{Binding Path=LocalizedStrings.AccountView_PostingsCount, FallbackValue='Postings count'}" />
-					</ToolTipService.ToolTip>
-				</TextBlock>
+						   VerticalAlignment="Center"
+						   ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_PostingsCount, FallbackValue='Postings count'}" />
 				<TextBlock Controls:DockPanel.Dock="Right"
 						   HorizontalAlignment="Right"
 						   FontSize="10"
 						   Foreground="Gray"
 						   FontStyle="Italic"
 						   Text="{Binding LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat=d}"
-						   VerticalAlignment="Center"
-						   Height="11.5">
+						   VerticalAlignment="Center">
 					<ToolTipService.ToolTip>
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding Path=LocalizedStrings.AccountView_LastPostingOn, FallbackValue='Last posting on'}" />
+							<TextBlock Text="{Binding Path=LocalizedStrings.AccountView_LastPostingOn, FallbackValue='Last posting on'}"
+									   Foreground="{StaticResource WhiteBrush}" />
 							<TextBlock Margin="5,0,0,0"
+									   Foreground="{StaticResource WhiteBrush}"
 									   Language="{Binding Language, Source={StaticResource cultureSettings}}"
 									   Text="{Binding Path=LastPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat='\{0:F\}'}" />
 						</StackPanel>
@@ -128,8 +123,10 @@
 						   VerticalAlignment="Center">
 					<ToolTipService.ToolTip>
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding Path=LocalizedStrings.AccountView_FirstPostingOn, FallbackValue='First posting on'}" />
+							<TextBlock Text="{Binding Path=LocalizedStrings.AccountView_FirstPostingOn, FallbackValue='First posting on'}"
+									   Foreground="{StaticResource WhiteBrush}" />
 							<TextBlock Margin="5,0,0,0"
+									   Foreground="{StaticResource WhiteBrush}"
 									   Language="{Binding Language, Source={StaticResource cultureSettings}}"
 									   Text="{Binding Path=FirstPostingDate, Converter={StaticResource dateTimeUtcToLocal}, StringFormat='\{0:F\}'}" />
 						</StackPanel>

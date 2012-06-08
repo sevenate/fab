@@ -165,14 +165,9 @@
 									Width="24"
 									Height="24"
 									Padding="3"
-									cal:Message.Attach="EditPosting($dataContext)">
-								<ToolTipService.ToolTip>
-									<TextBlock Foreground="Black"
-											   Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Column_Edit, FallbackValue='Edit'}" />
-								</ToolTipService.ToolTip>
-								<Button.Content>
-									<Resources:EditIcon />
-								</Button.Content>
+									cal:Message.Attach="EditPosting($dataContext)"
+									ToolTipService.ToolTip="{Binding Path=LocalizedStrings.SearchDashBoardView_Column_Edit, FallbackValue='Edit'}">
+								<Resources:EditIcon />
 							</Button>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
@@ -187,14 +182,9 @@
 									Width="24"
 									Height="24"
 									Padding="3"
-									cal:Message.Attach="DeleteTransaction($dataContext)">
-								<ToolTipService.ToolTip>
-									<TextBlock Foreground="Black"
-											   Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Column_Delete, FallbackValue='Delete'}" />
-								</ToolTipService.ToolTip>
-								<Button.Content>
-									<Resources:DeleteIcon />
-								</Button.Content>
+									cal:Message.Attach="DeleteTransaction($dataContext)"
+									ToolTipService.ToolTip="{Binding Path=LocalizedStrings.SearchDashBoardView_Column_Delete, FallbackValue='Delete'}">
+								<Resources:DeleteIcon />
 							</Button>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
