@@ -66,32 +66,7 @@
 		<TextBlock Text="{Binding Path=Name}"
 				   VerticalAlignment="Top"
 				   Foreground="{Binding Path=CategoryTypeWrapper.EnumValue, Converter={StaticResource categoryTypeToColor}}"
-				   TextWrapping="Wrap">
-			<ToolTipService.ToolTip>
-				<ToolTips:ToolTip DisplayTime="00:00:03"
-								  InitialDelay="00:00:03"
-								  x:Name="idTootltip">
-					<ToolTips:ToolTip.CloseAnimation>
-						<Storyboard Duration="00:00:01">
-							<DoubleAnimation From="1"
-											 To="0"
-											 Storyboard.TargetName="idTootltip"
-											 Storyboard.TargetProperty="Opacity" />
-						</Storyboard>
-					</ToolTips:ToolTip.CloseAnimation>
-					<ToolTips:ToolTip.OpenAnimation>
-						<Storyboard Duration="00:00:01">
-							<DoubleAnimation From="0"
-											 To="1"
-											 Storyboard.TargetName="idTootltip"
-											 Storyboard.TargetProperty="Opacity" />
-						</Storyboard>
-					</ToolTips:ToolTip.OpenAnimation>
-					<ToolTips:ToolTip.Content>
-						<TextBlock Text="{Binding Path=Id, StringFormat=#\{0\}}" />
-					</ToolTips:ToolTip.Content>
-				</ToolTips:ToolTip>
-			</ToolTipService.ToolTip>
-		</TextBlock>
+				   TextWrapping="Wrap"
+				   ToolTipService.ToolTip="{Binding Path=Id, StringFormat=#\{0\}}" />
 	</toolkit:DockPanel>
 </UserControl>
