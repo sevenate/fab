@@ -1,12 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 11
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Metro", "src\Fab.Metro\Fab.Metro.csproj", "{4584B223-4C3E-4D73-94E3-D4680E45C324}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2833E7CE-248E-4A7C-A5E5-8CFFA544EC67} = {2833E7CE-248E-4A7C-A5E5-8CFFA544EC67}
-	EndProjectSection
-EndProject
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Core", "src\Fab.Core\Fab.Core.csproj", "{2833E7CE-248E-4A7C-A5E5-8CFFA544EC67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fab.Metro", "src\Fab.Metro\Fab.Metro.csproj", "{4584B223-4C3E-4D73-94E3-D4680E45C324}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
