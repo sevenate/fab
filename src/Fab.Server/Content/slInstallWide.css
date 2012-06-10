@@ -1,0 +1,78 @@
+.slInstall .slInstallPopupWide
+{
+	margin:0 auto;
+	width:550px;
+	position:relative;
+	text-align:left;
+}
+.slInstall .slPopupTopWide
+{
+	background:url(../images/wide/panel_top.png);
+	width:550px;
+	height:219px;
+	position:absolute;
+	top:0;
+}
+.slInstall .slPopupLoopWide
+{
+	background:url(../images/wide/panel_loop.png);
+	width:550px;
+	position:absolute;
+	top:219px;
+}
+.slInstall .slPopupBotWide
+{
+	background:url(../images/wide/panel_bottom.png);
+	width:550px;
+	height:127px;
+	position:absolute;
+	bottom:0;
+}
+.slInstall .slPopupContentWide
+{
+	position:relative;
+	text-align:left;
+	z-index:100;
+	padding-top:26px;
+	padding-right:20px;
+	padding-bottom:30px;
+}
+.slInstall .slTextContentWide
+{
+	margin-left:187px;
+}
+.slInstall .slHeadlineWide
+{
+	font-weight:bold;
+	font-size:18px;
+	color:#000;
+}
+.slInstall .slButtonWide
+{
+	width:133px;
+	height:25px;
+	font-weight:bold;
+	font-size:12px;
+	background:url(../images/wide/button.png);
+	display:block;
+	color:#fff;
+	padding-left:10px;
+	padding-top:7px;
+	text-transform:uppercase;
+	text-decoration:none;
+}
+.slInstall a.slButtonWide:hover
+{
+	text-decoration:underline;
+}
+.slInstall .slScreenshotWide
+{
+	position:absolute;
+	left:-34px;
+	top:0;
+	background:url(../images/wide/screen_chrome.png);
+	width:196px;
+	height:158px;
+	padding-top:38px;
+	padding-left:31px;
+}

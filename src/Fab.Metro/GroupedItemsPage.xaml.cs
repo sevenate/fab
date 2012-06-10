@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Fab.Metro.Data;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -27,13 +28,19 @@ namespace Fab.Metro
         }
 
         /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
+        /// Populates the page with content passed during navigation.  Any saved state is also
+        /// provided when recreating a page from a prior session.
         /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property provides the grouped collection of items to be displayed.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        /// <param name="navigationParameter">The parameter value passed to
+        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+        /// </param>
+        /// <param name="pageState">A dictionary of state preserved by this page during an earlier
+        /// session.  This will be null the first time a page is visited.</param>
+        protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            this.DefaultViewModel["Groups"] = e.Parameter;
+            // TODO: Create an appropriate data model for your problem domain to replace the sample data
+            var sampleDataGroups = SampleDataSource.GetGroups((String)navigationParameter);
+            this.DefaultViewModel["Groups"] = sampleDataGroups;
         }
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace Fab.Metro
 
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            this.Frame.Navigate(typeof(GroupDetailPage), group);
+            this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)group).UniqueId);
         }
 
         /// <summary>
@@ -61,7 +68,8 @@ namespace Fab.Metro
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            this.Frame.Navigate(typeof(ItemDetailPage), e.ClickedItem);
-        }
+            var itemId = ((SampleDataItem)e.ClickedItem).UniqueId;
+            this.Frame.Navigate(typeof(ItemDetailPage), itemId);
     }
+}
 }
