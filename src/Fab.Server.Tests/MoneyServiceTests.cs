@@ -88,9 +88,9 @@ namespace Fab.Server.Tests
 			const string accountName = "Test Account";
 			const int assetType = 1;
 
-			var accountId = moneyService.CreateAccount(currentUser.Id, accountName, assetType);
+			var accountId = moneyService.CreateAccount(accountName, assetType);
 			DateTime date = DateTime.UtcNow;
-			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			var account = moneyService.GetAccount(accountId);
 
 			Assert.Equal(assetType, account.AssetTypeId);
 			Assert.Equal(accountName, account.Name);
@@ -111,11 +111,11 @@ namespace Fab.Server.Tests
 			const string accountName = "Renamed Account";
 			const int assetType = 2;
 
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", assetType);
+			var accountId = moneyService.CreateAccount("Test Account", assetType);
 			DateTime date = DateTime.UtcNow;
 
-			moneyService.UpdateAccount(currentUser.Id, accountId, accountName);
-			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			moneyService.UpdateAccount(accountId, accountName);
+			var account = moneyService.GetAccount(accountId);
 
 			Assert.Equal(accountName, account.Name);
 			Assert.Equal(assetType, account.AssetTypeId);
@@ -133,13 +133,13 @@ namespace Fab.Server.Tests
 		public void Delete_Account()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var accounts = moneyService.GetAllAccounts(currentUser.Id);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var accounts = moneyService.GetAllAccounts();
 			Assert.Equal(1, accounts.Count);
 
-			moneyService.DeleteAccount(currentUser.Id, accountId);
+			moneyService.DeleteAccount(accountId);
 
-			accounts = moneyService.GetAllAccounts(currentUser.Id);
+			accounts = moneyService.GetAllAccounts();
 			Assert.Equal(0, accounts.Count);
 		}
 
@@ -156,12 +156,12 @@ namespace Fab.Server.Tests
 			const int assetType1 = 1;
 			const int assetType2 = 2;
 
-			moneyService.CreateAccount(currentUser.Id, accountName1, assetType1);
+			moneyService.CreateAccount(accountName1, assetType1);
 			DateTime date1 = DateTime.UtcNow;
-			moneyService.CreateAccount(currentUser.Id, accountName2, assetType2);
+			moneyService.CreateAccount(accountName2, assetType2);
 			DateTime date2 = DateTime.UtcNow;
 
-			var accounts = moneyService.GetAllAccounts(currentUser.Id);
+			var accounts = moneyService.GetAllAccounts();
 
 			Assert.Equal(2, accounts.Count);
 			// accounts should be ordered by creation date
@@ -198,9 +198,9 @@ namespace Fab.Server.Tests
 			const CategoryType categoryType = CategoryType.Withdrawal;
 			const int categoryPopularity = 0;
 
-			var categoryId = moneyService.CreateCategory(currentUser.Id, categoryName, categoryType);
+			var categoryId = moneyService.CreateCategory(categoryName, categoryType);
 
-			var category = moneyService.GetCategory(currentUser.Id, categoryId);
+			var category = moneyService.GetCategory(categoryId);
 
 			Assert.Equal(categoryName, category.Name);
 			Assert.Equal(categoryType, category.CategoryType);
@@ -219,10 +219,10 @@ namespace Fab.Server.Tests
 			const CategoryType categoryType = CategoryType.Deposit;
 			const int popularity = 0;
 
-			var categoryId = moneyService.CreateCategory(currentUser.Id, "Test Category", CategoryType.Withdrawal);
+			var categoryId = moneyService.CreateCategory("Test Category", CategoryType.Withdrawal);
 
-			moneyService.UpdateCategory(currentUser.Id, categoryId, categoryName, categoryType);
-			var category = moneyService.GetCategory(currentUser.Id, categoryId);
+			moneyService.UpdateCategory(categoryId, categoryName, categoryType);
+			var category = moneyService.GetCategory(categoryId);
 			
 			Assert.Equal(categoryName, category.Name);
 			Assert.Equal(categoryType, category.CategoryType);
@@ -237,13 +237,13 @@ namespace Fab.Server.Tests
 		public void Delete_Category()
 // ReSharper restore InconsistentNaming
 		{
-			var categoryId = moneyService.CreateCategory(currentUser.Id, "Test Category", CategoryType.Withdrawal);
-			var categories = moneyService.GetAllCategories(currentUser.Id);
+			var categoryId = moneyService.CreateCategory("Test Category", CategoryType.Withdrawal);
+			var categories = moneyService.GetAllCategories();
 			Assert.Equal(1, categories.Count);
 
-			moneyService.DeleteCategory(currentUser.Id, categoryId);
+			moneyService.DeleteCategory(categoryId);
 
-			categories = moneyService.GetAllCategories(currentUser.Id);
+			categories = moneyService.GetAllCategories();
 			Assert.Equal(0, categories.Count);
 		}
 
@@ -261,10 +261,10 @@ namespace Fab.Server.Tests
 			const CategoryType categoryType2 = CategoryType.Withdrawal;
 			const int popularity = 0;
 
-			moneyService.CreateCategory(currentUser.Id, categoryName1, categoryType1);
-			moneyService.CreateCategory(currentUser.Id, categoryName2, categoryType2);
+			moneyService.CreateCategory(categoryName1, categoryType1);
+			moneyService.CreateCategory(categoryName2, categoryType2);
 
-			var categories = moneyService.GetAllCategories(currentUser.Id);
+			var categories = moneyService.GetAllCategories();
 
 			Assert.Equal(2, categories.Count);
 
@@ -291,7 +291,7 @@ namespace Fab.Server.Tests
 		public void Get_All_AssetTypes()
 // ReSharper restore InconsistentNaming
 		{
-			var assets = moneyService.GetAllAssetTypes(currentUser.Id);
+			var assets = moneyService.GetAllAssetTypes();
 
 			// by default there are only 4 asset types: UAH, USD, EUR and RUR
 			Assert.Equal(4, assets.Count);
@@ -315,28 +315,28 @@ namespace Fab.Server.Tests
 		public void Deposit_and_Delete()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var account = moneyService.GetAccount(accountId);
 			Assert.Equal(0, account.Balance);
 
-			var categoryId = moneyService.CreateCategory(currentUser.Id, "Test Category", CategoryType.Deposit);
-			var category = moneyService.GetCategory(currentUser.Id, categoryId);
+			var categoryId = moneyService.CreateCategory("Test Category", CategoryType.Deposit);
+			var category = moneyService.GetCategory(categoryId);
 			Assert.Equal(0, category.Popularity);
 
-			var journalId = moneyService.Deposit(currentUser.Id, accountId, DateTime.UtcNow, 25, 2, categoryId, "Some income");
+			var journalId = moneyService.Deposit(accountId, DateTime.UtcNow, 25, 2, categoryId, "Some income");
 
-			account = moneyService.GetAccount(currentUser.Id, accountId);
+			account = moneyService.GetAccount(accountId);
 			Assert.Equal(50, account.Balance);
 
-			category = moneyService.GetCategory(currentUser.Id, categoryId);
+			category = moneyService.GetCategory(categoryId);
 			Assert.Equal(1, category.Popularity);
 
-			moneyService.DeleteJournal(currentUser.Id, accountId, journalId);
+			moneyService.DeleteJournal(accountId, journalId);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId);
+			account = moneyService.GetAccount(accountId);
 			Assert.Equal(0, account.Balance);
 
-			category = moneyService.GetCategory(currentUser.Id, categoryId);
+			category = moneyService.GetCategory(categoryId);
 			Assert.Equal(0, category.Popularity);
 		}
 
@@ -348,23 +348,23 @@ namespace Fab.Server.Tests
 		public void Withdrawal_and_Delete()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryId = moneyService.CreateCategory(currentUser.Id, "Test Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryId = moneyService.CreateCategory("Test Category", CategoryType.Withdrawal);
 
-			var journalId = moneyService.Withdrawal(currentUser.Id, accountId, DateTime.UtcNow, 13, 10, categoryId, "Some expense");
+			var journalId = moneyService.Withdrawal(accountId, DateTime.UtcNow, 13, 10, categoryId, "Some expense");
 
-			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			var account = moneyService.GetAccount(accountId);
 			Assert.Equal(-130, account.Balance);
 
-			var category = moneyService.GetCategory(currentUser.Id, categoryId);
+			var category = moneyService.GetCategory(categoryId);
 			Assert.Equal(1, category.Popularity);
 
-			moneyService.DeleteJournal(currentUser.Id, accountId, journalId);
+			moneyService.DeleteJournal(accountId, journalId);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId);
+			account = moneyService.GetAccount(accountId);
 			Assert.Equal(0, account.Balance);
 
-			category = moneyService.GetCategory(currentUser.Id, categoryId);
+			category = moneyService.GetCategory(categoryId);
 			Assert.Equal(0, category.Popularity);
 		}
 
@@ -376,23 +376,23 @@ namespace Fab.Server.Tests
 		public void Create_and_Delete_Transfer()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId1 = moneyService.CreateAccount(currentUser.Id, "Test Account 1", 1);
-			var accountId2 = moneyService.CreateAccount(currentUser.Id, "Test Account 2", 1);
+			var accountId1 = moneyService.CreateAccount("Test Account 1", 1);
+			var accountId2 = moneyService.CreateAccount("Test Account 2", 1);
 
-			var transferId = moneyService.Transfer(currentUser.Id, accountId1, accountId2, DateTime.UtcNow, 78, 10, "Some transfer comment");
+			var transferId = moneyService.Transfer(accountId1, accountId2, DateTime.UtcNow, 78, 10, "Some transfer comment");
 
-			var account = moneyService.GetAccount(currentUser.Id, accountId1);
+			var account = moneyService.GetAccount(accountId1);
 			Assert.Equal(-780, account.Balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId2);
+			account = moneyService.GetAccount(accountId2);
 			Assert.Equal(780, account.Balance);
 
-			moneyService.DeleteJournal(currentUser.Id, accountId1, transferId);
+			moneyService.DeleteJournal(accountId1, transferId);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId1);
+			account = moneyService.GetAccount(accountId1);
 			Assert.Equal(0, account.Balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId2);
+			account = moneyService.GetAccount(accountId2);
 			Assert.Equal(0, account.Balance);
 		}
 
@@ -410,11 +410,11 @@ namespace Fab.Server.Tests
 			const string comment = "Some income";
 			DateTime date = DateTime.UtcNow;
 			
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryId = moneyService.CreateCategory(currentUser.Id, "Test Category", CategoryType.Deposit);
-			var depositId = moneyService.Deposit(currentUser.Id, accountId, date, rate, quantity, categoryId, comment);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryId = moneyService.CreateCategory("Test Category", CategoryType.Deposit);
+			var depositId = moneyService.Deposit(accountId, date, rate, quantity, categoryId, comment);
 
-			var deposit = moneyService.GetJournal(currentUser.Id, accountId, depositId) as DepositDTO;
+			var deposit = moneyService.GetJournal(accountId, depositId) as DepositDTO;
 
 			Assert.NotNull(deposit);
 			Assert.Equal(amount, deposit.Amount);
@@ -439,11 +439,11 @@ namespace Fab.Server.Tests
 			const string comment = "Some expense";
 			DateTime date = DateTime.UtcNow;
 			
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryId = moneyService.CreateCategory(currentUser.Id, "Test Category", CategoryType.Withdrawal);
-			var withdrawalId = moneyService.Withdrawal(currentUser.Id, accountId, date, rate, quantity, categoryId, comment);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryId = moneyService.CreateCategory("Test Category", CategoryType.Withdrawal);
+			var withdrawalId = moneyService.Withdrawal(accountId, date, rate, quantity, categoryId, comment);
 
-			var withdrawal = moneyService.GetJournal(currentUser.Id, accountId, withdrawalId) as WithdrawalDTO;
+			var withdrawal = moneyService.GetJournal(accountId, withdrawalId) as WithdrawalDTO;
 
 			Assert.NotNull(withdrawal);
 			Assert.Equal(-amount, withdrawal.Amount);
@@ -468,12 +468,12 @@ namespace Fab.Server.Tests
 			const string comment = "Some transfer";
 			DateTime date = DateTime.UtcNow;
 			
-			var accountId1 = moneyService.CreateAccount(currentUser.Id, "Test Account 1", 1);
-			var accountId2 = moneyService.CreateAccount(currentUser.Id, "Test Account 2", 1);
+			var accountId1 = moneyService.CreateAccount("Test Account 1", 1);
+			var accountId2 = moneyService.CreateAccount("Test Account 2", 1);
 
-			var transferId = moneyService.Transfer(currentUser.Id, accountId1, accountId2, date, rate, quantity, comment);
+			var transferId = moneyService.Transfer(accountId1, accountId2, date, rate, quantity, comment);
 
-			var outgoingTransferDTO = moneyService.GetJournal(currentUser.Id, accountId1, transferId) as OutgoingTransferDTO;
+			var outgoingTransferDTO = moneyService.GetJournal(accountId1, transferId) as OutgoingTransferDTO;
 
 			Assert.NotNull(outgoingTransferDTO);
 			Assert.Equal(-amount, outgoingTransferDTO.Amount);
@@ -483,7 +483,7 @@ namespace Fab.Server.Tests
 			Assert.Equal(rate, outgoingTransferDTO.Rate);
 			Assert.Equal(accountId2, outgoingTransferDTO.SecondAccountId);
 
-			var incomingTransferDTO = moneyService.GetJournal(currentUser.Id, accountId2, transferId) as IncomingTransferDTO;
+			var incomingTransferDTO = moneyService.GetJournal(accountId2, transferId) as IncomingTransferDTO;
 
 			Assert.NotNull(incomingTransferDTO);
 			Assert.Equal(amount, incomingTransferDTO.Amount);
@@ -502,50 +502,50 @@ namespace Fab.Server.Tests
 		public void Get_Account_Balance()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId1 = moneyService.CreateAccount(currentUser.Id, "Test Account 1", 1);
-			var accountId2 = moneyService.CreateAccount(currentUser.Id, "Test Account 2", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Test Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Test Category", CategoryType.Withdrawal);
+			var accountId1 = moneyService.CreateAccount("Test Account 1", 1);
+			var accountId2 = moneyService.CreateAccount("Test Account 2", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Test Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Test Category", CategoryType.Withdrawal);
 
-			moneyService.Deposit(currentUser.Id, accountId1, DateTime.UtcNow, 25, 10, null, "Some income");
+			moneyService.Deposit(accountId1, DateTime.UtcNow, 25, 10, null, "Some income");
 
-			var balance = moneyService.GetAccountBalance(currentUser.Id, accountId1, DateTime.UtcNow);
+			var balance = moneyService.GetAccountBalance(accountId1, DateTime.UtcNow);
 			Assert.Equal(250, balance);
 
-			var categories = moneyService.GetAllCategories(currentUser.Id);
+			var categories = moneyService.GetAllCategories();
 			Assert.Equal(2, categories.Count);
 			Assert.Equal(0, categories.Single(c => c.CategoryType == CategoryType.Deposit).Popularity);
 			Assert.Equal(0, categories.Single(c => c.CategoryType == CategoryType.Withdrawal).Popularity);
 
-			moneyService.Deposit(currentUser.Id, accountId1, DateTime.UtcNow, 5, 2, categoryDepositId, "Small income");
+			moneyService.Deposit(accountId1, DateTime.UtcNow, 5, 2, categoryDepositId, "Small income");
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId1, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId1, DateTime.UtcNow);
 			Assert.Equal(260, balance);
 
-			categories = moneyService.GetAllCategories(currentUser.Id);
+			categories = moneyService.GetAllCategories();
 			Assert.Equal(2, categories.Count);
 			Assert.Equal(1, categories.Single(c => c.CategoryType == CategoryType.Deposit).Popularity);
 			Assert.Equal(0, categories.Single(c => c.CategoryType == CategoryType.Withdrawal).Popularity);
 
-			moneyService.Withdrawal(currentUser.Id, accountId1, DateTime.UtcNow, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId1, DateTime.UtcNow, 10, 5, categoryWithdrawalId, "Some expense");
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId1, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId1, DateTime.UtcNow);
 			Assert.Equal(210, balance);
 
-			categories = moneyService.GetAllCategories(currentUser.Id);
+			categories = moneyService.GetAllCategories();
 			Assert.Equal(2, categories.Count);
 			Assert.Equal(1, categories.Single(c => c.CategoryType == CategoryType.Deposit).Popularity);
 			Assert.Equal(1, categories.Single(c => c.CategoryType == CategoryType.Withdrawal).Popularity);
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId2, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId2, DateTime.UtcNow);
 			Assert.Equal(0, balance);
 
-			moneyService.Transfer(currentUser.Id, accountId1, accountId2, DateTime.UtcNow, 30, 2, "Some transfer");
+			moneyService.Transfer(accountId1, accountId2, DateTime.UtcNow, 30, 2, "Some transfer");
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId1, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId1, DateTime.UtcNow);
 			Assert.Equal(150, balance);
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId2, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId2, DateTime.UtcNow);
 			Assert.Equal(60, balance);
 		}
 
@@ -557,22 +557,22 @@ namespace Fab.Server.Tests
 		public void Get_All_Journals()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Some income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 7, 5, null, "Another expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Some income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId, date3, 7, 5, null, "Another expense");
+			moneyService.Withdrawal(accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter();
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, filter);
+			var journals = moneyService.GetJournals(accountId, filter);
 
 			Assert.NotNull(journals);
 			Assert.Equal(4, journals.Count);
@@ -590,25 +590,25 @@ namespace Fab.Server.Tests
 		public void Get_Journals_Not_Older_Then()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Old income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Not older then expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 6, 1, null, "New expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 7, 2, categoryWithdrawalId, "Newest expense");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Old income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Not older then expense");
+			moneyService.Withdrawal(accountId, date3, 6, 1, null, "New expense");
+			moneyService.Withdrawal(accountId, date4, 7, 2, categoryWithdrawalId, "Newest expense");
 
 			var filter = new QueryFilter
 			             	{
 			             		NotOlderThen = date2
 			             	};
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, filter);
+			var journals = moneyService.GetJournals(accountId, filter);
 
 			Assert.NotNull(journals);
 			Assert.Equal(3, journals.Count);
@@ -640,25 +640,25 @@ namespace Fab.Server.Tests
 		public void Get_Journals_UpTo()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Old income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Up to expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 6, 1, null, "New expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 7, 2, categoryWithdrawalId, "Newest expense");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Old income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Up to expense");
+			moneyService.Withdrawal(accountId, date3, 6, 1, null, "New expense");
+			moneyService.Withdrawal(accountId, date4, 7, 2, categoryWithdrawalId, "Newest expense");
 
 			var filter = new QueryFilter
 			             	{
 			             		Upto = date3
 			             	};
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, filter);
+			var journals = moneyService.GetJournals(accountId, filter);
 
 			Assert.NotNull(journals);
 			Assert.Equal(2, journals.Count);
@@ -684,25 +684,25 @@ namespace Fab.Server.Tests
 		public void Get_Journals_Text()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Some income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 1, 5, null, "Another expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Some income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId, date3, 1, 5, null, "Another expense");
+			moneyService.Withdrawal(accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new TextSearchFilter
 			             	{
 								Contains = "exp"
 			             	};
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, filter);
+			var journals = moneyService.GetJournals(accountId, filter);
 
 			Assert.NotNull(journals);
 			Assert.Equal(2, journals.Count);
@@ -728,25 +728,25 @@ namespace Fab.Server.Tests
 		public void Get_Journals_Skiping()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Some income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 1, 5, null, "Another expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Some income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId, date3, 1, 5, null, "Another expense");
+			moneyService.Withdrawal(accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter
 						 {
 						 	Skip = 2
 						 };
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, filter);
+			var journals = moneyService.GetJournals(accountId, filter);
 
 			Assert.NotNull(journals);
 			Assert.Equal(2, journals.Count);
@@ -772,25 +772,25 @@ namespace Fab.Server.Tests
 		public void Get_Journals_Taking()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Some income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 1, 5, null, "Another expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Some income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId, date3, 1, 5, null, "Another expense");
+			moneyService.Withdrawal(accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter
 			{
 				Take = 2
 			};
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, filter);
+			var journals = moneyService.GetJournals(accountId, filter);
 
 			Assert.NotNull(journals);
 			Assert.Equal(2, journals.Count);
@@ -816,26 +816,26 @@ namespace Fab.Server.Tests
 		public void Get_Journals_Skiping_Taking()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Some income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 7, 5, null, "Another expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Some income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId, date3, 7, 5, null, "Another expense");
+			moneyService.Withdrawal(accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter
 			{
 				Skip = 2,
 				Take = 1
 			};
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, filter);
+			var journals = moneyService.GetJournals(accountId, filter);
 
 			Assert.NotNull(journals);
 			Assert.Equal(1, journals.Count);
@@ -855,21 +855,21 @@ namespace Fab.Server.Tests
 		public void Get_Journals_Count_All()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Some income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 7, 5, null, "Another expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Some income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId, date3, 7, 5, null, "Another expense");
+			moneyService.Withdrawal(accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
-			var journalsCount = moneyService.GetJournalsCount(currentUser.Id, accountId, new QueryFilter());
+			var journalsCount = moneyService.GetJournalsCount(accountId, new QueryFilter());
 
 			Assert.Equal(4, journalsCount);
 		}
@@ -882,26 +882,26 @@ namespace Fab.Server.Tests
 		public void Get_Journals_Count_DateRange()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 			var date4 = new DateTime(2010, 5, 17, 13, 49, 30).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Some income");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date3, 7, 5, null, "Another expense");
-			moneyService.Withdrawal(currentUser.Id, accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Some income");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Some expense");
+			moneyService.Withdrawal(accountId, date3, 7, 5, null, "Another expense");
+			moneyService.Withdrawal(accountId, date4, 3, 2, categoryWithdrawalId, "Yet another ...");
 
 			var filter = new QueryFilter
 			{
 				NotOlderThen = date1,
 				Upto = date3
 			};
-			var journalsCount = moneyService.GetJournalsCount(currentUser.Id, accountId, filter);
+			var journalsCount = moneyService.GetJournalsCount(accountId, filter);
 
 			Assert.Equal(2, journalsCount);
 		}
@@ -914,30 +914,30 @@ namespace Fab.Server.Tests
 		public void Update_Transaction()
 // ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Income comment");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, null, "Expense comment");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Income comment");
+			moneyService.Withdrawal(accountId, date2, 10, 5, null, "Expense comment");
 
-			var balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			var balance = moneyService.GetAccountBalance(accountId, DateTime.UtcNow);
 			Assert.Equal(200, balance);
 			
-			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			var account = moneyService.GetAccount(accountId);
 			Assert.Equal(200, account.Balance);
 
-			var depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
-			var withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+			var depositCategory = moneyService.GetCategory(categoryDepositId);
+			var withdrawalCategory = moneyService.GetCategory(categoryWithdrawalId);
 
 			Assert.Equal(1, depositCategory.Popularity);
 			Assert.Equal(0, withdrawalCategory.Popularity);
 
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+			var journals = moneyService.GetJournals(accountId, new QueryFilter());
 
 			Assert.NotNull(journals);
 			Assert.Equal(2, journals.Count);
@@ -951,21 +951,21 @@ namespace Fab.Server.Tests
 
 			var journalId = journals[0].Id;
 
-			moneyService.UpdateTransaction(currentUser.Id, accountId, journalId, false, date3, 32, 20, categoryWithdrawalId, "This is dept and not income!");
+			moneyService.UpdateTransaction(accountId, journalId, false, date3, 32, 20, categoryWithdrawalId, "This is dept and not income!");
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId, DateTime.UtcNow);
 			Assert.Equal(-690, balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId);
+			account = moneyService.GetAccount(accountId);
 			Assert.Equal(-690, account.Balance);
 
-			depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
-			withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+			depositCategory = moneyService.GetCategory(categoryDepositId);
+			withdrawalCategory = moneyService.GetCategory(categoryWithdrawalId);
 
 			Assert.Equal(0, depositCategory.Popularity);
 			Assert.Equal(1, withdrawalCategory.Popularity);
 
-			journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+			journals = moneyService.GetJournals(accountId, new QueryFilter());
 
 			Assert.NotNull(journals);
 			Assert.Equal(2, journals.Count);
@@ -986,31 +986,31 @@ namespace Fab.Server.Tests
 		public void Update_Debit_Transaction()
 		// ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Income comment");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Expense comment");
-			moneyService.Deposit(currentUser.Id, accountId, date3, 35, 1, categoryDepositId, "Income 2 comment");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Income comment");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Expense comment");
+			moneyService.Deposit(accountId, date3, 35, 1, categoryDepositId, "Income 2 comment");
 
-			var balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			var balance = moneyService.GetAccountBalance(accountId, DateTime.UtcNow);
 			Assert.Equal(235, balance);
 
-			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			var account = moneyService.GetAccount(accountId);
 			Assert.Equal(235, account.Balance);
 
-			var depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
-			var withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+			var depositCategory = moneyService.GetCategory(categoryDepositId);
+			var withdrawalCategory = moneyService.GetCategory(categoryWithdrawalId);
 
 			Assert.Equal(2, depositCategory.Popularity);
 			Assert.Equal(1, withdrawalCategory.Popularity);
 
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+			var journals = moneyService.GetJournals(accountId, new QueryFilter());
 
 			Assert.NotNull(journals);
 			Assert.Equal(3, journals.Count);
@@ -1024,21 +1024,21 @@ namespace Fab.Server.Tests
 
 			var journalId = journals[0].Id;
 
-			moneyService.UpdateTransaction(currentUser.Id, accountId, journalId, true, date3, 10, 17, categoryDepositId, "This is updated income");
+			moneyService.UpdateTransaction(accountId, journalId, true, date3, 10, 17, categoryDepositId, "This is updated income");
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId, DateTime.UtcNow);
 			Assert.Equal(155, balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId);
+			account = moneyService.GetAccount(accountId);
 			Assert.Equal(155, account.Balance);
 
-			depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
-			withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+			depositCategory = moneyService.GetCategory(categoryDepositId);
+			withdrawalCategory = moneyService.GetCategory(categoryWithdrawalId);
 
 			Assert.Equal(2, depositCategory.Popularity);
 			Assert.Equal(1, withdrawalCategory.Popularity);
 
-			journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+			journals = moneyService.GetJournals(accountId, new QueryFilter());
 
 			Assert.NotNull(journals);
 			Assert.Equal(3, journals.Count);
@@ -1059,31 +1059,31 @@ namespace Fab.Server.Tests
 		public void Update_Withdrawal_Transaction()
 		// ReSharper restore InconsistentNaming
 		{
-			var accountId = moneyService.CreateAccount(currentUser.Id, "Test Account", 1);
-			var categoryDepositId = moneyService.CreateCategory(currentUser.Id, "Deposit Category", CategoryType.Deposit);
-			var categoryWithdrawalId = moneyService.CreateCategory(currentUser.Id, "Withdrawal Category", CategoryType.Withdrawal);
+			var accountId = moneyService.CreateAccount("Test Account", 1);
+			var categoryDepositId = moneyService.CreateCategory("Deposit Category", CategoryType.Deposit);
+			var categoryWithdrawalId = moneyService.CreateCategory("Withdrawal Category", CategoryType.Withdrawal);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 			var date3 = new DateTime(2010, 5, 17, 13, 49, 29).ToUniversalTime();
 
-			moneyService.Deposit(currentUser.Id, accountId, date1, 25, 10, categoryDepositId, "Income comment");
-			moneyService.Withdrawal(currentUser.Id, accountId, date2, 10, 5, categoryWithdrawalId, "Expense comment");
-			moneyService.Deposit(currentUser.Id, accountId, date3, 35, 1, categoryDepositId, "Income 2 comment");
+			moneyService.Deposit(accountId, date1, 25, 10, categoryDepositId, "Income comment");
+			moneyService.Withdrawal(accountId, date2, 10, 5, categoryWithdrawalId, "Expense comment");
+			moneyService.Deposit(accountId, date3, 35, 1, categoryDepositId, "Income 2 comment");
 
-			var balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			var balance = moneyService.GetAccountBalance(accountId, DateTime.UtcNow);
 			Assert.Equal(235, balance);
 
-			var account = moneyService.GetAccount(currentUser.Id, accountId);
+			var account = moneyService.GetAccount(accountId);
 			Assert.Equal(235, account.Balance);
 
-			var depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
-			var withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+			var depositCategory = moneyService.GetCategory(categoryDepositId);
+			var withdrawalCategory = moneyService.GetCategory(categoryWithdrawalId);
 
 			Assert.Equal(2, depositCategory.Popularity);
 			Assert.Equal(1, withdrawalCategory.Popularity);
 
-			var journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+			var journals = moneyService.GetJournals(accountId, new QueryFilter());
 
 			Assert.NotNull(journals);
 			Assert.Equal(3, journals.Count);
@@ -1097,21 +1097,21 @@ namespace Fab.Server.Tests
 
 			var journalId = journals[1].Id;
 
-			moneyService.UpdateTransaction(currentUser.Id, accountId, journalId, false, date3, 10, 17, categoryWithdrawalId, "This is updated expense");
+			moneyService.UpdateTransaction(accountId, journalId, false, date3, 10, 17, categoryWithdrawalId, "This is updated expense");
 
-			balance = moneyService.GetAccountBalance(currentUser.Id, accountId, DateTime.UtcNow);
+			balance = moneyService.GetAccountBalance(accountId, DateTime.UtcNow);
 			Assert.Equal(115, balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId);
+			account = moneyService.GetAccount(accountId);
 			Assert.Equal(115, account.Balance);
 
-			depositCategory = moneyService.GetCategory(currentUser.Id, categoryDepositId);
-			withdrawalCategory = moneyService.GetCategory(currentUser.Id, categoryWithdrawalId);
+			depositCategory = moneyService.GetCategory(categoryDepositId);
+			withdrawalCategory = moneyService.GetCategory(categoryWithdrawalId);
 
 			Assert.Equal(2, depositCategory.Popularity);
 			Assert.Equal(1, withdrawalCategory.Popularity);
 
-			journals = moneyService.GetJournals(currentUser.Id, accountId, new QueryFilter());
+			journals = moneyService.GetJournals(accountId, new QueryFilter());
 
 			Assert.NotNull(journals);
 			Assert.Equal(3, journals.Count);
@@ -1142,29 +1142,29 @@ namespace Fab.Server.Tests
 			const decimal amount2 = rate2 * quantity2;
 			const string comment2 = "Another outgoing transfer";
 
-			var accountId1 = moneyService.CreateAccount(currentUser.Id, "Test Account 1-1", 1);
-			var accountId2 = moneyService.CreateAccount(currentUser.Id, "Test Account 2", 1);
-			var accountId3 = moneyService.CreateAccount(currentUser.Id, "Test Account 1-2", 1);
+			var accountId1 = moneyService.CreateAccount("Test Account 1-1", 1);
+			var accountId2 = moneyService.CreateAccount("Test Account 2", 1);
+			var accountId3 = moneyService.CreateAccount("Test Account 1-2", 1);
 
 			var date1 = new DateTime(2010, 5, 17, 13, 49, 27).ToUniversalTime();
 			var date2 = new DateTime(2010, 5, 17, 13, 49, 28).ToUniversalTime();
 
-			var transferId = moneyService.Transfer(currentUser.Id, accountId1, accountId2, date1, rate, quantity, comment);
+			var transferId = moneyService.Transfer(accountId1, accountId2, date1, rate, quantity, comment);
 
-			var account = moneyService.GetAccount(currentUser.Id, accountId1);
+			var account = moneyService.GetAccount(accountId1);
 			Assert.Equal(-amount, account.Balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId2);
+			account = moneyService.GetAccount(accountId2);
 			Assert.Equal(amount, account.Balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId3);
+			account = moneyService.GetAccount(accountId3);
 			Assert.Equal(0, account.Balance);
 
-			Assert.Equal(-amount, moneyService.GetAccountBalance(currentUser.Id, accountId1, DateTime.UtcNow));
-			Assert.Equal(amount, moneyService.GetAccountBalance(currentUser.Id, accountId2, DateTime.UtcNow));
-			Assert.Equal(0, moneyService.GetAccountBalance(currentUser.Id, accountId3, DateTime.UtcNow));
+			Assert.Equal(-amount, moneyService.GetAccountBalance(accountId1, DateTime.UtcNow));
+			Assert.Equal(amount, moneyService.GetAccountBalance(accountId2, DateTime.UtcNow));
+			Assert.Equal(0, moneyService.GetAccountBalance(accountId3, DateTime.UtcNow));
 
-			var trasfer = moneyService.GetJournal(currentUser.Id, accountId1, transferId);
+			var trasfer = moneyService.GetJournal(accountId1, transferId);
 
 			Assert.NotNull(trasfer);
 			Assert.Equal(comment, trasfer.Comment);
@@ -1175,22 +1175,22 @@ namespace Fab.Server.Tests
 			Assert.True(trasfer is OutgoingTransferDTO);
 			Assert.Equal(accountId2, ((OutgoingTransferDTO) trasfer).SecondAccountId);
 
-			moneyService.UpdateTransfer(currentUser.Id, transferId, accountId1, accountId3, date2, rate2, quantity2, comment2);
+			moneyService.UpdateTransfer(transferId, accountId1, accountId3, date2, rate2, quantity2, comment2);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId1);
+			account = moneyService.GetAccount(accountId1);
 			Assert.Equal(-amount2, account.Balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId2);
+			account = moneyService.GetAccount(accountId2);
 			Assert.Equal(0, account.Balance);
 
-			account = moneyService.GetAccount(currentUser.Id, accountId3);
+			account = moneyService.GetAccount(accountId3);
 			Assert.Equal(amount2, account.Balance);
 
-			Assert.Equal(-amount2, moneyService.GetAccountBalance(currentUser.Id, accountId1, DateTime.UtcNow));
-			Assert.Equal(0, moneyService.GetAccountBalance(currentUser.Id, accountId2, DateTime.UtcNow));
-			Assert.Equal(amount2, moneyService.GetAccountBalance(currentUser.Id, accountId3, DateTime.UtcNow));
+			Assert.Equal(-amount2, moneyService.GetAccountBalance(accountId1, DateTime.UtcNow));
+			Assert.Equal(0, moneyService.GetAccountBalance(accountId2, DateTime.UtcNow));
+			Assert.Equal(amount2, moneyService.GetAccountBalance(accountId3, DateTime.UtcNow));
 
-			trasfer = moneyService.GetJournal(currentUser.Id, accountId1, transferId);
+			trasfer = moneyService.GetJournal(accountId1, transferId);
 
 			Assert.NotNull(trasfer);
 			Assert.Equal(comment2, trasfer.Comment);

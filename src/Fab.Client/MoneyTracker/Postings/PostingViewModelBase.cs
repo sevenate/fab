@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Caliburn.Micro;
-using Fab.Client.Authentication;
 using Fab.Client.Framework;
 using Fab.Client.Framework.Results;
 using Fab.Client.Localization;
@@ -341,7 +340,7 @@ namespace Fab.Client.MoneyTracker.Postings
 
 		private IEnumerable<IResult> DeterminePagesCount()
 		{
-			var countResult = new CountPostingsResult(UserCredentials.Current.UserId, AccountId, CreateFilter(), eventAggregator);
+			var countResult = new CountPostingsResult(AccountId, CreateFilter(), eventAggregator);
 			yield return countResult;
 
 			yield return new SingleResult
@@ -371,7 +370,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		private IEnumerable<IResult> LoadPostings()
 		{
 			// Get filtered transactions during specified time frame
-			var transactionsResult = new GetPostingsResult(UserCredentials.Current.UserId, AccountId, CreateFilter(PageSize), eventAggregator);
+			var transactionsResult = new GetPostingsResult(AccountId, CreateFilter(PageSize), eventAggregator);
 			yield return transactionsResult;
 
 			yield return new SingleResult
@@ -590,7 +589,7 @@ namespace Fab.Client.MoneyTracker.Postings
 			}
 			else if (transactionRecord.Journal is TransferDTO)
 			{
-				var transferResult = new GetPostingResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId, eventAggregator);
+				var transferResult = new GetPostingResult(AccountId, transactionRecord.TransactionId, eventAggregator);
 				yield return transferResult;
 
 				var transfer = transferResult.Transaction as TransferDTO;
@@ -618,11 +617,11 @@ namespace Fab.Client.MoneyTracker.Postings
 			if (openConfirmationResult.Selected == MessageBoxOptions.Yes)
 			{
 				// Load transaction from server (used below to determine if the deleted posting was transfer)
-				var request = new GetPostingResult(UserCredentials.Current.UserId, AccountId, transactionRecord.TransactionId, eventAggregator);
+				var request = new GetPostingResult(AccountId, transactionRecord.TransactionId, eventAggregator);
 				yield return request;
 
 				// Remove transaction on server
-				var request2 = new DeleteTransactionResult(UserCredentials.Current.UserId, AccountId,
+				var request2 = new DeleteTransactionResult(AccountId,
 				                                           transactionRecord.TransactionId);
 				yield return request2;
 

@@ -9,16 +9,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="QueryFilter" nillable="true" type="tns:QueryFilter" />
-  <xs:complexType name="TextSearchFilter">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:QueryFilter">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Contains" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="TextSearchFilter" nillable="true" type="tns:TextSearchFilter" />
   <xs:complexType name="CategoryFilter">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:QueryFilter">
@@ -29,4 +19,14 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="CategoryFilter" nillable="true" type="tns:CategoryFilter" />
+  <xs:complexType name="TextSearchFilter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:QueryFilter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Contains" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TextSearchFilter" nillable="true" type="tns:TextSearchFilter" />
 </xs:schema>

@@ -13,17 +13,15 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		private readonly decimal amount;
 		private readonly string comment;
 		private readonly DateTime operationDate;
-		private readonly Guid user1Id;
 
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public AddTransferResult(Guid user1Id, int account1Id, int account2Id, DateTime operationDate, decimal amount,
+		public AddTransferResult(int account1Id, int account2Id, DateTime operationDate, decimal amount,
 								 string comment, IEventAggregator eventAggregator)
 		{
-			this.user1Id = user1Id;
 			this.account1Id = account1Id;
 			this.account2Id = account2Id;
 			this.operationDate = operationDate;
@@ -40,8 +38,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		{
 			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.TransferCompleted += OnTransferCompleted;
-			proxy.TransferAsync(user1Id,
-			                    account1Id,
+			proxy.TransferAsync(account1Id,
 			                    account2Id,
 			                    operationDate,
 			                    amount,

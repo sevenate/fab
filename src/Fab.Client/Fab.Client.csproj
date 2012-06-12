@@ -204,6 +204,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Service References\MoneyServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\RegistrationServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -290,11 +295,6 @@
     <Compile Include="MoneyTracker\AccountsDashboardViewModel.cs" />
     <Compile Include="MoneyTracker\Postings\GetPostingsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\MoneyServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\UserServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -528,20 +528,20 @@
     <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.JournalDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService1.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\MoneyServiceReference\MoneyService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService41.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService42.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService43.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService44.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\RegistrationServiceReference\Fab.Client.RegistrationServiceReference.UserDTO.datasource">
@@ -561,13 +561,13 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\UserServiceReference\UserService.wsdl" />
-    <None Include="Service References\UserServiceReference\UserService1.xsd">
+    <None Include="Service References\UserServiceReference\UserService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService11.xsd">
+    <None Include="Service References\UserServiceReference\UserService31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService12.xsd">
+    <None Include="Service References\UserServiceReference\UserService32.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -576,12 +576,6 @@
     <None Include="Service References\UserServiceReference\configuration91.svcinfo" />
     <None Include="Service References\UserServiceReference\configuration.svcinfo" />
     <None Include="Service References\UserServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\MoneyServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\MoneyServiceReference\configuration.svcinfo" />
-    <None Include="Service References\MoneyServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -597,7 +591,6 @@
     <Content Include="Resources\AppIcon_48x48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Service References\RegistrationServiceReference\RegistrationService.disco" />
     <None Include="Service References\RegistrationServiceReference\configuration91.svcinfo" />
     <None Include="Service References\RegistrationServiceReference\configuration.svcinfo" />
     <None Include="Service References\RegistrationServiceReference\Reference.svcmap">
@@ -608,6 +601,14 @@
     <Resource Include="Resources\Flag.ru.png" />
     <Resource Include="Resources\Flag.uk.png" />
     <Resource Include="Resources\Terms.txt" />
+    <None Include="Service References\MoneyServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\MoneyServiceReference\configuration.svcinfo" />
+    <None Include="Service References\MoneyServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService.disco" />
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.disco" />
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>

@@ -15,17 +15,15 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		private readonly DateTime operationDate;
 		private readonly decimal price;
 		private readonly decimal quantity;
-		private readonly Guid userId;
 
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public AddTransactionResult(Guid userId, int accountId, DateTime operationDate, decimal price, decimal quantity,
+		public AddTransactionResult(int accountId, DateTime operationDate, decimal price, decimal quantity,
 									string comment, int? categoryId, bool isDeposit, IEventAggregator eventAggregator)
 		{
-			this.userId = userId;
 			this.accountId = accountId;
 			this.operationDate = operationDate;
 			this.price = price;
@@ -47,12 +45,12 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 			if (isDeposit)
 			{
 				proxy.DepositCompleted += OnSavingCompleted;
-				proxy.DepositAsync(userId, accountId, operationDate, price, quantity, categoryId, comment);
+				proxy.DepositAsync(accountId, operationDate, price, quantity, categoryId, comment);
 			}
 			else
 			{
 				proxy.WithdrawalCompleted += OnSavingCompleted;
-				proxy.WithdrawalAsync(userId, accountId, operationDate, price, quantity, categoryId, comment);
+				proxy.WithdrawalAsync(accountId, operationDate, price, quantity, categoryId, comment);
 			}
 
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Saving new " + (isDeposit ? "income" : "expense") });

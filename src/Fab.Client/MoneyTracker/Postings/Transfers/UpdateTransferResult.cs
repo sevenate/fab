@@ -9,7 +9,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 	public class UpdateTransferResult : IResult
 	{
 		private readonly int transactionId;
-		private readonly Guid user1Id;
 		private readonly int account1Id;
 		private readonly int account2Id;
 		private readonly DateTime operationDate;
@@ -21,10 +20,9 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public UpdateTransferResult(int transactionId, Guid user1Id, int account1Id, int account2Id, DateTime operationDate, decimal amount, string comment, IEventAggregator eventAggregator)
+		public UpdateTransferResult(int transactionId, int account1Id, int account2Id, DateTime operationDate, decimal amount, string comment, IEventAggregator eventAggregator)
 		{
 			this.transactionId = transactionId;
-			this.user1Id = user1Id;
 			this.account1Id = account1Id;
 			this.account2Id = account2Id;
 			this.operationDate = operationDate;
@@ -39,8 +37,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 		{
 			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.UpdateTransferCompleted += OnUpdateTransferCompleted;
-			proxy.UpdateTransferAsync(user1Id,
-									  transactionId,
+			proxy.UpdateTransferAsync(transactionId,
 									  account1Id,
 									  account2Id,
 									  operationDate,
