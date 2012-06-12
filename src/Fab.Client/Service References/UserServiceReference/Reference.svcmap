@@ -12,19 +12,19 @@
     <GenerateSerializableTypes>false</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
-    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
     <ReferencedAssemblies />
     <ReferencedDataContractTypes />
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://thor/StagingFab/UserService.svc?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://localhost/StagingFab/UserService.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="UserService1.xsd" MetadataType="Schema" ID="a6fcaf04-e100-4fa5-a839-09634079fe74" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?xsd=xsd1" />
-    <MetadataFile FileName="UserService11.xsd" MetadataType="Schema" ID="4b0c7593-c455-434d-b7ca-672fc98a7712" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?xsd=xsd2" />
-    <MetadataFile FileName="UserService12.xsd" MetadataType="Schema" ID="94f89e56-c410-425e-92dd-270a9f346a8d" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?xsd=xsd0" />
-    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="5872f9fd-fec5-40a7-b912-62b3cd71efec" SourceId="1" SourceUrl="https://thor/StagingFab/UserService.svc?wsdl" />
+    <MetadataFile FileName="UserService3.xsd" MetadataType="Schema" ID="4c15f59c-343b-4f87-ab34-4eedd354697b" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?xsd=xsd1" />
+    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="cadf81bd-6fea-4514-a419-11cb1d316739" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?wsdl" />
+    <MetadataFile FileName="UserService31.xsd" MetadataType="Schema" ID="11561c75-5039-48bf-8aa0-f207fc0333f9" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?xsd=xsd2" />
+    <MetadataFile FileName="UserService32.xsd" MetadataType="Schema" ID="aa6c6539-bd51-4edd-b9f7-898294583285" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

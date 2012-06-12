@@ -19,15 +19,12 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public GetPostingsResult(Guid userId, int accountId, QueryFilter queryFilter, IEventAggregator eventAggregator)
+		public GetPostingsResult(int accountId, QueryFilter queryFilter, IEventAggregator eventAggregator)
 		{
-			UserId = userId;
 			AccountId = accountId;
 			QueryFilter = queryFilter;
 			EventAggregator = eventAggregator;
 		}
-
-		public Guid UserId { get; private set; }
 
 		public int AccountId { get; private set; }
 
@@ -56,7 +53,7 @@ namespace Fab.Client.MoneyTracker.Postings
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.GetJournalsAsync(UserId, AccountId, QueryFilter);
+			proxy.GetJournalsAsync(AccountId, QueryFilter);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading postings for account #" + AccountId});
 		}
 	}

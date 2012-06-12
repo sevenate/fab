@@ -99,7 +99,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 												EventAggregator.Publish(new AsyncOperationCompleteMessage());
 											 };
 
-			proxy.GetAllAccountsAsync(UserId);
+			proxy.GetAllAccountsAsync();
 			EventAggregator.Publish(new AsyncOperationStartedMessage{OperationName = "Downloading accounts"});
 		}
 
@@ -142,7 +142,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.GetAccountAsync(UserId, key);
+			proxy.GetAccountAsync(key);
 			EventAggregator.Publish(new AsyncOperationStartedMessage{OperationName = "Downloading account #" + key});
 		}
 
@@ -181,7 +181,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 												EventAggregator.Publish(new AsyncOperationCompleteMessage());
 											};
 
-			proxy.CreateAccountAsync(UserId, entity.Name, entity.AssetTypeId);
+			proxy.CreateAccountAsync(entity.Name, entity.AssetTypeId);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Creating new account \"" + entity.Name + "\"" });
 
 			return entity;
@@ -224,7 +224,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.UpdateAccountAsync(UserId, entity.Id, entity.Name);
+			proxy.UpdateAccountAsync(entity.Id, entity.Name);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Updating account \"" + entity.Name + "\"" });
 
 			return entity;
@@ -260,7 +260,7 @@ namespace Fab.Client.MoneyTracker.Accounts
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.DeleteAccountAsync(UserId, key);
+			proxy.DeleteAccountAsync(key);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Deleting account #" + key});
 		}
 

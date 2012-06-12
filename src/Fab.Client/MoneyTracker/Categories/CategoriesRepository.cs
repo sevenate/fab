@@ -99,7 +99,7 @@ namespace Fab.Client.MoneyTracker.Categories
 												   EventAggregator.Publish(new AsyncOperationCompleteMessage());
 											   };
 
-			proxy.GetAllCategoriesAsync(UserId);
+			proxy.GetAllCategoriesAsync();
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading categories" });
 		}
 
@@ -139,7 +139,7 @@ namespace Fab.Client.MoneyTracker.Categories
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.GetCategoryAsync(UserId, key);
+			proxy.GetCategoryAsync(key);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading category #" + key });
 		}
 
@@ -178,7 +178,7 @@ namespace Fab.Client.MoneyTracker.Categories
 												 EventAggregator.Publish(new AsyncOperationCompleteMessage());
 											 };
 
-			proxy.CreateCategoryAsync(UserId, entity.Name, entity.CategoryType);
+			proxy.CreateCategoryAsync(entity.Name, entity.CategoryType);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Creating new category \"" + entity.Name + "\"" });
 
 			return entity;
@@ -223,7 +223,7 @@ namespace Fab.Client.MoneyTracker.Categories
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.UpdateCategoryAsync(UserId, entity.Id, entity.Name, entity.CategoryType);
+			proxy.UpdateCategoryAsync(entity.Id, entity.Name, entity.CategoryType);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Updating category \"" + entity.Name + "\"" });
 
 			return entity;
@@ -259,7 +259,7 @@ namespace Fab.Client.MoneyTracker.Categories
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.DeleteCategoryAsync(UserId, key);
+			proxy.DeleteCategoryAsync(key);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Deleting category #" + key });
 		}
 

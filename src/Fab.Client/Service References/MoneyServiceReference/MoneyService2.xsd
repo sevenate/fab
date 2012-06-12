@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="https://thor/StagingFab/MoneyService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" />
-  <xs:complexType name="WithdrawalDTO">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:TransactionDTO">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="WithdrawalDTO" nillable="true" type="tns:WithdrawalDTO" />
+  <xs:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" />
   <xs:complexType name="TransactionDTO">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:JournalDTO">
@@ -30,14 +22,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="JournalDTO" nillable="true" type="tns:JournalDTO" />
-  <xs:complexType name="OutgoingTransferDTO">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:TransferDTO">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="OutgoingTransferDTO" nillable="true" type="tns:OutgoingTransferDTO" />
   <xs:complexType name="TransferDTO">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:JournalDTO">
@@ -48,14 +32,6 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="TransferDTO" nillable="true" type="tns:TransferDTO" />
-  <xs:complexType name="IncomingTransferDTO">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:TransferDTO">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="IncomingTransferDTO" nillable="true" type="tns:IncomingTransferDTO" />
   <xs:complexType name="DepositDTO">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:TransactionDTO">
@@ -64,6 +40,30 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="DepositDTO" nillable="true" type="tns:DepositDTO" />
+  <xs:complexType name="WithdrawalDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:TransactionDTO">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WithdrawalDTO" nillable="true" type="tns:WithdrawalDTO" />
+  <xs:complexType name="IncomingTransferDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:TransferDTO">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="IncomingTransferDTO" nillable="true" type="tns:IncomingTransferDTO" />
+  <xs:complexType name="OutgoingTransferDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:TransferDTO">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OutgoingTransferDTO" nillable="true" type="tns:OutgoingTransferDTO" />
   <xs:complexType name="FaultDetail">
     <xs:sequence>
       <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />

@@ -157,15 +157,15 @@ namespace Fab.Server.Tests
 		[Fact]
 		public void Check_Cached_Values_For_User_Accounts()
 		{
-			var account1 = moneyService.CreateAccount(currentUser.Id, "Account 1", 1);
-			var account2 = moneyService.CreateAccount(currentUser.Id, "Account 2", 2);
-			var account3 = moneyService.CreateAccount(currentUser.Id, "Account 3", 3);
+			var account1 = moneyService.CreateAccount("Account 1", 1);
+			var account2 = moneyService.CreateAccount("Account 2", 2);
+			var account3 = moneyService.CreateAccount("Account 3", 3);
 
-			moneyService.Deposit(currentUser.Id, account1, new DateTime(2012, 2, 11), 10, 3, null, null);
-			moneyService.Deposit(currentUser.Id, account1, new DateTime(2012, 2, 10), 5, 4, null, null);
-			moneyService.Withdrawal(currentUser.Id, account1, new DateTime(2012, 2, 13), 20, 2, null, null);
+			moneyService.Deposit(account1, new DateTime(2012, 2, 11), 10, 3, null, null);
+			moneyService.Deposit(account1, new DateTime(2012, 2, 10), 5, 4, null, null);
+			moneyService.Withdrawal(account1, new DateTime(2012, 2, 13), 20, 2, null, null);
 
-			moneyService.Deposit(currentUser.Id, account2, new DateTime(2012, 2, 5), 8, 1, null, null);
+			moneyService.Deposit(account2, new DateTime(2012, 2, 5), 8, 1, null, null);
 
 			var maintenanceAccounts = adminService.UpdateCachedValuesForUserAccounts(currentUser.Id, true);
 

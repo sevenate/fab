@@ -9,11 +9,9 @@ namespace Fab.Client.MoneyTracker.Postings
 	{
 		private readonly int accountId;
 		private readonly int transactionId;
-		private readonly Guid userId;
 
-		public DeleteTransactionResult(Guid userId, int accountId, int transactionId)
+		public DeleteTransactionResult(int accountId, int transactionId)
 		{
-			this.userId = userId;
 			this.accountId = accountId;
 			this.transactionId = transactionId;
 		}
@@ -26,10 +24,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		{
 			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.DeleteJournalCompleted += OnDeleteCompleted;
-			proxy.DeleteJournalAsync(userId,
-			                         accountId,
-			                         transactionId
-				);
+			proxy.DeleteJournalAsync(accountId, transactionId);
 		}
 
 		#endregion

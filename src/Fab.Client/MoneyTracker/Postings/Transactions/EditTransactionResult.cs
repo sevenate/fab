@@ -9,7 +9,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 	public class EditTransactionResult : IResult
 	{
 		private readonly int transactionId;
-		private readonly Guid userId;
 		private readonly int accountId;
 		private readonly DateTime operationDate;
 		private readonly decimal price;
@@ -23,10 +22,9 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public EditTransactionResult(int transactionId, Guid userId, int accountId, DateTime operationDate, decimal price, decimal quantity, string comment, int? categoryId, bool isDeposit, IEventAggregator eventAggregator)
+		public EditTransactionResult(int transactionId, int accountId, DateTime operationDate, decimal price, decimal quantity, string comment, int? categoryId, bool isDeposit, IEventAggregator eventAggregator)
 		{
 			this.transactionId = transactionId;
-			this.userId = userId;
 			this.accountId = accountId;
 			this.operationDate = operationDate;
 			this.price = price;
@@ -43,8 +41,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 		{
 			var proxy = ServiceFactory.CreateMoneyService();
 			proxy.UpdateTransactionCompleted += OnUpdateTransactionCompleted;
-			proxy.UpdateTransactionAsync(userId,
-										 accountId,
+			proxy.UpdateTransactionAsync(accountId,
 										 transactionId,
 										 isDeposit,
 										 operationDate,
