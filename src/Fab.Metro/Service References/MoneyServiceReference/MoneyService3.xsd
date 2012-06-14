@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" />
   <xs:import schemaLocation="https://localhost/StagingFab/MoneyService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" />
   <xs:element name="CreateAccount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q1:guid" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="assetTypeId" type="xs:int" />
       </xs:sequence>
@@ -22,7 +20,6 @@
   <xs:element name="GetAccount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q2:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -30,14 +27,13 @@
   <xs:element name="GetAccountResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAccountResult" nillable="true" type="q3:AccountDTO" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAccountResult" nillable="true" type="q1:AccountDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateAccount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q4:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -51,7 +47,6 @@
   <xs:element name="DeleteAccount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q5:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -63,22 +58,19 @@
   </xs:element>
   <xs:element name="GetAllAccounts">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q6:guid" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAccountsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllAccountsResult" nillable="true" type="q7:ArrayOfAccountDTO" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllAccountsResult" nillable="true" type="q2:ArrayOfAccountDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAccountBalance">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q8:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="dateTime" type="xs:dateTime" />
       </xs:sequence>
@@ -94,9 +86,8 @@
   <xs:element name="CreateCategory">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q9:guid" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" minOccurs="0" name="categoryType" type="q10:CategoryType" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" minOccurs="0" name="categoryType" type="q3:CategoryType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -110,7 +101,6 @@
   <xs:element name="GetCategory">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q11:guid" />
         <xs:element minOccurs="0" name="categoryId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -118,17 +108,16 @@
   <xs:element name="GetCategoryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetCategoryResult" nillable="true" type="q12:CategoryDTO" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetCategoryResult" nillable="true" type="q4:CategoryDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateCategory">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q13:guid" />
         <xs:element minOccurs="0" name="categoryId" type="xs:int" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" minOccurs="0" name="categoryType" type="q14:CategoryType" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Fab.Server.Core.Enums" minOccurs="0" name="categoryType" type="q5:CategoryType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -140,7 +129,6 @@
   <xs:element name="DeleteCategory">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q15:guid" />
         <xs:element minOccurs="0" name="categoryId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -152,22 +140,19 @@
   </xs:element>
   <xs:element name="GetAllCategories">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q16:guid" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllCategoriesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllCategoriesResult" nillable="true" type="q17:ArrayOfCategoryDTO" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllCategoriesResult" nillable="true" type="q6:ArrayOfCategoryDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteJournal">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q18:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="journalId" type="xs:int" />
       </xs:sequence>
@@ -181,7 +166,6 @@
   <xs:element name="GetJournal">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q19:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="journalId" type="xs:int" />
       </xs:sequence>
@@ -190,14 +174,13 @@
   <xs:element name="GetJournalResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetJournalResult" nillable="true" type="q20:JournalDTO" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetJournalResult" nillable="true" type="q7:JournalDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetJournalsCount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q21:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="queryFilter" nillable="true" type="xs:anyType" />
       </xs:sequence>
@@ -213,7 +196,6 @@
   <xs:element name="GetJournals">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q22:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="queryFilter" nillable="true" type="xs:anyType" />
       </xs:sequence>
@@ -222,28 +204,25 @@
   <xs:element name="GetJournalsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetJournalsResult" nillable="true" type="q23:ArrayOfJournalDTO" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetJournalsResult" nillable="true" type="q8:ArrayOfJournalDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAssetTypes">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q24:guid" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAssetTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllAssetTypesResult" nillable="true" type="q25:ArrayOfAssetTypeDTO" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Fab.Server.Core.DTO" minOccurs="0" name="GetAllAssetTypesResult" nillable="true" type="q9:ArrayOfAssetTypeDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="Deposit">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q26:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
         <xs:element minOccurs="0" name="rate" type="xs:decimal" />
@@ -263,7 +242,6 @@
   <xs:element name="Withdrawal">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q27:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
         <xs:element minOccurs="0" name="rate" type="xs:decimal" />
@@ -283,7 +261,6 @@
   <xs:element name="UpdateTransaction">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q28:guid" />
         <xs:element minOccurs="0" name="accountId" type="xs:int" />
         <xs:element minOccurs="0" name="transactionId" type="xs:int" />
         <xs:element minOccurs="0" name="isDeposit" type="xs:boolean" />
@@ -303,7 +280,6 @@
   <xs:element name="Transfer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q29:guid" />
         <xs:element minOccurs="0" name="fromAccountId" type="xs:int" />
         <xs:element minOccurs="0" name="toAccountId" type="xs:int" />
         <xs:element minOccurs="0" name="date" type="xs:dateTime" />
@@ -323,7 +299,6 @@
   <xs:element name="UpdateTransfer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q30:guid" />
         <xs:element minOccurs="0" name="transactionId" type="xs:int" />
         <xs:element minOccurs="0" name="fromAccountId" type="xs:int" />
         <xs:element minOccurs="0" name="toAccountId" type="xs:int" />
