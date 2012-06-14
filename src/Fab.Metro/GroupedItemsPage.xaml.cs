@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Fab.Metro.Data;
+using Fab.Metro.MoneyServiceReference;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -39,8 +40,16 @@ namespace Fab.Metro
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            var sampleDataGroups = SampleDataSource.GetGroups((String)navigationParameter);
-            this.DefaultViewModel["Groups"] = sampleDataGroups;
+            //var sampleDataGroups = SampleDataSource.GetGroups("AllGroups");
+
+            var sampleDataGroups = new List<SampleDataGroup>();
+
+            foreach (var accountDto in (AccountDTO[])navigationParameter)
+            {
+                sampleDataGroups.Add(new SampleDataGroup(accountDto.Id.ToString(), accountDto.Name, accountDto.Balance.ToString(), string.Empty, accountDto.PostingsCount.ToString()));
+            }
+
+            DefaultViewModel["Groups"] = sampleDataGroups;
         }
 
         /// <summary>

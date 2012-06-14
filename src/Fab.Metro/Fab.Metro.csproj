@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -101,6 +101,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -115,6 +116,9 @@
     <Compile Include="ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="Common\BindableBase.cs" />
@@ -126,6 +130,21 @@
     <Compile Include="..\AssemblyInfo.Generated.cs">
       <Link>Properties\AssemblyInfo.Generated.cs</Link>
     </Compile>
+    <Compile Include="Service References\MoneyServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\RegistrationServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -133,6 +152,61 @@
     </AppxManifest>
     <None Include="Common\ReadMe.txt" />
     <None Include="Fab.Metro_TemporaryKey.pfx" />
+    <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
+    <None Include="Service References\MoneyServiceReference\Fab.Metro.MoneyServiceReference.AccountDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\Fab.Metro.MoneyServiceReference.AssetTypeDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\Fab.Metro.MoneyServiceReference.CategoryDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\Fab.Metro.MoneyServiceReference.JournalDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MoneyServiceReference\MoneyService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\Fab.Metro.RegistrationServiceReference.UserDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.wsdl" />
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\RegistrationService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserServiceReference\Fab.Metro.UserServiceReference.UserDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServiceReference\UserService.wsdl" />
+    <None Include="Service References\UserServiceReference\UserService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserServiceReference\UserService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserServiceReference\UserService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.png" />
@@ -142,6 +216,27 @@
     <Content Include="Assets\LightGray.png" />
     <Content Include="Assets\MediumGray.png" />
     <Content Include="Assets\DarkGray.png" />
+    <None Include="Service References\UserServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\UserServiceReference\configuration.svcinfo" />
+    <None Include="Service References\UserServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\UserServiceReference\UserService.disco" />
+    <None Include="Service References\RegistrationServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\RegistrationServiceReference\configuration.svcinfo" />
+    <None Include="Service References\RegistrationServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\RegistrationServiceReference\RegistrationService.disco" />
+    <None Include="Service References\MoneyServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\MoneyServiceReference\configuration.svcinfo" />
+    <None Include="Service References\MoneyServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\MoneyServiceReference\MoneyService.disco" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -164,6 +259,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\MoneyServiceReference\" />
+    <WCFMetadataStorage Include="Service References\RegistrationServiceReference\" />
+    <WCFMetadataStorage Include="Service References\UserServiceReference\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
