@@ -142,13 +142,13 @@
     <value>+ Category</value>
   </data>
   <data name="CategoriesView_DepositCategories" xml:space="preserve">
-    <value>Deposit categories</value>
+    <value>Income categories</value>
   </data>
   <data name="CategoriesView_Used" xml:space="preserve">
     <value>Used</value>
   </data>
   <data name="CategoriesView_WithdrawalCategories" xml:space="preserve">
-    <value>Withdrawal categories</value>
+    <value>Expense categories</value>
   </data>
   <data name="CategoryView_Delete" xml:space="preserve">
     <value>Delete</value>
