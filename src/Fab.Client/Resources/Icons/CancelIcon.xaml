@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Fab.Client.Resources.Icons.CancelIcon"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100" d:DesignWidth="100">
+    <Path
+        Stretch="Uniform"
+        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorLevel=1, Mode=FindAncestor, AncestorType=UserControl}}"
+        Data="F1 M 24,12C 30.6274,12 36,17.3726 36,24C 36,30.6274 30.6274,36 24,36C 17.3726,36 12,30.6274 12,24C 12,17.3726 17.3726,12 24,12 Z M 24,15C 22.2389,15 20.5959,15.5058 19.2085,16.3801L 31.6199,28.7915C 32.4942,27.4041 33,25.7611 33,24C 33,19.0294 28.9706,15 24,15 Z M 15,24C 15,28.9706 19.0294,33 24,33C 25.7611,33 27.404,32.4942 28.7914,31.6199L 16.3801,19.2086C 15.5058,20.596 15,22.2389 15,24 Z " />
+</UserControl>
