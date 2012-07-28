@@ -61,7 +61,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to + Account.
+        ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string AccountsDashboardView_CreateAccount {
             get {
@@ -160,7 +160,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to + Category.
+        ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string CategoriesView_CreateNew {
             get {
@@ -511,7 +511,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to + Expense.
+        ///   Looks up a localized string similar to Expense.
         /// </summary>
         public static string PostingActionsView_NewExpense {
             get {
@@ -520,7 +520,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to + Income.
+        ///   Looks up a localized string similar to Income.
         /// </summary>
         public static string PostingActionsView_NewIncome {
             get {
@@ -529,7 +529,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to + Transfer.
+        ///   Looks up a localized string similar to Transfer.
         /// </summary>
         public static string PostingActionsView_NewTransfer {
             get {
@@ -637,15 +637,6 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to End balance:.
-        /// </summary>
-        public static string PostingsView_End_Balance {
-            get {
-                return ResourceManager.GetString("PostingsView_End_Balance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Expense:.
         /// </summary>
         public static string PostingsView_Expense {
@@ -673,20 +664,11 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Postings:.
+        ///   Looks up a localized string similar to Records:.
         /// </summary>
         public static string PostingsView_Postings {
             get {
                 return ResourceManager.GetString("PostingsView_Postings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start balance:.
-        /// </summary>
-        public static string PostingsView_Start_Balance {
-            get {
-                return ResourceManager.GetString("PostingsView_Start_Balance", resourceCulture);
             }
         }
         
