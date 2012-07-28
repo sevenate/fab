@@ -193,11 +193,71 @@
     <Compile Include="MoneyTracker\Postings\PostingRecordBase.cs" />
     <Compile Include="MoneyTracker\Postings\PostingViewModelBase.cs" />
     <Compile Include="MoneyTracker\SearchDashBoardViewModel.cs" />
-    <Compile Include="Resources\Actions\EditIcon.xaml.cs">
+    <Compile Include="Resources\Icons\AddIcon.xaml.cs">
+      <DependentUpon>AddIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\AlertIcon.xaml.cs">
+      <DependentUpon>AlertIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\ArrowLeftIcon.xaml.cs">
+      <DependentUpon>ArrowLeftIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\ArrowRightIcon.xaml.cs">
+      <DependentUpon>ArrowRightIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\ArrowsLeftRightIcon.xaml.cs">
+      <DependentUpon>ArrowsLeftRightIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\CancelIcon.xaml.cs">
+      <DependentUpon>CancelIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\CategoryIcon.xaml.cs">
+      <DependentUpon>CategoryIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\CheckIcon.xaml.cs">
+      <DependentUpon>CheckIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\CloseIcon.xaml.cs">
+      <DependentUpon>CloseIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\EditIcon.xaml.cs">
       <DependentUpon>EditIcon.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Actions\DeleteIcon.xaml.cs">
-      <DependentUpon>DeleteIcon.xaml</DependentUpon>
+    <Compile Include="Resources\Icons\GraphBarIcon.xaml.cs">
+      <DependentUpon>GraphBarIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\GraphPie.Icon.xaml.cs">
+      <DependentUpon>GraphPie.Icon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\MagnifyIcon.xaml.cs">
+      <DependentUpon>MagnifyIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\MinusIcon.xaml.cs">
+      <DependentUpon>MinusIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\MoneyIcon.xaml.cs">
+      <DependentUpon>MoneyIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\RecycleIcon.xaml.cs">
+      <DependentUpon>RecycleIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\RefreshIcon.xaml.cs">
+      <DependentUpon>RefreshIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\SaveIcon.xaml.cs">
+      <DependentUpon>SaveIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\SecuredIcon.xaml.cs">
+      <DependentUpon>SecuredIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\SettingsIcon.xaml.cs">
+      <DependentUpon>SettingsIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\WarningCircleIcon.xaml.cs">
+      <DependentUpon>WarningCircleIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\WarningIcon.xaml.cs">
+      <DependentUpon>WarningIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
@@ -418,15 +478,95 @@
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
-    <Page Include="Resources\Actions\EditIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Resources\Icons\AddIcon.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Actions\DeleteIcon.xaml">
+    <Page Include="Resources\Icons\AlertIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\ArrowLeftIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\ArrowRightIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\ArrowsLeftRightIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\CancelIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\CategoryIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\CheckIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\CloseIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\EditIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\GraphBarIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\GraphPie.Icon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\MagnifyIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\MinusIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\MoneyIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\RecycleIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\RefreshIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\SaveIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\SecuredIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\SettingsIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\WarningCircleIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\WarningIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

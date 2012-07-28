@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
-    <value>+ Account</value>
+    <value>Account</value>
   </data>
   <data name="AccountView_Delete" xml:space="preserve">
     <value>Delete</value>
@@ -139,7 +139,7 @@
     <value>Common categories</value>
   </data>
   <data name="CategoriesView_CreateNew" xml:space="preserve">
-    <value>+ Category</value>
+    <value>Category</value>
   </data>
   <data name="CategoriesView_DepositCategories" xml:space="preserve">
     <value>Income categories</value>
@@ -217,13 +217,13 @@
     <value>Sign out</value>
   </data>
   <data name="PostingActionsView_NewExpense" xml:space="preserve">
-    <value>+ Expense</value>
+    <value>Expense</value>
   </data>
   <data name="PostingActionsView_NewIncome" xml:space="preserve">
-    <value>+ Income</value>
+    <value>Income</value>
   </data>
   <data name="PostingActionsView_NewTransfer" xml:space="preserve">
-    <value>+ Transfer</value>
+    <value>Transfer</value>
   </data>
   <data name="PostingsFilterView_Today" xml:space="preserve">
     <value>Today</value>
@@ -411,9 +411,6 @@
   <data name="PostingsView_Difference" xml:space="preserve">
     <value>Difference:</value>
   </data>
-  <data name="PostingsView_End_Balance" xml:space="preserve">
-    <value>End balance:</value>
-  </data>
   <data name="PostingsView_Expense" xml:space="preserve">
     <value>Expense:</value>
   </data>
@@ -421,10 +418,7 @@
     <value>Income:</value>
   </data>
   <data name="PostingsView_Postings" xml:space="preserve">
-    <value>Postings:</value>
-  </data>
-  <data name="PostingsView_Start_Balance" xml:space="preserve">
-    <value>Start balance:</value>
+    <value>Records:</value>
   </data>
   <data name="AccountView_Delete_Confirmation_Message" xml:space="preserve">
     <value>Do you really want to delete account '{0}'?</value>

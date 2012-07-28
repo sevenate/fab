@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
-    <value>+ Счет</value>
+    <value>Счет</value>
   </data>
   <data name="AccountView_Delete" xml:space="preserve">
     <value>Удалить</value>
@@ -139,7 +139,7 @@
     <value>Общие категории</value>
   </data>
   <data name="CategoriesView_CreateNew" xml:space="preserve">
-    <value>+ Категория</value>
+    <value>Категория</value>
   </data>
   <data name="CategoriesView_DepositCategories" xml:space="preserve">
     <value>Категории доходов</value>
@@ -217,13 +217,13 @@
     <value>Выход</value>
   </data>
   <data name="PostingActionsView_NewExpense" xml:space="preserve">
-    <value>+ Расход</value>
+    <value>Расход</value>
   </data>
   <data name="PostingActionsView_NewIncome" xml:space="preserve">
-    <value>+ Доход</value>
+    <value>Доход</value>
   </data>
   <data name="PostingActionsView_NewTransfer" xml:space="preserve">
-    <value>+ Перевод</value>
+    <value>Перевод</value>
   </data>
   <data name="PostingsFilterView_Today" xml:space="preserve">
     <value>Сегодня</value>
@@ -411,9 +411,6 @@
   <data name="PostingsView_Difference" xml:space="preserve">
     <value>Разница:</value>
   </data>
-  <data name="PostingsView_End_Balance" xml:space="preserve">
-    <value>Конечный баланс:</value>
-  </data>
   <data name="PostingsView_Expense" xml:space="preserve">
     <value>Расход:</value>
   </data>
@@ -421,10 +418,7 @@
     <value>Доход:</value>
   </data>
   <data name="PostingsView_Postings" xml:space="preserve">
-    <value>Транзакций:</value>
-  </data>
-  <data name="PostingsView_Start_Balance" xml:space="preserve">
-    <value>Начальный баланс:</value>
+    <value>Записей:</value>
   </data>
   <data name="AccountView_Delete_Confirmation_Message" xml:space="preserve">
     <value>Вы действительно хотите удалить счет '{0}'?</value>
