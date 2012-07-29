@@ -18,7 +18,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 	<UsingTask TaskName="MSBuild.Community.Tasks.Unzip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
 	<UsingTask TaskName="MSBuild.Community.Tasks.Zip" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
 	<UsingTask TaskName="MSBuild.Community.Tasks.Version" AssemblyFile=".\tools\MSBuildExtensions\MSBuild.Community.Tasks\MSBuild.Community.Tasks.dll" />
-	<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
+	<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
 
 	<PropertyGroup>
 		<SourceRoot>.\src</SourceRoot>
