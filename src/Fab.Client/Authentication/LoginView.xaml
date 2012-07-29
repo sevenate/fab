@@ -159,28 +159,21 @@
 			TabIndex="4"
 			HorizontalContentAlignment="Stretch"
 			VerticalAlignment="Center">
-			<Grid MinHeight="40">
+			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 				<Icons:SecuredIcon
-					MaxHeight="24"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Right"/>
+					Style="{StaticResource IconStyle}" />
 				<TextBlock
 					Grid.Column="1"
 					Text="{Binding Path=LocalizedStrings.LoginView_Login, FallbackValue='Login'}"
-					Margin="5,0"
-					FontSize="24"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center" />
+					Style="{StaticResource ButtonTextStyle}" />
 				<Controls:Spinner
 					Grid.Column="2"
-					HorizontalAlignment="Left"
-					Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}"
-					VerticalAlignment="Center" />
+					Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
 			</Grid>
 		</Button>
 		<TextBlock
