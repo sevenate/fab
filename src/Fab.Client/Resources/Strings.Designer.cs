@@ -277,16 +277,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Authenticating....
-        /// </summary>
-        public static string LoginView_Authorization_In_Progress {
-            get {
-                return ResourceManager.GetString("LoginView_Authorization_In_Progress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Language.
+        ///   Looks up a localized string similar to Choose language.
         /// </summary>
         public static string LoginView_Language {
             get {
@@ -313,7 +304,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remember name.
+        ///   Looks up a localized string similar to Remember my name.
         /// </summary>
         public static string LoginView_Remember_me {
             get {
@@ -331,7 +322,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login.
+        ///   Looks up a localized string similar to Login to your profile.
         /// </summary>
         public static string LoginView_Title {
             get {

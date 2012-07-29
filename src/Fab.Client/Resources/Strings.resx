@@ -157,7 +157,7 @@
     <value>Edit</value>
   </data>
   <data name="LoginView_Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Choose language</value>
   </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Login</value>
@@ -166,13 +166,13 @@
     <value>Password</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Remember name</value>
+    <value>Remember my name</value>
   </data>
   <data name="LoginView_Show_characters" xml:space="preserve">
     <value>Show password</value>
   </data>
   <data name="LoginView_Title" xml:space="preserve">
-    <value>Login</value>
+    <value>Login to your profile</value>
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Username</value>
@@ -467,9 +467,6 @@
   </data>
   <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
     <value>Service is too busy. Please try again later.</value>
-  </data>
-  <data name="LoginView_Authorization_In_Progress" xml:space="preserve">
-    <value>Authenticating...</value>
   </data>
   <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
     <value>Signing up...</value>

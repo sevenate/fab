@@ -157,7 +157,7 @@
     <value>Редактировать</value>
   </data>
   <data name="LoginView_Language" xml:space="preserve">
-    <value>Язык</value>
+    <value>Выберите язык</value>
   </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Вход</value>
@@ -166,13 +166,13 @@
     <value>Пароль</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Запомнить имя</value>
+    <value>Запомнить моё имя</value>
   </data>
   <data name="LoginView_Show_characters" xml:space="preserve">
     <value>Показывать пароль</value>
   </data>
   <data name="LoginView_Title" xml:space="preserve">
-    <value>Вход</value>
+    <value>Вход в свой профиль</value>
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
@@ -467,9 +467,6 @@
   </data>
   <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
     <value>Служба слишком занята. Пожалуйста, повторите попытку позже.</value>
-  </data>
-  <data name="LoginView_Authorization_In_Progress" xml:space="preserve">
-    <value>Проверка пароля...</value>
   </data>
   <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
     <value>Регистрация...</value>

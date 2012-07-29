@@ -358,7 +358,6 @@ namespace Fab.Client.Authentication
 		[Dependencies("Username", "Password")]
 		public IEnumerable<IResult> Login()
 		{
-			Status = Strings.LoginView_Authorization_In_Progress;
 			ShowStatus = true;
 
 			var authenticateResult = new AuthenticateResult(Username, Password);
@@ -389,12 +388,16 @@ namespace Fab.Client.Authentication
 		/// Check if the credentials meets the security requirements.
 		/// </summary>
 		/// <returns><c>true</c> if the username and password meets the security requirements.</returns>
-		public bool CanLogin()
+		public bool CanLogin
 		{
-			return !string.IsNullOrWhiteSpace(Username)
-			       && !string.IsNullOrWhiteSpace(Password)
-			       && Username.Length >= MinimumUsernameLength
-			       && Password.Length >= MinimumPasswordLength;
+			get
+			{
+				return !string.IsNullOrWhiteSpace(Username)
+				       && !IsBusy;
+				//			       && !string.IsNullOrWhiteSpace(Password);
+				//			       && Username.Length >= MinimumUsernameLength
+				//			       && Password.Length >= MinimumPasswordLength;
+			}
 		}
 
 		#endregion
@@ -416,6 +419,7 @@ namespace Fab.Client.Authentication
 			{
 				isBusy = value;
 				NotifyOfPropertyChange(() => IsBusy);
+				NotifyOfPropertyChange(() => CanLogin);
 			}
 		}
 
