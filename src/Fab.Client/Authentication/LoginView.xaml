@@ -1,112 +1,199 @@
-﻿<UserControl x:Class="Fab.Client.Authentication.LoginView"
-			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
-			 xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
-			 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-			 xmlns:Controls="clr-namespace:Fab.Client.Shell.Controls"
-			 IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
-			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}">
-	<StackPanel>
-		<TextBlock TextWrapping="Wrap"
-				   Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login'}"
-				   FontSize="21.333"
-				   Margin="2,0,2,2" />
-		<sdk:Label Content="{Binding Path=LocalizedStrings.LoginView_Language, FallbackValue=Language}"
-				   Target="{Binding ElementName=Cultures}"
-				   Margin="5,10,5,2" />
-		<ComboBox x:Name="Cultures"
-				  SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
-				  ItemTemplate="{StaticResource LanguageItem}" />
-		<sdk:Label Content="{Binding Path=LocalizedStrings.LoginView_Username, FallbackValue=Username}"
-				   Target="{Binding ElementName=Username}"
-				   Margin="5,10,5,2" />
-		<TextBox x:Name="Username"
-				 TabIndex="0"
-				 MaxLength="50">
+﻿<UserControl
+	x:Class="Fab.Client.Authentication.LoginView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
+	xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:Layout="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+	xmlns:Controls="clr-namespace:Fab.Client.Shell.Controls"
+	xmlns:Icons="clr-namespace:Fab.Client.Resources.Icons"
+	mc:Ignorable="d"
+	d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}"
+	Height="364"
+	Width="619">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="*" />
+			<ColumnDefinition
+				Width="2*" />
+			<ColumnDefinition
+				Width="*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="Auto" />
+		</Grid.RowDefinitions>
+		<TextBlock
+			Grid.ColumnSpan="3"
+			Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login to your profile'}"
+			FontSize="21.333"
+			VerticalAlignment="Center"
+			HorizontalAlignment="Center"
+			Margin="10" />
+		<sdk:Label
+			Grid.Row="1"
+			Content="{Binding Path=LocalizedStrings.LoginView_Username, FallbackValue=Username}"
+			Target="{Binding ElementName=Username}"
+			VerticalAlignment="Center"
+			HorizontalContentAlignment="Right" />
+		<TextBox
+			x:Name="Username"
+			Grid.Row="1"
+			Grid.Column="1"
+			TabIndex="0"
+			MaxLength="50"
+			VerticalAlignment="Center"
+			Margin="10">
 			<Interactivity:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-				<Behaviors:FocusBehavior IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
+				<Behaviors:DefaultButtonBehavior
+					DefaultButton="{Binding ElementName=Login}" />
+				<Behaviors:FocusBehavior
+					IsFocused="{Binding UsernameIsFocused, Mode=TwoWay}" />
 				<Behaviors:SelectTextOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</TextBox>
-		<sdk:Label Content="{Binding Path=LocalizedStrings.LoginView_Password, FallbackValue=Password}"
-				   Target="{Binding ElementName=PasswordHiden}"
-				   Margin="5,10,5,2" />
-		<TextBox x:Name="Password"
-				 TabIndex="1"
-				 MaxLength="256"
-				 Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibility}, ElementName=ShowCharacters}">
+		<CheckBox
+			IsChecked="{Binding RememberMe, Mode=TwoWay}"
+			Grid.Row="1"
+			Grid.Column="2"
+			Content="{Binding Path=LocalizedStrings.LoginView_Remember_me, FallbackValue='Remember this name'}"
+			HorizontalAlignment="Left"
+			TabIndex="3"
+			VerticalAlignment="Center">
 			<Interactivity:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-				<Behaviors:FocusBehavior IsFocused="{Binding PasswordTextIsFocused, Mode=TwoWay}" />
+				<Behaviors:DefaultButtonBehavior
+					DefaultButton="{Binding ElementName=Login}" />
+			</Interactivity:Interaction.Behaviors>
+		</CheckBox>
+		<sdk:Label
+			Grid.Row="2"
+			Content="{Binding Path=LocalizedStrings.LoginView_Password, FallbackValue=Password}"
+			Target="{Binding ElementName=PasswordHiden}"
+			VerticalAlignment="Center"
+			HorizontalContentAlignment="Right" />
+		<TextBox
+			x:Name="Password"
+			Grid.Row="2"
+			Grid.Column="1"
+			TabIndex="1"
+			MaxLength="256"
+			Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibility}, ElementName=ShowCharacters}"
+			Margin="10"
+			VerticalAlignment="Center">
+			<Interactivity:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior
+					DefaultButton="{Binding ElementName=Login}" />
+				<Behaviors:FocusBehavior
+					IsFocused="{Binding PasswordTextIsFocused, Mode=TwoWay}" />
 				<Behaviors:SelectTextOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</TextBox>
-		<PasswordBox x:Name="PasswordHiden"
-					 TabIndex="1"
-					 Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibilityInvert}, ElementName=ShowCharacters}"
-					 MaxLength="256">
+		<PasswordBox
+			x:Name="PasswordHiden"
+			Grid.Row="2"
+			Grid.Column="1"
+			TabIndex="1"
+			Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibilityInvert}, ElementName=ShowCharacters}"
+			MaxLength="256"
+			VerticalAlignment="Center"
+			Margin="10">
 			<Interactivity:Interaction.Behaviors>
-				<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-				<Behaviors:FocusBehavior IsFocused="{Binding PasswordIsFocused, Mode=TwoWay}" />
-				<Authentication:PasswordBindBehavior BoundPassword="{Binding Password, Mode=TwoWay}" />
+				<Behaviors:DefaultButtonBehavior
+					DefaultButton="{Binding ElementName=Login}" />
+				<Behaviors:FocusBehavior
+					IsFocused="{Binding PasswordIsFocused, Mode=TwoWay}" />
+				<Authentication:PasswordBindBehavior
+					BoundPassword="{Binding Password, Mode=TwoWay}" />
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</Interactivity:Interaction.Behaviors>
 		</PasswordBox>
-		<Grid Margin="5,10,5,2">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition Width="*"
-								  MinWidth="20"/>
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<CheckBox x:Name="ShowCharacters"
-					  IsChecked="{Binding ShowCharacters, Mode=TwoWay}"
-					  Content="{Binding Path=LocalizedStrings.LoginView_Show_characters, FallbackValue='Show characters'}"
-					  HorizontalAlignment="Left"
-					  TabIndex="2"
-					  VerticalContentAlignment="Stretch">
-				<Interactivity:Interaction.Behaviors>
-					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-				</Interactivity:Interaction.Behaviors>
-			</CheckBox>
-			<CheckBox IsChecked="{Binding RememberMe, Mode=TwoWay}"
-					  Grid.Column="2"
-					  Content="{Binding Path=LocalizedStrings.LoginView_Remember_me, FallbackValue='Remember me'}"
-					  HorizontalAlignment="Right"
-					  TabIndex="3"
-					  VerticalContentAlignment="Stretch">
-				<Interactivity:Interaction.Behaviors>
-					<Behaviors:DefaultButtonBehavior DefaultButton="{Binding ElementName=Login}" />
-				</Interactivity:Interaction.Behaviors>
-			</CheckBox>
-		</Grid>
-		<TextBlock Text="{Binding Status}"
-				   Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}"
-				   Margin="5,10,5,0"
-				   MinHeight="24"
-				   MaxWidth="350"
-				   TextWrapping="Wrap"
-				   TextTrimming="WordEllipsis"
-				   HorizontalAlignment="Center" />
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-			<Button x:Name="Login"
+		<CheckBox
+			x:Name="ShowCharacters"
+			Grid.Row="2"
+			Grid.Column="2"
+			IsChecked="{Binding ShowCharacters, Mode=TwoWay}"
+			Content="{Binding Path=LocalizedStrings.LoginView_Show_characters, FallbackValue='Show characters'}"
+			HorizontalAlignment="Left"
+			TabIndex="2"
+			VerticalAlignment="Center">
+			<Interactivity:Interaction.Behaviors>
+				<Behaviors:DefaultButtonBehavior
+					DefaultButton="{Binding ElementName=Login}" />
+			</Interactivity:Interaction.Behaviors>
+		</CheckBox>
+		<sdk:Label
+			Grid.Row="3"
+			Content="{Binding Path=LocalizedStrings.LoginView_Language, FallbackValue='Choose language'}"
+			Target="{Binding ElementName=Cultures}"
+			VerticalAlignment="Center"
+			HorizontalContentAlignment="Right" />
+		<ComboBox
+			x:Name="Cultures"
+			Grid.Column="1"
+			Grid.Row="3"
+			SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
+			ItemTemplate="{StaticResource LanguageItem}"
+			VerticalAlignment="Center"
+			MaxHeight="40"
+			Margin="10" />
+		<Button
+			x:Name="Login"
+			Grid.Row="4"
+			Grid.Column="1"
+			Margin="10"
+			TabIndex="4"
+			HorizontalContentAlignment="Stretch"
+			VerticalAlignment="Center">
+			<Grid MinHeight="40">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Icons:SecuredIcon
+					MaxHeight="24"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Right"/>
+				<TextBlock
 					Grid.Column="1"
-					Content="{Binding Path=LocalizedStrings.LoginView_Login, FallbackValue='Login'}"
-					TabIndex="4" />
-			<Controls:Spinner Grid.Column="2"
-							  HorizontalAlignment="Left"
-							  Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
-		</Grid>
-	</StackPanel>
+					Text="{Binding Path=LocalizedStrings.LoginView_Login, FallbackValue='Login'}"
+					Margin="5,0"
+					FontSize="24"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center" />
+				<Controls:Spinner
+					Grid.Column="2"
+					HorizontalAlignment="Left"
+					Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}"
+					VerticalAlignment="Center" />
+			</Grid>
+		</Button>
+		<TextBlock
+			Grid.Row="5"
+			Grid.ColumnSpan="3"
+			Text="{Binding Status}"
+			Opacity="{Binding ShowStatus, Converter={StaticResource boolToOpacity}}"
+			Margin="10,30"
+			MinHeight="24"
+			MinWidth="100"
+			Foreground="Red"
+			TextWrapping="Wrap"
+			TextTrimming="WordEllipsis"
+			HorizontalAlignment="Center" />
+	</Grid>
 </UserControl>

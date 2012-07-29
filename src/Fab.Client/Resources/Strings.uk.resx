@@ -157,7 +157,7 @@
     <value>Редагувати</value>
   </data>
   <data name="LoginView_Language" xml:space="preserve">
-    <value>Мова</value>
+    <value>Виберіть мову</value>
   </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Вхід</value>
@@ -166,13 +166,13 @@
     <value>Пароль</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Запам'ятати ім'я</value>
+    <value>Запам'ятати моє ім'я</value>
   </data>
   <data name="LoginView_Show_characters" xml:space="preserve">
     <value>Показувати пароль</value>
   </data>
   <data name="LoginView_Title" xml:space="preserve">
-    <value>Вхід</value>
+    <value>Вхід у свій профіль</value>
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Ім'я користувача</value>
@@ -467,9 +467,6 @@
   </data>
   <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
     <value>Служба занадто зайнята. Будь ласка, спробуйте пізніше.</value>
-  </data>
-  <data name="LoginView_Authorization_In_Progress" xml:space="preserve">
-    <value>Перевірка пароля...</value>
   </data>
   <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
     <value>Реєстрація...</value>
