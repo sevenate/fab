@@ -206,7 +206,7 @@
 					Style="{StaticResource ButtonTextStyle}"
 					FontFamily="Portable User Interface"
 					HorizontalAlignment="Right"
-					Margin="5,0" />
+					Margin="10,0" />
 				<Controls:Spinner
 					Grid.Column="2"
 					Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
