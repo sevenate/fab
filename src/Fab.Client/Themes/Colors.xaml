@@ -1,27 +1,43 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<SolidColorBrush x:Key="PositiveBalanceBrush"
-					 Color="#00C000" />
-	<SolidColorBrush x:Key="NegativeBalanceBrush"
-					 Color="#C00000" />
-	<SolidColorBrush x:Key="NeutralBalanceBrush"
-					 Color="Black" />
-	<SolidColorBrush x:Key="IncomeBrush"
-					 Color="#00C000" />
-	<SolidColorBrush x:Key="ExpenceBrush"
-					 Color="#C00000" />
-	<SolidColorBrush x:Key="TransferBrush"
-					 Color="Black" />
-	<SolidColorBrush x:Key="DepositCategoryBrush"
-					 Color="#00C000" />
-	<SolidColorBrush x:Key="WithdrawalCategoryBrush"
-					 Color="#C00000" />
-	<SolidColorBrush x:Key="CommonCategoryBrush"
-					 Color="Black" />
-	<SolidColorBrush x:Key="StatusMessageTextBrush"
-					 Color="Gray" />
-	<SolidColorBrush x:Key="StatusMessagesCountBrush"
-					 Color="Black" />
-	<SolidColorBrush x:Key="CategoryTextColorBrush"
-					 Color="White" />
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<SolidColorBrush
+		x:Key="PositiveBalanceBrush"
+		Color="#00C000" />
+	<SolidColorBrush
+		x:Key="NegativeBalanceBrush"
+		Color="#C00000" />
+	<SolidColorBrush
+		x:Key="NeutralBalanceBrush"
+		Color="Black" />
+	<SolidColorBrush
+		x:Key="IncomeBrush"
+		Color="#00C000" />
+	<SolidColorBrush
+		x:Key="ExpenceBrush"
+		Color="#C00000" />
+	<SolidColorBrush
+		x:Key="TransferBrush"
+		Color="Black" />
+	<SolidColorBrush
+		x:Key="DepositCategoryBrush"
+		Color="#00C000" />
+	<SolidColorBrush
+		x:Key="WithdrawalCategoryBrush"
+		Color="#C00000" />
+	<SolidColorBrush
+		x:Key="CommonCategoryBrush"
+		Color="Black" />
+	<SolidColorBrush
+		x:Key="StatusMessageTextBrush"
+		Color="Gray" />
+	<SolidColorBrush
+		x:Key="StatusMessagesCountBrush"
+		Color="Black" />
+	<SolidColorBrush
+		x:Key="CategoryTextColorBrush"
+		Color="White" />
+	<SolidColorBrush
+		x:Key="AccentColorBrush"
+		Color="#CC119EDA" />
 </ResourceDictionary>

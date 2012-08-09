@@ -1311,7 +1311,13 @@
                         <Rectangle x:Name="fillColor" Fill="{StaticResource HighlightBrush}" IsHitTestVisible="False" Opacity="0" RadiusY="1" RadiusX="1"/>
                         <Rectangle x:Name="fillColor2" Fill="{StaticResource HighlightBrush}" IsHitTestVisible="False" Opacity="0" RadiusY="1" RadiusX="1"/>
                         <ContentControl x:Name="contentControl">
-                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="7"/>
+                            <ContentPresenter
+								x:Name="contentPresenter"
+								ContentTemplate="{TemplateBinding ContentTemplate}"
+								Content="{TemplateBinding Content}"
+								VerticalAlignment="Center"
+								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								Margin="7" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement" RadiusY="1" RadiusX="1" Stroke="{StaticResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed"/>
                     </Grid>
