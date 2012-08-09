@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Fab.Client.Framework.Controls.ValidationOKControl"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+			 xmlns:Icons="clr-namespace:Fab.Client.Resources.Icons"
+			 x:Name="validationControl" mc:Ignorable="d">
+	<Grid x:Name="LayoutRoot" Background="White">
+		<i:Interaction.Behaviors>
+			<ei:DataStateBehavior TrueState="OkState" FalseState="ErrorState"
+					Binding="{Binding ElementName=validationControl, Path=IsOk}" Value="true" />
+		</i:Interaction.Behaviors>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="Common">
+				<VisualState x:Name="OkState">
+					<Storyboard>
+						<ColorAnimation To="{Binding ElementName=validationControl, Path=OkStateColor}"
+										Duration="0:00:00.2" Storyboard.TargetName="icon"
+										Storyboard.TargetProperty="(UserControl.Foreground).(SolidColorBrush.Color)" />
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="ErrorState">
+					<Storyboard>
+						<ColorAnimation To="{StaticResource Gray13}"
+								Duration="0:00:00.2" Storyboard.TargetName="icon"
+								Storyboard.TargetProperty="(UserControl.Foreground).(SolidColorBrush.Color)" />
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<Icons:CheckIcon x:Name="icon" Foreground="{StaticResource GrayBrush13}" MaxWidth="24"
+				HorizontalAlignment="Left" />
+	</Grid>
+</UserControl>

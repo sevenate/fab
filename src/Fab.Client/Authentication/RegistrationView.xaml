@@ -9,6 +9,7 @@
 	xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 	xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
 	xmlns:Controls="clr-namespace:Fab.Client.Shell.Controls" xmlns:Icons="clr-namespace:Fab.Client.Resources.Icons"
+	xmlns:Controls1="clr-namespace:Fab.Client.Framework.Controls"
 	IsEnabled="{Binding IsBusy, Converter={StaticResource boolToNotBool}}"
 	mc:Ignorable="d"
 	d:DataContext="{d:DesignData Source=./SampleData/RegistrationData.xaml}">
@@ -65,7 +66,8 @@
 				</Grid>
 			</Button>
 		</Grid>
-		<Icons:CheckIcon x:Name="UsernameIsOk" Foreground="{StaticResource GrayBrush13}" Grid.Row="1" Grid.Column="2" MaxWidth="24" HorizontalAlignment="Left" />
+		<Controls1:ValidationOKControl IsOk="{Binding Path=UsernameIsOk}" Grid.Row="1" Grid.Column="3" MaxWidth="24"
+				HorizontalAlignment="Left" />
 		<sdk:Label
 			Grid.Row="2"
 			Grid.Column="0"
@@ -91,7 +93,8 @@
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</PasswordBox>
-		<Icons:CheckIcon x:Name="PasswordIsOk" Foreground="{StaticResource GrayBrush13}" Grid.Row="2" Grid.Column="2" MaxWidth="24" HorizontalAlignment="Left" />
+		<Controls1:ValidationOKControl IsOk="{Binding Path=PasswordIsOk}" Grid.Row="2" Grid.Column="2" MaxWidth="24"
+				HorizontalAlignment="Left" />
 		<sdk:Label
 			Grid.Row="3"
 			Grid.Column="0"
@@ -117,7 +120,6 @@
 				<Behaviors:SelectPasswordOnFocusBehavior />
 			</i:Interaction.Behaviors>
 		</PasswordBox>
-		<Icons:CheckIcon x:Name="Password2IsOk" Foreground="{StaticResource GrayBrush13}" Grid.Row="3" Grid.Column="2" MaxWidth="24" HorizontalAlignment="Left" />
 		<Grid Grid.Row="4"
 			  Grid.Column="1"
 			  HorizontalAlignment="Center">
@@ -147,7 +149,10 @@ FontSize="{StaticResource ControlTitleFontSize}"
 				</i:Interaction.Behaviors>
 			</HyperlinkButton>
 		</Grid>
-		<Icons:CheckIcon x:Name="TermsOk" Foreground="{StaticResource GrayBrush13}" Grid.Row="4" Grid.Column="2" MaxWidth="24" HorizontalAlignment="Left" />
+		<Controls1:ValidationOKControl IsOk="{Binding Path=Password2IsOk}" Grid.Row="3" Grid.Column="2" MaxWidth="24"
+				HorizontalAlignment="Left" />
+		<Controls1:ValidationOKControl IsOk="{Binding Path=AgreeToTerms}" Grid.Row="4" Grid.Column="2" MaxWidth="24"
+				HorizontalAlignment="Left" />
 		<Button x:Name="Register" Grid.Row="5" Grid.Column="1" Margin="10" TabIndex="5"
 				HorizontalContentAlignment="Stretch">
 			<Grid>
@@ -160,7 +165,7 @@ FontSize="{StaticResource ControlTitleFontSize}"
 				<TextBlock Grid.Column="1"
 						Text="{Binding Path=LocalizedStrings.RegistrationView_Register, FallbackValue='Sign up'}"
 						Style="{StaticResource ButtonTextStyle}" FontFamily="Portable User Interface"
-						HorizontalAlignment="Right" Margin="5,0" />
+						HorizontalAlignment="Right" Margin="10,0" />
 				<Controls:Spinner Grid.Column="2"
 						Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
 			</Grid>

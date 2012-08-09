@@ -91,6 +91,7 @@ namespace Fab.Client.Authentication
 			{
 				username = value;
 				NotifyOfPropertyChange(() => Username);
+				NotifyOfPropertyChange(() => UsernameIsOk);
 			}
 		}
 
@@ -113,6 +114,8 @@ namespace Fab.Client.Authentication
 			{
 				password = value;
 				NotifyOfPropertyChange(() => Password);
+				NotifyOfPropertyChange(() => PasswordIsOk);
+				NotifyOfPropertyChange(() => Password2IsOk);
 			}
 		}
 
@@ -135,6 +138,8 @@ namespace Fab.Client.Authentication
 			{
 				passwordConfirmation = value;
 				NotifyOfPropertyChange(() => PasswordConfirmation);
+				NotifyOfPropertyChange(() => PasswordIsOk);
+				NotifyOfPropertyChange(() => Password2IsOk);
 			}
 		}
 
