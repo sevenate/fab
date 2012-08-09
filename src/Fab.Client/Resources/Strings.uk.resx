@@ -166,7 +166,7 @@
     <value>Пароль</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Запам'ятати моє ім'я</value>
+    <value>Запам'ятати ім'я</value>
   </data>
   <data name="LoginView_Show_characters" xml:space="preserve">
     <value>Показувати пароль</value>
@@ -244,7 +244,7 @@
     <value>Зареєструватися</value>
   </data>
   <data name="RegistrationView_Title" xml:space="preserve">
-    <value>Реєстрація</value>
+    <value>Реєстрація в nReez</value>
   </data>
   <data name="RegistrationView_Username" xml:space="preserve">
     <value>Ім'я користувача</value>
@@ -304,10 +304,10 @@
     <value>Транзакцій:</value>
   </data>
   <data name="StartView_back_to_Login" xml:space="preserve">
-    <value>« Вход</value>
+    <value>Вход</value>
   </data>
   <data name="StartView_or_Sign_up" xml:space="preserve">
-    <value>Реєстрація »</value>
+    <value>Реєстрація</value>
   </data>
   <data name="SearchDashBoardView_Name_Empty" xml:space="preserve">
     <value>Пошук</value>
@@ -488,5 +488,8 @@
   </data>
   <data name="TermsView_Title" xml:space="preserve">
     <value>Угода користувача</value>
+  </data>
+  <data name="RegistrationView_Generate" xml:space="preserve">
+    <value>Згенерувати</value>
   </data>
 </root>

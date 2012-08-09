@@ -2,7 +2,6 @@
 					  Username="Jim"
 					  Password=""
 					  Status="The username or password provided is incorrect."
-					  ShowStatus="True"
 					  ShowCharacters="True"
 					  RememberMe="True"
 					  UsernameIsFocused="True"

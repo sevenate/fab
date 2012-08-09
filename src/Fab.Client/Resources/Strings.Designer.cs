@@ -304,7 +304,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remember my name.
+        ///   Looks up a localized string similar to Remember name.
         /// </summary>
         public static string LoginView_Remember_me {
             get {
@@ -493,7 +493,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign out.
+        ///   Looks up a localized string similar to Logout.
         /// </summary>
         public static string PersonalCornerView_Sign_out {
             get {
@@ -718,6 +718,15 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate.
+        /// </summary>
+        public static string RegistrationView_Generate {
+            get {
+                return ResourceManager.GetString("RegistrationView_Generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string RegistrationView_Password {
@@ -754,7 +763,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign up.
+        ///   Looks up a localized string similar to Sign up for nReez.
         /// </summary>
         public static string RegistrationView_Title {
             get {
@@ -1006,7 +1015,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to « Login.
+        ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string StartView_back_to_Login {
             get {
@@ -1015,7 +1024,7 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign up ».
+        ///   Looks up a localized string similar to Sign up.
         /// </summary>
         public static string StartView_or_Sign_up {
             get {

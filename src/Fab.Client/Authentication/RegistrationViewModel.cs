@@ -258,7 +258,6 @@ namespace Fab.Client.Authentication
 		[Dependencies("Username", "Password", "PasswordConfirmation", "AgreeToTerms")]
 		public IEnumerable<IResult> Register()
 		{
-			Status = Resources.Strings.RegistrationView_Registration_In_Progress;
 			ShowStatus = true;
 
 			var registerationResult = new RegisterationResult(Username, Password);
@@ -284,13 +283,37 @@ namespace Fab.Client.Authentication
 		public bool CanRegister()
 		{
 			return AgreeToTerms
-				   && !string.IsNullOrWhiteSpace(Username)
-				   && !string.IsNullOrWhiteSpace(Password)
-				   && !string.IsNullOrWhiteSpace(PasswordConfirmation)
-				   && Username.Length >= MinimumUsernameLength
-				   && Password.Length >= MinimumPasswordLength
-				   && PasswordConfirmation.Length >= MinimumPasswordLength
-				   && Password == PasswordConfirmation;
+				   && UsernameIsOk
+				   && PasswordIsOk
+				   && Password2IsOk;
+		}
+
+		public bool UsernameIsOk
+		{
+			get
+			{
+				return !string.IsNullOrWhiteSpace(Username)
+					&& Username.Length >= MinimumUsernameLength;
+			}
+		}
+
+		public bool PasswordIsOk
+		{
+			get
+			{
+				return !string.IsNullOrWhiteSpace(Password)
+				       && Password.Length >= MinimumPasswordLength;
+			}
+		}
+
+		public bool Password2IsOk
+		{
+			get
+			{
+				return !string.IsNullOrWhiteSpace(PasswordConfirmation)
+					&& PasswordConfirmation.Length >= MinimumPasswordLength
+					&& Password == PasswordConfirmation;
+			}
 		}
 
 		/// <summary>

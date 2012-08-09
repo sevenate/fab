@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO.IsolatedStorage;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
+using Fab.Client.Framework.Results;
 using Fab.Client.Localization;
 using Fab.Core.Framework;
 using Fab.Client.Resources;
@@ -348,6 +349,11 @@ namespace Fab.Client.Authentication
 		}
 
 		#endregion
+
+		public void GoToRegistration()
+		{
+			EventAggregator.Publish(new NavigateToRegistrationScreenMessage());
+		}
 
 		/// <summary>
 		/// Authorize the user with specified credentials.
