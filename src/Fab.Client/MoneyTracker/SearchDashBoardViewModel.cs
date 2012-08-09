@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Windows.Controls;
 using System.Windows.Data;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
@@ -18,6 +19,7 @@ using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Postings;
 using Fab.Client.MoneyTracker.Postings.Transactions;
 using Fab.Client.MoneyTracker.Postings.Transfers;
+using Fab.Client.Resources.Icons;
 
 namespace Fab.Client.MoneyTracker
 {
@@ -60,6 +62,8 @@ namespace Fab.Client.MoneyTracker
 		public SearchDashBoardViewModel(TransactionViewModel transactionDetails, TransferViewModel transferDetails)
 			: base(transactionDetails, transferDetails)
 		{
+			Icon = new MagnifyIcon();
+
 			TransactionRecords.CollectionChanged += (sender, args) => NotifyOfPropertyChange(() => Name);
 			Translator.CultureChanged += delegate
 			{
@@ -94,6 +98,14 @@ namespace Fab.Client.MoneyTracker
 						? string.Format(Resources.Strings.SearchDashBoardView_Name_Results, TransactionRecords.Count)
 				       	: Resources.Strings.SearchDashBoardView_Name_Empty;
 			}
+		}
+
+		private Control icon;
+
+		public Control Icon
+		{
+			get { return icon; }
+			private set { icon = value; }
 		}
 
 		/// <summary>

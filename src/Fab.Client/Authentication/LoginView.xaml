@@ -8,49 +8,73 @@
 	xmlns:Behaviors="clr-namespace:Fab.Client.Framework.Behaviors"
 	xmlns:Authentication="clr-namespace:Fab.Client.Authentication"
 	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-	xmlns:Layout="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
 	xmlns:Controls="clr-namespace:Fab.Client.Shell.Controls"
 	xmlns:Icons="clr-namespace:Fab.Client.Resources.Icons"
 	mc:Ignorable="d"
-	d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}"
-	Height="364"
-	Width="619">
+	d:DataContext="{d:DesignData Source=./SampleData/LoginData.xaml}">
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition
-				Width="*" />
-			<ColumnDefinition
-				Width="2*" />
-			<ColumnDefinition
-				Width="*" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="250" />
+			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition
-				Height="Auto" />
-			<RowDefinition
-				Height="Auto" />
-			<RowDefinition
-				Height="Auto" />
-			<RowDefinition
-				Height="Auto" />
-			<RowDefinition
-				Height="Auto" />
-			<RowDefinition
-				Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<TextBlock
-			Grid.ColumnSpan="3"
-			Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login to your profile'}"
-			FontSize="21.333"
-			VerticalAlignment="Center"
-			HorizontalAlignment="Center"
-			Margin="10" />
+		<TextBlock Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="10"
+				Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login to your profile'}"
+				FontSize="{StaticResource NavigationFontSize}" VerticalAlignment="Center"
+				FontFamily="Portable User Interface" Foreground="{StaticResource AccentColorBrush}" TextWrapping="Wrap"></TextBlock>
+<!--		<HyperlinkButton-->
+<!--			x:Name="GoToRegistration"-->
+<!--			Grid.Column="4"-->
+<!--			HorizontalAlignment="Center"-->
+<!--			VerticalAlignment="Center"-->
+<!--			Foreground="{StaticResource AccentColorBrush}"-->
+<!--			FontSize="{StaticResource ControlTitleFontSize}"-->
+<!--			TabIndex="6">-->
+<!--			<Grid-->
+<!--				VerticalAlignment="Center">-->
+<!--				<Interactivity:Interaction.Triggers>-->
+<!--					<Interactivity:EventTrigger-->
+<!--						EventName="Click">-->
+<!--						<ei:ControlStoryboardAction-->
+<!--							Storyboard="{StaticResource GoToRegisterStoryboard}" />-->
+<!--					</Interactivity:EventTrigger>-->
+<!--				</Interactivity:Interaction.Triggers>-->
+<!--				<Grid.ColumnDefinitions>-->
+<!--					<ColumnDefinition-->
+<!--						Width="Auto" />-->
+<!--					<ColumnDefinition-->
+<!--						Width="Auto" />-->
+<!--				</Grid.ColumnDefinitions>-->
+<!--				<TextBlock-->
+<!--					Foreground="{StaticResource AccentColorBrush}"-->
+<!--					FontSize="{StaticResource ControlTitleFontSize}"-->
+<!--					VerticalAlignment="Center"-->
+<!--					Margin="5,0"-->
+<!--					Text="{Binding Path=LocalizedStrings.StartView_or_Sign_up, FallbackValue='Sign up'}"-->
+<!--					FontFamily="Portable User Interface" />-->
+<!--				<Icons:ArrowRightIcon-->
+<!--					Grid.Column="1"-->
+<!--					Width="20"-->
+<!--					Height="20"-->
+<!--					FontFamily="Portable User Interface" />-->
+<!--			</Grid>-->
+<!--		</HyperlinkButton>-->
 		<sdk:Label
 			Grid.Row="1"
+			Grid.Column="0"
 			Content="{Binding Path=LocalizedStrings.LoginView_Username, FallbackValue=Username}"
 			Target="{Binding ElementName=Username}"
 			VerticalAlignment="Center"
-			HorizontalContentAlignment="Right" />
+			HorizontalContentAlignment="Right"
+			FontSize="{StaticResource ControlTitleFontSize}" />
 		<TextBox
 			x:Name="Username"
 			Grid.Row="1"
@@ -58,7 +82,8 @@
 			TabIndex="0"
 			MaxLength="50"
 			VerticalAlignment="Center"
-			Margin="10">
+			Margin="10"
+			FontSize="{StaticResource ControlTitleFontSize}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior
 					DefaultButton="{Binding ElementName=Login}" />
@@ -71,21 +96,24 @@
 			IsChecked="{Binding RememberMe, Mode=TwoWay}"
 			Grid.Row="1"
 			Grid.Column="2"
-			Content="{Binding Path=LocalizedStrings.LoginView_Remember_me, FallbackValue='Remember this name'}"
+			Content="{Binding Path=LocalizedStrings.LoginView_Remember_me, FallbackValue='Remember name'}"
 			HorizontalAlignment="Left"
-			TabIndex="3"
-			VerticalAlignment="Center">
+			TabIndex="4"
+			VerticalAlignment="Center"
+			FontSize="{StaticResource ControlTitleFontSize}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior
 					DefaultButton="{Binding ElementName=Login}" />
 			</Interactivity:Interaction.Behaviors>
 		</CheckBox>
 		<sdk:Label
+			Grid.Column="0"
 			Grid.Row="2"
 			Content="{Binding Path=LocalizedStrings.LoginView_Password, FallbackValue=Password}"
 			Target="{Binding ElementName=PasswordHiden}"
 			VerticalAlignment="Center"
-			HorizontalContentAlignment="Right" />
+			HorizontalContentAlignment="Right"
+			FontSize="16" />
 		<TextBox
 			x:Name="Password"
 			Grid.Row="2"
@@ -94,7 +122,8 @@
 			MaxLength="256"
 			Visibility="{Binding IsChecked, Converter={StaticResource boolToVisibility}, ElementName=ShowCharacters}"
 			Margin="10"
-			VerticalAlignment="Center">
+			VerticalAlignment="Center"
+			FontSize="16">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior
 					DefaultButton="{Binding ElementName=Login}" />
@@ -129,8 +158,9 @@
 			IsChecked="{Binding ShowCharacters, Mode=TwoWay}"
 			Content="{Binding Path=LocalizedStrings.LoginView_Show_characters, FallbackValue='Show characters'}"
 			HorizontalAlignment="Left"
-			TabIndex="2"
-			VerticalAlignment="Center">
+			TabIndex="5"
+			VerticalAlignment="Center"
+			FontSize="{StaticResource ControlTitleFontSize}">
 			<Interactivity:Interaction.Behaviors>
 				<Behaviors:DefaultButtonBehavior
 					DefaultButton="{Binding ElementName=Login}" />
@@ -138,39 +168,45 @@
 		</CheckBox>
 		<sdk:Label
 			Grid.Row="3"
+			Grid.Column="0"
 			Content="{Binding Path=LocalizedStrings.LoginView_Language, FallbackValue='Choose language'}"
 			Target="{Binding ElementName=Cultures}"
 			VerticalAlignment="Center"
-			HorizontalContentAlignment="Right" />
+			HorizontalContentAlignment="Right"
+			FontSize="{StaticResource ControlTitleFontSize}" />
 		<ComboBox
 			x:Name="Cultures"
-			Grid.Column="1"
 			Grid.Row="3"
+			Grid.Column="1"
 			SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
 			ItemTemplate="{StaticResource LanguageItem}"
 			VerticalAlignment="Center"
-			MaxHeight="40"
-			Margin="10" />
+			Margin="10"
+			FontFamily="Portable User Interface"
+			TabIndex="2" />
 		<Button
 			x:Name="Login"
 			Grid.Row="4"
 			Grid.Column="1"
 			Margin="10"
-			TabIndex="4"
-			HorizontalContentAlignment="Stretch"
-			VerticalAlignment="Center">
+			TabIndex="3"
+			HorizontalContentAlignment="Stretch">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
-					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition
+						Width="Auto" />
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
-				<Icons:SecuredIcon
+				<Icons:LoginIcon
 					Style="{StaticResource IconStyle}" />
 				<TextBlock
 					Grid.Column="1"
 					Text="{Binding Path=LocalizedStrings.LoginView_Login, FallbackValue='Login'}"
-					Style="{StaticResource ButtonTextStyle}" />
+					Style="{StaticResource ButtonTextStyle}"
+					FontFamily="Portable User Interface"
+					HorizontalAlignment="Right"
+					Margin="5,0" />
 				<Controls:Spinner
 					Grid.Column="2"
 					Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />

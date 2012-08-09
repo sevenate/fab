@@ -40,13 +40,20 @@ namespace Fab.Metro
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            //var sampleDataGroups = SampleDataSource.GetGroups("AllGroups");
+            var sampleDataGroups = SampleDataSource.GetGroups("AllGroups");
 
-            var sampleDataGroups = new List<SampleDataGroup>();
+//            var sampleDataGroups = new List<SampleDataGroup>();
 
-            foreach (var accountDto in (AccountDTO[])navigationParameter)
+            for (int index = 0; index < /*((AccountDTO[]) navigationParameter).Length*/ sampleDataGroups.Count(); index++)
             {
-                sampleDataGroups.Add(new SampleDataGroup(accountDto.Id.ToString(), accountDto.Name, accountDto.Balance.ToString(), string.Empty, accountDto.PostingsCount.ToString()));
+                var accountDto = ((AccountDTO[]) navigationParameter)[index];
+                
+//                new SampleDataGroup(accountDto.Id.ToString(), accountDto.Name,
+//                                                         accountDto.Balance.ToString(), string.Empty,
+//                                                         accountDto.PostingsCount.ToString());
+                sampleDataGroups.ElementAt(index).UniqueId = accountDto.Id.ToString();
+                sampleDataGroups.ElementAt(index).Title = accountDto.Name.ToString();
+                sampleDataGroups.ElementAt(index).Subtitle= accountDto.Balance.ToString();
             }
 
             DefaultViewModel["Groups"] = sampleDataGroups;

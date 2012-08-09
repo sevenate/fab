@@ -166,7 +166,7 @@
     <value>Password</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Remember my name</value>
+    <value>Remember name</value>
   </data>
   <data name="LoginView_Show_characters" xml:space="preserve">
     <value>Show password</value>
@@ -214,7 +214,7 @@
     <value>Type</value>
   </data>
   <data name="PersonalCornerView_Sign_out" xml:space="preserve">
-    <value>Sign out</value>
+    <value>Logout</value>
   </data>
   <data name="PostingActionsView_NewExpense" xml:space="preserve">
     <value>Expense</value>
@@ -244,7 +244,7 @@
     <value>Sign up</value>
   </data>
   <data name="RegistrationView_Title" xml:space="preserve">
-    <value>Sign up</value>
+    <value>Sign up for nReez</value>
   </data>
   <data name="RegistrationView_Username" xml:space="preserve">
     <value>Username</value>
@@ -304,10 +304,10 @@
     <value>Postings:</value>
   </data>
   <data name="StartView_back_to_Login" xml:space="preserve">
-    <value>« Login</value>
+    <value>Login</value>
   </data>
   <data name="StartView_or_Sign_up" xml:space="preserve">
-    <value>Sign up »</value>
+    <value>Sign up</value>
   </data>
   <data name="SearchDashBoardView_Name_Empty" xml:space="preserve">
     <value>Search</value>
@@ -488,5 +488,8 @@
   </data>
   <data name="TermsView_Title" xml:space="preserve">
     <value>Terms of Use</value>
+  </data>
+  <data name="RegistrationView_Generate" xml:space="preserve">
+    <value>Generate</value>
   </data>
 </root>
