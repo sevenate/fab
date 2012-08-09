@@ -15,8 +15,10 @@
             RenderTransformOrigin="0.5,0.5">
             <Path.RenderTransform>
                 <CompositeTransform
-                    TranslateX="0.5"
-                    TranslateY="0.5" />
+					ScaleX="0.75"
+					ScaleY="0.75"
+                    TranslateX="-8"
+                    TranslateY="18" />
             </Path.RenderTransform>
         </Path>
         <Path
@@ -26,8 +28,10 @@
             RenderTransformOrigin="0.5,0.5">
             <Path.RenderTransform>
                 <CompositeTransform
-                    TranslateX="0.5"
-                    TranslateY="0.5" />
+					ScaleX="0.75"
+					ScaleY="0.75"
+                    TranslateX="8"
+                    TranslateY="-18" />
             </Path.RenderTransform>
         </Path>
     </Grid>

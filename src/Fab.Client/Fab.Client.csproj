@@ -151,6 +151,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authentication\NavigateToRegistrationScreenMessage.cs" />
     <Compile Include="Authentication\TermsViewModel.cs" />
     <Compile Include="Authentication\LoggedInMessage.cs" />
     <Compile Include="Authentication\LoggedOutMessage.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Authentication\UserCredentials.cs" />
     <Compile Include="Framework\Behaviors\SelectPasswordOnFocusBehavior.cs" />
     <Compile Include="Framework\Behaviors\SelectTextOnFocusBehavior.cs" />
+    <Compile Include="Framework\Controls\ThicknessAnimation.cs" />
     <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
     <Compile Include="Framework\Converters\CultureToFlagImagePathConverter.cs" />
@@ -196,6 +198,9 @@
     <Compile Include="Resources\Icons\AddIcon.xaml.cs">
       <DependentUpon>AddIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Icons\AddUserIcon.xaml.cs">
+      <DependentUpon>AddUserIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Icons\AlertIcon.xaml.cs">
       <DependentUpon>AlertIcon.xaml</DependentUpon>
     </Compile>
@@ -207,6 +212,18 @@
     </Compile>
     <Compile Include="Resources\Icons\ArrowsLeftRightIcon.xaml.cs">
       <DependentUpon>ArrowsLeftRightIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\KeyIcon.xaml.cs">
+      <DependentUpon>KeyIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\LogoutIcon.xaml.cs">
+      <DependentUpon>LogoutIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\LoginIcon.xaml.cs">
+      <DependentUpon>LoginIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\AsterixIcon.xaml.cs">
+      <DependentUpon>AsterixIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Icons\CancelIcon.xaml.cs">
       <DependentUpon>CancelIcon.xaml</DependentUpon>
@@ -253,6 +270,9 @@
     <Compile Include="Resources\Icons\SettingsIcon.xaml.cs">
       <DependentUpon>SettingsIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Icons\SignUpIcon.xaml.cs">
+      <DependentUpon>SignUpIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Icons\WarningCircleIcon.xaml.cs">
       <DependentUpon>WarningCircleIcon.xaml</DependentUpon>
     </Compile>
@@ -276,6 +296,9 @@
     </Compile>
     <Compile Include="Shell\ApplicationErrorMessage.cs" />
     <Compile Include="Shell\ErrorDialogViewModel.cs" />
+    <Compile Include="Shell\ModuleHeaderView.xaml.cs">
+      <DependentUpon>ModuleHeaderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\ServiceErrorMessage.cs" />
     <Compile Include="Framework\Converters\NullToQuestionMarkConverter.cs" />
     <Compile Include="Framework\OpenConfirmationResult.cs" />
@@ -482,6 +505,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Icons\AddUserIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Icons\AlertIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -495,6 +522,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Icons\ArrowsLeftRightIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\KeyIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\LogoutIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\LoginIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\AsterixIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -562,6 +605,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Icons\SignUpIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Icons\WarningCircleIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -596,6 +643,10 @@
     <Page Include="Shell\MessageBoxView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\ModuleHeaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Shell\ShellView.xaml">
       <SubType>Designer</SubType>
