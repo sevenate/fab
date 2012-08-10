@@ -162,8 +162,8 @@
     <Compile Include="Framework\Behaviors\SelectPasswordOnFocusBehavior.cs" />
     <Compile Include="Framework\Behaviors\SelectTextOnFocusBehavior.cs" />
     <Compile Include="Framework\Controls\ThicknessAnimation.cs" />
-    <Compile Include="Framework\Controls\ValidationOKControl.xaml.cs">
-      <DependentUpon>ValidationOKControl.xaml</DependentUpon>
+    <Compile Include="Framework\Controls\ValidationOkControl.xaml.cs">
+      <DependentUpon>ValidationOkControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
@@ -431,7 +431,7 @@
     <DesignData Include="Authentication\SampleData\RegistrationData.xaml">
       <SubType>Designer</SubType>
     </DesignData>
-    <Page Include="Framework\Controls\ValidationOKControl.xaml">
+    <Page Include="Framework\Controls\ValidationOkControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -74,7 +74,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Username DP
+		#region Username
 
 		/// <summary>
 		/// User name.
@@ -97,7 +97,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Password DP
+		#region Password
 
 		/// <summary>
 		/// User password.
@@ -121,7 +121,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Password confirmation DP
+		#region Password confirmation
 
 		/// <summary>
 		/// User password confirmation.
@@ -145,7 +145,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Status DP
+		#region Status
 
 		/// <summary>
 		/// Status message.
@@ -167,7 +167,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Show status DP
+		#region Show status
 
 		/// <summary>
 		/// Specify if status message should be visible.
@@ -187,7 +187,9 @@ namespace Fab.Client.Authentication
 			}
 		}
 
-		#region Agree to terms DP
+		#endregion
+
+		#region Agree to terms
 
 		/// <summary>
 		/// Specify if user is "agree to terms"
@@ -209,9 +211,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#endregion
-
-		#region Username is focused DP
+		#region Username is focused
 
 		/// <summary>
 		/// Specify whether a <see cref="Username"/> field is focused.

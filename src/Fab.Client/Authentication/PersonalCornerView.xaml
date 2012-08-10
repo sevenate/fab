@@ -23,12 +23,6 @@
 							   Foreground="{StaticResource GrayBrush2}"
 							   Margin="5,0"
 							   FontSize="12" />
-					<TextBlock x:Name="Version"
-							   ToolTipService.ToolTip="{Binding Path=LocalizedStrings.PersonalCornerView_Client_Version, FallbackValue='Client version'}"
-							   TextWrapping="Wrap"
-							   HorizontalAlignment="Right"
-							   VerticalAlignment="Center"
-							   Foreground="{StaticResource GrayBrush4}" />
 				</StackPanel>
 			</Button.Content>
 		</Button>

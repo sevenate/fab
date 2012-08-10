@@ -29,18 +29,6 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Properties
-
-		/// <summary>
-		/// Gets current application version.
-		/// </summary>
-		public string Version
-		{
-			get { return AssemblyExtensions.AppVersion; }
-		}
-
-		#endregion
-
 		#region Username DP
 
 		/// <summary>
