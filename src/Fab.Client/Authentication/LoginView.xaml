@@ -15,7 +15,7 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
-			<ColumnDefinition Width="250" />
+			<ColumnDefinition MinWidth="100" MaxWidth="250" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -26,54 +26,16 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<TextBlock Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="10"
+		<TextBlock Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="10,20"
 				Text="{Binding Path=LocalizedStrings.LoginView_Title, FallbackValue='Login to your profile'}"
 				FontSize="{StaticResource NavigationFontSize}" VerticalAlignment="Center"
 				FontFamily="Portable User Interface" Foreground="{StaticResource AccentColorBrush}" TextWrapping="Wrap"></TextBlock>
-<!--		<HyperlinkButton-->
-<!--			x:Name="GoToRegistration"-->
-<!--			Grid.Column="4"-->
-<!--			HorizontalAlignment="Center"-->
-<!--			VerticalAlignment="Center"-->
-<!--			Foreground="{StaticResource AccentColorBrush}"-->
-<!--			FontSize="{StaticResource ControlTitleFontSize}"-->
-<!--			TabIndex="6">-->
-<!--			<Grid-->
-<!--				VerticalAlignment="Center">-->
-<!--				<Interactivity:Interaction.Triggers>-->
-<!--					<Interactivity:EventTrigger-->
-<!--						EventName="Click">-->
-<!--						<ei:ControlStoryboardAction-->
-<!--							Storyboard="{StaticResource GoToRegisterStoryboard}" />-->
-<!--					</Interactivity:EventTrigger>-->
-<!--				</Interactivity:Interaction.Triggers>-->
-<!--				<Grid.ColumnDefinitions>-->
-<!--					<ColumnDefinition-->
-<!--						Width="Auto" />-->
-<!--					<ColumnDefinition-->
-<!--						Width="Auto" />-->
-<!--				</Grid.ColumnDefinitions>-->
-<!--				<TextBlock-->
-<!--					Foreground="{StaticResource AccentColorBrush}"-->
-<!--					FontSize="{StaticResource ControlTitleFontSize}"-->
-<!--					VerticalAlignment="Center"-->
-<!--					Margin="5,0"-->
-<!--					Text="{Binding Path=LocalizedStrings.StartView_or_Sign_up, FallbackValue='Sign up'}"-->
-<!--					FontFamily="Portable User Interface" />-->
-<!--				<Icons:ArrowRightIcon-->
-<!--					Grid.Column="1"-->
-<!--					Width="20"-->
-<!--					Height="20"-->
-<!--					FontFamily="Portable User Interface" />-->
-<!--			</Grid>-->
-<!--		</HyperlinkButton>-->
-		<sdk:Label
+		<TextBlock
 			Grid.Row="1"
 			Grid.Column="0"
-			Content="{Binding Path=LocalizedStrings.LoginView_Username, FallbackValue=Username}"
-			Target="{Binding ElementName=Username}"
+			Text="{Binding Path=LocalizedStrings.LoginView_Username, FallbackValue=Username}"
 			VerticalAlignment="Center"
-			HorizontalContentAlignment="Right"
+			HorizontalAlignment="Right"
 			FontSize="{StaticResource ControlTitleFontSize}" />
 		<TextBox
 			x:Name="Username"
@@ -106,13 +68,12 @@
 					DefaultButton="{Binding ElementName=Login}" />
 			</Interactivity:Interaction.Behaviors>
 		</CheckBox>
-		<sdk:Label
+		<TextBlock
 			Grid.Column="0"
 			Grid.Row="2"
-			Content="{Binding Path=LocalizedStrings.LoginView_Password, FallbackValue=Password}"
-			Target="{Binding ElementName=PasswordHiden}"
+			Text="{Binding Path=LocalizedStrings.LoginView_Password, FallbackValue=Password}"
 			VerticalAlignment="Center"
-			HorizontalContentAlignment="Right"
+			HorizontalAlignment="Right"
 			FontSize="16" />
 		<TextBox
 			x:Name="Password"
@@ -166,13 +127,12 @@
 					DefaultButton="{Binding ElementName=Login}" />
 			</Interactivity:Interaction.Behaviors>
 		</CheckBox>
-		<sdk:Label
+		<TextBlock
 			Grid.Row="3"
 			Grid.Column="0"
-			Content="{Binding Path=LocalizedStrings.LoginView_Language, FallbackValue='Choose language'}"
-			Target="{Binding ElementName=Cultures}"
+			Text="{Binding Path=LocalizedStrings.LoginView_Language, FallbackValue='Choose language'}"
 			VerticalAlignment="Center"
-			HorizontalContentAlignment="Right"
+			HorizontalAlignment="Right"
 			FontSize="{StaticResource ControlTitleFontSize}" />
 		<ComboBox
 			x:Name="Cultures"
@@ -188,8 +148,9 @@
 			x:Name="Login"
 			Grid.Row="4"
 			Grid.Column="1"
-			Margin="10"
+			Margin="10,20"
 			TabIndex="3"
+			HorizontalAlignment="Center"
 			HorizontalContentAlignment="Stretch">
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -209,7 +170,7 @@
 					Margin="10,0" />
 				<Controls:Spinner
 					Grid.Column="2"
-					Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
+					Opacity="{Binding Path=IsBusy, Converter={StaticResource boolToOpacity}}" />
 			</Grid>
 		</Button>
 		<TextBlock

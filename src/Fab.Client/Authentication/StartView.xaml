@@ -188,75 +188,67 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
-			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Grid x:Name="grid" Grid.Column="1" HorizontalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition Height="Auto" />
-				<RowDefinition />
-			</Grid.RowDefinitions>
+		<Grid x:Name="grid" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+				RenderTransformOrigin="0.5,0.5">
 			<Grid.RenderTransform>
-				<CompositeTransform
-					TranslateX="0" />
+				<CompositeTransform TranslateX="0" />
 			</Grid.RenderTransform>
-			<ContentControl x:Name="LoginForm" Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"
-					VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-			<ContentControl x:Name="RegistrationForm" Grid.Column="1" Grid.Row="1" Opacity="0" VerticalContentAlignment="Center"
-					HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-			<HyperlinkButton x:Name="GoToLogin" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"
-							 VerticalAlignment="Top" Foreground="{StaticResource AccentColorBrush}"
-							 FontSize="{StaticResource ControlTitleFontSize}" TabIndex="7"
-							 Opacity="0" IsEnabled="False" >
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Click">
-						<ei:ControlStoryboardAction Storyboard="{StaticResource GoToLoginStoryboard}" />
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<Grid VerticalAlignment="Center">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Icons:ArrowLeftIcon Width="20" Height="20" FontFamily="Portable User Interface" />
-					<TextBlock Grid.Column="1" Foreground="{StaticResource AccentColorBrush}"
-							FontSize="{StaticResource ControlTitleFontSize}" VerticalAlignment="Center" Margin="5,0"
-							Text="{Binding Path=LocalizedStrings.StartView_back_to_Login, FallbackValue='Login'}"
-							FontFamily="Portable User Interface" />
-				</Grid>
-			</HyperlinkButton>
-			<HyperlinkButton x:Name="GoToRegistration" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"
-					VerticalAlignment="Top" Foreground="{StaticResource AccentColorBrush}"
-					FontSize="{StaticResource ControlTitleFontSize}" TabIndex="6">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Click">
-						<ei:ControlStoryboardAction Storyboard="{StaticResource GoToRegisterStoryboard}" />
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<Grid VerticalAlignment="Center">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<TextBlock Foreground="{StaticResource AccentColorBrush}"
-							FontSize="{StaticResource ControlTitleFontSize}" VerticalAlignment="Center" Margin="5,0"
-							Text="{Binding Path=LocalizedStrings.StartView_or_Sign_up, FallbackValue='Sign up'}"
-							FontFamily="Portable User Interface" />
-					<Icons:ArrowRightIcon Grid.Column="1" Width="20" Height="20" FontFamily="Portable User Interface" />
-				</Grid>
-			</HyperlinkButton>
+			<ContentControl x:Name="LoginForm" VerticalAlignment="Center" VerticalContentAlignment="Center"
+					HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" />
+			<ContentControl x:Name="RegistrationForm" Opacity="0"
+					VerticalContentAlignment="Center" VerticalAlignment="Center"
+					HorizontalContentAlignment="Stretch"  HorizontalAlignment="Stretch" />
 		</Grid>
-		<StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+		<HyperlinkButton x:Name="GoToLogin" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"
+				VerticalAlignment="Center" Foreground="{StaticResource AccentColorBrush}"
+				FontSize="{StaticResource ControlTitleFontSize}" TabIndex="7" Opacity="0" IsEnabled="False">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Click">
+					<ei:ControlStoryboardAction Storyboard="{StaticResource GoToLoginStoryboard}" />
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+			<Grid VerticalAlignment="Center">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Icons:ArrowLeftIcon Width="24" Height="24" FontFamily="Portable User Interface" />
+				<TextBlock Grid.Column="1" Foreground="{StaticResource AccentColorBrush}"
+						FontSize="{StaticResource ControlTitleFontSize}" VerticalAlignment="Center" Margin="5,0"
+						Text="{Binding Path=LocalizedStrings.StartView_back_to_Login, FallbackValue='Login'}"
+						FontFamily="Portable User Interface" />
+			</Grid>
+		</HyperlinkButton>
+		<HyperlinkButton x:Name="GoToRegistration" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"
+				VerticalAlignment="Center" Foreground="{StaticResource AccentColorBrush}"
+				FontSize="{StaticResource ControlTitleFontSize}" TabIndex="6">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Click">
+					<ei:ControlStoryboardAction Storyboard="{StaticResource GoToRegisterStoryboard}" />
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+			<Grid VerticalAlignment="Center">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<TextBlock Foreground="{StaticResource AccentColorBrush}"
+						FontSize="{StaticResource ControlTitleFontSize}" VerticalAlignment="Center" Margin="5,0"
+						Text="{Binding Path=LocalizedStrings.StartView_or_Sign_up, FallbackValue='Sign up'}"
+						FontFamily="Portable User Interface" />
+				<Icons:ArrowRightIcon Grid.Column="1" Width="24" Height="24" FontFamily="Portable User Interface" />
+			</Grid>
+		</HyperlinkButton>
+		<StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center"
+				VerticalAlignment="Bottom">
 			<TextBlock x:Name="Copyright" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Bottom"
 					Foreground="#FF868686" />
 			<TextBlock x:Name="Version" Margin="10,0,0,0" ToolTipService.ToolTip="Client version" TextWrapping="Wrap"
