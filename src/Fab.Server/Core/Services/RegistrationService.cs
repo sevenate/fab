@@ -193,6 +193,10 @@ namespace Fab.Server.Core.Services
 				mc.Users.AddObject(user);
 				mc.SaveChanges();
 
+				// Creating default $ account
+				var moneyService = new MoneyService { UserName = user.Login };
+				moneyService.CreateAccount("Cash", 2);
+
 				return usersMapper.Map(user);
 			}
 		}
