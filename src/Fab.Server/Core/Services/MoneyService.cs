@@ -55,7 +55,7 @@ namespace Fab.Server.Core.Services
 		{
 			private get
 			{
-				return ServiceSecurityContext.Current == null
+				return ServiceSecurityContext.Current == null || ServiceSecurityContext.Current.IsAnonymous
 				       	? userName
 				       	: ServiceSecurityContext.Current.PrimaryIdentity.Name;
 			}
@@ -951,7 +951,7 @@ namespace Fab.Server.Core.Services
 		/// </summary>
 		/// <param name="login">User login.</param>
 		/// <returns>Connection string to the user personal database.</returns>
-		private string GetPersonalConnection(string login)
+		public string GetPersonalConnection(string login)
 		{
 			if (string.IsNullOrEmpty(login))
 			{
