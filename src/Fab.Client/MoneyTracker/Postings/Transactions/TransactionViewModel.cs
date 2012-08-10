@@ -359,7 +359,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		public bool CanSave
 		{
-			get { return Amount != null && CurrentCategory != null; }
+			get { return Amount != null; }
 		}
 
 		[SetBusy]
