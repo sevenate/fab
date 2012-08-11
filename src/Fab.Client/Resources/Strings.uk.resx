@@ -492,4 +492,19 @@
   <data name="RegistrationView_Generate" xml:space="preserve">
     <value>Згенерувати</value>
   </data>
+  <data name="Registration_View_Hint_1" xml:space="preserve">
+    <value>Підказка:</value>
+  </data>
+  <data name="Registration_View_Hint_1_2" xml:space="preserve">
+    <value>не рекомендується вибирати своє справжнє ім'я, нік або емейл як ім'я користувача.</value>
+  </data>
+  <data name="Registration_View_Hint_2" xml:space="preserve">
+    <value>Важливо:</value>
+  </data>
+  <data name="Registration_View_Hint_2_1" xml:space="preserve">
+    <value>Ім'я користувача і пароль повинні бути як мінімум</value>
+  </data>
+  <data name="Registration_View_Hint_2_2" xml:space="preserve">
+    <value> символів довгою.</value>
+  </data>
 </root>

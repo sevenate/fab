@@ -61,15 +61,15 @@
 		</Grid>
 		<StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3">
 			<Controls1:ValidationOkControl IsOk="{Binding Path=UsernameIsOk}" MaxWidth="24" HorizontalAlignment="Left" />
-			<TextBlock TextTrimming="WordEllipsis" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="240"
+			<TextBlock TextTrimming="WordEllipsis" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="350"
 					Margin="30,0,0,0">
-				<Run Text="Hint:" FontWeight="Bold" />
-				<Run Text=" avoid the use of your real name, nickname or email as you username." /></TextBlock>
+				<Run Text="{Binding Path=LocalizedStrings.Registration_View_Hint_1, FallbackValue='Hint:'}"
+						FontWeight="Bold" />
+				<Run Text="{Binding Path=LocalizedStrings.Registration_View_Hint_1_2, FallbackValue=' avoid the use of your real name, nickname or email as you username.'}" /></TextBlock>
 		</StackPanel>
 		<TextBlock Grid.Row="2" Grid.Column="0"
 				Text="{Binding Path=LocalizedStrings.RegistrationView_Password, FallbackValue='Password'}"
-				VerticalAlignment="Center" HorizontalAlignment="Right"
-				FontSize="{StaticResource ControlTitleFontSize}" />
+				VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="{StaticResource ControlTitleFontSize}" />
 		<PasswordBox x:Name="Password" Grid.Row="2" Grid.Column="1" TabIndex="1" MaxLength="256" Margin="10"
 				VerticalAlignment="Center" FontSize="16">
 			<i:Interaction.Behaviors>
@@ -80,16 +80,18 @@
 		</PasswordBox>
 		<StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
 			<Controls1:ValidationOkControl IsOk="{Binding Path=PasswordIsOk}" MaxWidth="24" HorizontalAlignment="Left" />
-			<TextBlock TextTrimming="WordEllipsis" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="220"
+			<TextBlock TextTrimming="WordEllipsis" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="340"
 					Margin="30,0,0,0">
-				<Run Text="Username and password must be at least " />
-				<Run Text="5" FontWeight="Bold" Foreground="Red" />
-				<Run Text=" characters long" /></TextBlock>
+				<Run Text="{Binding Path=LocalizedStrings.Registration_View_Hint_2, FallbackValue='Important:'}"
+						FontWeight="Bold" />
+				
+				<Run Text="{Binding Path=LocalizedStrings.Registration_View_Hint_2_1, FallbackValue='Username and password must be at least '}" />
+				<Run Text="{Binding Path=MinPasswordLength, FallbackValue=5}" FontWeight="Bold" Foreground="Red" />
+				<Run Text="{Binding Path=LocalizedStrings.Registration_View_Hint_2_2, FallbackValue=' characters long.'}" /></TextBlock>
 		</StackPanel>
 		<TextBlock Grid.Row="3" Grid.Column="0"
 				Text="{Binding Path=LocalizedStrings.RegistrationView_Password2, FallbackValue='Password (again)'}"
-				HorizontalAlignment="Right" VerticalAlignment="Center"
-				FontSize="{StaticResource ControlTitleFontSize}" />
+				HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="{StaticResource ControlTitleFontSize}" />
 		<PasswordBox x:Name="PasswordConfirmation" Grid.Row="3" Grid.Column="1" TabIndex="2" MaxLength="256"
 				FontSize="16" VerticalAlignment="Center" Margin="10">
 			<i:Interaction.Behaviors>
