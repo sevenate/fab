@@ -145,6 +145,18 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		#region Minimum password length
+
+		/// <summary>
+		/// Gets user name.
+		/// </summary>
+		public int MinPasswordLength
+		{
+			get { return MinimumPasswordLength; }
+		}
+
+		#endregion
+
 		#region Status
 
 		/// <summary>

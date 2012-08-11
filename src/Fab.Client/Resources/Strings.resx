@@ -492,4 +492,19 @@
   <data name="RegistrationView_Generate" xml:space="preserve">
     <value>Generate</value>
   </data>
+  <data name="Registration_View_Hint_1" xml:space="preserve">
+    <value>Hint:</value>
+  </data>
+  <data name="Registration_View_Hint_1_2" xml:space="preserve">
+    <value> avoid the use of your real name, nickname or email as you username.</value>
+  </data>
+  <data name="Registration_View_Hint_2" xml:space="preserve">
+    <value>Important:</value>
+  </data>
+  <data name="Registration_View_Hint_2_1" xml:space="preserve">
+    <value>Username and password must be at least </value>
+  </data>
+  <data name="Registration_View_Hint_2_2" xml:space="preserve">
+    <value> characters long.</value>
+  </data>
 </root>

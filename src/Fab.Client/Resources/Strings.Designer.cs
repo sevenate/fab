@@ -700,6 +700,51 @@ namespace Fab.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hint:.
+        /// </summary>
+        public static string Registration_View_Hint_1 {
+            get {
+                return ResourceManager.GetString("Registration_View_Hint_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  avoid the use of your real name, nickname or email as you username..
+        /// </summary>
+        public static string Registration_View_Hint_1_2 {
+            get {
+                return ResourceManager.GetString("Registration_View_Hint_1_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Important:.
+        /// </summary>
+        public static string Registration_View_Hint_2 {
+            get {
+                return ResourceManager.GetString("Registration_View_Hint_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username and password must be at least .
+        /// </summary>
+        public static string Registration_View_Hint_2_1 {
+            get {
+                return ResourceManager.GetString("Registration_View_Hint_2_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  characters long..
+        /// </summary>
+        public static string Registration_View_Hint_2_2 {
+            get {
+                return ResourceManager.GetString("Registration_View_Hint_2_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yes, I agree to the.
         /// </summary>
         public static string RegistrationView_Agreement1 {
