@@ -97,6 +97,33 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		#region Username
+
+		/// <summary>
+		/// A value indicating whether view model is "busy" with generating unique username on the background
+		/// </summary>
+		private bool isGenerating;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether view model is "busy" with generating unique username on the background.
+		/// </summary>
+		public bool IsGenerating
+		{
+			get { return isGenerating; }
+			set
+			{
+				if (isGenerating != value)
+				{
+					isGenerating = value;
+					NotifyOfPropertyChange(() => IsGenerating);
+					NotifyOfPropertyChange(() => Username);
+					NotifyOfPropertyChange(() => UsernameIsOk);
+				}
+			}
+		}
+
+		#endregion
+
 		#region Password
 
 		/// <summary>
@@ -252,6 +279,8 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		private bool isBusy;
 
+		private bool canGenerate;
+
 		/// <summary>
 		/// Gets or sets a value indicating whether a view model has a long running operation in the background.
 		/// </summary>
@@ -266,6 +295,16 @@ namespace Fab.Client.Authentication
 		}
 
 		#endregion
+
+		public IEnumerable<IResult> Generate()
+		{
+			return null;
+		}
+
+		public bool CanGenerate()
+		{
+			return true;
+		}
 
 		/// <summary>
 		/// Authorize the user with specified credentials.
