@@ -33,6 +33,7 @@
 		<TextBlock
 			Grid.Row="1"
 			Grid.Column="0"
+			TextWrapping="Wrap"
 			Text="{Binding Path=LocalizedStrings.LoginView_Username, FallbackValue=Username}"
 			VerticalAlignment="Center"
 			HorizontalAlignment="Right"
@@ -71,6 +72,7 @@
 		<TextBlock
 			Grid.Column="0"
 			Grid.Row="2"
+			TextWrapping="Wrap"
 			Text="{Binding Path=LocalizedStrings.LoginView_Password, FallbackValue=Password}"
 			VerticalAlignment="Center"
 			HorizontalAlignment="Right"
@@ -133,6 +135,7 @@
 			Text="{Binding Path=LocalizedStrings.LoginView_Language, FallbackValue='Choose language'}"
 			VerticalAlignment="Center"
 			HorizontalAlignment="Right"
+			TextWrapping="Wrap"
 			FontSize="{StaticResource ControlTitleFontSize}" />
 		<ComboBox
 			x:Name="Cultures"
