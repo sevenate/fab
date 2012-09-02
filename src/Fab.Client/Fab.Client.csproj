@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
+    <Compile Include="Framework\Converters\InvertDoubleConverter.cs" />
     <Compile Include="Framework\Converters\CultureToFlagImagePathConverter.cs" />
     <Compile Include="Framework\Converters\DebugConverter.cs" />
     <Compile Include="Framework\Extensions\ColorFromString.cs" />
