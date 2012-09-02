@@ -5,12 +5,10 @@
 //------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using Fab.Client.Framework;
-using Fab.Client.Framework.Results;
 using Fab.Client.Localization;
 
 namespace Fab.Client.Authentication
