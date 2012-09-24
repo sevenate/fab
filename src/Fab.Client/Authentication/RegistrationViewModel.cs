@@ -38,6 +38,57 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		#region Fields
+
+		/// <summary>
+		/// User name.
+		/// </summary>
+		private string username;
+
+		/// <summary>
+		/// A value indicating whether view model is "busy" with generating unique username on the background
+		/// </summary>
+		private bool isGenerating;
+
+		/// <summary>
+		/// User password.
+		/// </summary>
+		private string password;
+
+		/// <summary>
+		/// User password confirmation.
+		/// </summary>
+		private string passwordConfirmation;
+
+		/// <summary>
+		/// Status message.
+		/// </summary>
+		private string status;
+
+		/// <summary>
+		/// Specify if status message should be visible.
+		/// </summary>
+		private bool showStatus;
+
+		/// <summary>
+		/// Specify if user is "agree to terms"
+		/// </summary>
+		private bool agreeToTerms;
+
+		/// <summary>
+		/// Specify whether a <see cref="Username"/> field is focused.
+		/// </summary>
+		private bool usernameIsFocused;
+
+		/// <summary>
+		/// Gets or sets a value indicating weather a login view model has a long running operation in the background.
+		/// </summary>
+		private bool isBusy;
+
+		private bool canGenerate;
+
+		#endregion
+
 		#region Private Properties
 
 		/// <summary>
@@ -74,12 +125,7 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		#region Username
-
-		/// <summary>
-		/// User name.
-		/// </summary>
-		private string username;
+		#region Properties
 
 		/// <summary>
 		/// Gets or sets user name.
@@ -94,15 +140,6 @@ namespace Fab.Client.Authentication
 				NotifyOfPropertyChange(() => UsernameIsOk);
 			}
 		}
-
-		#endregion
-
-		#region Username
-
-		/// <summary>
-		/// A value indicating whether view model is "busy" with generating unique username on the background
-		/// </summary>
-		private bool isGenerating;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether view model is "busy" with generating unique username on the background.
@@ -122,15 +159,6 @@ namespace Fab.Client.Authentication
 			}
 		}
 
-		#endregion
-
-		#region Password
-
-		/// <summary>
-		/// User password.
-		/// </summary>
-		private string password;
-
 		/// <summary>
 		/// Gets or sets user password.
 		/// </summary>
@@ -145,15 +173,6 @@ namespace Fab.Client.Authentication
 				NotifyOfPropertyChange(() => Password2IsOk);
 			}
 		}
-
-		#endregion
-
-		#region Password confirmation
-
-		/// <summary>
-		/// User password confirmation.
-		/// </summary>
-		private string passwordConfirmation;
 
 		/// <summary>
 		/// Gets or sets user password confirmation.
@@ -170,10 +189,6 @@ namespace Fab.Client.Authentication
 			}
 		}
 
-		#endregion
-
-		#region Minimum password length
-
 		/// <summary>
 		/// Gets user name.
 		/// </summary>
@@ -181,15 +196,6 @@ namespace Fab.Client.Authentication
 		{
 			get { return MinimumPasswordLength; }
 		}
-
-		#endregion
-
-		#region Status
-
-		/// <summary>
-		/// Status message.
-		/// </summary>
-		private string status;
 
 		/// <summary>
 		/// Gets or sets status message.
@@ -204,15 +210,6 @@ namespace Fab.Client.Authentication
 			}
 		}
 
-		#endregion
-
-		#region Show status
-
-		/// <summary>
-		/// Specify if status message should be visible.
-		/// </summary>
-		private bool showStatus;
-
 		/// <summary>
 		/// Gets a value indicating whether a status message should be visible.
 		/// </summary>
@@ -225,15 +222,6 @@ namespace Fab.Client.Authentication
 				NotifyOfPropertyChange(() => ShowStatus);
 			}
 		}
-
-		#endregion
-
-		#region Agree to terms
-
-		/// <summary>
-		/// Specify if user is "agree to terms"
-		/// </summary>
-		private bool agreeToTerms;
 
 		/// <summary>
 		/// Gets a value indicating whether a user "agree to terms".
@@ -248,15 +236,6 @@ namespace Fab.Client.Authentication
 			}
 		}
 
-		#endregion
-
-		#region Username is focused
-
-		/// <summary>
-		/// Specify whether a <see cref="Username"/> field is focused.
-		/// </summary>
-		private bool usernameIsFocused;
-
 		/// <summary>
 		/// Gets or sets a value indicating whether a <see cref="Username"/> field is focused.
 		/// </summary>
@@ -270,16 +249,37 @@ namespace Fab.Client.Authentication
 			}
 		}
 
+		public bool UsernameIsOk
+		{
+			get
+			{
+				return !string.IsNullOrWhiteSpace(Username)
+				       && Username.Length >= MinimumUsernameLength;
+			}
+		}
+
+		public bool PasswordIsOk
+		{
+			get
+			{
+				return !string.IsNullOrWhiteSpace(Password)
+				       && Password.Length >= MinimumPasswordLength;
+			}
+		}
+
+		public bool Password2IsOk
+		{
+			get
+			{
+				return !string.IsNullOrWhiteSpace(PasswordConfirmation)
+				       && PasswordConfirmation.Length >= MinimumPasswordLength
+				       && Password == PasswordConfirmation;
+			}
+		}
+
 		#endregion
 
 		#region Implementation of ICanBeBusy
-
-		/// <summary>
-		/// Gets or sets a value indicating weather a login view model has a long running operation in the background.
-		/// </summary>
-		private bool isBusy;
-
-		private bool canGenerate;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether a view model has a long running operation in the background.
@@ -292,6 +292,19 @@ namespace Fab.Client.Authentication
 				isBusy = value;
 				NotifyOfPropertyChange(() => IsBusy);
 			}
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<in LoggedOutMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(LoggedOutMessage message)
+		{
+			ClearForm();
 		}
 
 		#endregion
@@ -344,34 +357,6 @@ namespace Fab.Client.Authentication
 				   && Password2IsOk;
 		}
 
-		public bool UsernameIsOk
-		{
-			get
-			{
-				return !string.IsNullOrWhiteSpace(Username)
-					&& Username.Length >= MinimumUsernameLength;
-			}
-		}
-
-		public bool PasswordIsOk
-		{
-			get
-			{
-				return !string.IsNullOrWhiteSpace(Password)
-				       && Password.Length >= MinimumPasswordLength;
-			}
-		}
-
-		public bool Password2IsOk
-		{
-			get
-			{
-				return !string.IsNullOrWhiteSpace(PasswordConfirmation)
-					&& PasswordConfirmation.Length >= MinimumPasswordLength
-					&& Password == PasswordConfirmation;
-			}
-		}
-
 		/// <summary>
 		/// Show window with "Terms of Use" agreement.
 		/// </summary>
@@ -397,19 +382,6 @@ namespace Fab.Client.Authentication
 			                                                   		{"Style", Application.Current.Resources["ChildWindowStyle"]}
 			                                                   	});
 		}
-
-		#region Implementation of IHandle<in LoggedOutMessage>
-
-		/// <summary>
-		/// Handles the message.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Handle(LoggedOutMessage message)
-		{
-			ClearForm();
-		}
-
-		#endregion
 
 		#region Private Methods
 
