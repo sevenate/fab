@@ -31,6 +31,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<CallTarget Targets="Prepare" />
 		<CallTarget Targets="DeployFAB" />
 		<CallTarget Targets="DeployManagementTool" />
+		<CallTarget Targets="ZipPackage" />
 	</Target>
 
 	<Target Name="Prepare">
@@ -71,23 +72,22 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<Message Text="Application version: @(Ver)" />
 
 		<FileUpdate Files="$(DeployFolder)\Scripts\Common.js"
-                Regex="var clientVersion = null;"
-                ReplacementText="var clientVersion = @(Ver);" />
-
+				Regex="var clientVersion = null;"
+				ReplacementText="var clientVersion = @(Ver);" />
 	</Target>
 
 	<Target Name="DeployManagementTool">
 		<PropertyGroup>
 			<BinFolder>$(BinRoot)\Fab.Management</BinFolder>
 			<SourceFolder>$(SourceRoot)\Fab.Management</SourceFolder>
-			<DeployFolder>$(DeployRoot)\AdminTool</DeployFolder>
+			<DeployAdminFolder>$(DeployRoot)\AdminTool</DeployAdminFolder>
 		</PropertyGroup>
 
 		<Message Text="Deploying FAB Management Tool..." />
 
-		<RemoveDir Condition="Exists('$(DeployFolder)')"
-				   Directories="$(DeployFolder)" />
-		<MakeDir Directories="$(DeployFolder)" />
+		<RemoveDir Condition="Exists('$(DeployAdminFolder)')"
+				   Directories="$(DeployAdminFolder)" />
+		<MakeDir Directories="$(DeployAdminFolder)" />
 
 		<CreateItem Include="$(BinFolder)\**\*.*"
 					Exclude="$(BinFolder)\**\*.vshost.*;$(BinFolder)\**\*.pdb;$(BinFolder)\**\*.xml;">
@@ -96,8 +96,22 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		</CreateItem>
 
 		<Copy SourceFiles="@(ImportReleaseFiles)"
-			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
+			  DestinationFolder="$(DeployAdminFolder)\%(RecursiveDir)"  />
 
+	</Target>
+
+	<Target Name="ZipPackage">
+		<ItemGroup>
+        	<DeployedFiles Include="$(DeployRoot)\**\*.*" />
+		</ItemGroup>
+
+		<Zip WorkingDirectory="$(DeployRoot)" Files="@(DeployedFiles)" ZipFileName="$(DeployRoot)\FAB-@(Ver).zip" />
+
+		<ItemGroup>
+        	<DeployedServiceFiles Include="$(DeployFolder)\**\*.*" />
+		</ItemGroup>
+
+		<Zip WorkingDirectory="$(DeployFolder)" Files="@(DeployedServiceFiles)" ZipFileName="$(DeployRoot)\FAB-Client-@(Ver).zip" />
 	</Target>
 
 </Project>
