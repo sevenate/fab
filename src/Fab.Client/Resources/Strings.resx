@@ -156,9 +156,6 @@
   <data name="CategoryView_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="LoginView_Language" xml:space="preserve">
-    <value>Choose language</value>
-  </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -166,13 +163,10 @@
     <value>Password</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Remember name</value>
+    <value>Remember / forget the name</value>
   </data>
-  <data name="LoginView_Show_characters" xml:space="preserve">
-    <value>Show password</value>
-  </data>
-  <data name="LoginView_Title" xml:space="preserve">
-    <value>Login to your profile</value>
+  <data name="LoginView_Show_Hide_Password" xml:space="preserve">
+    <value>Show / hide password</value>
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Username</value>
@@ -229,22 +223,16 @@
     <value>Today</value>
   </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
-    <value>I have read, understood and agree to the</value>
+    <value>Click</value>
   </data>
   <data name="RegistrationView_Agreement2" xml:space="preserve">
-    <value> terms of service</value>
+    <value>Terms of Service</value>
   </data>
   <data name="RegistrationView_Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="RegistrationView_Password2" xml:space="preserve">
-    <value>Password (again)</value>
-  </data>
   <data name="RegistrationView_Register" xml:space="preserve">
     <value>Sign up</value>
-  </data>
-  <data name="RegistrationView_Title" xml:space="preserve">
-    <value>Sign up for nReez</value>
   </data>
   <data name="RegistrationView_Username" xml:space="preserve">
     <value>Username</value>
@@ -468,17 +456,14 @@
   <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
     <value>Service is too busy. Please try again later.</value>
   </data>
-  <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
-    <value>Signing up...</value>
-  </data>
   <data name="PostingsView_Filter_Days" xml:space="preserve">
     <value>days</value>
   </data>
   <data name="ErrorDialogView_Close" xml:space="preserve">
-    <value>Try to continue</value>
+    <value>Close</value>
   </data>
   <data name="ErrorDialogView_Title" xml:space="preserve">
-    <value>Аn unexpected error :(</value>
+    <value>Аn unexpected error occured</value>
   </data>
   <data name="PersonalCornerView_Client_Version" xml:space="preserve">
     <value>Client version</value>
@@ -489,22 +474,37 @@
   <data name="TermsView_Title" xml:space="preserve">
     <value>Terms of Service</value>
   </data>
-  <data name="RegistrationView_Generate" xml:space="preserve">
-    <value>Generate</value>
-  </data>
   <data name="Registration_View_Hint_1" xml:space="preserve">
-    <value>Hint:</value>
+    <value>Safety Tip:</value>
   </data>
   <data name="Registration_View_Hint_1_2" xml:space="preserve">
-    <value> avoid the use of your real name, nickname or email as you username.</value>
+    <value> avoid the use of your real name, nickname or email as your </value>
   </data>
-  <data name="Registration_View_Hint_2" xml:space="preserve">
-    <value>Important:</value>
+  <data name="Registration_View_Error_Lenght" xml:space="preserve">
+    <value>at least {0} characters</value>
   </data>
-  <data name="Registration_View_Hint_2_1" xml:space="preserve">
-    <value>Username and password must be at least </value>
+  <data name="Registration_View_Hint_1_3" xml:space="preserve">
+    <value>Username</value>
   </data>
-  <data name="Registration_View_Hint_2_2" xml:space="preserve">
-    <value> characters long.</value>
+  <data name="RegistrationView_ERR_REGS_0" xml:space="preserve">
+    <value>Sorry, the subscription is temporarily suspended.</value>
+  </data>
+  <data name="RegistrationView_ERR_REGS_1" xml:space="preserve">
+    <value>Sorry, but username "{0}" is already used. Please, try to pick another.</value>
+  </data>
+  <data name="RegistrationView_Error_UsernameNotUnique" xml:space="preserve">
+    <value>This name is already used</value>
+  </data>
+  <data name="RegistrationView_Agreement3" xml:space="preserve">
+    <value>I accept</value>
+  </data>
+  <data name="RegistrationView_Agreement4" xml:space="preserve">
+    <value>when you have read, understood and agree to the terms</value>
+  </data>
+  <data name="RegistrationView_Generate_Anonymous_Username" xml:space="preserve">
+    <value>Generate an anonymous username</value>
+  </data>
+  <data name="RegistrationView_Show_Hide_Password" xml:space="preserve">
+    <value>Show / hide password</value>
   </data>
 </root>

@@ -217,10 +217,7 @@
     <SolidColorBrush x:Key="NormalBrush" Color="{StaticResource Gray7}" />
 
     <SolidColorBrush x:Key="ComboBoxPopupBrush" Color="{StaticResource Gray9}" />
-    <LinearGradientBrush x:Key="BrandingBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
-        <GradientStop Color="{StaticResource HighlightDarkColor}" Offset="0"/>
-        <GradientStop Color="#FF5FC316" Offset="1"/>
-    </LinearGradientBrush>
+	<SolidColorBrush x:Key="BrandingBrush" Color="{StaticResource HighlightDarkColor}" />
 
     <DropShadowEffect x:Key="DropShadowBrush" Direction="330" Opacity="0.3" ShadowDepth="0" BlurRadius="6"/>
 

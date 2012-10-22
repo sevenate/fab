@@ -37,7 +37,7 @@
 		<StackPanel Orientation="Horizontal">
 			<Image Source="{Binding Converter={StaticResource cultureFlagPath}}"
 				   Stretch="Uniform"
-				   Margin="0,0,3,0" />
+				   Margin="0,0,10,0" />
 			<TextBlock Text="{Binding Path=NativeName}" />
 		</StackPanel>
 	</DataTemplate>

@@ -3,26 +3,23 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 x:Name="userControl"
+			 x:Name="UserControl"
 			 mc:Ignorable="d"
 			 d:DesignHeight="100" d:DesignWidth="100">
-	<Grid Background="{Binding Background, ElementName=userControl}">
-        <Path
-            Stretch="Uniform"
-            Fill="{Binding Foreground, ElementName=userControl}"
-            Data="F1 M 24,0.5C 36.9787,0.5 47.5,11.0213 47.5,24C 47.5,36.9787 36.9787,47.5 24,47.5C 11.0213,47.5 0.499997,36.9787 0.499997,24C 0.499997,11.0213 11.0213,0.5 24,0.5 Z M 24,3.5C 12.6782,3.5 3.5,12.6782 3.5,24C 3.5,35.3218 12.6782,44.5 24,44.5C 35.3218,44.5 44.5,35.3218 44.5,24C 44.5,12.6782 35.3218,3.5 24,3.5 Z " />
-        <Path
-            Stretch="Uniform"
-            Fill="{Binding Foreground, ElementName=userControl}"
-            Data="F1 M 36,22L 36,26L 19.75,26L 27,33L 20.5,33L 11,24L 20.5,15L 27,15L 19.75,22L 36,22 Z "
-            RenderTransformOrigin="0.5,0.5">
-            <Path.RenderTransform>
-                <CompositeTransform
-                    TranslateX="0.5"
-                    TranslateY="0.5"
-                    ScaleX="0.6"
-                    ScaleY="0.6" />
-            </Path.RenderTransform>
-        </Path>
-    </Grid>
+	<Viewbox>
+		<Grid>
+			<Path Stretch="Uniform" StrokeThickness="7"
+				  Stroke="{Binding BorderBrush, ElementName=UserControl}"
+			      Fill="{Binding Background, ElementName=UserControl}"
+			      Data="M50,0 C77.6143,-1E-06 100,22.3857 100,50 C100,77.6142 77.6143,100 50,100 C22.3857,100 0,77.6142 0,50 C0,22.3857 22.3857,-1E-06 50,0 z" />
+			<Path Stretch="Uniform" RenderTransformOrigin="0.5,0.5"
+				  Stroke="{Binding Foreground, ElementName=UserControl}"
+			      Fill="{Binding Foreground, ElementName=UserControl}"
+			      Data="M43.3,28.9 L58.9,28.9 L41.5,45.7 L80.5,45.7 L80.5,55.3 L41.5,55.3 L58.9,72.1 L43.3,72.1 L20.5,50.5 z">
+				<Path.RenderTransform>
+					<CompositeTransform ScaleX="0.6" ScaleY="0.6" />
+				</Path.RenderTransform>
+			</Path>
+		</Grid>
+	</Viewbox>
 </UserControl>

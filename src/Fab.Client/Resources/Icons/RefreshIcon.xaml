@@ -1,12 +1,16 @@
 ﻿<UserControl x:Class="Fab.Client.Resources.Icons.RefreshIcon"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="100" d:DesignWidth="100">
-    <Path
-        Stretch="Uniform"
-        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorLevel=1, Mode=FindAncestor, AncestorType=UserControl}}"
-        Data="F1 M 24,13C 27.1521,13 29.9945,14.3258 32,16.4501L 32,11L 35,14L 35,22L 27,22L 24,19L 29.5903,19C 28.217,17.4656 26.2212,16.5 24,16.5C 20.1969,16.5 17.055,19.3306 16.5661,23L 13.0448,23C 13.5501,17.3935 18.262,13 24,13 Z M 24,31.5C 27.8031,31.5 30.945,28.6694 31.4339,25L 34.9552,25C 34.4499,30.6065 29.738,35 24,35C 20.8479,35 18.0055,33.6742 16,31.5499L 16,37L 13,34L 13,26L 21,26L 24,29L 18.4097,29C 19.783,30.5344 21.7787,31.5 24,31.5 Z " />
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 x:Name="UserControl"
+			 mc:Ignorable="d"
+			 d:DesignHeight="100" d:DesignWidth="100">
+	<Viewbox>
+		<Grid>
+			<Path Data="M513.94,162.3 L575.31,270.79 L536.99,270.45 C532.22,329.52 506.9,384.47 464.59,426.77 C417.37,473.99 354.59,500 287.81,500 C221.04,500 158.26,473.99 111.04,426.77 C101.28,417.01 101.28,401.18 111.04,391.42 C120.8,381.65 136.63,381.65 146.39,391.42 C184.17,429.19 234.39,450 287.81,450 C341.24,450 391.46,429.19 429.23,391.42 C462.21,358.45 482.28,315.87 486.82,270.01 L450.67,269.69 z M287.82,0 C354.59,0 417.37,26.01 464.59,73.23 C474.36,82.99 474.36,98.8199 464.59,108.58 C454.83,118.34 439,118.34 429.24,108.58 C391.46,70.8101 341.24,50 287.82,50 C234.39,50 184.17,70.8101 146.39,108.58 C112.48,142.5 92.2999,186.33 88.49,233.54 L124.64,233.22 L63.28,341.71 L0,234.32 L38.3199,233.98 C42.12,173.24 67.5499,116.71 111.04,73.23 C158.26,26.01 221.04,0 287.82,0 z"
+				  Fill="{Binding Foreground, ElementName=UserControl}"
+				  Stretch="Uniform" UseLayoutRounding="False" />
+		</Grid>
+	</Viewbox>
 </UserControl>

@@ -40,9 +40,11 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base36Extensions.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Framework\ICanBeBusy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HashExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Generated.cs">

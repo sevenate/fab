@@ -10,7 +10,6 @@ using System.Globalization;
 using System.IO.IsolatedStorage;
 using Caliburn.Micro;
 using Fab.Client.Framework.Filters;
-using Fab.Client.Framework.Results;
 using Fab.Client.Localization;
 using Fab.Core.Framework;
 using Fab.Client.Resources;
@@ -66,23 +65,10 @@ namespace Fab.Client.Authentication
 
 			displayName = Strings.LoginView_Login;
 
-#if DEBUG
 			ShowCharacters = true;
-#endif
 		}
 
 		#endregion
-
-		public IEnumerable<CultureInfo> Cultures
-		{
-			get { return Translator.SupportedCultures; }
-		}
-
-		public CultureInfo CurrentCulture
-		{
-			get { return Translator.CurrentCulture; }
-			set { Translator.CurrentCulture = value; }
-		}
 
 		#region Overrides of Screen
 
@@ -455,6 +441,7 @@ namespace Fab.Client.Authentication
 			UsernameIsFocused = true;
 			Username = string.Empty;
 			Password = string.Empty;
+			ShowCharacters = true;
 		}
 
 		#endregion

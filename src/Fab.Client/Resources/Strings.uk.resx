@@ -156,9 +156,6 @@
   <data name="CategoryView_Edit" xml:space="preserve">
     <value>Редагувати</value>
   </data>
-  <data name="LoginView_Language" xml:space="preserve">
-    <value>Виберіть мову</value>
-  </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Вхід</value>
   </data>
@@ -166,13 +163,10 @@
     <value>Пароль</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Запам'ятати ім'я</value>
+    <value>Пам'ятати / забути ім'я</value>
   </data>
-  <data name="LoginView_Show_characters" xml:space="preserve">
-    <value>Показувати пароль</value>
-  </data>
-  <data name="LoginView_Title" xml:space="preserve">
-    <value>Вхід у свій профіль</value>
+  <data name="LoginView_Show_Hide_Password" xml:space="preserve">
+    <value>Показати / приховати пароль</value>
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Ім'я користувача</value>
@@ -229,22 +223,16 @@
     <value>Сьогодні</value>
   </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
-    <value>Я прочитав, зрозумів і згоден з</value>
+    <value>Натисніть</value>
   </data>
   <data name="RegistrationView_Agreement2" xml:space="preserve">
-    <value> умовами надання послуг</value>
+    <value>Умови надання послуг</value>
   </data>
   <data name="RegistrationView_Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
-  <data name="RegistrationView_Password2" xml:space="preserve">
-    <value>Пароль (ще раз)</value>
-  </data>
   <data name="RegistrationView_Register" xml:space="preserve">
     <value>Зареєструватися</value>
-  </data>
-  <data name="RegistrationView_Title" xml:space="preserve">
-    <value>Реєстрація в nReez</value>
   </data>
   <data name="RegistrationView_Username" xml:space="preserve">
     <value>Ім'я користувача</value>
@@ -304,7 +292,7 @@
     <value>Транзакцій:</value>
   </data>
   <data name="StartView_back_to_Login" xml:space="preserve">
-    <value>Вход</value>
+    <value>Вхід</value>
   </data>
   <data name="StartView_or_Sign_up" xml:space="preserve">
     <value>Реєстрація</value>
@@ -468,17 +456,14 @@
   <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
     <value>Служба занадто зайнята. Будь ласка, спробуйте пізніше.</value>
   </data>
-  <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
-    <value>Реєстрація...</value>
-  </data>
   <data name="PostingsView_Filter_Days" xml:space="preserve">
     <value>днів</value>
   </data>
   <data name="ErrorDialogView_Close" xml:space="preserve">
-    <value>Спробувати продовжити</value>
+    <value>Закрити</value>
   </data>
   <data name="ErrorDialogView_Title" xml:space="preserve">
-    <value>Непередбачена помилка :(</value>
+    <value>Виникла непередбачена помилка</value>
   </data>
   <data name="PersonalCornerView_Client_Version" xml:space="preserve">
     <value>Версія програми</value>
@@ -489,22 +474,37 @@
   <data name="TermsView_Title" xml:space="preserve">
     <value>Угода користувача</value>
   </data>
-  <data name="RegistrationView_Generate" xml:space="preserve">
-    <value>Згенерувати</value>
-  </data>
   <data name="Registration_View_Hint_1" xml:space="preserve">
-    <value>Підказка:</value>
+    <value>Порада з безпеки:</value>
   </data>
   <data name="Registration_View_Hint_1_2" xml:space="preserve">
-    <value>не рекомендується вибирати своє справжнє ім'я, нік або емейл як ім'я користувача.</value>
+    <value>не рекомендується вибирати своє справжнє ім'я, нік або емейл як </value>
   </data>
-  <data name="Registration_View_Hint_2" xml:space="preserve">
-    <value>Важливо:</value>
+  <data name="Registration_View_Error_Lenght" xml:space="preserve">
+    <value>не менше {0} символів</value>
   </data>
-  <data name="Registration_View_Hint_2_1" xml:space="preserve">
-    <value>Ім'я користувача і пароль повинні бути як мінімум</value>
+  <data name="Registration_View_Hint_1_3" xml:space="preserve">
+    <value>Ім'я користувача</value>
   </data>
-  <data name="Registration_View_Hint_2_2" xml:space="preserve">
-    <value> символів довгою.</value>
+  <data name="RegistrationView_ERR_REGS_0" xml:space="preserve">
+    <value>Вибачте, підписка тимчасово призупинена.</value>
+  </data>
+  <data name="RegistrationView_ERR_REGS_1" xml:space="preserve">
+    <value>Вибачте, але ім'я користувача "{0}" вже використовується. Будь ласка, спробуйте вибрати інше.</value>
+  </data>
+  <data name="RegistrationView_Error_UsernameNotUnique" xml:space="preserve">
+    <value>Це ім'я вже використовується</value>
+  </data>
+  <data name="RegistrationView_Agreement3" xml:space="preserve">
+    <value>Я приймаю</value>
+  </data>
+  <data name="RegistrationView_Agreement4" xml:space="preserve">
+    <value>після того як ви прочитаєте і погодьтеся з умовами надання послуг</value>
+  </data>
+  <data name="RegistrationView_Generate_Anonymous_Username" xml:space="preserve">
+    <value>Згенерувати анонімне ім'я користувача</value>
+  </data>
+  <data name="RegistrationView_Show_Hide_Password" xml:space="preserve">
+    <value>Показати / приховати пароль</value>
   </data>
 </root>

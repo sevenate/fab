@@ -5,7 +5,9 @@
 //------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using Fab.Client.Framework;
@@ -59,6 +61,17 @@ namespace Fab.Client.Authentication
 		public string Version
 		{
 			get { return AssemblyExtensions.AppVersion; }
+		}
+
+		public IEnumerable<CultureInfo> Cultures
+		{
+			get { return Translator.SupportedCultures; }
+		}
+
+		public CultureInfo CurrentCulture
+		{
+			get { return Translator.CurrentCulture; }
+			set { Translator.CurrentCulture = value; }
 		}
 
 		#endregion

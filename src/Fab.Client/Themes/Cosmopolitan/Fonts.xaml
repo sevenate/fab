@@ -8,7 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
     
     <FontFamily x:Key="HeaderFontFamily">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="ContentFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+	<FontFamily x:Key="ContentFontFamily">Portable User Interface, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
 
     <my:Double x:Key="ApplicationNameFontSize">50</my:Double>
     <my:Double x:Key="HeaderFontSize">21.333</my:Double>

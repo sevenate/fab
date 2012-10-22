@@ -8,11 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using Caliburn.Micro;
+using Fab.Client.Framework.Controls;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Localization;
+using Fab.Client.Resources;
+using Fab.Client.Shell;
+using Fab.Core;
 using Fab.Core.Framework;
 
 namespace Fab.Client.Authentication
@@ -27,6 +33,12 @@ namespace Fab.Client.Authentication
 		#region Constants
 
 		/// <summary>
+		/// Delay (in milliseconds) from the last typed character in the <see cref="Username"/> field
+		/// to the start of checking it for uniqueness on server.
+		/// </summary>
+		private const int TypingDelay = 500;
+
+		/// <summary>
 		/// Minimum allowed username length.
 		/// </summary>
 		private const int MinimumUsernameLength = 5;
@@ -34,11 +46,25 @@ namespace Fab.Client.Authentication
 		/// <summary>
 		/// Minimum allowed password length.
 		/// </summary>
+#if DEBUG
 		private const int MinimumPasswordLength = 5;
+#else
+		private const int MinimumPasswordLength = 8;
+#endif
 
 		#endregion
 
 		#region Fields
+
+		/// <summary>
+		/// Timer for delayed username validation.
+		/// </summary>
+		private readonly Timer usernameValidationTimer;
+
+		/// <summary
+		/// Timer for delayed username validation.
+		/// </summary>
+		private readonly Timer passwordValidationTimer;
 
 		/// <summary>
 		/// User name.
@@ -46,9 +72,14 @@ namespace Fab.Client.Authentication
 		private string username;
 
 		/// <summary>
-		/// A value indicating whether view model is "busy" with generating unique username on the background
+		/// A value indicating whether username is unique.
 		/// </summary>
-		private bool isGenerating;
+		private bool? isUserNameUnique;
+
+		/// <summary>
+		/// <see cref="Username"/> validness state.
+		/// </summary>
+		private ValidationStates usernameState;
 
 		/// <summary>
 		/// User password.
@@ -56,9 +87,14 @@ namespace Fab.Client.Authentication
 		private string password;
 
 		/// <summary>
-		/// User password confirmation.
+		/// Specify if status message should be visible.
 		/// </summary>
-		private string passwordConfirmation;
+		private bool showCharacters;
+
+		/// <summary>
+		/// <see cref="Password"/> validness state.
+		/// </summary>
+		private ValidationStates passwordState;
 
 		/// <summary>
 		/// Status message.
@@ -71,11 +107,6 @@ namespace Fab.Client.Authentication
 		private bool showStatus;
 
 		/// <summary>
-		/// Specify if user is "agree to terms"
-		/// </summary>
-		private bool agreeToTerms;
-
-		/// <summary>
 		/// Specify whether a <see cref="Username"/> field is focused.
 		/// </summary>
 		private bool usernameIsFocused;
@@ -85,7 +116,15 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		private bool isBusy;
 
-		private bool canGenerate;
+		/// <summary>
+		/// Validation error message for <see cref="Username"/>.
+		/// </summary>
+		private string usernameValidationResult;
+
+		/// <summary>
+		/// Validation error message for <see cref="Password"/>.
+		/// </summary>
+		private string passwordValidationResult;
 
 		#endregion
 
@@ -95,21 +134,6 @@ namespace Fab.Client.Authentication
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
-
-		#endregion
-
-		#region Ctors
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="RegistrationViewModel"/> class.
-		/// </summary>
-		/// <param name="eventAggregator">Events exchange entry point.</param>
-		[ImportingConstructor]
-		public RegistrationViewModel(IEventAggregator eventAggregator)
-		{
-			EventAggregator = eventAggregator;
-			EventAggregator.Subscribe(this);
-		}
 
 		#endregion
 
@@ -132,30 +156,41 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		public string Username
 		{
-			get { return username; }
+			get { return (username ?? string.Empty).Trim(); }
 			set
 			{
-				username = value;
-				NotifyOfPropertyChange(() => Username);
-				NotifyOfPropertyChange(() => UsernameIsOk);
+				if (Username != value)
+				{
+					username = value;
+					NotifyOfPropertyChange(() => Username);
+
+					// delay uniqueness checking for a moment for case if user will type another character
+					usernameValidationTimer.Change(TimeSpan.FromMilliseconds(TypingDelay), TimeSpan.FromMilliseconds(-1));
+				}
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets a value indicating whether view model is "busy" with generating unique username on the background.
-		/// </summary>
-		public bool IsGenerating
+		public string UsernameValidationResult	
 		{
-			get { return isGenerating; }
+			get { return usernameValidationResult; }
 			set
 			{
-				if (isGenerating != value)
-				{
-					isGenerating = value;
-					NotifyOfPropertyChange(() => IsGenerating);
-					NotifyOfPropertyChange(() => Username);
-					NotifyOfPropertyChange(() => UsernameIsOk);
-				}
+				if (value == usernameValidationResult) return;
+
+				usernameValidationResult = value;
+				NotifyOfPropertyChange(() => UsernameValidationResult);
+			}
+		}
+
+		public string PasswordValidationResult
+		{
+			get { return passwordValidationResult; }
+			set
+			{
+				if (value == passwordValidationResult) return;
+
+				passwordValidationResult = value;
+				NotifyOfPropertyChange(() => PasswordValidationResult);
 			}
 		}
 
@@ -167,25 +202,28 @@ namespace Fab.Client.Authentication
 			get { return password; }
 			set
 			{
-				password = value;
-				NotifyOfPropertyChange(() => Password);
-				NotifyOfPropertyChange(() => PasswordIsOk);
-				NotifyOfPropertyChange(() => Password2IsOk);
+				if (password != value)
+				{
+					password = value;
+
+					// delay uniqueness checking for a moment for case if user will type another character
+					passwordValidationTimer.Change(TimeSpan.FromMilliseconds(TypingDelay), TimeSpan.FromMilliseconds(-1));
+
+					NotifyOfPropertyChange(() => Password);
+				}
 			}
 		}
 
 		/// <summary>
-		/// Gets or sets user password confirmation.
+		/// Gets or sets a value indicating whether a password characters should be visible to user.
 		/// </summary>
-		public string PasswordConfirmation
+		public bool ShowCharacters
 		{
-			get { return passwordConfirmation; }
+			get { return showCharacters; }
 			set
 			{
-				passwordConfirmation = value;
-				NotifyOfPropertyChange(() => PasswordConfirmation);
-				NotifyOfPropertyChange(() => PasswordIsOk);
-				NotifyOfPropertyChange(() => Password2IsOk);
+				showCharacters = value;
+				NotifyOfPropertyChange(() => ShowCharacters);
 			}
 		}
 
@@ -224,19 +262,6 @@ namespace Fab.Client.Authentication
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether a user "agree to terms".
-		/// </summary>
-		public bool AgreeToTerms
-		{
-			get { return agreeToTerms; }
-			set
-			{
-				agreeToTerms = value;
-				NotifyOfPropertyChange(() => AgreeToTerms);
-			}
-		}
-
-		/// <summary>
 		/// Gets or sets a value indicating whether a <see cref="Username"/> field is focused.
 		/// </summary>
 		public bool UsernameIsFocused
@@ -249,31 +274,29 @@ namespace Fab.Client.Authentication
 			}
 		}
 
-		public bool UsernameIsOk
+		public ValidationStates UsernameState
 		{
-			get
+			get { return usernameState; }
+			set
 			{
-				return !string.IsNullOrWhiteSpace(Username)
-				       && Username.Length >= MinimumUsernameLength;
+				if (usernameState != value)
+				{
+					usernameState = value;
+					NotifyOfPropertyChange(() => UsernameState);
+				}
 			}
 		}
 
-		public bool PasswordIsOk
+		public ValidationStates PasswordState
 		{
-			get
+			get { return passwordState; }
+			set
 			{
-				return !string.IsNullOrWhiteSpace(Password)
-				       && Password.Length >= MinimumPasswordLength;
-			}
-		}
-
-		public bool Password2IsOk
-		{
-			get
-			{
-				return !string.IsNullOrWhiteSpace(PasswordConfirmation)
-				       && PasswordConfirmation.Length >= MinimumPasswordLength
-				       && Password == PasswordConfirmation;
+				if (passwordState != value)
+				{
+					passwordState = value;
+					NotifyOfPropertyChange(() => PasswordState);
+				}
 			}
 		}
 
@@ -296,6 +319,29 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
+		/// </summary>
+		public RegistrationViewModel()
+		{
+			ResetValidationState();
+
+			usernameValidationTimer = new Timer(OnTimerCallback);
+			passwordValidationTimer = new Timer(state => Execute.OnUIThread(ValidatePassword));
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RegistrationViewModel"/> class.
+		/// </summary>
+		/// <param name="eventAggregator">Events exchange entry point.</param>
+		[ImportingConstructor]
+		public RegistrationViewModel(IEventAggregator eventAggregator):this()
+		{
+			EventAggregator = eventAggregator;
+			EventAggregator.Subscribe(this);
+			ShowCharacters = true;
+		}
+
 		#region Implementation of IHandle<in LoggedOutMessage>
 
 		/// <summary>
@@ -309,14 +355,107 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
-		public IEnumerable<IResult> Generate()
+		#region Overrides of Screen
+
+		/// <summary>
+		/// Called when activating.
+		/// </summary>
+		protected override void OnActivate()
 		{
-			return null;
+			base.OnActivate();
+
+			if (IsolatedStorageSettings.ApplicationSettings.Contains("Login_ShowCharacters"))
+			{
+				ShowCharacters = (bool)IsolatedStorageSettings.ApplicationSettings["Login_ShowCharacters"];
+			}
 		}
 
-		public bool CanGenerate()
+		/// <summary>
+		/// Called when deactivating.
+		/// </summary>
+		/// <param name="close">Indicates whether this instance will be closed.</param>
+		protected override void OnDeactivate(bool close)
 		{
-			return true;
+			base.OnDeactivate(close);
+			IsolatedStorageSettings.ApplicationSettings["Login_ShowCharacters"] = ShowCharacters;
+		}
+
+		#endregion
+
+		public void Generate()
+		{
+			Username = Guid.NewGuid().Hash36();
+			ValidateUsername();
+		}
+
+		private void ResetValidationState()
+		{
+			UsernameState = ValidationStates.Undefined;
+			UsernameValidationResult = string.Format(Strings.Registration_View_Error_Lenght, MinimumUsernameLength);
+
+			PasswordState = ValidationStates.Undefined;
+			PasswordValidationResult = string.Format(Strings.Registration_View_Error_Lenght, MinimumPasswordLength);
+		}
+
+		public void ValidateUsername()
+		{
+			if (string.IsNullOrWhiteSpace(Username) || Username.Length < MinimumUsernameLength)
+			{
+				UsernameState = ValidationStates.Error;
+				UsernameValidationResult = string.Format(Strings.Registration_View_Error_Lenght, MinimumUsernameLength);
+				return;
+			}
+			
+			if (isUserNameUnique.HasValue && !isUserNameUnique.Value)
+			{
+				UsernameState = ValidationStates.Error;
+				UsernameValidationResult = Strings.RegistrationView_Error_UsernameNotUnique;
+				return;
+			}
+
+			if (!isUserNameUnique.HasValue)
+			{
+				UsernameState = ValidationStates.Checking;
+				UsernameValidationResult = String.Empty;
+				return;
+			}
+
+			UsernameState = ValidationStates.Ok;
+			UsernameValidationResult = string.Empty;
+		}
+
+		public void ValidatePassword()
+		{
+			if (string.IsNullOrWhiteSpace(Password) || Password.Length < MinimumPasswordLength)
+			{
+				PasswordState = ValidationStates.Error;
+				PasswordValidationResult = string.Format(Strings.Registration_View_Error_Lenght, MinimumPasswordLength);
+				return;
+			}
+
+			PasswordState = ValidationStates.Ok;
+			PasswordValidationResult = string.Empty;
+		}
+
+		private void OnTimerCallback(object state)
+		{
+			Execute.OnUIThread(() =>
+				                   {
+									   isUserNameUnique = null;
+									   ValidateUsername();
+
+									   if (!string.IsNullOrWhiteSpace(Username) && Username.Length >= MinimumUsernameLength)
+									   {
+										   var proxy = ServiceFactory.CreateRegistrationService();
+										   proxy.IsLoginAvailableCompleted += (sender, args) =>
+										   {
+											   isUserNameUnique = args.Result;
+											   Execute.OnUIThread(ValidateUsername);
+										   };
+
+										   proxy.IsLoginAvailableAsync(Username);
+									   }
+								   });
 		}
 
 		/// <summary>
@@ -328,6 +467,13 @@ namespace Fab.Client.Authentication
 		public IEnumerable<IResult> Register()
 		{
 			ShowStatus = true;
+
+			if (!CanRegister())
+			{
+				ValidateUsername();
+				ValidatePassword();
+				yield break;
+			}
 
 			var registerationResult = new RegisterationResult(Username, Password);
 			yield return registerationResult;
@@ -351,10 +497,7 @@ namespace Fab.Client.Authentication
 		/// <returns><c>true</c> if the username and password meets the security requirements.</returns>
 		public bool CanRegister()
 		{
-			return AgreeToTerms
-				   && UsernameIsOk
-				   && PasswordIsOk
-				   && Password2IsOk;
+			return UsernameState == ValidationStates.Ok && PasswordState == ValidationStates.Ok;
 		}
 
 		/// <summary>
@@ -372,7 +515,7 @@ namespace Fab.Client.Authentication
 			string termsText = streamReader.ReadToEnd();
 
 			var termsViewModel = IoC.Get<TermsViewModel>();
-			termsViewModel.DisplayName = Resources.Strings.TermsView_Title;
+			termsViewModel.DisplayName = Strings.TermsView_Title;
 			termsViewModel.Text = termsText;
 
 			var windowManager = IoC.Get<IWindowManager>();
@@ -391,11 +534,11 @@ namespace Fab.Client.Authentication
 		private void ClearForm()
 		{
 			ShowStatus = false;
-			AgreeToTerms = false;
 			UsernameIsFocused = true;
 			Username = string.Empty;
 			Password = string.Empty;
-			PasswordConfirmation = string.Empty;
+			ShowCharacters = true;
+			ResetValidationState();
 		}
 
 		#endregion

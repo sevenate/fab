@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Fab.Client.Resources.Icons.SmileyWhatIcon"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 x:Name="UserControl"
+			 mc:Ignorable="d"
+			 d:DesignHeight="100" d:DesignWidth="100">
+	<Path Data="F1 M 16.5455,16C 18.5036,16 20.0909,17.5874 20.0909,19.5455C 20.0909,21.5036 18.5036,23.0909 16.5455,23.0909C 14.5874,23.0909 13,21.5036 13,19.5455C 13,17.5874 14.5874,16 16.5455,16 Z M 17.5,31L 30.5,31C 31.8807,31 33,32.1193 33,33.5C 33,34.8807 31.8807,36 30.5,36L 17.5,36C 16.1193,36 15,34.8807 15,33.5C 15,32.1193 16.1193,31 17.5,31 Z M 30,13C 32.7614,13 35,15.6863 35,19C 35,22.3137 32.7614,25 30,25C 27.2386,25 25,22.3137 25,19C 25,15.6863 27.2386,13 30,13 Z"
+		  Fill="{Binding Foreground, ElementName=UserControl}"
+		  Stretch="Uniform" UseLayoutRounding="False" />
+</UserControl>

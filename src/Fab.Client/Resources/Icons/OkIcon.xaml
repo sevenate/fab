@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Fab.Client.Resources.Icons.OkIcon"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 x:Name="Usercontrol"
+			 mc:Ignorable="d"
+			 d:DesignHeight="100" d:DesignWidth="100">
+	<Grid>
+		<Path Data="M72.9999,25.1667 L45.5,60.1668 L27.9998,42.6666 L20.5,50.1667 L45.5,75.1669 L80.5,32.6668 z M50,0 C77.6143,-1E-06 100,22.3857 100,50 C100,77.6142 77.6143,100 50,100 C22.3857,100 0,77.6142 0,50 C0,22.3857 22.3857,-1E-06 50,0 z"
+			Fill="{Binding Background, ElementName=Usercontrol}"
+			Stretch="Uniform" />
+		<Path
+            Stretch="Uniform"
+            Fill="{Binding Foreground, ElementName=Usercontrol}"
+            Data="F1 M 24,0.5C 36.9787,0.5 47.5,11.0213 47.5,24C 47.5,36.9787 36.9787,47.5 24,47.5C 11.0213,47.5 0.499997,36.9787 0.499997,24C 0.499997,11.0213 11.0213,0.5 24,0.5 Z M 24,3.5C 12.6782,3.5 3.5,12.6782 3.5,24C 3.5,35.3218 12.6782,44.5 24,44.5C 35.3218,44.5 44.5,35.3218 44.5,24C 44.5,12.6782 35.3218,3.5 24,3.5 Z " />
+		<Path Stretch="Uniform"
+			  RenderTransformOrigin="0.5,0.5"
+		      Fill="{Binding Foreground, ElementName=Usercontrol}"
+		      Data="F1 M 15,21L 22,28L 32.9999,14.0001L 35.9999,17.0001L 22,34L 12.0001,24L 15,21 Z ">
+			<Path.RenderTransform>
+				<CompositeTransform
+                    TranslateX="0.5"
+                    TranslateY="0.5"
+                    ScaleX="0.6"
+                    ScaleY="0.6" />
+			</Path.RenderTransform>
+		</Path>
+	</Grid>
+</UserControl>
