@@ -151,6 +151,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authentication\GenerateLoginResult.cs" />
     <Compile Include="Authentication\NavigateToRegistrationScreenMessage.cs" />
     <Compile Include="Authentication\TermsViewModel.cs" />
     <Compile Include="Authentication\LoggedInMessage.cs" />
@@ -162,14 +163,17 @@
     <Compile Include="Framework\Behaviors\SelectPasswordOnFocusBehavior.cs" />
     <Compile Include="Framework\Behaviors\SelectTextOnFocusBehavior.cs" />
     <Compile Include="Framework\Controls\ThicknessAnimation.cs" />
-    <Compile Include="Framework\Controls\ValidationOkControl.xaml.cs">
-      <DependentUpon>ValidationOkControl.xaml</DependentUpon>
+    <Compile Include="Framework\Controls\ValidationControl.xaml.cs">
+      <DependentUpon>ValidationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Framework\Converters\BoolToValidationStateConverter.cs" />
     <Compile Include="Framework\Converters\AssetTypeIdToStringConverter.cs" />
     <Compile Include="Framework\Converters\BooleanToColorConverter.cs" />
+    <Compile Include="Framework\Converters\ValidationStateToOpacityConverter.cs" />
     <Compile Include="Framework\Converters\InvertDoubleConverter.cs" />
     <Compile Include="Framework\Converters\CultureToFlagImagePathConverter.cs" />
     <Compile Include="Framework\Converters\DebugConverter.cs" />
+    <Compile Include="Framework\DispatcherHelper.cs" />
     <Compile Include="Framework\Extensions\ColorFromString.cs" />
     <Compile Include="Framework\Extensions\FrameworkElementExtensions.cs" />
     <Compile Include="Framework\Results\Animation.cs" />
@@ -216,6 +220,27 @@
     </Compile>
     <Compile Include="Resources\Icons\ArrowsLeftRightIcon.xaml.cs">
       <DependentUpon>ArrowsLeftRightIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\UnpinIcon.xaml.cs">
+      <DependentUpon>UnpinIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\PinIcon.xaml.cs">
+      <DependentUpon>PinIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\TextboxIcon.xaml.cs">
+      <DependentUpon>TextboxIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\PasswordIcon.xaml.cs">
+      <DependentUpon>PasswordIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\SmileyWhatIcon.xaml.cs">
+      <DependentUpon>SmileyWhatIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\DiceIcon.xaml.cs">
+      <DependentUpon>DiceIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\OkIcon.xaml.cs">
+      <DependentUpon>OkIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Icons\KeyIcon.xaml.cs">
       <DependentUpon>KeyIcon.xaml</DependentUpon>
@@ -432,7 +457,7 @@
     <DesignData Include="Authentication\SampleData\RegistrationData.xaml">
       <SubType>Designer</SubType>
     </DesignData>
-    <Page Include="Framework\Controls\ValidationOkControl.xaml">
+    <Page Include="Framework\Controls\ValidationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -532,6 +557,34 @@
     <Page Include="Resources\Icons\ArrowsLeftRightIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\UnpinIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\PinIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\TextboxIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\PasswordIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\SmileyWhatIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\DiceIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\OkIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Icons\KeyIcon.xaml">
       <SubType>Designer</SubType>
@@ -704,10 +757,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\TransitioningFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -853,7 +902,9 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.ru.resx" />
+    <EmbeddedResource Include="Resources\Strings.ru.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!--

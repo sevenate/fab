@@ -1,8 +1,8 @@
 ﻿namespace Fab.Client.Resources.Icons
 {
-    public partial class RefreshIcon
-    {
-        public RefreshIcon()
+	public partial class OkIcon
+	{
+        public OkIcon()
         {
             InitializeComponent();
         }

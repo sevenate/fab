@@ -15,7 +15,6 @@
 				<ResourceDictionary Source="Themes/Cosmopolitan/ToolkitStyles.xaml" />
 				<ResourceDictionary Source="Themes/AutoCompleteComboBox.xaml" />
 				<ResourceDictionary Source="Themes/TransitioningFrame.xaml" />
-				<ResourceDictionary Source="Themes/generic.xaml" />
 				<ResourceDictionary Source="Themes/Colors.xaml" />
 				<ResourceDictionary Source="Themes/CustomStyles.xaml" />
 				<ResourceDictionary Source="Themes/ControlStyles.xaml" />

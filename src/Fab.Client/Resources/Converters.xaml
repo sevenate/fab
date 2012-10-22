@@ -17,6 +17,8 @@
 	<converters:DebugConverter x:Key="debugConverter" />
 	<converters:BooleanToColorConverter x:Key="boolToColor" />
 	<converters:AssetTypeIdToStringConverter x:Key="assetTypeIdToString" />
+	<converters:BoolToValidationStateConverter x:Key="boolToValidationState" />
+	<converters:ValidationStateToOpacityConverter x:Key="ValidationStatesToOpacity" />
 	<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
 	<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
 </ResourceDictionary>
