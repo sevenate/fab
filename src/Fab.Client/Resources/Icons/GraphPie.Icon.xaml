@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Fab.Client.Resources.Icons.GraphPie"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 x:Name="userControl"
+			 mc:Ignorable="d"
+			 d:DesignHeight="100" d:DesignWidth="100">
+	<Grid Background="{Binding Background, ElementName=userControl}">
+		<Path
+			Stretch="Uniform"
+			Fill="{Binding Foreground, ElementName=userControl}"
+			Data="F1 M 25,23L 28.2358,12.4836C 31.7087,13.5509 34.4491,16.2913 35.5164,19.7642L 25,23 Z M 23,14C 24.1261,14 25.2127,14.1692 26.2358,14.4836L 23,25L 33.5164,21.7642C 33.8308,22.7872 34,23.8739 34,25C 34,31.0751 29.0751,36 23,36C 16.9249,36 12,31.0751 12,25C 12,18.9249 16.9249,14 23,14 Z " />
+	</Grid>
+</UserControl>

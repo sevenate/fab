@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccountsDashboardView_CreateAccount" xml:space="preserve">
-    <value>+ Счет</value>
+    <value>Счет</value>
   </data>
   <data name="AccountView_Delete" xml:space="preserve">
     <value>Удалить</value>
@@ -139,7 +139,7 @@
     <value>Общие категории</value>
   </data>
   <data name="CategoriesView_CreateNew" xml:space="preserve">
-    <value>+ Категория</value>
+    <value>Категория</value>
   </data>
   <data name="CategoriesView_DepositCategories" xml:space="preserve">
     <value>Категории доходов</value>
@@ -156,9 +156,6 @@
   <data name="CategoryView_Edit" xml:space="preserve">
     <value>Редактировать</value>
   </data>
-  <data name="LoginView_Language" xml:space="preserve">
-    <value>Язык</value>
-  </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Вход</value>
   </data>
@@ -166,13 +163,10 @@
     <value>Пароль</value>
   </data>
   <data name="LoginView_Remember_me" xml:space="preserve">
-    <value>Запомнить имя</value>
+    <value>Помнить / забыть имя</value>
   </data>
-  <data name="LoginView_Show_characters" xml:space="preserve">
-    <value>Показывать пароль</value>
-  </data>
-  <data name="LoginView_Title" xml:space="preserve">
-    <value>Вход</value>
+  <data name="LoginView_Show_Hide_Password" xml:space="preserve">
+    <value>Показать / скрыть пароль</value>
   </data>
   <data name="LoginView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
@@ -217,34 +211,28 @@
     <value>Выход</value>
   </data>
   <data name="PostingActionsView_NewExpense" xml:space="preserve">
-    <value>+ Расход</value>
+    <value>Расход</value>
   </data>
   <data name="PostingActionsView_NewIncome" xml:space="preserve">
-    <value>+ Доход</value>
+    <value>Доход</value>
   </data>
   <data name="PostingActionsView_NewTransfer" xml:space="preserve">
-    <value>+ Перевод</value>
+    <value>Перевод</value>
   </data>
   <data name="PostingsFilterView_Today" xml:space="preserve">
     <value>Сегодня</value>
   </data>
   <data name="RegistrationView_Agreement1" xml:space="preserve">
-    <value>Да, я согласен с</value>
+    <value>Нажмите</value>
   </data>
   <data name="RegistrationView_Agreement2" xml:space="preserve">
-    <value> условиями использования</value>
+    <value>Условия предоставления услуг</value>
   </data>
   <data name="RegistrationView_Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
-  <data name="RegistrationView_Password2" xml:space="preserve">
-    <value>Пароль (еще раз)</value>
-  </data>
   <data name="RegistrationView_Register" xml:space="preserve">
     <value>Зарегистрироваться</value>
-  </data>
-  <data name="RegistrationView_Title" xml:space="preserve">
-    <value>Регистрация</value>
   </data>
   <data name="RegistrationView_Username" xml:space="preserve">
     <value>Имя пользователя</value>
@@ -304,10 +292,10 @@
     <value>Транзакций:</value>
   </data>
   <data name="StartView_back_to_Login" xml:space="preserve">
-    <value>« Вход</value>
+    <value>Вход</value>
   </data>
   <data name="StartView_or_Sign_up" xml:space="preserve">
-    <value>Регистрация »</value>
+    <value>Регистрация</value>
   </data>
   <data name="SearchDashBoardView_Name_Empty" xml:space="preserve">
     <value>Поиск</value>
@@ -411,9 +399,6 @@
   <data name="PostingsView_Difference" xml:space="preserve">
     <value>Разница:</value>
   </data>
-  <data name="PostingsView_End_Balance" xml:space="preserve">
-    <value>Конечный баланс:</value>
-  </data>
   <data name="PostingsView_Expense" xml:space="preserve">
     <value>Расход:</value>
   </data>
@@ -421,10 +406,7 @@
     <value>Доход:</value>
   </data>
   <data name="PostingsView_Postings" xml:space="preserve">
-    <value>Транзакций:</value>
-  </data>
-  <data name="PostingsView_Start_Balance" xml:space="preserve">
-    <value>Начальный баланс:</value>
+    <value>Записей:</value>
   </data>
   <data name="AccountView_Delete_Confirmation_Message" xml:space="preserve">
     <value>Вы действительно хотите удалить счет '{0}'?</value>
@@ -474,20 +456,14 @@
   <data name="Error_Service_Is_Too_Busy" xml:space="preserve">
     <value>Служба слишком занята. Пожалуйста, повторите попытку позже.</value>
   </data>
-  <data name="LoginView_Authorization_In_Progress" xml:space="preserve">
-    <value>Проверка пароля...</value>
-  </data>
-  <data name="RegistrationView_Registration_In_Progress" xml:space="preserve">
-    <value>Регистрация...</value>
-  </data>
   <data name="PostingsView_Filter_Days" xml:space="preserve">
     <value>дней</value>
   </data>
   <data name="ErrorDialogView_Close" xml:space="preserve">
-    <value>Попробовать продолжить</value>
+    <value>Закрыть</value>
   </data>
   <data name="ErrorDialogView_Title" xml:space="preserve">
-    <value>Непредвиденная ошибка :(</value>
+    <value>Возникла непредвиденная ошибка</value>
   </data>
   <data name="PersonalCornerView_Client_Version" xml:space="preserve">
     <value>Версия программы</value>
@@ -497,5 +473,38 @@
   </data>
   <data name="TermsView_Title" xml:space="preserve">
     <value>Пользовательское соглашение</value>
+  </data>
+  <data name="Registration_View_Hint_1" xml:space="preserve">
+    <value>Совет по безопасности:</value>
+  </data>
+  <data name="Registration_View_Hint_1_2" xml:space="preserve">
+    <value> не рекомендуется выбирать свое настоящее имя, ник или емейл как </value>
+  </data>
+  <data name="Registration_View_Error_Lenght" xml:space="preserve">
+    <value>не менее {0} символов</value>
+  </data>
+  <data name="Registration_View_Hint_1_3" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="RegistrationView_ERR_REGS_0" xml:space="preserve">
+    <value>Извините, подписка временно приостановлена.</value>
+  </data>
+  <data name="RegistrationView_ERR_REGS_1" xml:space="preserve">
+    <value>Извините, но имя пользователя "{0}" уже используется. Пожалуйста, попробуйте выбрать другое.</value>
+  </data>
+  <data name="RegistrationView_Error_UsernameNotUnique" xml:space="preserve">
+    <value>Это имя уже используется</value>
+  </data>
+  <data name="RegistrationView_Agreement3" xml:space="preserve">
+    <value>Я принимаю</value>
+  </data>
+  <data name="RegistrationView_Agreement4" xml:space="preserve">
+    <value>после того как вы прочитаете и согласитесь с условиями предоставления услуг</value>
+  </data>
+  <data name="RegistrationView_Generate_Anonymous_Username" xml:space="preserve">
+    <value>Сгенерировать анонимное имя пользователя</value>
+  </data>
+  <data name="RegistrationView_Show_Hide_Password" xml:space="preserve">
+    <value>Показать / скрыть пароль</value>
   </data>
 </root>

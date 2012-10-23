@@ -1,4 +1,7 @@
-﻿function addCustomSEToGA() {
+﻿var clientVersion = null;
+var fileSize = null;
+
+function addCustomSEToGA() {
 	try {
 		_gaq.push(['_addOragnic','rambler.ru', 'words']);
 		_gaq.push(['_addOragnic','nova.rambler.ru', 'query']);
@@ -67,8 +70,6 @@ Silverlight.onInstallRequired = function() {
 		Silverlight.installControls[i].update(AgInstall.INSTALL_REQUIRED);
 	_gaq.push(['_trackEvent', 'Silverlight Experience', 'Supported', 'Install Required']);
 };
-
-var fileSize = null;
 
 function addSeparatorsNF(nStr, inD, outD, sep) {
 	nStr += '';
@@ -198,12 +199,16 @@ getSLVersion = function() {
 	return version;
 };
 
+function getClientParam(){
+	return (clientVersion != null && clientVersion != '' ? ('?' + clientVersion) : '');
+}
+
 function pageLoaded() {
 	if (Silverlight.supportedUserAgent('5.0', null)) {
 		// silverlight is supported update any installers
 		for (var i in Silverlight.installControls)
 			Silverlight.installControls[i].update();
-		getXapSize('ClientBin/SilverFAB.xap');
+		getXapSize('ClientBin/SilverFAB.xap' + getClientParam());
 	} else {
 		// silverlight is not supported, need to tell installers to report this
 		for (var j in Silverlight.installControls)

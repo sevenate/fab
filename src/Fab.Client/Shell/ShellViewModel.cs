@@ -241,7 +241,7 @@ namespace Fab.Client.Shell
 			// It is required to "manually" pass style here so that Caliburn could apply it to newly created ChildWindow
 			windowManager.ShowDialog(errorViewModel, settings: new Dictionary<string, object>
 			                                                   	{
-			                                                   		{"Style", Application.Current.Resources["ChildWindowStyle"]}
+			                                                   		{"Style", Application.Current.Resources["ErrorChildWindowStyle"]}
 			                                                   	});
 		}
 

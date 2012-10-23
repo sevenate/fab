@@ -19,16 +19,14 @@ namespace Fab.Client.MoneyTracker.Postings
 	{
 		private readonly int accountId;
 		private readonly int transactionId;
-		private readonly Guid userId;
 
 		/// <summary>
 		/// Gets or sets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public GetPostingResult(Guid userId, int accountId, int transactionId, IEventAggregator eventAggregator)
+		public GetPostingResult(int accountId, int transactionId, IEventAggregator eventAggregator)
 		{
-			this.userId = userId;
 			this.accountId = accountId;
 			this.transactionId = transactionId;
 			EventAggregator = eventAggregator;
@@ -62,9 +60,7 @@ namespace Fab.Client.MoneyTracker.Postings
 
 											EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			                             };
-			proxy.GetJournalAsync(userId,
-			                      accountId,
-			                      transactionId);
+			proxy.GetJournalAsync(accountId, transactionId);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Downloading posting #" + transactionId });
 		}
 

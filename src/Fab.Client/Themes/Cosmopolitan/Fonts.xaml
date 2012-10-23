@@ -8,15 +8,15 @@
     </ResourceDictionary.MergedDictionaries>
     
     <FontFamily x:Key="HeaderFontFamily">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="ContentFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+	<FontFamily x:Key="ContentFontFamily">Portable User Interface, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
 
     <my:Double x:Key="ApplicationNameFontSize">50</my:Double>
     <my:Double x:Key="HeaderFontSize">21.333</my:Double>
     <my:Double x:Key="NavigationFontSize">28</my:Double>
     
-    <my:Double x:Key="ContentFontSize">14</my:Double>
-    <my:Double x:Key="HyperlinkFontSize">14</my:Double>
-    <my:Double x:Key="LabelFontSize">12</my:Double>
+    <my:Double x:Key="ContentFontSize">16</my:Double>
+    <my:Double x:Key="HyperlinkFontSize">16</my:Double>
+    <my:Double x:Key="LabelFontSize">16</my:Double>
     <my:Double x:Key="ControlTitleFontSize">16</my:Double>
     <my:Double x:Key="ControlTitleBigFontSize">18</my:Double>
     <my:Double x:Key="ControlContentFontSize">10</my:Double>

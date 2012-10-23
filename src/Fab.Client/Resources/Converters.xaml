@@ -7,6 +7,7 @@
 	<converters:CultureToFlagImagePathConverter x:Key="cultureFlagPath" />
 	<converters:BooleanToNotBooleanConverter x:Key="boolToNotBool" />
 	<converters:BooleanToVisibilityInvertConverter x:Key="boolToVisibilityInvert" />
+	<converters:InvertDoubleConverter x:Key="invertDouble" />
 	<converters:BooleanToOpacityConverter x:Key="boolToOpacity" />
 	<converters:NullToCollapsedConverter x:Key="nullToCollapsed" />
 	<converters:NullToQuestionMarkConverter x:Key="nullToQuestion" />
@@ -16,6 +17,8 @@
 	<converters:DebugConverter x:Key="debugConverter" />
 	<converters:BooleanToColorConverter x:Key="boolToColor" />
 	<converters:AssetTypeIdToStringConverter x:Key="assetTypeIdToString" />
+	<converters:BoolToValidationStateConverter x:Key="boolToValidationState" />
+	<converters:ValidationStateToOpacityConverter x:Key="ValidationStatesToOpacity" />
 	<Common:DateTimeUtcToLocalConverter x:Key="dateTimeUtcToLocal" />
 	<Common:ZeroToEmptyStringConverter x:Key="zeroToEmptyString" />
 </ResourceDictionary>

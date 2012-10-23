@@ -49,8 +49,8 @@
 		}
 	</style>
 	<script type="text/javascript" src="Scripts/Silverlight.js"></script>
-	<script type="text/javascript" src="Scripts/Silverlight.supportedUserAgent.debug.js"></script>
-	<script type="text/javascript" src="Scripts/AgInstall.debug.js"></script>
+	<script type="text/javascript" src="Scripts/Silverlight.supportedUserAgent.js"></script>
+	<script type="text/javascript" src="Scripts/AgInstall.js"></script>
 	<script type="text/javascript" src="Scripts/Common.js"></script>
 
     <script type="text/javascript">
@@ -83,13 +83,13 @@
 	
 	<script type="text/javascript">
 		Silverlight.inject({
-			source: 'ClientBin/SilverFAB.xap',
+			source: 'ClientBin/SilverFAB.xap' + getClientParam(),
 			parentElement: 'silverlightControlHost',
 			properties: {
 				width: '100%',
 				height: '100%',
 				background: 'white',
-				version: '5.0.61118.0',
+				version: '5.0.10411.0',
 				autoUpgrade: 'true',
 				SplashScreenSource: 'splash.xaml',
 				onSourceDownloadProgressChanged: 'downloadProgress',

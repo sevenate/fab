@@ -14,7 +14,6 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Caliburn.Micro;
-using Fab.Client.Authentication;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
@@ -360,7 +359,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 		public bool CanSave
 		{
-			get { return Amount != null && CurrentCategory != null; }
+			get { return Amount != null; }
 		}
 
 		[SetBusy]
@@ -376,7 +375,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 
 				var request = new EditTransactionResult(
 					transactionId.Value,
-					UserCredentials.Current.UserId,
 					AccountId,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
@@ -399,9 +397,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transactions
 				                	? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
 				                	: OperationDate.Date + DateTime.Now.TimeOfDay;
 
-				var request = new AddTransactionResult(
-					UserCredentials.Current.UserId,
-					AccountId,
+				var request = new AddTransactionResult(AccountId,
 					date.ToUniversalTime(),
 					decimal.Parse(Price.Trim()),
 					decimal.Parse(Quantity.Trim()),

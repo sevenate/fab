@@ -9,6 +9,8 @@
 		</Grid.RowDefinitions>
 		<TextBox x:Name="Text"
 				 TextWrapping="Wrap"
+				 BorderThickness="0"
+				 BorderBrush="Transparent"
 				 IsReadOnly="True"
 				 MaxHeight="500"
 				 VerticalScrollBarVisibility="Auto">
@@ -18,7 +20,12 @@
 					HorizontalAlignment="Right"
 					Margin="0 8 0 0">
 			<Button x:Name="Close"
-					Content="{Binding Path=LocalizedStrings.TermsView_Close, FallbackValue='Close'}" />
+					Style="{StaticResource ButtonStyle}">
+				<TextBlock Text="{Binding Path=LocalizedStrings.TermsView_Close, FallbackValue='Close'}"
+						   Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding BorderBrush, ElementName=Close}"
+						   Margin="10" />
+			</Button>
 		</StackPanel>
 	</Grid>
 </UserControl>

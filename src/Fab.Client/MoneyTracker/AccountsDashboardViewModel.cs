@@ -6,12 +6,14 @@
 
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Windows.Controls;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Localization;
 using Fab.Client.MoneyTracker.Accounts;
 using Fab.Client.MoneyTracker.Accounts.Single;
 using Fab.Client.MoneyTracker.Filters;
+using Fab.Client.Resources.Icons;
 
 namespace Fab.Client.MoneyTracker
 {
@@ -37,6 +39,8 @@ namespace Fab.Client.MoneyTracker
 		/// </summary>
 		private readonly IAccountsRepository repository = IoC.Get<IAccountsRepository>();
 
+		private Control icon;
+
 		#endregion
 
 		#region Properties
@@ -56,6 +60,7 @@ namespace Fab.Client.MoneyTracker
 		[ImportingConstructor]
 		public AccountsDashboardViewModel(PostingsFilterViewModel postingsFilterVM)
 		{
+			Icon = new MoneyIcon();
 			PostingsFilter = postingsFilterVM;
 			eventAggregator.Subscribe(this);
 			ResetAccounts();
@@ -69,6 +74,12 @@ namespace Fab.Client.MoneyTracker
 		public string Name
 		{
 			get { return string.Format(Resources.Strings.AccountsDashboardView_Name_Counts, Items.Count); }
+		}
+
+		public Control Icon
+		{
+			get { return icon; }
+			private set { icon = value; }
 		}
 
 		/// <summary>

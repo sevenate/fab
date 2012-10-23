@@ -1,0 +1,33 @@
+﻿<Page x:Class="Fab.Metro.LoginPage"
+    IsTabStop="false"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel 
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    MinWidth="400">
+            <TextBlock Text="Service"
+                       Style="{StaticResource BasicTextStyle}" />
+            <TextBox x:Name="ServiceUrl"
+                     Text="https://orion/StagingFab/MoneyService.svc"
+                     Style="{StaticResource TextBoxStyle}" />
+            <TextBlock Text="User name"
+                       Style="{StaticResource BasicTextStyle}" />
+            <TextBox x:Name="Username"
+                     Style="{StaticResource TextBoxStyle}" />
+            <TextBlock Text="Password"
+                       Style="{StaticResource BasicTextStyle}" />
+            <TextBox x:Name="Password"
+                     Style="{StaticResource TextBoxStyle}" />
+            <Button Content="Login" HorizontalAlignment="Center"
+                    MinWidth="100"
+                    Margin="0,5" Click="Button_Click_1"/>
+        </StackPanel>
+
+    </Grid>
+</Page>

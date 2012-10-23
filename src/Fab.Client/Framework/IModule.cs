@@ -4,6 +4,7 @@
 // </copyright>
 //------------------------------------------------------------
 
+using System.Windows.Controls;
 using Caliburn.Micro;
 
 namespace Fab.Client.Framework
@@ -14,12 +15,17 @@ namespace Fab.Client.Framework
 	public interface IModule : IScreen
 	{
 		/// <summary>
-		/// Module name.
+		/// Gets module name.
 		/// </summary>
 		string Name { get; }
+		
+		/// <summary>
+		/// Gets module icon.
+		/// </summary>
+		Control Icon { get; }
 
 		/// <summary>
-		/// Determine order in UI representation (like position in ItemsControl.Items).
+		/// Gets rder in UI representation (like position in ItemsControl.Items) for module.
 		/// </summary>
 		int Order { get; }
 
