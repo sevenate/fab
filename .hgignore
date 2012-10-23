@@ -16,3 +16,5 @@ glob:App_Data/Logs/*
 glob:src/AssemblyInfo.Generated.cs
 glob:version.txt
 glob:*.log
+syntax: glob
+packages/*
