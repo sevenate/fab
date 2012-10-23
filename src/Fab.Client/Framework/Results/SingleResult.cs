@@ -5,10 +5,9 @@
 //------------------------------------------------------------
 
 using System;
-using System.Windows;
-using System.Windows.Threading;
 using Caliburn.Micro;
 using Action = System.Action;
+using Fab.Client.Framework;
 
 namespace Fab.Client.Framework.Results
 {
@@ -31,12 +30,8 @@ namespace Fab.Client.Framework.Results
 			Action();
 
 			// Push all binded properties changes during Action to appear faster on screen
-#if SILVERLIGHT
-			Application.Current.RootVisual.Dispatcher.BeginInvoke(delegate { });
-#else
-			Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate { }));
-#endif
-			
+			//DispatcherHelper.ForceBindingUpdate();
+
 			Completed(this, new ResultCompletionEventArgs());
 		}
 

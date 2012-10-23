@@ -14,12 +14,11 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-
-    <Canvas x:Name="loader_anim"
+	<Viewbox Stretch="Uniform">
+		<Canvas x:Name="loader_anim"
                 Height="32"
                 Width="32"
-                RenderTransformOrigin="0.5,0.5"
-                Margin="4,4,8,4">
+                RenderTransformOrigin="0.5,0.5">
         <Canvas.RenderTransform>
             <TransformGroup>
                 <ScaleTransform />
@@ -109,4 +108,5 @@
                      Width="6"
                      Canvas.Top="13" />
     </Canvas>
+	</Viewbox>
 </UserControl>

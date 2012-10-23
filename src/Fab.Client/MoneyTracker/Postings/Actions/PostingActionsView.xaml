@@ -3,27 +3,58 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 mc:Ignorable="d">
+             xmlns:Icons="clr-namespace:Fab.Client.Resources.Icons" mc:Ignorable="d">
 	<StackPanel Orientation="Horizontal"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Right">
-		<Button x:Name="NewExpense"
-				Content="{Binding Path=LocalizedStrings.PostingActionsView_NewExpense, FallbackValue='+ Expense'}"
+		<Button x:Name="NewExpense" Padding="10"
+				MinWidth="75"
+				MinHeight="23"
+				Foreground="{StaticResource ExpenceBrush}">
+		    <StackPanel Orientation="Horizontal">
+                <Icons:AddIcon
+                    MaxWidth="16"
+                    MaxHeight="16"/>
+                <TextBlock
+                    Text="{Binding Path=LocalizedStrings.PostingActionsView_NewExpense, FallbackValue='Expense'}"
+                    Margin="10,0,0,0"
+                    Foreground="{StaticResource ExpenceBrush}"
+                    FontSize="18" />
+            </StackPanel>
+		</Button>
+	    <Button x:Name="NewIncome"
 				Padding="10"
 				MinWidth="75"
 				MinHeight="23"
-				Foreground="{StaticResource ExpenceBrush}" />
-		<Button x:Name="NewIncome"
-				Content="{Binding Path=LocalizedStrings.PostingActionsView_NewIncome, FallbackValue='+ Income'}"
+				Foreground="{StaticResource IncomeBrush}">
+            <StackPanel
+                Orientation="Horizontal">
+                <Icons:AddIcon
+                    MaxWidth="16"
+                    MaxHeight="16" />
+                <TextBlock
+                    Text="{Binding Path=LocalizedStrings.PostingActionsView_NewIncome, FallbackValue='Income'}"
+                    Margin="10,0,0,0"
+                    Foreground="{StaticResource IncomeBrush}"
+                    FontSize="18" />
+            </StackPanel>
+	    </Button>
+	    <Button x:Name="NewTransfer"
 				Padding="10"
 				MinWidth="75"
 				MinHeight="23"
-				Foreground="{StaticResource IncomeBrush}" />
-		<Button x:Name="NewTransfer"
-				Content="{Binding Path=LocalizedStrings.PostingActionsView_NewTransfer, FallbackValue='+ Transfer'}"
-				Padding="10"
-				MinWidth="75"
-				MinHeight="23"
-				Foreground="{StaticResource TransferBrush}" />
+				Foreground="{StaticResource TransferBrush}">
+            <StackPanel
+                Orientation="Horizontal">
+                <Icons:AddIcon
+                    MaxWidth="16"
+                    MaxHeight="16" />
+                <TextBlock
+                    Text="{Binding Path=LocalizedStrings.PostingActionsView_NewTransfer, FallbackValue='Transfer'}"
+                    Margin="10,0,0,0"
+                    Foreground="{StaticResource TransferBrush}"
+                    FontSize="18" />
+            </StackPanel>
+	    </Button>
 	</StackPanel>
 </UserControl>

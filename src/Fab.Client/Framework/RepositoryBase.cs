@@ -1,10 +1,9 @@
+//------------------------------------------------------------
 // <copyright file="RepositoryBase.cs" company="nReez">
-// 	Copyright (c) 2009-2011 nReez. All rights reserved.
+// 	Copyright (c) 2012 nReez. All rights reserved.
 // </copyright>
-// <author name="Andrew Levshoff" email="78@nreez.com" date="2011-03-26" />
+//------------------------------------------------------------
 
-using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Fab.Client.Authentication;
@@ -30,11 +29,6 @@ namespace Fab.Client.Framework
 		/// Gets global instance of the <see cref="IEventAggregator"/> that enables loosely-coupled publication of and subscription to events.
 		/// </summary>
 		protected IEventAggregator EventAggregator { get; private set; }
-
-		/// <summary>
-		/// Gets currently logged in user ID.
-		/// </summary>
-		protected Guid UserId { get; private set; }
 
 		#endregion
 
@@ -62,7 +56,6 @@ namespace Fab.Client.Framework
 		/// <param name="message">The message.</param>
 		public virtual void Handle(LoggedInMessage message)
 		{
-			UserId = message.Credentials.UserId;
 			Download();
 		}
 
@@ -76,7 +69,6 @@ namespace Fab.Client.Framework
 		/// <param name="message">The message.</param>
 		public virtual void Handle(LoggedOutMessage message)
 		{
-			UserId = Guid.Empty;
 			Entities.Clear();
 		}
 

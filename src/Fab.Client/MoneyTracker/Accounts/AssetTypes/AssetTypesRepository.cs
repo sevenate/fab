@@ -79,7 +79,7 @@ namespace Fab.Client.MoneyTracker.Accounts.AssetTypes
 												EventAggregator.Publish(new AsyncOperationCompleteMessage());
 											 };
 
-			proxy.GetAllAssetTypesAsync(UserId);
+			proxy.GetAllAssetTypesAsync();
 			EventAggregator.Publish(new AsyncOperationStartedMessage{OperationName = "Downloading asset types"});
 		}
 

@@ -4,10 +4,9 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-			 xmlns:Resources="clr-namespace:Fab.Client.Resources.Actions"
-			 xmlns:cal="http://www.caliburnproject.org"
+             xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:ToolTips="clr-namespace:Silverlight.Controls.ToolTips;assembly=Silverlight.Controls.ToolTips"
-			 mc:Ignorable="d"
+             xmlns:Icons="clr-namespace:Fab.Client.Resources.Icons" mc:Ignorable="d"
 			 cal:Message.Attach="[Event MouseEnter] = [Action ShowActions()]; [Event MouseLeave] = [Action HideActions()]"
 			 d:DataContext="{d:DesignData Source=./SampleData/Account.xaml}">
 	<UserControl.Resources>
@@ -75,7 +74,7 @@
 						Height="16"
 						Padding="2"
 						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Delete, FallbackValue='Delete'}">
-					<Resources:DeleteIcon />
+					<Icons:RecycleIcon />
 				</Button>
 				<Button x:Name="Edit"
 						Width="16"
@@ -83,7 +82,7 @@
 						Style="{x:Null}"
 						Padding="2"
 						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Edit, FallbackValue='Edit'}">
-					<Resources:EditIcon />
+					<Icons:EditIcon />
 				</Button>
 			</StackPanel>
 			<Controls:DockPanel Grid.Row="1"

@@ -12,7 +12,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Data;
 using Caliburn.Micro;
-using Fab.Client.Authentication;
 using Fab.Client.Framework.Filters;
 using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
@@ -291,7 +290,6 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 
 				var request = new UpdateTransferResult(
 					transactionId.Value,
-					UserCredentials.Current.UserId,
 					((AccountDTO)SourceAccounts.CurrentItem).Id,
 					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
@@ -309,9 +307,7 @@ namespace Fab.Client.MoneyTracker.Postings.Transfers
 							? DateTime.SpecifyKind(OperationDate, DateTimeKind.Local) + DateTime.Now.TimeOfDay
 							: OperationDate.Date + DateTime.Now.TimeOfDay;
 
-				var request = new AddTransferResult(
-					UserCredentials.Current.UserId,
-					((AccountDTO)SourceAccounts.CurrentItem).Id,
+				var request = new AddTransferResult(((AccountDTO)SourceAccounts.CurrentItem).Id,
 					((AccountDTO)TargetAccounts.CurrentItem).Id,
 					date.ToUniversalTime(),
 					decimal.Parse(Amount.Trim()),

@@ -5,11 +5,13 @@
 //------------------------------------------------------------
 
 using System.ComponentModel.Composition;
+using System.Windows.Controls;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Categories;
+using Fab.Client.Resources.Icons;
 
 namespace Fab.Client.MoneyTracker
 {
@@ -68,6 +70,7 @@ namespace Fab.Client.MoneyTracker
 		#region Deposit categories
 
 		private CategoriesViewModel depositCategories;
+		private Control icon;
 
 		public CategoriesViewModel DepositCategories
 		{
@@ -92,6 +95,8 @@ namespace Fab.Client.MoneyTracker
 		[ImportingConstructor]
 		public CategoriesDashBoardViewModel()
 		{
+			Icon = new CategoryIcon();
+
 			CommonCategories = IoC.Get<CategoriesViewModel>();
 			CommonCategories.CategoryType = CategoryType.Common;
 
@@ -114,6 +119,12 @@ namespace Fab.Client.MoneyTracker
 			get { return string.Format(Resources.Strings.CategoriesDashBoardView_Name_Counts, repository.Entities.Count); }
 		}
 
+		public Control Icon
+		{
+			get { return icon; }
+			private set { icon = value; }
+		}
+
 		/// <summary>
 		/// Determine order in UI representation (like position in ItemsControl.Items).
 		/// </summary>
@@ -125,14 +136,14 @@ namespace Fab.Client.MoneyTracker
 		public void Show()
 		{
 			//TODO: make this method common for all IModels
-			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
-			{
-				DisplayName = Name;
-			}
-			else
-			{
-				((IConductor)Parent).ActivateItem(this);
-			}
+//			if (Parent is IHaveActiveItem && ((IHaveActiveItem)Parent).ActiveItem == this)
+//			{
+//				DisplayName = Name;
+//			}
+//			else
+//			{
+//				((IConductor)Parent).ActivateItem(this);
+//			}
 		}
 
 		#endregion

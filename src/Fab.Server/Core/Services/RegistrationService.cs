@@ -8,6 +8,7 @@ using System;
 using System.ServiceModel;
 using Common.Logging;
 using EmitMapper;
+using Fab.Core;
 using Fab.Server.Core.Contracts;
 using Fab.Server.Core.DTO;
 
@@ -54,12 +55,13 @@ namespace Fab.Server.Core.Services
 
 		/// <summary>
 		/// Generate unique login name for new user.
+		/// Something like "8AB3-9D27" from Guid.New() most likely
+		/// will be unique without additional DB hit to make sure that it is really unique.
 		/// </summary>
 		/// <returns>Unique login name.</returns>
 		public string GenerateUniqueLogin()
 		{
-			// Todo: use more sophisticate algorithm for uniqueness login generation 
-			return "a" + Guid.NewGuid().GetHashCode();
+			return Guid.NewGuid().Hash36();
 		}
 
 		/// <summary>
@@ -145,7 +147,7 @@ namespace Fab.Server.Core.Services
 				{
 					ErrorCode = "ERR-REGS-0",
 					ErrorMessage = "Registration failed.",
-					Description = "Registration is temporarily closed. Please, try again later."
+					Description = "Sorry, the subscription is temporarily suspended."
 				};
 
 				throw new FaultException<FaultDetail>(
@@ -167,7 +169,7 @@ namespace Fab.Server.Core.Services
 					{
 						ErrorCode = "ERR-REGS-1",
 						ErrorMessage = "Registration failed.",
-						Description = string.Format("Username \"{0}\" is already used.\nPlease use another one.", newLogin)
+						Description = string.Format("Sorry, but username \"{0}\" is already in use. Please, try to pick another username.", newLogin)
 					};
 
 					throw new FaultException<FaultDetail>(
@@ -192,6 +194,10 @@ namespace Fab.Server.Core.Services
 
 				mc.Users.AddObject(user);
 				mc.SaveChanges();
+
+				// Creating default $ account
+				var moneyService = new MoneyService { UserName = user.Login };
+				moneyService.CreateAccount("Cash", 2);
 
 				return usersMapper.Map(user);
 			}

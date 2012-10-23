@@ -5,7 +5,10 @@
 //------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Globalization;
+using System.Windows.Controls;
 using Caliburn.Micro;
 using Fab.Client.Framework;
 using Fab.Client.Localization;
@@ -17,7 +20,7 @@ namespace Fab.Client.Authentication
 	/// </summary>
 	[Export(typeof (IModule))]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public class StartViewModel : LocalizableScreen, IStartViewModel, IHandle<LoggedOutMessage>
+	public class StartViewModel : LocalizableScreen, IStartViewModel, IHandle<LoggedOutMessage>, IHandle<NavigateToRegistrationScreenMessage>
 	{
 		#region Constants
 
@@ -58,6 +61,17 @@ namespace Fab.Client.Authentication
 		public string Version
 		{
 			get { return AssemblyExtensions.AppVersion; }
+		}
+
+		public IEnumerable<CultureInfo> Cultures
+		{
+			get { return Translator.SupportedCultures; }
+		}
+
+		public CultureInfo CurrentCulture
+		{
+			get { return Translator.CurrentCulture; }
+			set { Translator.CurrentCulture = value; }
 		}
 
 		#endregion
@@ -121,12 +135,24 @@ namespace Fab.Client.Authentication
 
 		#endregion
 
+		public void Handle(NavigateToRegistrationScreenMessage message)
+		{
+//			var a = Animation.Begin("GoToRegisterStoryboard");
+//			IEnumerable<IResult> resutls = new BindableCollection<IResult>();
+//			resutls.Apply(a);
+//			Coroutine.BeginExecute();
+
+//			yield return Animation.Begin("GoToRegisterStoryboard");
+		}
+
 		#region Implementation of IModule
 
 		public string Name
 		{
 			get { return "Start"; }
 		}
+
+		public Control Icon { get { return null; } }
 
 		/// <summary>
 		/// Determine order in UI representation (like position in ItemsControl.Items).

@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
-using Fab.Client.Authentication;
 using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Postings.Actions;
@@ -113,7 +112,7 @@ namespace Fab.Client.MoneyTracker.Postings
 		protected override IEnumerable<IResult> PreAction()
 		{
 			// Determine previous account balance.
-			var balanceResult = new GetBalanceResult(UserCredentials.Current.UserId, AccountId, startDate.ToUniversalTime(),
+			var balanceResult = new GetBalanceResult(AccountId, startDate.ToUniversalTime(),
 			                                         eventAggregator);
 			yield return balanceResult;
 

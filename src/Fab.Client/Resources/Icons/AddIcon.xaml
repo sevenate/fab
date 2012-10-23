@@ -1,0 +1,17 @@
+﻿<UserControl
+	x:Class="Fab.Client.Resources.Icons.AddIcon"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	d:DesignHeight="100"
+	d:DesignWidth="100">
+	<Grid>
+		<Path
+			Stretch="Uniform"
+			Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorLevel=1, Mode=FindAncestor, AncestorType=UserControl}}"
+			Data="F1 M 22,12L 26,12L 26,22L 36,22L 36,26L 26,26L 26,36L 22,36L 22,26L 12,26L 12,22L 22,22L 22,12 Z ">
+		</Path>
+	</Grid>
+</UserControl>

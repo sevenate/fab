@@ -1,4 +1,5 @@
-﻿using Fab.Metro.Data;
+﻿using Fab.Metro.Common;
+using Fab.Metro.Data;
 
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Grid Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234226
+// The Grid App template is documented at http://go.microsoft.com/fwlink/?LinkId=234226
 
 namespace Fab.Metro
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
-    /// An overview of the Grid Application design will be linked to in future revisions of
-    /// this template.
     /// </summary>
     sealed partial class App : Application
     {
@@ -43,21 +42,37 @@ namespace Fab.Metro
         /// search results, and so forth.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            // TODO: Create a data model appropriate for your problem domain to replace the sample data
-            var sampleData = new SampleDataSource();
+            // Do not repeat app initialization when already running, just ensure that
+            // the window is active
+            if (args.PreviousExecutionState == ApplicationExecutionState.Running)
+            {
+                Window.Current.Activate();
+                return;
+            }
+
+            // Create a Frame to act as the navigation context and associate it with
+            // a SuspensionManager key
+            var rootFrame = new Frame();
+            SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
 
             if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
-                //TODO: Load state from previously suspended application
+                // Restore the saved session state only when appropriate
+                await SuspensionManager.RestoreAsync();
             }
 
-            // Create a Frame to act navigation context and navigate to the first page,
+            if (rootFrame.Content == null)
+            {
+                // When the navigation stack isn't restored navigate to the first page,
             // configuring the new page by passing required information as a navigation
             // parameter
-            var rootFrame = new Frame();
-            rootFrame.Navigate(typeof(GroupedItemsPage), sampleData.ItemGroups);
+                if (!rootFrame.Navigate(typeof(LoginPage)))
+                {
+                    throw new Exception("Failed to create initial page");
+                }
+            }
 
             // Place the frame in the current Window and ensure that it is active
             Window.Current.Content = rootFrame;
@@ -71,9 +86,11 @@ namespace Fab.Metro
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            //TODO: Save application state and stop any background activity
-        }
+            var deferral = e.SuspendingOperation.GetDeferral();
+            await SuspensionManager.SaveAsync();
+            deferral.Complete();
+}
     }
 }

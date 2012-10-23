@@ -1,6 +1,5 @@
 ﻿using System;
 using Caliburn.Micro;
-using Fab.Client.MoneyServiceReference;
 using Fab.Client.Shell;
 using Fab.Client.Shell.Async;
 
@@ -13,15 +12,12 @@ namespace Fab.Client.MoneyTracker.Postings
 		/// </summary>
 		private IEventAggregator EventAggregator { get; set; }
 
-		public GetBalanceResult(Guid userId, int accountId, DateTime date, IEventAggregator eventAggregator)
+		public GetBalanceResult(int accountId, DateTime date, IEventAggregator eventAggregator)
 		{
-			UserId = userId;
 			AccountId = accountId;
 			Date = date;
 			EventAggregator = eventAggregator;
 		}
-
-		public Guid UserId { get; private set; }
 
 		public int AccountId { get; private set; }
 
@@ -50,7 +46,7 @@ namespace Fab.Client.MoneyTracker.Postings
 				EventAggregator.Publish(new AsyncOperationCompleteMessage());
 			};
 
-			proxy.GetAccountBalanceAsync(UserId, AccountId, Date);
+			proxy.GetAccountBalanceAsync(AccountId, Date);
 			EventAggregator.Publish(new AsyncOperationStartedMessage { OperationName = "Get account #" + AccountId + " balance" });
 		}
 	}
