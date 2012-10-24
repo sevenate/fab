@@ -476,26 +476,26 @@ section#main .row .col h2 {
 }
 
 /* -----------------------------------------
-   Services
+   Features
 ------------------------------------------- */
-section#services h1 {
+section#features h1 {
    margin: 0 0 25px 0;
 }
-section#services .row .col img.align-left {
+section#features .row .col img.align-left {
     margin-top: 13px;
     margin-right: 12px;
 }
 
 /* ---------------------------------------
-    Portfolio
+    Screenshots
 ----------------------------------------- */
-section#portfolio ul.folio-list {
+section#screenshots ul.folio-list {
     margin: 25px 0;
     padding: 0;
     width: 970px;
     list-style: none;
 }
-section#portfolio ul.folio-list li {
+section#screenshots ul.folio-list li {
     float: left;
     margin-right: 29px;
     margin-bottom: 10px;
@@ -504,49 +504,49 @@ section#portfolio ul.folio-list li {
     height: 230px;
     max-height: 250px;
 }
-section#portfolio ul.folio-list li .thumb {
+section#screenshots ul.folio-list li .thumb {
     margin: 0 0 5px 0;
     padding: 0;
     background: url(../images/thumb-frame.png) no-repeat;
     width: 294px;
     height: 205px;
 }
-section#portfolio ul.folio-list li .thumb img {
+section#screenshots ul.folio-list li .thumb img {
     margin-top: 18px;
     margin-left: 18px;
 }
-section#portfolio ul.folio-list li h3.entry-title {
+section#screenshots ul.folio-list li h3.entry-title {
     font-size: 14px;
     line-height: 25px;
     margin-left: 16px;
 }
 
 /* ------------------------------------------------
-    About
+    Faq
 ------------------------------------------------ */
-section#about-us .primary .row .first {
+section#faq .primary .row .first {
     margin-right: 35px;
 }
-section#about-us .primary ul.the-team {
+section#faq .primary ul.the-team {
     margin: 25px 0 25px 0;
     padding: 0;
     list-style: none;
 }
-section#about-us .primary ul.the-team li {
+section#faq .primary ul.the-team li {
     float: left;
     width: 290px;
     height: 150px;
 }
-section#about-us .primary ul.the-team li a {
+section#faq .primary ul.the-team li a {
     color: #3B3B3B;
 }
-section#about-us .primary ul.the-team li a:hover,
-section#about-us .primary ul.the-team li a:focus,
-section#about-us .primary ul.the-team li a:active {
+section#faq .primary ul.the-team li a:hover,
+section#faq .primary ul.the-team li a:focus,
+section#faq .primary ul.the-team li a:active {
     color: #285935;
 }
 
-section#about-us .primary ul.the-team li .thumbnail {
+section#faq .primary ul.the-team li .thumbnail {
     position: relative;
     float: left;
     background: url(../images/thumb-bg.png) no-repeat;
@@ -554,25 +554,25 @@ section#about-us .primary ul.the-team li .thumbnail {
     height: 150px;
     margin-right: 12px;
 }
-section#about-us .primary ul.the-team li .thumbnail img {
+section#faq .primary ul.the-team li .thumbnail img {
     position: absolute;
     top: 19px;
     left: 18px;
 }
-section#about-us .primary ul.the-team li p {
+section#faq .primary ul.the-team li p {
     font-size: 14px;
     line-height: 20px;
     margin: 5px 0 0 0;
 }
-section#about-us .primary ul.the-team li p.mname {
+section#faq .primary ul.the-team li p.mname {
     font-family: "MerriweatherBold", Serif;
     margin: 10px 0 0 0;
 }
-section#about-us .primary ul.the-team li.odd {
+section#faq .primary ul.the-team li.odd {
     margin-right: 35px;
 }
 
-section#about-us aside .download-btn {
+section#faq aside .download-btn {
     background: url(../images/btn-bg.png);
     display: block;
     width: 250px;
@@ -692,14 +692,6 @@ section#contact aside .social li.flickr a {
 /* ----------------------------------------------------
     Footer
 ----------------------------------------------------- */
-footer p.footer-text {
-    font-family: Verdana, Tahoma, Geneva, sans-serif;
-    font-size: .75em;
-    padding: 0 10px;
-    margin-bottom: 0;
-    vertical-align: middle;
-    clear: both;
-}
 footer .footer-content {
     position: relative;
     width: 900px;
@@ -711,17 +703,8 @@ footer ul.footer-menu {
     padding: 0;
     list-style: none;
 }
-footer  ul.footer-menu li {
-    float: left;
-}
 footer  ul.footer-menu li a {
-    display: block;
-    font-family: "MerriweatherBold", Serif;
-    font-size: .75em;
-    line-height: 1em;
     color: #3B3B3B;
-    padding: 1px 12px;
-    border-left:  1px  solid #ADADAD;
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
 }
 footer  ul.footer-menu li a:hover,
@@ -729,11 +712,26 @@ footer  ul.footer-menu li a:focus,
 footer  ul.footer-menu li a:active {
     color: #285935;
 }
-footer  ul.footer-menu li.rss-feed a {
-    background: url(../images/rss.png) no-repeat right 0;
-    padding-right: 20px;
+footer ul > li:last-child:after {
+    display: none;
 }
-footer  ul.footer-menu li:first-child a {
-    border: none;
+footer  ul > li:after {
+    content: "·";
+    margin-left: 10px;
+}
+footer ul > li + li {
+    margin-left: 10px;
+}
+footer ul > li {
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
+    font-size: .75em;
+    margin-bottom: 0;
+    vertical-align: middle;
+    clear: both;
+    display: inline-block;
+    white-space: nowrap;
+}
+footer ul > li a:hover{
+    text-decoration: underline;
 }
 
