@@ -527,50 +527,6 @@ section#screenshots ul.folio-list li h3.entry-title {
 section#faq .primary .row .first {
     margin-right: 35px;
 }
-section#faq .primary ul.the-team {
-    margin: 25px 0 25px 0;
-    padding: 0;
-    list-style: none;
-}
-section#faq .primary ul.the-team li {
-    float: left;
-    width: 290px;
-    height: 150px;
-}
-section#faq .primary ul.the-team li a {
-    color: #3B3B3B;
-}
-section#faq .primary ul.the-team li a:hover,
-section#faq .primary ul.the-team li a:focus,
-section#faq .primary ul.the-team li a:active {
-    color: #285935;
-}
-
-section#faq .primary ul.the-team li .thumbnail {
-    position: relative;
-    float: left;
-    background: url(../images/thumb-bg.png) no-repeat;
-    width: 120px;
-    height: 150px;
-    margin-right: 12px;
-}
-section#faq .primary ul.the-team li .thumbnail img {
-    position: absolute;
-    top: 19px;
-    left: 18px;
-}
-section#faq .primary ul.the-team li p {
-    font-size: 14px;
-    line-height: 20px;
-    margin: 5px 0 0 0;
-}
-section#faq .primary ul.the-team li p.mname {
-    font-family: "MerriweatherBold", Serif;
-    margin: 10px 0 0 0;
-}
-section#faq .primary ul.the-team li.odd {
-    margin-right: 35px;
-}
 
 section#styles aside .download-btn {
     background: url(../images/btn-bg.png);
