@@ -693,10 +693,11 @@ section#contact aside .social li.flickr a {
     Footer
 ----------------------------------------------------- */
 footer p.footer-text {
-    font-family: "MerriweatherRegular", Serif;
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
     font-size: .75em;
     padding: 0 10px;
     margin-bottom: 0;
+    vertical-align: middle;
     clear: both;
 }
 footer .footer-content {
