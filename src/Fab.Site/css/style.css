@@ -528,7 +528,7 @@ section#faq .primary .row .first {
     margin-right: 35px;
 }
 
-section#styles aside .download-btn {
+section#faq aside .download-btn {
     background: url(../images/btn-bg.png);
     display: block;
     width: 250px;
@@ -551,29 +551,17 @@ section#styles aside .download-btn {
 /* ---------------------------------------------------
     Contact
 ----------------------------------------------------- */
-section#styles aside .social li a {
+section#faq aside .social li a {
     padding-left: 35px;
 }
-section#styles aside .social li.facebook a {
+section#faq aside .social li.facebook a {
     background: url(../images/social/facebook.png) no-repeat left 11px;
 }
-section#styles aside .social li.googleplus a {
+section#faq aside .social li.googleplus a {
     background: url(../images/social/googleplus.png) no-repeat left 11px;
 }
-section#styles aside .social li.twitter a {
+section#faq aside .social li.twitter a {
     background: url(../images/social/twitter.png) no-repeat left 11px;
-}
-section#styles aside .social li.dribble a {
-    background: url(../images/social/dribble.png) no-repeat left 11px;
-}
-section#styles aside .social li.linkedin a {
-    background: url(../images/social/linkedin.png) no-repeat left 11px;
-}
-section#styles aside .social li.delicious a {
-    background: url(../images/social/delicious.png) no-repeat left 11px;
-}
-section#styles aside .social li.flickr a {
-    background: url(../images/social/flickr.png) no-repeat left 11px;
 }
 
 /* ----------------------------------------------------
