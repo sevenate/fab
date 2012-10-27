@@ -213,7 +213,7 @@ header {
 }
 .content-wrap section {
     position: relative;
-    padding: 125px 0 25px 0;
+    padding: 75px 0 35px 0;
     background: url(../images/section-sep.png) repeat-x left 25px;
 }
 .content-wrap section section {
@@ -223,7 +223,7 @@ header {
 .content-wrap section .row {
     clear: both;
     overflow: hidden;
-    margin-bottom: 25px;
+    margin-bottom: 0px;
 }
 .content-wrap section .row .col {
     float: left;
@@ -388,12 +388,17 @@ section#main .row .col h2 {
 /* Slider */
 .slider-wrapper {
    
-   /* width: 420px;
+    /*width: 420px;
     height: 234px;*/
 
+    width: 800px;
+    height: 300px;
 
-    width: 90%; 
-    margin: auto;
+/*    width: 940px;
+*/
+/*    width: 80%; 
+*/    margin: auto;
+
 }
 
 /* -----------------------------------------
