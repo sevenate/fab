@@ -2,7 +2,11 @@
 /* Nivo Slider */
 $(window).load(function() {
 
-    $('#slider').nivoSlider();
+    $('#slider').nivoSlider({
+        effect: 'fade',
+        animSpeed: 500,
+        pauseTime: 3000,
+    });
 
 });
 
