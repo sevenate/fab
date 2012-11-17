@@ -776,46 +776,46 @@
     <None Include="Service References\MoneyServiceReference\Fab.Client.MoneyServiceReference.JournalDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService.wsdl" />
-    <None Include="Service References\MoneyServiceReference\MoneyService.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService1.wsdl" />
+    <None Include="Service References\MoneyServiceReference\MoneyService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService1.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService51.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService2.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService52.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService3.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService53.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService4.xsd">
+    <None Include="Service References\MoneyServiceReference\MoneyService54.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\RegistrationServiceReference\Fab.Client.RegistrationServiceReference.UserDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\RegistrationServiceReference\RegistrationService.wsdl" />
-    <None Include="Service References\RegistrationServiceReference\RegistrationService.xsd">
+    <None Include="Service References\RegistrationServiceReference\RegistrationService1.wsdl" />
+    <None Include="Service References\RegistrationServiceReference\RegistrationService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RegistrationServiceReference\RegistrationService1.xsd">
+    <None Include="Service References\RegistrationServiceReference\RegistrationService31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RegistrationServiceReference\RegistrationService2.xsd">
+    <None Include="Service References\RegistrationServiceReference\RegistrationService32.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\UserServiceReference\Fab.Client.UserServiceReference.UserDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\UserServiceReference\UserService.wsdl" />
-    <None Include="Service References\UserServiceReference\UserService3.xsd">
+    <None Include="Service References\UserServiceReference\UserService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService31.xsd">
+    <None Include="Service References\UserServiceReference\UserService1.wsdl" />
+    <None Include="Service References\UserServiceReference\UserService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\UserService32.xsd">
+    <None Include="Service References\UserServiceReference\UserService2.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -855,8 +855,8 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\MoneyServiceReference\MoneyService.disco" />
-    <None Include="Service References\RegistrationServiceReference\RegistrationService.disco" />
+    <None Include="Service References\MoneyServiceReference\MoneyService1.disco" />
+    <None Include="Service References\RegistrationServiceReference\RegistrationService1.disco" />
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>

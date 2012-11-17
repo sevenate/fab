@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="QgzcJB2mybzkjjB7ayJ1dy2WwPc=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="TVu+RXzIrSSJiarz8chAf2GJi30=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="RegistrationServiceBasic">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="RegistrationServiceBasic" contract="RegistrationServiceReference.IRegistrationService" bindingType="basicHttpBinding" address="../RegistrationService.svc" bindingConfiguration="RegistrationServiceBasic">
+    <endpoint name="RegistrationServiceBasic" contract="RegistrationServiceReference.IRegistrationService" bindingType="basicHttpBinding" address="https://localhost/fab.api/RegistrationService.svc" bindingConfiguration="RegistrationServiceBasic">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>../RegistrationService.svc</serializedValue>
+          <serializedValue>https://localhost/fab.api/RegistrationService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

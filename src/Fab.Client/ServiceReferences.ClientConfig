@@ -17,15 +17,16 @@
    </basicHttpBinding>
   </bindings>
 		<client>
-   <endpoint address="../MoneyService.svc" binding="basicHttpBinding"
-    bindingConfiguration="MoneyServiceBasic" contract="MoneyServiceReference.IMoneyService"
-    name="MoneyServiceBasic" />
-   <endpoint address="../RegistrationService.svc" binding="basicHttpBinding"
-    bindingConfiguration="RegistrationServiceBasic" contract="RegistrationServiceReference.IRegistrationService"
+   <endpoint address="https://localhost/fab.api/MoneyService.svc"
+    binding="basicHttpBinding" bindingConfiguration="MoneyServiceBasic"
+    contract="MoneyServiceReference.IMoneyService" name="MoneyServiceBasic" />
+   <endpoint address="https://localhost/fab.api/RegistrationService.svc"
+    binding="basicHttpBinding" bindingConfiguration="RegistrationServiceBasic"
+    contract="RegistrationServiceReference.IRegistrationService"
     name="RegistrationServiceBasic" />
-   <endpoint address="../UserService.svc" binding="basicHttpBinding"
-    bindingConfiguration="UserServiceBasic" contract="UserServiceReference.IUserService"
-    name="UserServiceBasic" />
+   <endpoint address="https://localhost/fab.api/UserService.svc"
+    binding="basicHttpBinding" bindingConfiguration="UserServiceBasic"
+    contract="UserServiceReference.IUserService" name="UserServiceBasic" />
   </client>
 	</system.serviceModel>
 </configuration>

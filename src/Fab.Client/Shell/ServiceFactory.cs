@@ -72,7 +72,7 @@ namespace Fab.Client.Shell
 #if !DEBUG
 			var serviceName = serviceEndpoint.Address.Uri.LocalPath.Split('/').Last();
 // ReSharper disable AssignNullToNotNullAttribute
-			string absoluteUri = new Uri(Application.Current.Host.Source, Path.Combine("..", serviceName)).AbsoluteUri;
+			string absoluteUri = new Uri(Application.Current.Host.Source, Path.Combine(@"../sl/", serviceName)).AbsoluteUri;
 // ReSharper restore AssignNullToNotNullAttribute
 			serviceEndpoint.Address = new EndpointAddress(absoluteUri);
 #endif
