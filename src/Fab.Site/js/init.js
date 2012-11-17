@@ -1,53 +1,69 @@
 
-/* Nivo Slider */
+/* Orbit Slider */
 $(window).load(function() {
 
-    $('#slider').nivoSlider({
-        effect: 'fade',
-        animSpeed: 500,
-        pauseTime: 3000,
+$("#featured").orbit({
+        animation: 'fade',
+        animationSpeed: 800,
+        timer: false,
+        bullets: false,
+        pauseOnHover: true,
+        pauseTime: 1000,
+        fluid: true
     });
 
-});
+var make_button_active = function()
+{
+  //Get item siblings
+  var siblings = $("#header ul li a");
 
-$(document).ready(function(){
+  //Remove active class on all buttons
+  siblings.each(function (index)
+    {
+      $(this).removeClass('current');
+    }
+  )
 
-    /* Fancy Box */
-    $('a.lightbox').fancybox({
-        'titlePosition'	: 'over',
-        'padding'       : 16,
-        'opacity'		: true,
-		'overlayShow'	: false,
-		'transitionIn'	: 'elastic',
-		'transitionOut'	: 'elastic'
-  	});
-   // youtube videos with fancy box
-   $('a.lightbox-video').click(function() {
+  //Add the clicked button class
+  $(this).addClass('current');
+}
 
-        $.fancybox( {
-            'titlePosition'	: 'over',
-            'padding'       : 16,
-            'opacity'		: true,
-		    'overlayShow'	: false,
-		    'transitionIn'	: 'elastic',
-		    'transitionOut'	: 'elastic',
-            'href'          : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
-            'type'          : 'swf',
-            'swf'           : {'wmode':'transparent','allowfullscreen':'true'}
+//Attach events to menu
+$(document).ready(
+  function()
+  {
+    $("#header ul li a").click(make_button_active);
 
-          });
-            return false;
-    });
+    $('#faq h4').each(function() {
+	    var tis = $(this), state = false, answer = tis.next('div').slideUp();
+	    tis.click(function() {
+	      state = !state;
+	      answer.slideToggle(state);
+	      tis.toggleClass('active',state);
+	    });
+	  });
 
-    // Fade in/out on hover
-    /*
-    $("ul.folio-list li .thumb img").fadeTo("slow", 0.6);
-    $("ul.folio-list li .thumb img").hover(function(){
-        $(this).fadeTo("slow", 1.0);
-    },function(){
-        $(this).fadeTo("slow", 0.6);
-    });
-    */
+  }  
+)
 });
 
 
+$(function (){
+
+    $('#header ul li a').each(function(){
+        var path = window.location.href;
+        var current = path.substring(path.lastIndexOf('#'));
+        var url = $(this).attr('href');
+
+        if(url == current){
+            $(this).addClass('current');
+        };
+    });         
+});
+
+/* FAQ */
+
+$('.faqlink').click(function(){
+        $('.content').hide();
+        $(this).next('.content').show();
+    });

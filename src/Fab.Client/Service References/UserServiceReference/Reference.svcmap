@@ -18,13 +18,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://localhost/StagingFab/UserService.svc?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://localhost/fab.api/UserService.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="UserService3.xsd" MetadataType="Schema" ID="4c15f59c-343b-4f87-ab34-4eedd354697b" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?xsd=xsd1" />
-    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="cadf81bd-6fea-4514-a419-11cb1d316739" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?wsdl" />
-    <MetadataFile FileName="UserService31.xsd" MetadataType="Schema" ID="11561c75-5039-48bf-8aa0-f207fc0333f9" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?xsd=xsd2" />
-    <MetadataFile FileName="UserService32.xsd" MetadataType="Schema" ID="aa6c6539-bd51-4edd-b9f7-898294583285" SourceId="1" SourceUrl="https://localhost/StagingFab/UserService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserService.xsd" MetadataType="Schema" ID="40a56fad-3c82-4735-adc9-e4f346e6072e" SourceId="1" SourceUrl="https://localhost/fab.api/UserService.svc?xsd=xsd2" />
+    <MetadataFile FileName="UserService1.xsd" MetadataType="Schema" ID="194c11f5-7415-4226-88ed-ad4fcc32bd19" SourceId="1" SourceUrl="https://localhost/fab.api/UserService.svc?xsd=xsd1" />
+    <MetadataFile FileName="UserService1.wsdl" MetadataType="Wsdl" ID="4ac51224-8a22-4d47-ad42-be2f471243a7" SourceId="1" SourceUrl="https://localhost/fab.api/UserService.svc?wsdl" />
+    <MetadataFile FileName="UserService2.xsd" MetadataType="Schema" ID="f6692524-a7f1-4bda-925d-84a8f6e84af8" SourceId="1" SourceUrl="https://localhost/fab.api/UserService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -1,52 +1,68 @@
 <!DOCTYPE html>
-<!--[if IE 7 ]>    <html class="ie7 oldie"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie8 oldie"> <![endif]-->
-<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
-
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <meta charset="utf-8"/>
-    <meta name="description" content="Easy track your daily expense, plan family budget and achieve your financial goals!">
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>nReez - Your personal assistant for tracking and planning family assets.</title>
+	<meta name="description" content="">
     <meta name="author" content="nReez">
     <meta name="keywords" content="finance, money, asset, budget, planning, tracking, report, nreez" />
     <meta name="robots" content="noarchive,index,follow" />
     <meta name="googlebot" content="noarchive,index,follow" />
     <meta name="revisit-after" content="7 days" />
 
-    <title>nReez - Your personal assistant for tracking and planning family assets.</title>
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="themes/nivoSlider/default.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+	<link rel="stylesheet" href="css/foundation.orbit.css">
 
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="alternate" type="application/atom+xml" href="http://feeds.nreez.com/nreez" title="nReez News" />
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
 
-    <!--[if lt IE 9]>
-	    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+	<!-- RSS
+	================================================== -->
+    <link rel="alternate" type="application/atom+xml" href="http://feeds.nreez.com/nreez" title="nReez Blog" />
 
+	<!-- Scripts
+	================================================== -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')</script>
-
+<!--
     <script type="text/javascript" src="js/jquery.smoothscroll.js"></script>
-    <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
+-->  
+	<script type="text/javascript" src="js/jquery.smoothscroll.js"></script>
+	<script type="text/javascript" src="js/jquery.foundation.orbit.js"></script>
     <script type="text/javascript" src="js/jquery.easing-1.3.pack.js"></script>
-    <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
-    <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/analytics.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
 
     <script type="text/javascript">
-      var uvOptions = {};
-      (function() {
-        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/HigsxZC4GyI3X29uzoUk3g.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-      })();
-    </script>
+	  var uvOptions = {};
+	  (function() {
+	    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+	    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/HigsxZC4GyI3X29uzoUk3g.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+	  })();
+	</script>
 
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -64,258 +80,131 @@
     </script>
 
 </head>
-
 <body>
 
-<!-- header-wrap -->
-<div id="header-wrap">
-    <header>
-
-        <hgroup>
-            <h1><a href="index.html">nReez</a></h1>
-            <h3>Your personal assistant for tracking and planning family assets.</h3>
-        </hgroup>
-
-        <nav>
-            <ul>
-                <li><a href="#main">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#screenshots">Screenshots</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="http://blog.nreez.com">Blog</a></li>
-                <li><a href="https://nreez.com/sl">Log In / Sign Up</a></li>
-            </ul>
-        </nav>
-
-    </header>
-</div>
-
-<!-- content-wrap -->
-<div class="content-wrap">
-
-    <!-- main -->
-    <section id="main">
-
-        <div class="intro-box">
-           <h1 style="font-size: 30px;">Your personal assistant for tracking and planning family assets.</h1>
-        </div>
-
-        <div class="slider-wrapper theme-default">
-            <div id="slider" class="nivoSlider">
-                <img src="images/slides/800x300.png" data-thumb="images/slides/800x300.png" alt="" />
-                <img src="images/slides/800x300-2.png" data-thumb="images/slides/800x300-2png" alt="" />
-            </div>
-        </div>
-
-        <a class="back-to-top" href="#main">Back to Top</a>
-
-      </section>
-
-      <!-- features -->
-      <section id="features">
-
-             <h1>Features</h1>
-
-             <div class="row no-bottom-margin">
-                <section class="col">
-                    <h2>Clean &amp; Simple</h2>
-
-                    <p><img class="align-left" alt="" src="images/features/webdesign.png" />Pellentesque magna mi, iaculis pharetra eu, fermentum ullamcorper nisi.
-                    Integer fringilla magna ut quam vulputate erat. Pulvinar cum, ac eu augue ut sit amet
-                    gravida lacinia, eros massa condimentum sem, a fermentum ligula lorem non.
-                    Phasellus vulputate.</p>
-                </section>
-                <section class="col mid">
-                    <h2>Secured</h2>
-
-                    <p><img class="align-left" alt="" src="images/features/webdevelopment.png" />In hac habitasse platea risus dictumst. Suspendisse sit amet enim arcu. Aliquam erat volutpat.
-                    Phasellus a dui nisi. Nunc nec quam vitae nisl vehicula euismod. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit. Sed commodo ligula blandit risus</p>
-                </section>
-
-                <section class="col">
-                    <h2>Anonymous</h2>
-
-                    <p><img class="align-left" alt="" src="images/features/seo-services.png" />Nascetur augue hac platea enim, egestas pulvinar vut. Pulvinar cum, ac eu, tristie
-                    acus duis in dictumst non integer! Elit, sed scelerisque odio tortor, sed platea dis? Quis
-                    cursus parturient ac amet odio in? Nunc Amet urna scelerisque eu lectus placerat.</p>
-
-                </section>
-            </div>
-
-            <div class="row">
-                <section class="col">
-                    <h2>Touchscreen Friendly</h2>
-
-                    <p><img class="align-left" alt="" src="images/features/print-design.png" />In hac habitasse platea risus dictumst. Suspendisse sit amet enim arcu. Aliquam erat volutpat.
-                    Phasellus a dui nisi. Nunc nec quam vitae nisl vehicula euismod. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit. Sed commodo ligula blandit risus</p>
-                </section>
-                <section class="col mid">
-                    <h2>Works Out Of Browser</h2>
-
-                    <p><img class="align-left" alt="" src="images/features/logo-design-and-branding.png" />Nascetur augue hac platea enim, egestas pulvinar vut. Pulvinar cum, ac eu, tristie
-                    acus duis in dictumst non integer! Elit, sed scelerisque odio tortor, sed platea dis? Quis
-                    cursus parturient ac amet odio in? Nunc Amet urna scelerisque eu lectus placerat.</p>
-                </section>
-
-                <section class="col">
-                    <h2>Free!</h2>
-
-                    <p><img class="align-left" alt="" src="images/features/newsletter.png" />Pellentesque magna mi, iaculis pharetra eu, fermentum ullamcorper nisi.
-                    Integer fringilla magna ut quam vulputate erat. Pulvinar cum, ac eu augue ut sit amet
-                    gravida lacinia, eros massa condimentum sem, a fermentum ligula lorem non.
-                    Phasellus vulputate.</p>
-
-                </section>
-            </div>
-
-            <a class="back-to-top" href="#main">Back to Top</a>
-
-      </section>
-
-      <!-- screenshots -->
-      <section id="screenshots">
-
-            <h1>Screenshots</h1>
-
-            <ul class="folio-list clearfix">
-
-                <li class="folio-thumb">
-                    <div class="thumb">
-                        <a class="lightbox" href="images/thumbs/big/milk.jpg" title="Milk Splashes" ><img src="images/thumbs/milk.jpg" alt="" /> </a>
-                    </div>
-                    <h3 class="entry-title">Milk Splashes</h3>
-                </li>
-
-                <li class="folio-thumb last">
-                    <div class="thumb">
-                        <a class="lightbox" href="images/thumbs/big/hexagon.jpg" title="Hexagon Bokeh"><img src="images/thumbs/hexagon.jpg" alt="" /> </a>
-                    </div>
-                    <h3 class="entry-title">Hexagon Bokeh</h3>
-                </li>
-
-                <li class="folio-thumb">
-                    <div class="thumb">
-                        <a class="lightbox-video" href="http://www.youtube.com/watch?v=EPXwP8D5C5c&feature=player_embedded"><img src="images/thumbs/hillsong-united-aftermath.jpg" alt="" /></a>
-                    </div>
-                    <h3 class="entry-title">Aftermath (Sample Video)</h3>
-                </li>
-
-            </ul>
-
-            <a class="back-to-top" href="#main">Back to Top</a>
-
-      </section>
-
-      <!-- faq -->
-      <section id="faq" class="clearfix">
-
-            <h1>FAQ</h1>
-
-            <div class="primary">
-
-                <p class="intro">Maecenas eu neque erat, auctor feugiat enim. Sed libero risus, pretium vel
-                elementum id, lacinia vel purus. Mauris semper, orci vitae aliquam vestibul,
-                lorem nulla auctor nulla, gravida fermentum urna libero eget sapien. Quisque
-                cursus, urna quis vestibulum egestas, nibh sem semper erat, a feugiat justo
-                dolor eget libero. Quisque cursus, urna quis vestibulum egestas, nibh sem
-                semper erat, a feugiat justo dolor eget libero
-                </p>
-
-                <h2>Template License</h2>
-
-                <p>This work is released and licensed under the <a href="http://creativecommons.org/licenses/by/2.5/" rel="license">
-                Creative Commons Attribution 3.0 License</a>, which means that you are free to use and modify it for any
-                personal or commercial purpose. All I ask is that you give me credit by including a link back to my
-                <a href="http://www.styleshout.com">website</a></p>
-
-                <div class="row no-bottom-margin">
-
-                    <section class="col first">
-
-                        <h2>Our Process</h2>
-
-                        <p>Nascetur augue hac platea enim, egestas pulvinar vut. Pulvinar cum, ac eu, tristie
-                        acus duis in dictumst non integer! Elit, sed scelerisque odio tortor, sed platea dis? Quis
-                        cursus parturient ac amet odio in? Nunc Amet urna scelerisque eu lectus placerat.</p>
-
-                    </section>
-
-                    <section class="col">
-                        
-                        <h2>Our Approach</h2>
-
-                        <p>Pellentesque magna mi, iaculis pharetra eu, fermentum ullamcorper nisi.
-                        Integer fringilla magna ut quam vulputate erat. Pulvinar cum, ac eu augue ut sit amet
-                        gravida lacinia, eros massa condimentum sem, a fermentum ligula lorem non.
-                        Phasellus vulputate.</p>
-
-                    </section>
-
-                </div>
-
-            </div>
-
-                <aside>
-
-                    <a href="#" class="download-btn">Download PDF</a>
-
-                    <h2>Testimonials</h2>
-
-                    <div class="testimonials">
-                        <blockquote>
-                            <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue.
-                            Nullam id dolor id nibh ultricies vehicula ut id elit. </p>
-
-                            <cite>&mdash; John Doe, XYZ Company</cite>
-                        </blockquote>
-                        <blockquote>
-                        <p>Aenean lacinia bibendum nulla sed consectetur. Cras mattis
-                        consectetur purus sit amet fermentum.</p>
-
-                        <cite>&mdash; Jane Roe, ABC Corp</cite>
-                    </blockquote>
-                </div>
-
-                <h2>Contact Information</h2>
-
-                <p>
-                PageOne Studio <br />
-                Anystreet Avenue 012 <br />
-                State, Anytown
-                </p>
-
-                <p>
-                Phone: 0 123 456 789 0 <br />
-                Email: <a href="mailto:info@nreez.com">info@nreez.com</a>
-                </p>
-
-                <h2>Follow Us</h2>
-
-                <ul class="link-list social">
-                    <li class="facebook"><a href="#">Facebook</a></li>
-                    <li class="googleplus"><a href="#">Google+</a></li>
-                    <li class="twitter"><a href="#">Twitter</a></li>
-                </ul>
-
-            </aside>
-
-            <a class="back-to-top" href="#main">Back to Top</a>
-
-      </section>
-
-</div>
-
-<!-- footer -->
-<footer>
-    <div class="footer-content">
-        <ul class="footer-menu">
-            <li>&copy; 2012 nReez</li>
-            <li><a href="http://nreez.com/terms">Terms of Service</a></li>
-        </ul>
-    </div>
-</footer>
-
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<!-- Delete everything in this .container and get started on your own site! -->
+
+	<div class="container">
+
+		<div id="header-wrap">
+			<div class="sixteen columns">
+				<div id="header">
+					<ul class="nav">
+						<img src="images\AppIcon_32x32.png" alt="nReez" width="16" height="16" />nReez
+						<li><a href="https://nreez.com/app" id="05" style="background-color: #119EDA; color: white; padding: 7px 15px; border-bottom: 0px;">Login / Sign Up</a></li>
+						<li><a href="http://blog.nreez.com" id="04">Blog</a></li>
+						<li><a href="#faq" id="03">FAQ</a></li>
+						<li><a href="#features" id="02">Features</a></li>
+						<li><a href="#main" id="01">Home</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div id="main" class="section row no-bottom-margin">
+
+			<div class="sixteen columns">
+
+				<h2>Track your family's assets free and anonymously.</h2>
+
+		        <div id="featured" class="slider-wrapper">
+		        	<img src="images/slides/s01.png" alt="Login">
+		        	<img src="images/slides/s02.png" alt="Main">
+		  	    </div>
+
+			</div>
+		</div>
+
+	  	<div id="features" class="section">
+
+	  		<div class="row no-bottom-margin">
+	  		
+				<div class="one-third column">
+					<h3>Clean &amp; Simple</h3>
+		            <p><img class="align-left" alt="" src="images/features/webdesign.png" />Pellentesque magna mi, iaculis pharetra eu, fermentum ullamcorper nisi.
+		            Integer fringilla magna ut quam vulputate erat. Pulvinar cum, ac eu augue ut sit amet
+		            gravida lacinia, eros massa condimentum sem, a fermentum ligula lorem non.
+		            Phasellus vulputate.</p>
+				</div>
+				<div class="one-third column">
+					<h3>Secured</h3>
+		            <p><img class="align-left" alt="" src="images/features/webdevelopment.png" />In hac habitasse platea risus dictumst. Suspendisse sit amet enim arcu. Aliquam erat volutpat.
+		            Phasellus a dui nisi. Nunc nec quam vitae nisl vehicula euismod. Lorem ipsum dolor sit amet,
+		            consectetur adipiscing elit. Sed commodo ligula blandit risus</p>
+				</div>
+				<div class="one-third column">
+		            <h3>Anonymous</h3>
+		            <p><img class="align-left" alt="" src="images/features/seo-services.png" />Nascetur augue hac platea enim, egestas pulvinar vut. Pulvinar cum, ac eu, tristie
+		            acus duis in dictumst non integer! Elit, sed scelerisque odio tortor, sed platea dis? Quis
+		            cursus parturient ac amet odio in? Nunc Amet urna scelerisque eu lectus placerat.</p>
+				</div>
+
+				<div class="one-third column">
+					<h3>Touch-screen Friendly</h3>
+		            <p><img class="align-left" alt="" src="images/features/print-design.png" />In hac habitasse platea risus dictumst. Suspendisse sit amet enim arcu. Aliquam erat volutpat.
+		            Phasellus a dui nisi. Nunc nec quam vitae nisl vehicula euismod. Lorem ipsum dolor sit amet,
+		            consectetur adipiscing elit. Sed commodo ligula blandit risus</p>
+				</div>
+				<div class="one-third column">
+					<h3>Works Out Of Browser</h3>
+		            <p><img class="align-left" alt="" src="images/features/logo-design-and-branding.png" />Nascetur augue hac platea enim, egestas pulvinar vut. Pulvinar cum, ac eu, tristie
+		            acus duis in dictumst non integer! Elit, sed scelerisque odio tortor, sed platea dis? Quis
+		            cursus parturient ac amet odio in? Nunc Amet urna scelerisque eu lectus placerat.</p>
+				</div>
+				<div class="one-third column">
+		            <h3>Its Free!</h3>
+		            <p><img class="align-left" alt="" src="images/features/newsletter.png" />Pellentesque magna mi, iaculis pharetra eu, fermentum ullamcorper nisi.
+		            Integer fringilla magna ut quam vulputate erat. Pulvinar cum, ac eu augue ut sit amet
+		            gravida lacinia, eros massa condimentum sem, a fermentum ligula lorem non.
+		            Phasellus vulputate.</p>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="faq" class="sixteen columns section">
+
+			<h2>Frequently Asked Questions (FAQ)</h2>
+			
+			<ol>
+				<li>
+					<h4>So, why Silverlight and not HTML 5 for main browser application?</h4>
+					<div>
+					  <p><strong>Silverlight</strong> is widely supported on all major browsers like <strong>Firefox</strong>, <strong>Chrome</strong> and <strong>Internet Explorer</strong> on both <strong>Windows</strong> and <strong>Mac</strong> platforms and it provide a way to build rich and solid client not only for web, but for desktop as well with the fastest and straightforward deployment model that support automatic updates.</p>
+					</div>
+				</li>
+				<li>
+					<h4>Do you have clients for mobile devices?</h4>
+					<div>
+					  <p>Clients for <strong>Windows Phone</strong> and <strong>Windows RT</strong> are in the active development.<br/>
+					  <strong>Android</strong> and <strong>iPhone/iPad</strong> are also on our road, just a little further.</p>
+					</div>
+				</li>
+				<li>
+					<h4>Is there any tech support?</h4>
+					<div>
+					  <p>Since <strong>nReez</strong> is supposed to be completely anonymous, we do not offer personal support, but any general issues or suggestions could be posted on our <a href="https://nreez.uservoice.com">forum</a> - just make sure that you do not mentioned your <strong>nReez</strong> login name there.</p>
+					</div>
+				</li>
+			</ol>
+
+		</div>
+
+		<div class="sixteen columns">
+			<hr id="button-line" />
+	        <ul class="footer-menu">
+	            <li>&copy; 2012 nReez</li>
+	            <li><a href="http://nreez.com/terms">Terms of Service</a></li>
+	        </ul>
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
 </body>
 </html>

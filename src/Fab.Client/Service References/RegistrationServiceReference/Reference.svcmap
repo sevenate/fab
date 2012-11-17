@@ -20,14 +20,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://localhost/StagingFab/RegistrationService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://localhost/fab.api/RegistrationService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="RegistrationService.xsd" MetadataType="Schema" ID="b1a6405a-0159-482c-a54a-4efb7acaaab3" SourceId="1" SourceUrl="https://localhost/StagingFab/RegistrationService.svc?xsd=xsd2" />
-    <MetadataFile FileName="RegistrationService1.xsd" MetadataType="Schema" ID="0c6692a0-8cad-403d-8840-22b9dbb89120" SourceId="1" SourceUrl="https://localhost/StagingFab/RegistrationService.svc?xsd=xsd1" />
-    <MetadataFile FileName="RegistrationService2.xsd" MetadataType="Schema" ID="efe28da2-1a74-4271-bd2f-62be32973215" SourceId="1" SourceUrl="https://localhost/StagingFab/RegistrationService.svc?xsd=xsd0" />
-    <MetadataFile FileName="RegistrationService.wsdl" MetadataType="Wsdl" ID="86651ac4-a25b-437e-8b15-38518c4fa86e" SourceId="1" SourceUrl="https://localhost/StagingFab/RegistrationService.svc?wsdl" />
-    <MetadataFile FileName="RegistrationService.disco" MetadataType="Disco" ID="bdd3eeb1-c5e0-49fd-8704-c6134d8d529b" SourceId="1" SourceUrl="https://localhost/StagingFab/RegistrationService.svc?disco" />
+    <MetadataFile FileName="RegistrationService1.disco" MetadataType="Disco" ID="496b19cc-6d90-426e-9c1d-131e963260fa" SourceId="1" SourceUrl="https://localhost/fab.api/RegistrationService.svc?disco" />
+    <MetadataFile FileName="RegistrationService3.xsd" MetadataType="Schema" ID="5ded78b0-7185-4b6e-ae8b-8c8af6d416c6" SourceId="1" SourceUrl="https://localhost/fab.api/RegistrationService.svc?xsd=xsd0" />
+    <MetadataFile FileName="RegistrationService31.xsd" MetadataType="Schema" ID="a1d3414c-5d28-44d7-9770-3a0cd886703f" SourceId="1" SourceUrl="https://localhost/fab.api/RegistrationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="RegistrationService32.xsd" MetadataType="Schema" ID="d9a34de8-b956-4af1-ada0-dafbd364b7bd" SourceId="1" SourceUrl="https://localhost/fab.api/RegistrationService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RegistrationService1.wsdl" MetadataType="Wsdl" ID="c92bf074-6740-4ac6-a8d5-ad7802b9dbdb" SourceId="1" SourceUrl="https://localhost/fab.api/RegistrationService.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

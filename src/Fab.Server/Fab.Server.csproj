@@ -260,7 +260,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>33809</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost/StagingFab</IISUrl>
+          <IISUrl>https://localhost/fab.api</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -270,15 +270,15 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-	<ItemGroup>
-		<SqlCe4Files Include="..\..\ext\.NET 4\SQL CE 4.0\**\*.*"/>
-	</ItemGroup>
+  <ItemGroup>
+    <SqlCe4Files Include="..\..\ext\.NET 4\SQL CE 4.0\**\*.*" />
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   -->
-	<Target Name="AfterBuild">
-		<Copy SourceFiles="@(SqlCe4Files)" DestinationFolder="$(OutputPath)\%(RecursiveDir)" />
-	</Target>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="@(SqlCe4Files)" DestinationFolder="$(OutputPath)\%(RecursiveDir)" />
+  </Target>
 </Project>

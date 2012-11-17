@@ -463,7 +463,7 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		/// <returns>Common co-routine results.</returns>
 		[SetBusy]
-		[Dependencies("Username", "Password", "PasswordConfirmation", "AgreeToTerms")]
+		[Dependencies("Username", "Password")]
 		public IEnumerable<IResult> Register()
 		{
 			ShowStatus = true;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="GwHm02tQwoe/UKSr/GVc2I+pL0k=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="15zG6/avmumC7MN7Sn+9WTM7PKM=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="UserServiceBasic">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="UserServiceBasic" contract="UserServiceReference.IUserService" bindingType="basicHttpBinding" address="../UserService.svc" bindingConfiguration="UserServiceBasic">
+    <endpoint name="UserServiceBasic" contract="UserServiceReference.IUserService" bindingType="basicHttpBinding" address="https://localhost/fab.api/UserService.svc" bindingConfiguration="UserServiceBasic">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>../UserService.svc</serializedValue>
+          <serializedValue>https://localhost/fab.api/UserService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
