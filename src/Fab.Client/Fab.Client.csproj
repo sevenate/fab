@@ -221,6 +221,9 @@
     <Compile Include="Resources\Icons\ArrowsLeftRightIcon.xaml.cs">
       <DependentUpon>ArrowsLeftRightIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Icons\LogoIcon.xaml.cs">
+      <DependentUpon>LogoIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Icons\UnpinIcon.xaml.cs">
       <DependentUpon>UnpinIcon.xaml</DependentUpon>
     </Compile>
@@ -557,6 +560,10 @@
     <Page Include="Resources\Icons\ArrowsLeftRightIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons\LogoIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Icons\UnpinIcon.xaml">
       <Generator>MSBuild:Compile</Generator>

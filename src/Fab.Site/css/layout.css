@@ -78,7 +78,7 @@ ul.nav 											{ padding:0px 10px 10px;margin: 10px -10px; font-size:1.0em; l
 ul.nav li										{ padding:0; margin:0; display:block; text-align:right; float:right; background-image:none; }
 ul.nav li a										{ padding:7px 15px 7px; text-decoration:none; color:#888; }
 ul.nav li a:hover								{ padding:7px 15px 7px; border-bottom:1px solid #333; text-decoration:none; color:#333; }
-ul.nav li a.current								{ padding:7px 15px 6px; border-bottom:3px solid #119EDA; text-decoration:none; color:#333; }
+ul.nav li a.current								{ padding:7px 15px 6px; border-bottom:3px solid #2476E4; text-decoration:none; color:#333; }
 
 /* Clearing and Alignment Classes */
 .align-left {
