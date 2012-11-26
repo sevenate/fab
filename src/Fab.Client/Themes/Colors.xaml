@@ -13,6 +13,6 @@
 	<SolidColorBrush x:Key="StatusMessageTextBrush"		Color="Gray" />
 	<SolidColorBrush x:Key="StatusMessagesCountBrush"	Color="Black" />
 	<SolidColorBrush x:Key="CategoryTextColorBrush"		Color="White" />
-	<SolidColorBrush x:Key="AccentColorBrush"			Color="#CC119EDA" />
-	<SolidColorBrush x:Key="AccentHoverColorBrush"		Color="#FF119EDA" />
+	<SolidColorBrush x:Key="AccentColorBrush"			Color="#CC2476E4" />
+	<SolidColorBrush x:Key="AccentHoverColorBrush"		Color="#FF2476E4" />
 </ResourceDictionary>

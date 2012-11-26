@@ -93,16 +93,23 @@
 		</Grid.RowDefinitions>
 		<Grid x:Name="grid" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
 				RenderTransformOrigin="0.5,0.5">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
 			<Grid.RenderTransform>
 				<CompositeTransform TranslateX="0" />
 			</Grid.RenderTransform>
-			<ContentControl x:Name="LoginForm" VerticalAlignment="Top" VerticalContentAlignment="Top"
+			<Icons:LogoIcon Grid.Row="0" MaxHeight="40" MinHeight="16"
+							VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"
+							HorizontalAlignment="Center" HorizontalContentAlignment="Center" />
+			<ContentControl x:Name="LoginForm" Grid.Row="1" VerticalAlignment="Top" VerticalContentAlignment="Top"
 							HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" >
 				<ContentControl.RenderTransform>
 					<CompositeTransform/>
 				</ContentControl.RenderTransform>
 			</ContentControl>
-			<ContentControl x:Name="RegistrationForm" VerticalAlignment="Top" VerticalContentAlignment="Top" 
+			<ContentControl x:Name="RegistrationForm" Grid.Row="1" VerticalAlignment="Top" VerticalContentAlignment="Top" 
 							HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" Opacity="0" >
 				<ContentControl.RenderTransform>
 					<CompositeTransform/>
