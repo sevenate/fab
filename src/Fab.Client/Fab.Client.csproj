@@ -13,13 +13,13 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fab.Client</RootNamespace>
-    <AssemblyName>SilverFAB</AssemblyName>
+    <AssemblyName>nReez</AssemblyName>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <SilverlightApplication>true</SilverlightApplication>
     <SupportedCultures>en;ru;uk</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>SilverFAB.xap</XapFilename>
+    <XapFilename>nReez.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>Fab.Client.App</SilverlightAppEntry>
     <TestPageFileName>TestPage.html</TestPageFileName>

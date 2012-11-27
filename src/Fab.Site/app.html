@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	
-	<title>nReez Web Client</title>
+	<title>nReez - Track your spending, plan your earnings.</title>
 	
     <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type" />
     
@@ -83,7 +83,7 @@
 	
 	<script type="text/javascript">
 		Silverlight.inject({
-			source: 'ClientBin/SilverFAB.xap' + getClientParam(),
+			source: 'ClientBin/nReez.xap' + getClientParam(),
 			parentElement: 'silverlightControlHost',
 			properties: {
 				width: '100%',
@@ -96,13 +96,13 @@
 				onError: 'onSilverlightError'
 			},
 			installerUiConfig: {
-				title: 'nReez Web Client',
+				title: 'nReez Client',
 				picture: 'images/wide/logo.png', // 165x124
 				description: {
 					notSupported: {
-						wide: '<p>This web application is powered by the <a href=\"http://www.microsoft.com/silverlight/\">Microsoft Silverlight</a>, but unfortunately your Web browser (or operation system) is not compatible with it. Please, try to visit us with a compatible Web browser like <a href=\'http://www.microsoft.com/windows/internet-explorer/default.aspx\'>Microsoft Internet Explorer</a> of <a href=\"http://www.mozilla.com/en-US/firefox/\">Mozilla Firefox</a> (running on Microsoft Windows) or <a href=\"https://www.google.com/intl/en/chrome/\">Google Chrome</a>.</p>',
-						narrow: '<p>This web application is powered by the <a href=\"http://www.microsoft.com/silverlight/\">Microsoft Silverlight</a>, but unfortunately your Web browser (or operation system) is not compatible with it. Please, try to visit us with a compatible Web browser like <a href=\'http://www.microsoft.com/windows/internet-explorer/default.aspx\'>Microsoft Internet Explorer</a> of <a href=\"http://www.mozilla.com/en-US/firefox/\">Mozilla Firefox</a> (running on Microsoft Windows) or <a href=\"https://www.google.com/intl/en/chrome/\">Google Chrome</a>.</p>',
-						small: '<p>This web application is powered by the <a href=\"http://www.microsoft.com/silverlight/\">Microsoft Silverlight</a>, but unfortunately your Web browser (or operation system) is not compatible with it. Please, try to visit us with a compatible Web browser like <a href=\'http://www.microsoft.com/windows/internet-explorer/default.aspx\'>Microsoft Internet Explorer</a> of <a href=\"http://www.mozilla.com/en-US/firefox/\">Mozilla Firefox</a> (running on Microsoft Windows) or <a href=\"https://www.google.com/intl/en/chrome/\">Google Chrome</a>.</p>'
+						wide: '<p>This web application is powered by the <a href=\"http://www.microsoft.com/silverlight/\">Microsoft Silverlight</a> and, unfortunately, your Web browser (or operation system) is not compatible with it. Please, try to visit us with a compatible Web browser like <a href=\'http://www.microsoft.com/windows/internet-explorer/default.aspx\'>Microsoft Internet Explorer</a> or <a href=\"http://www.mozilla.com/en-US/firefox/\">Mozilla Firefox</a> (running on Microsoft Windows) or <a href=\"https://www.google.com/intl/en/chrome/\">Google Chrome</a>.</p>',
+						narrow: '<p>This web application is powered by the <a href=\"http://www.microsoft.com/silverlight/\">Microsoft Silverlight</a> and, unfortunately, your Web browser (or operation system) is not compatible with it. Please, try to visit us with a compatible Web browser like <a href=\'http://www.microsoft.com/windows/internet-explorer/default.aspx\'>Microsoft Internet Explorer</a> or <a href=\"http://www.mozilla.com/en-US/firefox/\">Mozilla Firefox</a> (running on Microsoft Windows) or <a href=\"https://www.google.com/intl/en/chrome/\">Google Chrome</a>.</p>',
+						small: '<p>This web application is powered by the <a href=\"http://www.microsoft.com/silverlight/\">Microsoft Silverlight</a> and, unfortunately, your Web browser (or operation system) is not compatible with it. Please, try to visit us with a compatible Web browser like <a href=\'http://www.microsoft.com/windows/internet-explorer/default.aspx\'>Microsoft Internet Explorer</a> or <a href=\"http://www.mozilla.com/en-US/firefox/\">Mozilla Firefox</a> (running on Microsoft Windows) or <a href=\"https://www.google.com/intl/en/chrome/\">Google Chrome</a>.</p>'
 					}
 				}
 			}

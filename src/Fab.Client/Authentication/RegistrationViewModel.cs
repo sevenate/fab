@@ -505,7 +505,7 @@ namespace Fab.Client.Authentication
 		/// </summary>
 		public void Terms()
 		{
-			var assemblyName = Assembly.GetExecutingAssembly().GetAssemblyName(); // "SilverFAB"
+			var assemblyName = Assembly.GetExecutingAssembly().GetAssemblyName(); // "nReez"
 
 			// Try to find culture specific Terms text first and fallback to default one in "not found" case
 			var resource = Application.GetResourceStream(new Uri(string.Format(@"/{0};component/Resources/Terms.{1}.txt", assemblyName, Translator.CurrentCulture.TwoLetterISOLanguageName), UriKind.Relative)) ??

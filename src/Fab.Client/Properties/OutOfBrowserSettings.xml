@@ -1,7 +1,7 @@
-<OutOfBrowserSettings ShortName="SilverFAB" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
-  <OutOfBrowserSettings.Blurb>SilverFAB Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
+<OutOfBrowserSettings ShortName="nReez" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>Free and anonymous online assets manager.</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
-    <WindowSettings Title="SilverFAB" Height="700" Width="1100" />
+    <WindowSettings Title="nReez" Height="700" Width="1100" />
   </OutOfBrowserSettings.WindowSettings>
   <OutOfBrowserSettings.SecuritySettings>
     <SecuritySettings ElevatedPermissions="NotRequired" />
