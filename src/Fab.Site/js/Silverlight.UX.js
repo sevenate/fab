@@ -125,7 +125,7 @@ function pageLoaded() {
 		// silverlight is supported update any installers
 		for (var i in Silverlight.installControls)
 			Silverlight.installControls[i].update();
-		getXapSize('ClientBin/SilverFAB.xap' + getClientParam());
+		getXapSize('ClientBin/nReez.xap' + getClientParam());
 	} else {
 		// silverlight is not supported, need to tell installers to report this
 		for (var j in Silverlight.installControls)

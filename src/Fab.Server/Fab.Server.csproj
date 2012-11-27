@@ -92,7 +92,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClientBin\SilverFAB.xap" />
+    <Content Include="ClientBin\nReez.xap" />
     <EntityDeploy Include="Core\Master.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Master.Designer.cs</LastGenOutput>
