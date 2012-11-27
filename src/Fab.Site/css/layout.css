@@ -66,7 +66,7 @@
 	position: relative;
 }
 
-#featured { background: url("images/foundation/orbit/spinner.gif") center center #f4f4f4; height: 300px; }
+#featured { background: url("../images/foundation/orbit/loading.gif") center center #f4f4f4; height: 300px; }
 #featured img { display: none; }
 
 #featured.orbit { background: none; }
@@ -79,6 +79,13 @@ ul.nav li										{ padding:0; margin:0; display:block; text-align:right; float
 ul.nav li a										{ padding:7px 15px 7px; text-decoration:none; color:#888; }
 ul.nav li a:hover								{ padding:7px 15px 7px; border-bottom:1px solid #333; text-decoration:none; color:#333; }
 ul.nav li a.current								{ padding:7px 15px 6px; border-bottom:3px solid #2476E4; text-decoration:none; color:#333; }
+
+ul.nav li a.loginButton {
+	background-color: #2476E4;
+	color: white;
+	padding: 7px 15px;
+	border-bottom: 0px;
+}
 
 /* Clearing and Alignment Classes */
 .align-left {
@@ -177,4 +184,35 @@ ul.footer-menu li a:hover { text-decoration:underline; }
 
 #bottom-line {
     margin: 50px 0 10px;
+}
+
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+	ul.nav li							{ padding:0; margin:0; display:block; text-align:right; float:right; background-image:none;font-size: 12px; }
+	ul.nav li a							{ padding:7px 7px 7px; text-decoration:none; color:#888; }
+	ul.nav li a:hover					{ padding:7px 7px 7px; border-bottom:1px solid #333; text-decoration:none; color:#333; }
+	ul.nav li a.current					{ padding:7px 7px 6px; border-bottom:3px solid #2476E4; text-decoration:none; color:#333; }
+
+	ul.nav li a.loginButton {
+		background-color: #2476E4;
+		color: white;
+		padding: 7px 15px;
+		border-bottom: 0px;
+	}
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+	ul.nav li a.menuButton {
+		display: none;
+	}
+
+
+	ul.nav li a.loginButton {
+		background-color: #2476E4;
+		color: white;
+		padding: 7px 15px;
+		border-bottom: 0px;
+	}
 }
