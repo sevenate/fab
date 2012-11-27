@@ -72,6 +72,8 @@
 #featured.orbit { background: none; }
 #featured.orbit img { display: block; }
 
+#header div { float: left; position: absolute; margin-top: 7px; }
+
 /***** Navigation *****/
 
 ul.nav 											{ padding:0px 10px 10px;margin: 10px -10px; font-size:1.0em; list-style:none; float:right; text-transform:uppercase; text-align:left; width:100%; }
@@ -175,17 +177,10 @@ ul.footer-menu > li {
     white-space: nowrap;
 }
 
-ul.footer-menu > li {
-
-}
-
 ul.footer-menu li a { text-decoration:none; color:#888; }
 ul.footer-menu li a:hover { text-decoration:underline; }
 
-#bottom-line {
-    margin: 50px 0 10px;
-}
-
+#bottom-line { margin: 50px 0 10px; }
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
