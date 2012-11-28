@@ -198,7 +198,7 @@
 			Visibility="{Binding Path=IsAuthenticated, Converter={StaticResource boolToVisibility}}">
 			<ListBox
 				x:Name="Items"
-				Margin="5,2,2,-2"
+				Margin="-2,2,2,-2"
 				Canvas.ZIndex="100"
 				Controls:DockPanel.Dock="Left"
 				ItemTemplate="{StaticResource ModuleDataTemplate}"
