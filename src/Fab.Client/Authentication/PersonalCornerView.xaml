@@ -10,21 +10,41 @@
 		<ComboBox x:Name="Cultures"
 				  SelectedValue="{Binding CurrentCulture, Mode=TwoWay}"
 				  ItemTemplate="{StaticResource LanguageItem}" />
-		<Button x:Name="Logout">
-			<Button.Content>
-				<StackPanel Orientation="Horizontal">
-					<Icons:LogoutIcon />
-					<TextBlock Text="{Binding Path=LocalizedStrings.PersonalCornerView_Sign_out, FallbackValue='Sign out'}"							   
-							   Margin="5,0,0,0"
-							   FontSize="16"
-							   VerticalAlignment="Center" />
-					<TextBlock Text="{Binding Username, StringFormat=( \{0\} )}"
-							   VerticalAlignment="Center"
-							   Foreground="{StaticResource GrayBrush2}"
-							   Margin="5,0"
-							   FontSize="12" />
-				</StackPanel>
-			</Button.Content>
+		<Button x:Name="Logout" Style="{StaticResource ButtonStyle}">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Icons:LogoutIcon Style="{StaticResource ButtonIconStyle}"
+								  Foreground="{Binding BorderBrush, ElementName=Logout}" />
+				<TextBlock Grid.Column="1"
+						   Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding BorderBrush, ElementName=Logout}"
+						   Margin="5" HorizontalAlignment="Left"
+						   Text="{Binding Path=LocalizedStrings.PersonalCornerView_Sign_out, FallbackValue='Sign out'}" />
+				<TextBlock Grid.Column="2" Text="{Binding Username, StringFormat=( \{0\} )}"
+							VerticalAlignment="Center"
+							Foreground="{StaticResource GrayBrush2}"
+							Margin="5,0"
+							FontSize="12" />
+
+			</Grid>
 		</Button>
+<!--		<Button x:Name="Logout">-->
+<!--			<StackPanel Orientation="Horizontal">-->
+<!--				<Icons:LogoutIcon />-->
+<!--				<TextBlock Text="{Binding Path=LocalizedStrings.PersonalCornerView_Sign_out, FallbackValue='Sign out'}"							   -->
+<!--							Margin="5,0,0,0"-->
+<!--							FontSize="16"-->
+<!--							VerticalAlignment="Center" />-->
+<!--				<TextBlock Text="{Binding Username, StringFormat=( \{0\} )}"-->
+<!--							VerticalAlignment="Center"-->
+<!--							Foreground="{StaticResource GrayBrush2}"-->
+<!--							Margin="5,0"-->
+<!--							FontSize="12" />-->
+<!--			</StackPanel>-->
+<!--		</Button>-->
 	</StackPanel>
 </UserControl>
