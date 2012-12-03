@@ -42,20 +42,23 @@
 				ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				HorizontalContentAlignment="Stretch"
 				ItemContainerStyle="{StaticResource ListBoxItemStyle}" />
-			<Button
-				x:Name="CreateAccount"
-				Grid.Row="1"
-				MinHeight="23">
-				<StackPanel
-					Orientation="Horizontal">
-					<Icons:AddIcon
-						MaxWidth="16"
-						MaxHeight="16" />
-					<TextBlock
-						Margin="10,0,0,0"
-						FontSize="18"
-						Text="{Binding Path=LocalizedStrings.AccountsDashboardView_CreateAccount, FallbackValue=Account}" />
-				</StackPanel>
+			<Button x:Name="CreateAccount" Grid.Row="1" TabIndex="2" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Stretch">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Icons:AddIcon Style="{StaticResource ButtonIconStyle}"
+								   MaxWidth="16"
+								   MaxHeight="16"
+								   Foreground="{Binding BorderBrush, ElementName=CreateAccount, FallbackValue=Black}" />
+					<TextBlock Grid.Column="1"
+						   Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding BorderBrush, ElementName=CreateAccount, FallbackValue=Black}"
+						   Margin="5" HorizontalAlignment="Left"
+						   Text="{Binding Path=LocalizedStrings.AccountsDashboardView_CreateAccount, FallbackValue='Account'}" />
+
+				</Grid>
 			</Button>
 		</Grid>
 		<sdk:GridSplitter
