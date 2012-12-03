@@ -484,25 +484,21 @@
         <Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
         <Setter Property="TextOptions.TextHintingMode" Value="Animated"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{StaticResource Gray7}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="TabNavigation" Value="Once"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WhiteBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
                     <Grid>
                         <Grid.Resources>
                             <Style x:Name="comboToggleStyle" TargetType="ToggleButton">
-                                <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-                                <Setter Property="Background" Value="{StaticResource GrayBrush7}"/>
+                                <Setter Property="Foreground" Value="{StaticResource HighlightBrush}"/>
+                                <Setter Property="Background" Value="{StaticResource WhiteBrush}"/>
                                 <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
                                 <Setter Property="BorderThickness" Value="1"/>
                                 <Setter Property="Padding" Value="3"/>
@@ -514,11 +510,11 @@
                                                     <VisualStateGroup x:Name="CommonStates">
                                                         <VisualState x:Name="Normal"/>
                                                         <VisualState x:Name="MouseOver">
-                                                            <Storyboard>
+                                                            <!--<Storyboard>
                                                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverBorder">
                                                                     <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
                                                                 </DoubleAnimationUsingKeyFrames>
-                                                            </Storyboard>
+                                                            </Storyboard>-->
                                                         </VisualState>
                                                         <VisualState x:Name="Pressed">
                                                             <Storyboard>
@@ -556,16 +552,16 @@
                                                         <VisualState x:Name="Unfocused"/>
                                                     </VisualStateGroup>
                                                 </VisualStateManager.VisualStateGroups>
-                                                <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3"/>
-                                                <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource WhiteBrush}" IsHitTestVisible="false" Opacity="0" RadiusY="3" RadiusX="3"/>
-                                                <Border x:Name="MouseOverBorder" Background="{StaticResource GrayBrush8}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
-                                                <Border x:Name="PressedBorder" Background="{StaticResource GrayBrush5}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
-                                                <Rectangle x:Name="FocusRectangle" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
-                                                <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
-                                                <Rectangle x:Name="CheckedRectangle" StrokeThickness="{TemplateBinding BorderThickness}" RadiusY="4" RadiusX="4" Opacity="0" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" />
-                                                <Rectangle x:Name="CheckedInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" RadiusY="4" RadiusX="4" Opacity="0" Margin="1" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" />
+                                                <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" />
+                                                <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource WhiteBrush}" IsHitTestVisible="false" Opacity="0"/>
+												<Border x:Name="MouseOverBorder" Background="{StaticResource WhiteBrush}" BorderBrush="{StaticResource BlackBrush}" BorderThickness="0" Opacity="0"/>
+												<Border x:Name="PressedBorder" Background="{StaticResource WhiteBrush}" BorderThickness="0" Opacity="1"/>
+                                                <Rectangle x:Name="FocusRectangle" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" StrokeThickness="0" Margin="-1" Opacity="0" />
+												<Rectangle x:Name="FocusInnerRectangle" StrokeThickness="0" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" Opacity="0" />
+                                                <Rectangle x:Name="CheckedRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" />
+                                                <Rectangle x:Name="CheckedInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Margin="1" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" />
                                                 <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                                <Rectangle x:Name="FocusVisualElement" IsHitTestVisible="false" Margin="1" RadiusY="3.5" RadiusX="3.5" Stroke="{StaticResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed"/>
+                                                <Rectangle x:Name="FocusVisualElement" IsHitTestVisible="false" Margin="1" Stroke="{StaticResource HighlightBrush}" StrokeThickness="0" Visibility="Collapsed"/>
                                             </Grid>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -575,7 +571,17 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
-                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="MouseOver">
+                                	<Storyboard>
+                                		<DoubleAnimation Duration="0" To="0.175" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="FocusRectangle" d:IsOptimized="True"/>
+                                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush)" Storyboard.TargetName="ContentPresenterBorder">
+                                			<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BlackBrush}"/>
+                                		</ObjectAnimationUsingKeyFrames>
+                                		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="BtnArrow">
+                                			<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BlackBrush}"/>
+                                		</ObjectAnimationUsingKeyFrames>
+                                	</Storyboard>
+                                </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="DisabledVisualElement">
@@ -641,24 +647,28 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="ContentPresenterBorder">
+                        <Border x:Name="ContentPresenterBorder" BorderThickness="1">
                             <Grid>
                                 <ToggleButton x:Name="DropDownToggle" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="0" Style="{StaticResource comboToggleStyle}" VerticalAlignment="Stretch">
                                     <Path x:Name="BtnArrow" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z " HorizontalAlignment="Right" Height="4" Margin="0,0,6,0" Stretch="Uniform" Width="8">
-                                        <Path.Fill>
-                                            <SolidColorBrush x:Name="BtnArrowColor" Color="{StaticResource Gray3}"/>
-                                        </Path.Fill>
-                                    </Path>
+										<Path.Fill>
+											<SolidColorBrush x:Name="BtnArrowColor" Color="{StaticResource HighlightDarkColor}"/>
+										</Path.Fill>
+									</Path>
                                 </ToggleButton>
                                 <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <TextBlock Text=" "/>
                                 </ContentPresenter>
                             </Grid>
                         </Border>
-                        <Rectangle x:Name="FocusRectangle" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
-                        <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
-                        <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource DisabledWhiteColorBrush}" IsHitTestVisible="false" RadiusX="3" RadiusY="3" Opacity="0"/>
-                        <Border x:Name="ValidationErrorElement" BorderBrush="{StaticResource ControlsValidationBrush}" BorderThickness="1" CornerRadius="3" Visibility="Collapsed">
+						<Rectangle x:Name="FocusRectangle" StrokeThickness="0" Stroke="{StaticResource WhiteBrush}" Margin="-1" Opacity="0" RenderTransformOrigin="0.5,0.5" >
+                        	<Rectangle.RenderTransform>
+                        		<CompositeTransform/>
+                        	</Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle x:Name="FocusInnerRectangle" Visibility="Collapsed" StrokeThickness="0" Stroke="{StaticResource WhiteBrush}" Opacity="0" />
+                        <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource DisabledWhiteColorBrush}" IsHitTestVisible="false" Opacity="0"/>
+                        <Border x:Name="ValidationErrorElement" BorderBrush="{StaticResource ControlsValidationBrush}" BorderThickness="1" Visibility="Collapsed">
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ValidationToolTipTemplate}">
                                     <ToolTip.Triggers>
@@ -759,7 +769,7 @@
                             </ContentControl.Foreground>
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}"/>
                         </ContentControl>
-                        <Rectangle x:Name="FocusVisualElement" RadiusY="1" RadiusX="1" Stroke="{StaticResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed"/>
+                        <Rectangle x:Name="FocusVisualElement" Stroke="{StaticResource HighlightBrush}" Visibility="Collapsed"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
