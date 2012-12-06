@@ -6,7 +6,7 @@
 	<SolidColorBrush x:Key="NeutralBalanceBrush"		Color="Black" />
 	<SolidColorBrush x:Key="IncomeBrush"				Color="#00C000" />
 	<SolidColorBrush x:Key="ExpenceBrush"				Color="#C00000" />
-	<SolidColorBrush x:Key="TransferBrush"				Color="Black" />
+	<SolidColorBrush x:Key="TransferBrush"				Color="#FF2476E4" />
 	<SolidColorBrush x:Key="DepositCategoryBrush"		Color="#00C000" />
 	<SolidColorBrush x:Key="WithdrawalCategoryBrush"	Color="#C00000" />
 	<SolidColorBrush x:Key="CommonCategoryBrush"		Color="Black" />

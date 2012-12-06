@@ -21,8 +21,11 @@
 																SelectedRange="{Binding Path=SelectedRange, Mode=TwoWay}" />
 			</Interactivity:Interaction.Behaviors>
 		</sdk:Calendar>
-		<Button x:Name="Today"
-				Grid.Row="1"
-				Content="{Binding Path=LocalizedStrings.PostingsFilterView_Today, FallbackValue='Today'}" />
+		<Button x:Name="Today" Grid.Row="1" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Stretch">
+			<TextBlock Style="{StaticResource IconButtonTextStyle}"
+					   Foreground="{Binding BorderBrush, ElementName=Today, FallbackValue=Black}"
+					   Margin="5"
+					   Text="{Binding Path=LocalizedStrings.PostingsFilterView_Today, FallbackValue='Today'}" />
+		</Button>
 	</Grid>
 </UserControl>
