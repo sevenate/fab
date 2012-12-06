@@ -7,54 +7,59 @@
 	<StackPanel Orientation="Horizontal"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Right">
-		<Button x:Name="NewExpense" Padding="10"
-				MinWidth="75"
-				MinHeight="23"
-				Foreground="{StaticResource ExpenceBrush}">
-		    <StackPanel Orientation="Horizontal">
-                <Icons:AddIcon
-                    MaxWidth="16"
-                    MaxHeight="16"/>
-                <TextBlock
-                    Text="{Binding Path=LocalizedStrings.PostingActionsView_NewExpense, FallbackValue='Expense'}"
-                    Margin="10,0,0,0"
-                    Foreground="{StaticResource ExpenceBrush}"
-                    FontSize="18" />
-            </StackPanel>
+		<Button x:Name="NewExpense" TabIndex="2" Margin="0,5" Style="{StaticResource ButtonStyle}"
+				BorderBrush="{StaticResource ExpenceBrush}">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Icons:AddIcon Style="{StaticResource ButtonIconStyle}"
+								   MaxWidth="16"
+								   MaxHeight="16"
+								   Foreground="{Binding BorderBrush, ElementName=NewExpense, FallbackValue=Black}" />
+				<TextBlock Grid.Column="1"
+						   Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding BorderBrush, ElementName=NewExpense, FallbackValue=Black}"
+						   Margin="5" HorizontalAlignment="Left"
+						   Text="{Binding Path=LocalizedStrings.PostingActionsView_NewExpense, FallbackValue='Expense'}" />
+			</Grid>
 		</Button>
-	    <Button x:Name="NewIncome"
-				Padding="10"
-				MinWidth="75"
-				MinHeight="23"
-				Foreground="{StaticResource IncomeBrush}">
-            <StackPanel
-                Orientation="Horizontal">
-                <Icons:AddIcon
-                    MaxWidth="16"
-                    MaxHeight="16" />
-                <TextBlock
-                    Text="{Binding Path=LocalizedStrings.PostingActionsView_NewIncome, FallbackValue='Income'}"
-                    Margin="10,0,0,0"
-                    Foreground="{StaticResource IncomeBrush}"
-                    FontSize="18" />
-            </StackPanel>
-	    </Button>
-	    <Button x:Name="NewTransfer"
-				Padding="10"
-				MinWidth="75"
-				MinHeight="23"
-				Foreground="{StaticResource TransferBrush}">
-            <StackPanel
-                Orientation="Horizontal">
-                <Icons:AddIcon
-                    MaxWidth="16"
-                    MaxHeight="16" />
-                <TextBlock
-                    Text="{Binding Path=LocalizedStrings.PostingActionsView_NewTransfer, FallbackValue='Transfer'}"
-                    Margin="10,0,0,0"
-                    Foreground="{StaticResource TransferBrush}"
-                    FontSize="18" />
-            </StackPanel>
-	    </Button>
+		<Button x:Name="NewIncome" TabIndex="2" Margin="0,5" Style="{StaticResource ButtonStyle}"
+				BorderBrush="{StaticResource IncomeBrush}">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Icons:AddIcon Style="{StaticResource ButtonIconStyle}"
+								   MaxWidth="16"
+								   MaxHeight="16"
+								   Foreground="{Binding BorderBrush, ElementName=NewIncome, FallbackValue=Black}" />
+				<TextBlock Grid.Column="1"
+						   Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding BorderBrush, ElementName=NewIncome, FallbackValue=Black}"
+						   Margin="5" HorizontalAlignment="Left"
+						   Text="{Binding Path=LocalizedStrings.PostingActionsView_NewIncome, FallbackValue='Income'}" />
+			</Grid>
+		</Button>
+		<Button x:Name="NewTransfer" TabIndex="2" Margin="0,5" Style="{StaticResource ButtonStyle}"
+				BorderBrush="{StaticResource TransferBrush}">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Icons:AddIcon Style="{StaticResource ButtonIconStyle}"
+								   MaxWidth="16"
+								   MaxHeight="16"
+								   Foreground="{Binding BorderBrush, ElementName=NewTransfer, FallbackValue=Black}" />
+				<TextBlock Grid.Column="1"
+						   Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding BorderBrush, ElementName=NewTransfer, FallbackValue=Black}"
+						   Margin="5" HorizontalAlignment="Left"
+						   Text="{Binding Path=LocalizedStrings.PostingActionsView_NewTransfer, FallbackValue='Transfer'}" />
+			</Grid>
+		</Button>
 	</StackPanel>
 </UserControl>
