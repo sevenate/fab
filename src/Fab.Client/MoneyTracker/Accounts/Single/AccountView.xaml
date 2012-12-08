@@ -61,30 +61,40 @@
 					   FontWeight="Bold"
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Left" />
-			<StackPanel x:Name="actionsPanel"
-						Grid.Column="3"
-						Grid.RowSpan="2"
-						Opacity="0"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Center"
-						Orientation="Vertical">
-				<Button x:Name="Delete"
-						Style="{x:Null}"
-						Width="16"
-						Height="16"
-						Padding="2"
-						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Delete, FallbackValue='Delete'}">
-					<Icons:RecycleIcon />
-				</Button>
-				<Button x:Name="Edit"
-						Width="16"
-						Height="16"
-						Style="{x:Null}"
-						Padding="2"
+			<Grid x:Name="actionsPanel"
+				  Grid.Column="3"
+				  Grid.RowSpan="2"
+				  HorizontalAlignment="Right"
+				  Opacity="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="Edit" Style="{StaticResource ButtonStyle}"
+						Grid.Column="0"
+						Margin="0"
+						MinWidth="0"
+						Background="Red"
 						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Edit, FallbackValue='Edit'}">
-					<Icons:EditIcon />
+					<Icons:EditIcon Style="{StaticResource ButtonIconStyle}"
+									Padding="5"
+									Width="24"
+									Height="24"
+									Foreground="{Binding BorderBrush, ElementName=Edit}" />
 				</Button>
-			</StackPanel>
+				<Button x:Name="Delete" Style="{StaticResource ButtonStyle}"
+						Grid.Column="1"
+						Margin="0"
+						MinWidth="0"
+						Background="Transparent"
+						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Delete, FallbackValue='Delete'}">
+					<Icons:RecycleIcon Style="{StaticResource ButtonIconStyle}"
+									   Padding="5"
+									   Width="24"
+									   Height="24"
+									   Foreground="{Binding BorderBrush, ElementName=Delete}" />
+				</Button>
+			</Grid>
 			<Controls:DockPanel Grid.Row="1"
 								Grid.ColumnSpan="3"
 								Margin="2,0">

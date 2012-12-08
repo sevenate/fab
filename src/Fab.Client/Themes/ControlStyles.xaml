@@ -281,12 +281,13 @@
 		<Setter Property="Padding" Value="5"/>
 		<Setter Property="MinWidth" Value="75" />
 		<Setter Property="Margin" Value="5" />
+		<Setter Property="Cursor" Value="Hand" />
 		<Setter Property="HorizontalAlignment" Value="Left" />
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">
-					<Grid Background="{StaticResource WhiteBrush}">
+					<Grid Background="Transparent">
 						<Grid.RenderTransform>
 							<CompositeTransform/>
 						</Grid.RenderTransform>
@@ -348,7 +349,6 @@
 										Background="{Binding Background, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
 
 						<ContentPresenter x:Name="contentPresenter" RenderTransformOrigin="0.5,0.5"
-										  Cursor="Hand"
 						                  ContentTemplate="{TemplateBinding ContentTemplate}"
 						                  Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
 						                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
