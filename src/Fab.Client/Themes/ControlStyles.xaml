@@ -256,7 +256,6 @@
 		<Setter Property="IsTabStop" Value="False" />
 	</Style>
 	<Style x:Key="IconButtonTextStyle" TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockStyle}">
-		<Setter Property="FontFamily" Value="Portable User Interface" />
 		<Setter Property="Margin" Value="5,0" />
 		<Setter Property="FontSize" Value="{StaticResource ControlTitleBigFontSize}" />
 		<Setter Property="VerticalAlignment" Value="Center" />

@@ -8,22 +8,34 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0 8 0 0">
-            <Button x:Name="Ok"
-					Margin="0,0,5,0"
-					MinWidth="75"
-                    Visibility="{Binding OkVisible, Converter={StaticResource boolToVisibility}}"
-					Content="{Binding Path=LocalizedStrings.MessageBoxView_Ok, FallbackValue='Ok'}" />
-            <Button x:Name="Yes"
-					Margin="0,0,5,0"
-					MinWidth="75"
-					Visibility="{Binding YesVisible, Converter={StaticResource boolToVisibility}}"
-					Content="{Binding Path=LocalizedStrings.MessageBoxView_Yes, FallbackValue='Yes'}" />
-            <Button x:Name="No"
-					Visibility="{Binding NoVisible, Converter={StaticResource boolToVisibility}}"
-					Content="{Binding Path=LocalizedStrings.MessageBoxView_No, FallbackValue='No'}" />
-            <Button x:Name="Cancel"
-					Visibility="{Binding CancelVisible, Converter={StaticResource boolToVisibility}}"
-					Content="{Binding Path=LocalizedStrings.MessageBoxView_Cancel, FallbackValue='Cancel'}" />
+			<Button x:Name="Ok" TabIndex="0" Style="{StaticResource ButtonStyle}"
+					Visibility="{Binding Path=OkVisible, Converter={StaticResource boolToVisibility}}">
+				<TextBlock Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding Path=BorderBrush, ElementName=Ok}"
+						   Margin="5"
+						   Text="{Binding Path=LocalizedStrings.MessageBoxView_Ok, FallbackValue='Ok'}" />
+			</Button>
+			<Button x:Name="Yes" TabIndex="0" Style="{StaticResource ButtonStyle}"
+					Visibility="{Binding Path=YesVisible, Converter={StaticResource boolToVisibility}}">
+				<TextBlock Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding Path=BorderBrush, ElementName=Yes}"
+						   Margin="5"
+						   Text="{Binding Path=LocalizedStrings.MessageBoxView_Yes, FallbackValue='Yes'}" />
+			</Button>
+			<Button x:Name="No" TabIndex="0" Style="{StaticResource ButtonStyle}"
+					Visibility="{Binding Path=NoVisible, Converter={StaticResource boolToVisibility}}">
+				<TextBlock Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding Path=BorderBrush, ElementName=No}"
+						   Margin="5"
+						   Text="{Binding Path=LocalizedStrings.MessageBoxView_No, FallbackValue='No'}" />
+			</Button>
+			<Button x:Name="Cancel" TabIndex="0" Style="{StaticResource ButtonStyle}"
+					Visibility="{Binding Path=CancelVisible, Converter={StaticResource boolToVisibility}}">
+				<TextBlock Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding Path=BorderBrush, ElementName=Cancel}"
+						   Margin="5"
+						   Text="{Binding Path=LocalizedStrings.MessageBoxView_Cancel, FallbackValue='Cancel'}" />
+			</Button>
         </StackPanel>
     </StackPanel>
 </UserControl>

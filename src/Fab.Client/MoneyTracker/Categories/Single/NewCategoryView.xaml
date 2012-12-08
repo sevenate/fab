@@ -51,15 +51,18 @@
 					HorizontalAlignment="Right"
 					Margin="0,10,0,0">
 			<Controls1:Spinner Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibility}}" />
-			<Button x:Name="Save"
-					Content="{Binding Path=LocalizedStrings.NewCategoryView_Save, FallbackValue='Save'}"
-					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
-					TabIndex="2" />
-			<Button x:Name="Cancel"
-					Grid.Row="2"
-					Content="{Binding Path=LocalizedStrings.NewCategoryView_Cancel, FallbackValue='Cancel'}"
-					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}"
-					TabIndex="3" />
+			<Button x:Name="Save" TabIndex="2" Style="{StaticResource ButtonStyle}"
+					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}">
+				<TextBlock Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding Path=BorderBrush, ElementName=Save}"
+						   Text="{Binding Path=LocalizedStrings.NewCategoryView_Save, FallbackValue='Save'}" />
+			</Button>
+			<Button x:Name="Cancel" Grid.Row="2" TabIndex="3" Style="{StaticResource ButtonStyle}"
+					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}">
+				<TextBlock Style="{StaticResource IconButtonTextStyle}"
+						   Foreground="{Binding Path=BorderBrush, ElementName=Cancel}"
+						   Text="{Binding Path=LocalizedStrings.NewCategoryView_Cancel, FallbackValue='Cancel'}" />
+			</Button>
 		</StackPanel>
 	</Grid>
 </UserControl>
