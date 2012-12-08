@@ -10,26 +10,16 @@
 	<Grid Visibility="{Binding ActiveItem, Mode=TwoWay, Converter={StaticResource nullToCollapsed}}"
 		  Background="#AAAAAAAA"
 		  IsHitTestVisible="True">
-		<Border BorderBrush="Black"
+		<Border BorderBrush="#FF444444"
 				BorderThickness="1"
 				VerticalAlignment="Center"
 				Background='White'
-				HorizontalAlignment="Center"
-				CornerRadius="3">
+				HorizontalAlignment="Center">
 			<Border.Effect>
 				<DropShadowEffect />
 			</Border.Effect>
 			<StackPanel>
-				<Border>
-					<Border.Background>
-						<LinearGradientBrush StartPoint="-1,0.5"
-											 EndPoint="1,0.5">
-							<GradientStop Offset="1"
-										  Color="#FF3B3B3B" />
-							<GradientStop Offset="0"
-										  Color="#FF000000" />
-						</LinearGradientBrush>
-					</Border.Background>
+				<Border Background="{StaticResource AccentColorBrush}">
 					<TextBlock x:Name="ActiveItem_DisplayName"
 							   FontWeight="Bold"
 							   FontSize="16"
