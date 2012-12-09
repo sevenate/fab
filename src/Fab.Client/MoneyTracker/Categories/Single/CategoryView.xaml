@@ -1,17 +1,15 @@
-﻿<UserControl
-    x:Class="Fab.Client.MoneyTracker.Categories.Single.CategoryView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-    xmlns:ToolTips="clr-namespace:Silverlight.Controls.ToolTips;assembly=Silverlight.Controls.ToolTips"
-    xmlns:cal="http://www.caliburnproject.org"
-    xmlns:Resources="clr-namespace:Fab.Client.Resources.Icons"
-    mc:Ignorable="d"
-    d:DesignWidth="160"
-    cal:Message.Attach="[Event MouseEnter] = [Action ShowActions()]; [Event MouseLeave] = [Action HideActions()]"
-    d:DataContext="{d:DesignData Source=./SampleData/Category.xaml}">
+﻿<UserControl x:Class="Fab.Client.MoneyTracker.Categories.Single.CategoryView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+			 xmlns:cal="http://www.caliburnproject.org"
+			 xmlns:Resources="clr-namespace:Fab.Client.Resources.Icons"
+			 mc:Ignorable="d"
+			 d:DesignWidth="247"
+			 cal:Message.Attach="[Event MouseEnter] = [Action ShowActions()]; [Event MouseLeave] = [Action HideActions()]"
+			 d:DataContext="{d:DesignData Source=./SampleData/Category.xaml}" d:DesignHeight="40.25">
     <UserControl.Resources>
         <Storyboard
             x:Name="ShowActionsPanel">
@@ -42,32 +40,39 @@
     </UserControl.Resources>
     <toolkit:DockPanel
         VerticalAlignment="Center">
-        <StackPanel
-            x:Name="actionsPanel"
-            toolkit:DockPanel.Dock="Right"
-            Opacity="0"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            Orientation="Horizontal">
-            <Button
-                x:Name="Edit"
-                Width="16"
-                Height="16"
-                Style="{x:Null}"
-                Padding="2"
-                ToolTipService.ToolTip="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}">
-                <Resources:EditIcon />
-            </Button>
-            <Button
-                x:Name="Delete"
-                Width="16"
-                Height="16"
-                Style="{x:Null}"
-                Padding="2"
-                ToolTipService.ToolTip="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}">
-                <Resources:RecycleIcon />
-            </Button>
-        </StackPanel>
+		<Grid x:Name="actionsPanel"
+				  toolkit:DockPanel.Dock="Right"
+				  HorizontalAlignment="Right"
+			  VerticalAlignment="Center"
+				  Opacity="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Button x:Name="Edit" Style="{StaticResource ButtonStyle}"
+						Grid.Column="0"
+						Margin="0"
+						MinWidth="0"
+						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.CategoryView_Edit, FallbackValue='Edit'}">
+				<Resources:EditIcon Style="{StaticResource ButtonIconStyle}"
+									Padding="5"
+									Width="24"
+									Height="24"
+									Foreground="{Binding BorderBrush, ElementName=Edit}" />
+			</Button>
+			<Button x:Name="Delete" Style="{StaticResource ButtonStyle}"
+						Grid.Column="1"
+						Margin="0"
+						MinWidth="0"
+						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.CategoryView_Delete, FallbackValue='Delete'}">
+				<Resources:RecycleIcon Style="{StaticResource ButtonIconStyle}"
+									   Padding="5"
+									   Width="24"
+									   Height="24"
+									   Foreground="{Binding BorderBrush, ElementName=Delete}" />
+			</Button>
+		</Grid>
+		
         <TextBlock
             toolkit:DockPanel.Dock="Right"
             VerticalAlignment="Top"
