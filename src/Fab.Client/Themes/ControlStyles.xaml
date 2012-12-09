@@ -232,17 +232,10 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-	<Style
-		TargetType="Controls:Spinner">
-		<Setter
-			Property="MaxHeight"
-			Value="20" />
-		<Setter
-			Property="HorizontalAlignment"
-			Value="Left" />
-		<Setter
-			Property="VerticalAlignment"
-			Value="Center" />
+	<Style TargetType="Controls:Spinner">
+		<Setter Property="MaxHeight" Value="20" />
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="VerticalAlignment" Value="Center" />
 	</Style>
 	<Style x:Key="IconStyle" TargetType="Control">
 		<Setter Property="MaxHeight" Value="20" />
@@ -250,8 +243,8 @@
 		<Setter Property="VerticalAlignment" Value="Center" />
 	</Style>
 	<Style x:Key="ButtonIconStyle" TargetType="Control">
-		<Setter Property="Width" Value="36" />
-		<Setter Property="Height" Value="36" />
+		<Setter Property="Width" Value="32" />
+		<Setter Property="Height" Value="32" />
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="IsTabStop" Value="False" />
 	</Style>

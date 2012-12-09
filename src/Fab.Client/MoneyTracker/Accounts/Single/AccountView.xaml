@@ -74,7 +74,6 @@
 						Grid.Column="0"
 						Margin="0"
 						MinWidth="0"
-						Background="Red"
 						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Edit, FallbackValue='Edit'}">
 					<Icons:EditIcon Style="{StaticResource ButtonIconStyle}"
 									Padding="5"
@@ -86,7 +85,6 @@
 						Grid.Column="1"
 						Margin="0"
 						MinWidth="0"
-						Background="Transparent"
 						ToolTipService.ToolTip="{Binding Path=LocalizedStrings.AccountView_Delete, FallbackValue='Delete'}">
 					<Icons:RecycleIcon Style="{StaticResource ButtonIconStyle}"
 									   Padding="5"
