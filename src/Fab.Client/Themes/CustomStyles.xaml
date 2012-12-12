@@ -21,4 +21,99 @@
 		<Setter Property="Foreground"
 				Value="#00C000" />
 	</Style>
+	<Style x:Key="CalendarHeaderButtonStyle" TargetType="Button">
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="BorderBrush" Value="{StaticResource AccentColor}"/>
+		<Setter Property="Background" Value="{StaticResource WhiteColor}"/>
+		<Setter Property="Foreground" Value="{StaticResource AccentColor}"/>
+		<Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
+		<Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
+		<Setter Property="TextOptions.TextHintingMode" Value="Animated"/>
+		<Setter Property="ClickMode" Value="Press"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="Padding" Value="5"/>
+		<Setter Property="MinWidth" Value="75" />
+		<Setter Property="Margin" Value="5" />
+		<Setter Property="Cursor" Value="Hand" />
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Grid Background="Transparent">
+						<Grid.RenderTransform>
+							<CompositeTransform/>
+						</Grid.RenderTransform>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualStateGroup.Transitions>
+									<VisualTransition GeneratedDuration="0:0:0.2"/>
+								</VisualStateGroup.Transitions>
+								<VisualState x:Name="Normal"/>
+								<VisualState x:Name="MouseOver">
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Workaround"
+											Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)"
+											To="{StaticResource BlackColor}" />
+										<ColorAnimation Storyboard.TargetName="Workaround"
+											Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)"
+											To="{StaticResource WhiteColor}" />
+										<ColorAnimation Storyboard.TargetName="Workaround"
+											Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)"
+											To="{StaticResource BlackColor}" />
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Pressed">
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Workaround" Duration="0:0:0.1"
+											Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)"
+											To="{StaticResource AccentColor}" />
+										<ColorAnimation Storyboard.TargetName="Workaround" Duration="0:0:0.1"
+											Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)"
+											To="{StaticResource AccentColor}" />
+										<ColorAnimation Storyboard.TargetName="Workaround" Duration="0:0:0.1"
+											Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)"
+											To="{StaticResource WhiteColor}" />
+
+										<DoubleAnimation Storyboard.TargetName="contentPresenter" Duration="0:0:0.1"
+											Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
+											To="0.75" />
+										<DoubleAnimation Storyboard.TargetName="contentPresenter" Duration="0:0:0.1"
+											Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
+											To="0.75" />
+										
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Disabled">
+									<Storyboard>
+										<DoubleAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter"
+											Storyboard.TargetProperty="(UIElement.Opacity)">
+											<EasingDoubleKeyFrame KeyTime="0" Value="0.3"/>
+										</DoubleAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
+							</VisualStateGroup>
+							<VisualStateGroup x:Name="FocusStates"/>
+						</VisualStateManager.VisualStateGroups>
+
+						<ContentControl x:Name="Workaround" Visibility="Collapsed"
+							BorderBrush="{Binding BorderBrush, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+							Foreground="{Binding Foreground, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+							Background="{Binding Background, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+						<ContentPresenter x:Name="contentPresenter" RenderTransformOrigin="0.5,0.5"
+							ContentTemplate="{TemplateBinding ContentTemplate}"
+							Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
+							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+							<ContentPresenter.RenderTransform>
+								<CompositeTransform x:Name="compositeTransform" />
+							</ContentPresenter.RenderTransform>
+						</ContentPresenter>
+						
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>

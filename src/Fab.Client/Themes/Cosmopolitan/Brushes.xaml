@@ -210,7 +210,7 @@
 
     <SolidColorBrush x:Key="ThumbBrush" Color="{StaticResource Gray4}" />
 
-    <SolidColorBrush x:Key="ItemSelectedBrush" Color="{StaticResource Gray5}" />
+	<SolidColorBrush x:Key="ItemSelectedBrush" Color="{StaticResource HighlightDarkColor}" />
 
     <SolidColorBrush x:Key="SliderTrackBrush" Color="{StaticResource Gray6}" />
 

@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Fab.Client.Resources.Icons.ChevronLeftIcon"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 x:Name="UserControl"
+			 mc:Ignorable="d"
+			 d:DesignHeight="100" d:DesignWidth="100">
+	<Viewbox>
+		<Grid>
+			<Path Stretch="Uniform" StrokeThickness="7"
+				  Stroke="{Binding BorderBrush, ElementName=UserControl}"
+			      Fill="{Binding Background, ElementName=UserControl}"
+			      Data="M50,0 C77.6143,-1E-06 100,22.3857 100,50 C100,77.6142 77.6143,100 50,100 C22.3857,100 0,77.6142 0,50 C0,22.3857 22.3857,-1E-06 50,0 z" />
+			<Path Stretch="Uniform" RenderTransformOrigin="0.5,0.5"
+				  Stroke="{Binding Foreground, ElementName=UserControl}"
+			      Fill="{Binding Foreground, ElementName=UserControl}"
+			      Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z">
+				<Path.RenderTransform>
+					<CompositeTransform ScaleX="0.6" ScaleY="0.6" />
+				</Path.RenderTransform>
+			</Path>
+		</Grid>
+	</Viewbox>
+</UserControl>
