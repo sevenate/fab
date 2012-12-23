@@ -2,7 +2,6 @@
     x:Name="pageRoot"
     x:Class="Fab.Metro.GroupedItemsPage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    IsTabStop="false"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fab.Metro"
@@ -37,27 +36,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"/>
-        </Grid>
-
         <!-- Horizontal scrolling grid used in most view states -->
         <GridView
             x:Name="itemGridView"
             AutomationProperties.AutomationId="ItemGridView"
             AutomationProperties.Name="Grouped Items"
-            Grid.Row="1"
-            Margin="0,-3,0,0"
-            Padding="116,0,40,46"
+            Grid.RowSpan="2"
+            Padding="116,137,40,46"
                 ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
                 ItemTemplate="{StaticResource Standard250x250ItemTemplate}"
                 SelectionMode="None"
+            IsSwipeEnabled="false"
                 IsItemClickEnabled="True"
                 ItemClick="ItemView_ItemClick">
 
@@ -73,9 +62,13 @@
                                 <Grid Margin="1,0,0,6">
                                     <Button
                                         AutomationProperties.Name="Group Title"
-                                        Content="{Binding Title}"
-                                        Click="Header_Click"
-                                        Style="{StaticResource TextButtonStyle}"/>
+                                    Click="Header_Click"
+                                    Style="{StaticResource TextPrimaryButtonStyle}" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                    </StackPanel>
+                                </Button>
                                 </Grid>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
@@ -100,6 +93,7 @@
                 ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
                 ItemTemplate="{StaticResource Standard80ItemTemplate}"
                 SelectionMode="None"
+            IsSwipeEnabled="false"
                 IsItemClickEnabled="True"
                 ItemClick="ItemView_ItemClick">
 
@@ -110,15 +104,29 @@
                                 <Grid Margin="7,7,0,0">
                                     <Button
                                         AutomationProperties.Name="Group Title"
-                                        Content="{Binding Title}"
                                         Click="Header_Click"
-                                        Style="{StaticResource TextButtonStyle}"/>
+                                    Style="{StaticResource TextPrimaryButtonStyle}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                    </StackPanel>
+                                </Button>
                                 </Grid>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
                 </ListView.GroupStyle>
             </ListView>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
 
@@ -135,7 +143,7 @@
                         </ObjectAnimationUsingKeyFrames>
 
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView" Storyboard.TargetProperty="Padding">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="96,0,10,56"/>
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="96,137,10,56"/>
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
