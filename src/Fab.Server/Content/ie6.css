@@ -1,5 +1,0 @@
-.slInstall .slPopupTopNarrow, .slInstall .slPopupTopWide, .slInstall .slPopupLoopWide, .slInstall .slPopupLoopNarrow, .slInstall .slPopupBotWide, .slInstall .slPopupBotNarrow, .slInstall .slScreenshotNarrow, .slInstall .slScreenshotWide
-{
-	behavior: url(Content/iepngfix.htc);
-}
-

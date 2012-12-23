@@ -29,7 +29,8 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 
 	<Target Name="Deploy">
 		<CallTarget Targets="Prepare" />
-		<CallTarget Targets="DeployFAB" />
+		<CallTarget Targets="DeploySite" />
+		<CallTarget Targets="DeployService" />
 		<CallTarget Targets="DeployManagementTool" />
 		<CallTarget Targets="ZipPackage" />
 	</Target>
@@ -40,14 +41,48 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 		<MakeDir Directories="$(DeployRoot)" />
 	</Target>
 
-	<Target Name="DeployFAB">
+	<Target Name="DeploySite">
 		<PropertyGroup>
-			<SourceFolder>$(SourceRoot)\Fab.Server</SourceFolder>
-			<DeployFolder>$(DeployRoot)\Fab</DeployFolder>
-			<SilverSourceFolder>$(SourceRoot)\Fab.Client</SilverSourceFolder>
+			<SourceFolder>$(SourceRoot)\Fab.Site</SourceFolder>
+			<DeployFolder>$(DeployRoot)\site</DeployFolder>
 		</PropertyGroup>
 
-		<Message Text="Deploying FAB..." />
+		<Message Text="Deploying Site..." />
+
+		<RemoveDir Condition="Exists('$(DeployFolder)')"
+				   Directories="$(DeployFolder)" />
+		<MakeDir Directories="$(DeployFolder)" />
+
+		<CreateItem Include="$(SourceFolder)\**\*.*"
+					Exclude="$(SourceFolder)\**\*.cs;$(SourceFolder)\**\*.resx;$(SourceFolder)\**\StyleCop.Cache;$(SourceFolder)\**\*.csproj*;$(SourceFolder)\**\*.debug.js;$(SourceFolder)\**\*-Prod.config;$(SourceFolder)\Bin\*.xml;$(SourceFolder)\Bin\Resources\*.*;$(SourceFolder)\**\Logs\*.*;$(SourceFolder)\**\*.mdf;$(SourceFolder)\**\*_log.ldf;$(SourceFolder)\**\*.sdf;$(SourceFolder)\**\*.edmx;$(SourceFolder)\**\*.sql;$(SourceFolder)\**\*.sqlce;$(SourceFolder)\Web*.config;$(SourceFolder)\**\README_ENU.txt;;$(SourceFolder)\**\*.settings;$(SourceFolder)\**\*.svclog;$(SourceFolder)\**\*.log;">
+			<Output TaskParameter="Include"
+					ItemName="SiteReleaseFiles"/>
+		</CreateItem>
+
+		<Copy SourceFiles="@(SiteReleaseFiles)"
+			  DestinationFolder="$(DeployFolder)\%(RecursiveDir)"  />
+
+		<TransformXml Source="$(SourceFolder)\Web.Config" Transform="$(SourceFolder)\Web.$(Configuration).config" Destination="$(DeployFolder)\Web.config" StackTrace="true" />
+
+		<!-- Reading version number from file -->
+		<ReadLinesFromFile File="$(SourceRoot)\version.txt">
+			<Output TaskParameter="Lines" ItemName="ClientVer" />
+		</ReadLinesFromFile>
+
+		<Message Text="Application version: @(ClientVer)" />
+
+		<FileUpdate Files="$(DeployFolder)\js\Silverlight.UX.js"
+				Regex="var clientVersion = null;"
+				ReplacementText="var clientVersion = @(ClientVer);" />
+	</Target>
+
+	<Target Name="DeployService">
+		<PropertyGroup>
+			<SourceFolder>$(SourceRoot)\Fab.Server</SourceFolder>
+			<DeployFolder>$(DeployRoot)\service</DeployFolder>
+		</PropertyGroup>
+
+		<Message Text="Deploying Service..." />
 
 		<RemoveDir Condition="Exists('$(DeployFolder)')"
 				   Directories="$(DeployFolder)" />
@@ -66,24 +101,20 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 
 		<!-- Reading version number from file -->
 		<ReadLinesFromFile File="$(SourceRoot)\version.txt">
-			<Output TaskParameter="Lines" ItemName="Ver" />
+			<Output TaskParameter="Lines" ItemName="ServiceVer" />
 		</ReadLinesFromFile>
 
-		<Message Text="Application version: @(Ver)" />
-
-		<FileUpdate Files="$(DeployFolder)\Scripts\Common.js"
-				Regex="var clientVersion = null;"
-				ReplacementText="var clientVersion = @(Ver);" />
+		<Message Text="Service version: @(ServiceVer)" />
 	</Target>
 
 	<Target Name="DeployManagementTool">
 		<PropertyGroup>
 			<BinFolder>$(BinRoot)\Fab.Management</BinFolder>
 			<SourceFolder>$(SourceRoot)\Fab.Management</SourceFolder>
-			<DeployAdminFolder>$(DeployRoot)\AdminTool</DeployAdminFolder>
+			<DeployAdminFolder>$(DeployRoot)\admin</DeployAdminFolder>
 		</PropertyGroup>
 
-		<Message Text="Deploying FAB Management Tool..." />
+		<Message Text="Deploying Admin Tool..." />
 
 		<RemoveDir Condition="Exists('$(DeployAdminFolder)')"
 				   Directories="$(DeployAdminFolder)" />
@@ -105,13 +136,13 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
         	<DeployedFiles Include="$(DeployRoot)\**\*.*" />
 		</ItemGroup>
 
-		<Zip WorkingDirectory="$(DeployRoot)" Files="@(DeployedFiles)" ZipFileName="$(DeployRoot)\FAB-@(Ver).zip" />
+		<Zip WorkingDirectory="$(DeployRoot)" Files="@(DeployedFiles)" ZipFileName="$(DeployRoot)\fab-all-@(ClientVer).zip" />
 
 		<ItemGroup>
         	<DeployedServiceFiles Include="$(DeployFolder)\**\*.*" />
 		</ItemGroup>
 
-		<Zip WorkingDirectory="$(DeployFolder)" Files="@(DeployedServiceFiles)" ZipFileName="$(DeployRoot)\FAB-Client-@(Ver).zip" />
+		<Zip WorkingDirectory="$(DeployFolder)" Files="@(DeployedServiceFiles)" ZipFileName="$(DeployRoot)\fab-client-@(ClientVer).zip" />
 	</Target>
 
 </Project>

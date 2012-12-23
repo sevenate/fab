@@ -23,12 +23,15 @@ namespace Fab.Server
 
 		protected void Application_BeginRequest(object sender, EventArgs e)
 		{
-			// only for remote connections
+			// Only for remote connections
+			// NOTE: prefer such restriction via configuration by IIS rewrite module rule instead of code bellow
+			/*
 			if (!HttpContext.Current.Request.IsSecureConnection && !HttpContext.Current.Request.IsLocal)
 			{
 				Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"]
 				                  + HttpContext.Current.Request.RawUrl);
 			}
+			*/
 		}
 
 		protected void Application_AuthenticateRequest(object sender, EventArgs e)
