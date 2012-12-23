@@ -10,7 +10,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:Resources="clr-namespace:Fab.Client.Resources.Icons"
     mc:Ignorable="d">
 
     <!-- Global Settings-->
@@ -525,7 +526,7 @@
     <!--DataPagerPageButton Style-->
     <Style x:Key="ImageButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource GrayBrush3}"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
         <Setter Property="Padding" Value="3"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
@@ -602,7 +603,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="0">
-                            <Grid Margin="2">
+                            <Grid>
                                 <Grid.Resources>
                                     <ControlTemplate x:Key="HeaderButtonTemplate" TargetType="Button">
                                         <Grid Cursor="Hand">
@@ -683,16 +684,29 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="PreviousButton" Cursor="Hand" HorizontalAlignment="Left" Height="24" Visibility="Collapsed" Width="24" Margin="13,0,0,0" Style="{StaticResource ImageButton}">
-                                    <Grid>
-                                        <Path x:Name="PreviousIconPath" Data="M288.75,232.25 L288.75,240.625 L283,236.625 z" Fill="{StaticResource CheckBoxMouseOverBrush}" HorizontalAlignment="Left" Height="10" Stretch="Fill" VerticalAlignment="Center" Width="6" Opacity="0.7"/>
-                                    </Grid>
-                                </Button>
-                                <Button x:Name="HeaderButton" Padding="0" Foreground="{StaticResource HighlightBrush}" Grid.Column="1" FontWeight="Bold" FontSize="13.333" HorizontalAlignment="Center" Cursor="Hand" Height="30" VerticalAlignment="Center" FontFamily="Segoe UI" Width="120"/>
-                                <Button x:Name="NextButton" Grid.Column="2" HorizontalAlignment="Right" Height="24" Visibility="Collapsed" Width="24" Cursor="Hand" Margin="0,0,13,0" Style="{StaticResource ImageButton}">
-                                    <Path x:Name="NextIconPath" Data="M282.875,231.875 L282.875,240.375 L288.625,236 z" Fill="{StaticResource CheckBoxMouseOverBrush}" HorizontalAlignment="Right" Height="10" Stretch="Fill" VerticalAlignment="Center" Width="6" Opacity="0.7"/>
-                                </Button>
-                                <Grid x:Name="MonthView" Grid.ColumnSpan="3" Margin="15,7,15,6" Grid.Row="1" Visibility="Collapsed">
+								<Button x:Name="PreviousButton" Style="{StaticResource ButtonStyle}"
+										Visibility="Collapsed"
+										MinWidth="0"
+										HorizontalAlignment="Left">
+									<Resources:ChevronLeftIcon Style="{StaticResource ButtonIconStyle}"
+										Foreground="{Binding BorderBrush, ElementName=PreviousButton}" />
+								</Button>
+								<Button x:Name="HeaderButton" TabIndex="0" Style="{StaticResource CalendarHeaderButtonStyle}"
+										Padding="0" Foreground="{StaticResource HighlightBrush}" Grid.Column="1"
+										FontWeight="Bold" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+										<TextBlock Style="{StaticResource IconButtonTextStyle}"
+											   Foreground="{Binding Path=BorderBrush, ElementName=HeaderButton}"
+											   Margin="5" />
+								</Button>
+								<Button x:Name="NextButton" Style="{StaticResource ButtonStyle}"
+										Grid.Column="2" 
+										MinWidth="0"
+										Visibility="Collapsed"
+										HorizontalAlignment="Right">
+									<Resources:ChevronRightIcon Style="{StaticResource ButtonIconStyle}"
+										Foreground="{Binding BorderBrush, ElementName=NextButton}" />
+								</Button>
+                                <Grid x:Name="MonthView" Grid.ColumnSpan="3" Grid.Row="1" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
@@ -712,7 +726,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                 </Grid>
-                                <Grid x:Name="YearView" Grid.ColumnSpan="3" Margin="6,7,7,6" Grid.Row="1" Visibility="Collapsed">
+                                <Grid x:Name="YearView" Grid.ColumnSpan="3" Grid.Row="1" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
@@ -751,6 +765,9 @@
                     <Grid x:Name="Root"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Stretch">
+                    	<VisualStateManager.VisualStateGroups>
+                    		<VisualStateGroup x:Name="ValidationStates"/>
+                    	</VisualStateManager.VisualStateGroups>
                         <System_Windows_Controls_Primitives:CalendarItem x:Name="CalendarItem" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="0" Padding="0"/>
 					</Grid>
                 </ControlTemplate>
@@ -869,7 +886,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="TodayBackground" Opacity="0" >
+                        <Rectangle x:Name="TodayBackground" Opacity="0" StrokeThickness="1" Stroke="{StaticResource BlackBrush}" >
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{StaticResource Gray2}"/>
                             </Rectangle.Fill>
