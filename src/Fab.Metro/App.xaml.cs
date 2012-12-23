@@ -27,7 +27,7 @@ namespace Fab.Metro
     sealed partial class App : Application
     {
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
+        /// Initializes the singleton Application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
@@ -44,25 +44,35 @@ namespace Fab.Metro
         /// <param name="args">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            // Do not repeat app initialization when already running, just ensure that
-            // the window is active
-            if (args.PreviousExecutionState == ApplicationExecutionState.Running)
-            {
-                Window.Current.Activate();
-                return;
-            }
+            Frame rootFrame = Window.Current.Content as Frame;
 
-            // Create a Frame to act as the navigation context and associate it with
-            // a SuspensionManager key
-            var rootFrame = new Frame();
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            
+            if (rootFrame == null)
+            {
+                // Create a Frame to act as the navigation context and navigate to the first page
+                rootFrame = new Frame();
+                //Associate the frame with a SuspensionManager key                                
             SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
 
             if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
                 // Restore the saved session state only when appropriate
-                await SuspensionManager.RestoreAsync();
-            }
+                    try
+                    {
+                        await SuspensionManager.RestoreAsync();
+                    }
+                    catch (SuspensionManagerException)
+                    {
+                        //Something went wrong restoring state.
+                        //Assume there is no state and continue
+                    }
+                }
 
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
+            }
             if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
@@ -73,9 +83,7 @@ namespace Fab.Metro
                     throw new Exception("Failed to create initial page");
                 }
             }
-
-            // Place the frame in the current Window and ensure that it is active
-            Window.Current.Content = rootFrame;
+            // Ensure the current window is active
             Window.Current.Activate();
         }
 

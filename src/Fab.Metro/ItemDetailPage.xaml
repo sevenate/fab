@@ -36,16 +36,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1"/>
-        </Grid>
-
         <!--
             The remainder of the page is one large FlipView that displays details for
             one item at a time, allowing the user to flip through all items in the chosen
@@ -56,9 +46,14 @@
             AutomationProperties.AutomationId="ItemsFlipView"
             AutomationProperties.Name="Item Details"
             TabIndex="1"
-            Grid.Row="1"
-            Margin="0,-3,0,0"
+            Grid.RowSpan="2"
             ItemsSource="{Binding Source={StaticResource itemsViewSource}}">
+
+            <FlipView.ItemContainerStyle>
+                <Style TargetType="FlipViewItem">
+                    <Setter Property="Margin" Value="0,137,0,0"/>
+                </Style>
+            </FlipView.ItemContainerStyle>
 
             <FlipView.ItemTemplate>
                 <DataTemplate>
@@ -72,16 +67,16 @@
 
                             <!-- Content is allowed to flow across as many columns as needed -->
                             <common:RichTextColumns x:Name="richTextColumns" Margin="117,0,117,47">
-                                <RichTextBlock x:Name="richTextBlock" Width="560" Style="{StaticResource ItemRichTextStyle}">
+                                <RichTextBlock x:Name="richTextBlock" Width="560" Style="{StaticResource ItemRichTextStyle}" IsTextSelectionEnabled="False">
                                     <Paragraph>
                                         <Run FontSize="26.667" FontWeight="Light" Text="{Binding Title}"/>
                                         <LineBreak/>
                                         <LineBreak/>
-                                        <Run FontWeight="SemiBold" Text="{Binding Subtitle}"/>
+                                        <Run FontWeight="Normal" Text="{Binding Subtitle}"/>
                                     </Paragraph>
                                     <Paragraph LineStackingStrategy="MaxHeight">
                                         <InlineUIContainer>
-                                            <Image x:Name="image" MaxHeight="480" Margin="0,20,0,10" Stretch="Uniform" Source="{Binding Image}"/>
+                                            <Image x:Name="image" MaxHeight="480" Margin="0,20,0,10" Stretch="Uniform" Source="{Binding Image}" AutomationProperties.Name="{Binding Title}"/>
                                         </InlineUIContainer>
                                     </Paragraph>
                                     <Paragraph>
@@ -144,6 +139,16 @@
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1" IsHitTestVisible="false"/>
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
 

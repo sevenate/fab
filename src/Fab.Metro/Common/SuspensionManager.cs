@@ -17,7 +17,7 @@ namespace Fab.Metro.Common
     /// SuspensionManager captures global session state to simplify process lifetime management
     /// for an application.  Note that session state will be automatically cleared under a variety
     /// of conditions and should only be used to store information that would be convenient to
-    /// carry across sessions, but that should be disacarded when an application crashes or is
+    /// carry across sessions, but that should be discarded when an application crashes or is
     /// upgraded.
     /// </summary>
     internal sealed class SuspensionManager
@@ -57,6 +57,8 @@ namespace Fab.Metro.Common
         /// <returns>An asynchronous task that reflects when session state has been saved.</returns>
         public static async Task SaveAsync()
         {
+            try
+            {
             // Save the navigation state for all registered frames
             foreach (var weakFrameReference in _registeredFrames)
             {
@@ -82,6 +84,11 @@ namespace Fab.Metro.Common
                 await fileStream.FlushAsync();
             }
         }
+            catch (Exception e)
+            {
+                throw new SuspensionManagerException(e);
+            }
+        }
 
         /// <summary>
         /// Restores previously saved <see cref="SessionState"/>.  Any <see cref="Frame"/> instances
@@ -96,6 +103,8 @@ namespace Fab.Metro.Common
         {
             _sessionState = new Dictionary<String, Object>();
 
+            try
+            {
             // Get the input stream for the SessionState file
             StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(sessionStateFilename);
             using (IInputStream inStream = await file.OpenSequentialReadAsync())
@@ -114,6 +123,11 @@ namespace Fab.Metro.Common
                     frame.ClearValue(FrameSessionStateProperty);
                     RestoreFrameNavigationState(frame);
                 }
+            }
+        }
+            catch (Exception e)
+            {
+                throw new SuspensionManagerException(e);
             }
         }
 
@@ -227,6 +241,17 @@ namespace Fab.Metro.Common
         {
             var frameState = SessionStateForFrame(frame);
             frameState["Navigation"] = frame.GetNavigationState();
+        }
+    }
+    public class SuspensionManagerException : Exception
+    {
+        public SuspensionManagerException()
+        {
+        }
+
+        public SuspensionManagerException(Exception e) : base("SuspensionManager failed", e)
+        {
+            
         }
     }
 }

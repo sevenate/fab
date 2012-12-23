@@ -10,6 +10,7 @@ using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using System.Collections.Specialized;
 
 // The data model defined by this file serves as a representative example of a strongly-typed
 // model that supports notification when members are added, removed, or modified.  The property
@@ -92,6 +93,11 @@ namespace Fab.Metro.Data
             this._imagePath = path;
             this.OnPropertyChanged("Image");
         }
+
+        public override string ToString()
+        {
+            return this.Title;
+        }
     }
 
     /// <summary>
@@ -129,15 +135,10 @@ namespace Fab.Metro.Data
         public SampleDataGroup(String uniqueId, String title, String subtitle, String imagePath, String description)
             : base(uniqueId, title, subtitle, imagePath, description)
         {
+            Items.CollectionChanged += ItemsCollectionChanged;
         }
 
-        private ObservableCollection<SampleDataItem> _items = new ObservableCollection<SampleDataItem>();
-        public ObservableCollection<SampleDataItem> Items
-        {
-            get { return this._items; }
-        }
-        
-        public IEnumerable<SampleDataItem> TopItems
+        private void ItemsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             // Provides a subset of the full items collection to bind to from a GroupedItemsPage
             // for two reasons: GridView will not virtualize large items collections, and it
@@ -146,12 +147,79 @@ namespace Fab.Metro.Data
             //
             // A maximum of 12 items are displayed because it results in filled grid columns
             // whether there are 1, 2, 3, 4, or 6 rows displayed
-            get { return this._items.Take(12); }
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewStartingIndex < 12)
+                    {
+                        TopItems.Insert(e.NewStartingIndex,Items[e.NewStartingIndex]);
+                        if (TopItems.Count > 12)
+                        {
+                            TopItems.RemoveAt(12);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex < 12 && e.NewStartingIndex < 12)
+                    {
+                        TopItems.Move(e.OldStartingIndex, e.NewStartingIndex);
+                    }
+                    else if (e.OldStartingIndex < 12)
+                    {
+                        TopItems.RemoveAt(e.OldStartingIndex);
+                        TopItems.Add(Items[11]);
+                    }
+                    else if (e.NewStartingIndex < 12)
+                    {
+                        TopItems.Insert(e.NewStartingIndex, Items[e.NewStartingIndex]);
+                        TopItems.RemoveAt(12);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex < 12)
+                    {
+                        TopItems.RemoveAt(e.OldStartingIndex);
+                        if (Items.Count >= 12)
+                        {
+                            TopItems.Add(Items[11]);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex < 12)
+                    {
+                        TopItems[e.OldStartingIndex] = Items[e.OldStartingIndex];
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    TopItems.Clear();
+                    while (TopItems.Count < Items.Count && TopItems.Count < 12)
+                    {
+                        TopItems.Add(Items[TopItems.Count]);
+                    }
+                    break;
+            }
+        }
+
+        private ObservableCollection<SampleDataItem> _items = new ObservableCollection<SampleDataItem>();
+        public ObservableCollection<SampleDataItem> Items
+        {
+            get { return this._items; }
+        }
+
+        private ObservableCollection<SampleDataItem> _topItem = new ObservableCollection<SampleDataItem>();
+        public ObservableCollection<SampleDataItem> TopItems
+        {
+            get {return this._topItem; }
         }
     }
 
     /// <summary>
     /// Creates a collection of groups and items with hard-coded content.
+    /// 
+    /// SampleDataSource initializes with placeholder data rather than live production
+    /// data so that sample data is provided at both design-time and run-time.
     /// </summary>
     public sealed class SampleDataSource
     {

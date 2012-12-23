@@ -424,7 +424,7 @@ namespace Fab.Metro.Common
                 var eventHandler = MapChanged;
                 if (eventHandler != null)
                 {
-                    eventHandler(this, new ObservableDictionaryChangedEventArgs(CollectionChange.ItemInserted, key));
+                    eventHandler(this, new ObservableDictionaryChangedEventArgs(change, key));
                 }
             }
 
