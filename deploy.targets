@@ -73,7 +73,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 
 		<FileUpdate Files="$(DeployFolder)\js\Silverlight.UX.js"
 				Regex="var clientVersion = null;"
-				ReplacementText="var clientVersion = @(ClientVer);" />
+				ReplacementText="var clientVersion = '@(ClientVer)';" />
 	</Target>
 
 	<Target Name="DeployService">
