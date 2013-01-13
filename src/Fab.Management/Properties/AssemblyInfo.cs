@@ -10,8 +10,8 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fab.Management")]
-[assembly: AssemblyDescription("FAB management tool")]
+[assembly: AssemblyTitle("Admin console")]
+[assembly: AssemblyDescription("Admin console")]
 
 //In order to begin building localizable applications, set 
 //<UICulture>CultureYouAreCodingWith</UICulture> in your .csproj file

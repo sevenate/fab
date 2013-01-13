@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("nReez")]
-[assembly: AssemblyDescription("Track your spending, plan your earnings.")]
+[assembly: AssemblyTitle("Silverlight Client")]
+[assembly: AssemblyDescription("Silverlight Client")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("0a3bd14b-9c0e-4d7a-a5dd-71981a64e14b")]

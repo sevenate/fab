@@ -19,7 +19,15 @@ namespace Fab.Client.Framework
 		/// </summary>
 		public static string AppVersion
 		{
-			get { return Assembly.GetExecutingAssembly().GetVersion().ToString(); }
+			get
+			{
+				string version = Assembly.GetExecutingAssembly().GetVersion().ToString();
+#if DEBUG
+				return version + " Debug";
+#else
+				return version + " Release";
+#endif
+			}
 		}
 
 		/// <summary>
