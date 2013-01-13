@@ -14,11 +14,10 @@
 	<!-- Common projects assembly information -->
 	<PropertyGroup>
 		<MajorVersion>0</MajorVersion>
-		<MinorVersion>6</MinorVersion>
-		<VersionString>Alpha</VersionString>
-		<ProductName>FAB</ProductName>
+		<MinorVersion>7</MinorVersion>
+		<ProductName>nReez.com</ProductName>
 		<CompanyName>nReez, LLC</CompanyName>
-		<Copyright>Copyright © nReez 2012</Copyright>
+		<Copyright>© 2013 nReez</Copyright>
 		<Trademark>All Rights Reserved</Trademark>
 	</PropertyGroup>
 	
@@ -103,10 +102,10 @@
 					  AssemblyCulture=""
 					  AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
 					  AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
-					  AssemblyInformationalVersion="$(Major).$(Minor) $(VersionString)"
+					  AssemblyInformationalVersion="$(Major).$(Minor) $(Configuration)"
 					  AssemblyConfiguration="$(Configuration)"
 					  CLSCompliant="false" />
-		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision) $(VersionString)" Importance="high" />
+		<Message Text="Version: $(Major).$(Minor).$(Build).$(Revision) $(Configuration)" Importance="high" />
 	</Target>
 
 </Project>
