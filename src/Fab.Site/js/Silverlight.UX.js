@@ -1,5 +1,4 @@
-﻿var clientVersion = null;
-var fileSize = null;
+﻿var fileSize = null;
 
 Silverlight.inject = function(params) {
 	new AgInstall.Installer(params);
@@ -116,16 +115,12 @@ function onSilverlightError(sender, args) {
 	throw new Error(errMsg);
 }
 
-function getClientParam(){
-	return (clientVersion != null && clientVersion != '' ? ('?' + clientVersion) : '');
-}
-
 function pageLoaded() {
 	if (Silverlight.supportedUserAgent('5.0', null)) {
 		// silverlight is supported update any installers
 		for (var i in Silverlight.installControls)
 			Silverlight.installControls[i].update();
-		getXapSize('ClientBin/nReez.xap' + getClientParam());
+		getXapSize('ClientBin/nReez.xap');
 	} else {
 		// silverlight is not supported, need to tell installers to report this
 		for (var j in Silverlight.installControls)
