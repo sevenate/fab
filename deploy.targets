@@ -71,7 +71,7 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 
 		<Message Text="Application version: @(ClientVer)" />
 
-		<FileUpdate Files="$(DeployFolder)\js\Silverlight.UX.js"
+		<FileUpdate Files="$(DeployFolder)\app.html"
 				Regex="var clientVersion = null;"
 				ReplacementText="var clientVersion = '@(ClientVer)';" />
 	</Target>
