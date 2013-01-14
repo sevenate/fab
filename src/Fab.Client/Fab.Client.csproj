@@ -935,9 +935,10 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+	<Target Name="AfterBuild">
+		<Copy Condition="" SourceFiles="$(OutputPath)\$(AssemblyName).xap" DestinationFolder="..\Fab.Site\ClientBin" />
+  </Target>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
