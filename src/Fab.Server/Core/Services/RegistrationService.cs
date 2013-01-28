@@ -89,6 +89,9 @@ namespace Fab.Server.Core.Services
 
 			using (var mc = new MasterEntities(masterConnection))
 			{
+				var log = LogManager.GetCurrentClassLogger();
+				log.Info("Uniqueness check for login: " + newLogin);
+
 				return ModelHelper.IsLoginAvailable(mc, newLogin);
 			}
 		}
@@ -199,6 +202,9 @@ namespace Fab.Server.Core.Services
 				var moneyService = new MoneyService { UserName = user.Login };
 				moneyService.CreateAccount("Cash", 2);
 
+				var log = LogManager.GetCurrentClassLogger();
+				log.Info("Registered new user : " + user.Login);
+
 				return usersMapper.Map(user);
 			}
 		}
@@ -221,6 +227,9 @@ namespace Fab.Server.Core.Services
 			{
 				throw new ArgumentException("Email must not be empty.");
 			}
+
+			var log = LogManager.GetCurrentClassLogger();
+			log.Warn("Password reset requested for user: " + login);
 
 			throw new NotImplementedException();
 		}

@@ -33,23 +33,23 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "fab", "https://localhost/fab", "{29640DBF-3D36-4836-B400-33928F4220D5}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/fab"
 		Debug.AspNetCompiler.PhysicalPath = "src\Fab.Site\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\fab\"
-		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.Updateable = "false"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/fab"
 		Release.AspNetCompiler.PhysicalPath = "src\Fab.Site\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\fab\"
-		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.Updateable = "false"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "src\Fab.Site\"
-		ProjOutputReferences = "{C75F0C64-CBBF-4B29-9E9E-A362AC3A4760}|ClientBin|false;"
+		ProjOutputReferences = ""
 	EndProjectSection
 EndProject
 Global
