@@ -66,14 +66,14 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 
 		<!-- Reading version number from file -->
 		<ReadLinesFromFile File="$(SourceRoot)\version.txt">
-			<Output TaskParameter="Lines" ItemName="ClientVer" />
+			<Output TaskParameter="Lines" ItemName="SiteVersion" />
 		</ReadLinesFromFile>
 
-		<Message Text="Application version: @(ClientVer)" />
+		<Message Text="Web site build version: @(SiteVersion)" />
 
-		<FileUpdate Files="$(DeployFolder)\app.html"
-				Regex="var clientVersion = null;"
-				ReplacementText="var clientVersion = '@(ClientVer)';" />
+		<FileUpdate Files="$(DeployFolder)\index.html"
+				Regex="title='SiteVersion'"
+				ReplacementText="title='@(SiteVersion)'" />
 	</Target>
 
 	<Target Name="DeployService">
@@ -101,10 +101,14 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
 
 		<!-- Reading version number from file -->
 		<ReadLinesFromFile File="$(SourceRoot)\version.txt">
-			<Output TaskParameter="Lines" ItemName="ServiceVer" />
+			<Output TaskParameter="Lines" ItemName="BuildVersion" />
 		</ReadLinesFromFile>
 
-		<Message Text="Service version: @(ServiceVer)" />
+		<Message Text="Service version: @(BuildVersion)" />
+
+		<FileUpdate Files="$(DeployFolder)\app.html"
+				Regex="var clientVersion = null;"
+				ReplacementText="var clientVersion = '@(BuildVersion)';" />
 	</Target>
 
 	<Target Name="DeployManagementTool">
@@ -136,13 +140,13 @@ Copyright (C) 2009-2011 nReez Software. All rights reserved.
         	<DeployedFiles Include="$(DeployRoot)\**\*.*" />
 		</ItemGroup>
 
-		<Zip WorkingDirectory="$(DeployRoot)" Files="@(DeployedFiles)" ZipFileName="$(DeployRoot)\fab-all-@(ClientVer).zip" />
+		<Zip WorkingDirectory="$(DeployRoot)" Files="@(DeployedFiles)" ZipFileName="$(DeployRoot)\fab-all-@(BuildVersion).zip" />
 
 		<ItemGroup>
         	<DeployedServiceFiles Include="$(DeployFolder)\**\*.*" />
 		</ItemGroup>
 
-		<Zip WorkingDirectory="$(DeployFolder)" Files="@(DeployedServiceFiles)" ZipFileName="$(DeployRoot)\fab-client-@(ClientVer).zip" />
+		<Zip WorkingDirectory="$(DeployFolder)" Files="@(DeployedServiceFiles)" ZipFileName="$(DeployRoot)\fab-client-@(BuildVersion).zip" />
 	</Target>
 
 </Project>

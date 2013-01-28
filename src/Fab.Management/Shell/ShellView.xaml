@@ -19,23 +19,20 @@
         </Grid.RowDefinitions>
         <ribbon:Ribbon SelectedIndex="0">
             <ribbon:Ribbon.ApplicationMenu>
-                <ribbon:RibbonApplicationMenu SmallImageSource="..\Images\SmallIcon.png">
-                    <ribbon:RibbonApplicationMenuItem Header="Hello _Ribbon"
-																						ImageSource="..\Images\LargeIcon.png" />
+                <ribbon:RibbonApplicationMenu SmallImageSource="/Images/SmallIcon.png">
+                    <ribbon:RibbonApplicationMenuItem Header="Hello _Ribbon" ImageSource="/Images/LargeIcon.png" />
                 </ribbon:RibbonApplicationMenu>
             </ribbon:Ribbon.ApplicationMenu>
             <ribbon:RibbonTab Header="Home">
                 <ribbon:RibbonGroup Header="Service">
-                    <ribbon:RibbonComboBox x:Name="endPointAddress"
-																 SelectionBoxWidth="250">
-                        <ribbon:RibbonGallery SelectedValuePath="Tag"
-																	SelectedValue="{Binding Path=EndPointAddress, Mode=OneWayToSource}">
+                    <ribbon:RibbonComboBox x:Name="endPointAddress" SelectionBoxWidth="250">
+                        <ribbon:RibbonGallery SelectedValuePath="Tag" SelectedValue="{Binding Path=EndPointAddress, Mode=OneWayToSource}">
                             <ribbon:RibbonGalleryCategory FontSize="16">
                                 <ribbon:RibbonGalleryItem Tag="https://localhost/StagingFab/AdminService.svc"
 																					Content="https://localhost/StagingFab/AdminService.svc"
 																					IsSelected="True" />
-                                <ribbon:RibbonGalleryItem Tag="https://nreez.com/sl/AdminService.svc"
-																					Content="https://nreez.com/sl/AdminService.svc" />
+                                <ribbon:RibbonGalleryItem Tag="https://nreez.com/AdminService.svc"
+																					Content="https://nreez.com/AdminService.svc" />
                             </ribbon:RibbonGalleryCategory>
                         </ribbon:RibbonGallery>
                     </ribbon:RibbonComboBox>
@@ -150,13 +147,13 @@
             </ribbon:RibbonTab>
             <ribbon:RibbonTab Header="Misc">
                 <ribbon:RibbonGroup Header="Sample">
-                    <ribbon:RibbonButton LargeImageSource="..\Images\LargeIcon.png"
+                    <ribbon:RibbonButton LargeImageSource="/Images/LargeIcon.png"
 															 Label="Button1" />
-                    <ribbon:RibbonButton SmallImageSource="..\Images\SmallIcon.png"
+                    <ribbon:RibbonButton SmallImageSource="/Images/SmallIcon.png"
 															 Label="Button2" />
-                    <ribbon:RibbonButton SmallImageSource="..\Images\SmallIcon.png"
+                    <ribbon:RibbonButton SmallImageSource="/Images/SmallIcon.png"
 															 Label="Button3" />
-                    <ribbon:RibbonButton SmallImageSource="..\Images\SmallIcon.png"
+                    <ribbon:RibbonButton SmallImageSource="/Images/SmallIcon.png"
 															 Label="Button4" />
                 </ribbon:RibbonGroup>
                 <ribbon:RibbonGroup Header="Hash">

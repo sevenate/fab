@@ -13,7 +13,7 @@
     <meta name="revisit-after" content="7 days" />
     
     <link type="image/png" rel="icon" href="favicon.png" />
-    <link type="application/atom+xml" rel="alternate" href="http://feeds.nreez.com/nreez" title="nReez News (Atom 1.0)" />
+    <link type="application/atom+xml" rel="alternate" href="http://feeds.nreez.com/nreez" title="nReez Blog" />
 	
 	<style type="text/css">
 		html, body
@@ -59,6 +59,7 @@
 		
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-33382180-1']);
+    	_gaq.push(['_setDomainName', 'nreez.com']);
 		_gaq.push(['_trackPageview']);
 
 		(function() {
@@ -67,7 +68,7 @@
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 
 			addCustomSEToGA();
-			_gaq.push(['_setCustomVar', 1, 'SL version', getSLVersion(), 1]);
+        	_gaq.push(['_setCustomVar', 1, 'WPF/E', getSLVersion(), 1]);
 		})();
 	</script>
 </head>
@@ -75,7 +76,7 @@
 	<div id="silverlightControlHost">
 		<div class="noJS">
 			<noscript>
-				This website requires JavaScript to be enabled in your browser to function properly.
+				This page requires JavaScript to be enabled in your browser to function properly.
 				Please enable it and <a href="">click here</a> to continue.
 			</noscript>
 		</div>

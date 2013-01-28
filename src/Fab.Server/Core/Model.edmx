@@ -4,16 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ModelStoreContainer">
-          <EntitySet Name="Accounts" EntityType="Model.Store.Accounts" store:Type="Tables" />
-          <EntitySet Name="AssetTypes" EntityType="Model.Store.AssetTypes" store:Type="Tables" />
-          <EntitySet Name="Categories" EntityType="Model.Store.Categories" store:Type="Tables" />
-          <EntitySet Name="DeletedJournals" EntityType="Model.Store.DeletedJournals" store:Type="Tables" />
-          <EntitySet Name="DeletedPostings" EntityType="Model.Store.DeletedPostings" store:Type="Tables" />
-          <EntitySet Name="Journals" EntityType="Model.Store.Journals" store:Type="Tables" />
-          <EntitySet Name="Postings" EntityType="Model.Store.Postings" store:Type="Tables" />
-          <EntitySet Name="Settings" EntityType="Model.Store.Settings" store:Type="Tables" />
+          <EntitySet Name="Accounts" EntityType="Model.Store.Accounts" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="AssetTypes" EntityType="Model.Store.AssetTypes" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Categories" EntityType="Model.Store.Categories" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="DeletedJournals" EntityType="Model.Store.DeletedJournals" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="DeletedPostings" EntityType="Model.Store.DeletedPostings" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Journals" EntityType="Model.Store.Journals" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Postings" EntityType="Model.Store.Postings" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Settings" EntityType="Model.Store.Settings" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_AccountAssetType" Association="Model.Store.FK_AccountAssetType">
             <End Role="AssetTypes" EntitySet="AssetTypes" />
             <End Role="Accounts" EntitySet="Accounts" />
@@ -610,7 +610,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="Model" ShowGrid="false" DisplayType="true" xmlns="http://schemas.microsoft.com/ado/2008/10/edmx" ZoomLevel="100">
+      <Diagram Name="Model" ShowGrid="false" DisplayType="true" ZoomLevel="100" xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
         <EntityTypeShape EntityType="Model.Account" Width="2.125" PointX="0.625" PointY="3.625" Height="3.5186979166666652" />
         <EntityTypeShape EntityType="Model.AssetType" Width="1.5" PointX="3.375" PointY="4.125" Height="1.9802864583333326" />
         <EntityTypeShape EntityType="Model.Category" Width="1.5" PointX="5.625" PointY="4.125" Height="2.3648893229166674" />
@@ -619,43 +619,43 @@
         <EntityTypeShape EntityType="Model.Journal" Width="1.625" PointX="5.625" PointY="1.375" Height="2.3648893229166683" />
         <EntityTypeShape EntityType="Model.Posting" Width="1.5" PointX="3.375" PointY="1.5" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="Model.Setting" Width="1.5" PointX="0.625" PointY="1.5" Height="1.5956835937500005" />
-        <AssociationConnector Association="Model.FK_AccountAssetType" >
+        <AssociationConnector Association="Model.FK_AccountAssetType">
           <ConnectorPoint PointX="3.375" PointY="5.1151432291666659" />
           <ConnectorPoint PointX="2.75" PointY="5.1151432291666659" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_AccountDeletedPosting" >
+        <AssociationConnector Association="Model.FK_AccountDeletedPosting">
           <ConnectorPoint PointX="1.14943722663754" PointY="7.1436979166666656" />
           <ConnectorPoint PointX="1.14943722663754" PointY="8.0667941197916662" />
           <ConnectorPoint PointX="3.375" PointY="8.0667941197916662" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_AccountPosting" >
+        <AssociationConnector Association="Model.FK_AccountPosting">
           <ConnectorPoint PointX="1.6875" PointY="3.625" />
           <ConnectorPoint PointX="1.6875" PointY="3.325" />
           <ConnectorPoint PointX="3.075" PointY="3.325" />
           <ConnectorPoint PointX="3.075" PointY="2.5862939453125" />
           <ConnectorPoint PointX="3.375" PointY="2.5862939453125" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_DeletedPostingAssetType" >
+        <AssociationConnector Association="Model.FK_DeletedPostingAssetType">
           <ConnectorPoint PointX="4.125" PointY="6.1052864583333326" />
           <ConnectorPoint PointX="4.125" PointY="6.625" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_PostingAssetType" >
+        <AssociationConnector Association="Model.FK_PostingAssetType">
           <ConnectorPoint PointX="4.125" PointY="4.125" />
           <ConnectorPoint PointX="4.125" PointY="3.6725878906249996" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_CategoryDeletedJournal" >
+        <AssociationConnector Association="Model.FK_CategoryDeletedJournal">
           <ConnectorPoint PointX="6.375" PointY="6.4898893229166674" />
           <ConnectorPoint PointX="6.375" PointY="7" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_CategoryJournal" >
+        <AssociationConnector Association="Model.FK_CategoryJournal">
           <ConnectorPoint PointX="6.375" PointY="4.125" />
           <ConnectorPoint PointX="6.375" PointY="3.7398893229166683" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_DeletedJournalDeletedPosting" >
+        <AssociationConnector Association="Model.FK_DeletedJournalDeletedPosting">
           <ConnectorPoint PointX="5.625" PointY="7.9949446614583328" />
           <ConnectorPoint PointX="5" PointY="7.9949446614583328" />
         </AssociationConnector>
-        <AssociationConnector Association="Model.FK_JournalPosting" >
+        <AssociationConnector Association="Model.FK_JournalPosting">
           <ConnectorPoint PointX="5.625" PointY="2.5862939453125" />
           <ConnectorPoint PointX="4.875" PointY="2.5862939453125" />
         </AssociationConnector>

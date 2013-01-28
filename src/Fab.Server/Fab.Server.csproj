@@ -24,8 +24,7 @@
     <SccProvider>
     </SccProvider>
     <UseIISExpress>false</UseIISExpress>
-    <SilverlightApplicationList>
-    </SilverlightApplicationList>
+    <SilverlightApplicationList>{C75F0C64-CBBF-4B29-9E9E-A362AC3A4760}|..\Fab.Client\Fab.Client.csproj|ClientBin|False</SilverlightApplicationList>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -45,6 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PublishDatabaseSettings>&lt;Objects&gt;&lt;ObjectGroup Name="ModelContainer" Order="1" Enabled="True"&gt;&lt;Destination Path="" /&gt;&lt;Object Type="dbFullSql"&gt;&lt;PreSource Path="metadata=res://%2a/Model.csdl|res://%2a/Model.ssdl|res://%2a/Model.msl%3bprovider=System.Data.SqlClient%3bprovider connection string=&amp;quot%3bData Source=.\SQLEXPRESS%3bAttachDbFilename=|DataDirectory|\Database.mdf%3bIntegrated Security=True%3bUser Instance=True%3bMultipleActiveResultSets=True&amp;quot%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" /&gt;&lt;Source Path="obj\Debug\AutoScripts\ModelContainer_SchemaOnly.sql" /&gt;&lt;/Object&gt;&lt;/ObjectGroup&gt;&lt;/Objects&gt;</PublishDatabaseSettings>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +53,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
@@ -71,6 +72,7 @@
       <HintPath>..\..\ext\.NET 4\Logging\Nreez.Utility.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -82,23 +84,57 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
+    <Content Include="app.html" />
     <Content Include="ClientBin\nReez.xap" />
     <EntityDeploy Include="Core\Master.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Master.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="content\blank.gif" />
+    <Content Include="content\ie6.css" />
+    <Content Include="content\iepngfix.htc" />
+    <Content Include="content\slInstall.css" />
+    <Content Include="content\slInstallNarrow.css" />
+    <Content Include="content\slInstallSmall.css" />
+    <Content Include="content\slInstallWide.css" />
+    <Content Include="error.html" />
     <Content Include="Global.asax" />
+    <Content Include="images\narrow\divider.png" />
+    <Content Include="images\narrow\panel_bottom.png" />
+    <Content Include="images\narrow\panel_loop.png" />
+    <Content Include="images\narrow\panel_top.png" />
+    <Content Include="images\say_no_to_hotlinking.gif" />
+    <Content Include="images\small\gradient.jpg" />
+    <Content Include="images\small\powered_by_sl.jpg" />
+    <Content Include="images\wide\button.png" />
+    <Content Include="images\wide\divider.png" />
+    <Content Include="images\wide\logo.png" />
+    <Content Include="images\wide\panel_bottom.png" />
+    <Content Include="images\wide\panel_loop.png" />
+    <Content Include="images\wide\panel_top.png" />
+    <Content Include="images\wide\screen_chrome.png" />
+    <Content Include="js\AgInstall.debug.js" />
+    <Content Include="js\AgInstall.js" />
+    <Content Include="js\analytics.js" />
+    <Content Include="js\Silverlight.js" />
+    <Content Include="js\Silverlight.supportedUserAgent.debug.js" />
+    <Content Include="js\Silverlight.supportedUserAgent.js" />
+    <Content Include="js\Silverlight.UX.js" />
     <Content Include="log4net.config" />
     <Content Include="ClientBin\web.config" />
     <None Include="Properties\Settings.settings">
@@ -107,6 +143,7 @@
     </None>
     <None Include="Sql\master_001_setup.sqlce" />
     <None Include="Sql\personal_001_setup.sqlce" />
+    <Content Include="maintenance.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -235,6 +272,11 @@
   </ProjectExtensions>
   <ItemGroup>
     <SqlCe4Files Include="..\..\ext\.NET 4\SQL CE 4.0\**\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="splash.xaml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

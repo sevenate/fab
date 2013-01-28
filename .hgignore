@@ -18,3 +18,4 @@ glob:version.txt
 glob:*.log
 syntax: glob
 packages/*
+PrecompiledWeb/*
