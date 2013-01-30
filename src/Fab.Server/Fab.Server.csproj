@@ -113,6 +113,8 @@
     <Content Include="content\slInstallSmall.css" />
     <Content Include="content\slInstallWide.css" />
     <Content Include="error.html" />
+    <Content Include="favicon.ico" />
+    <Content Include="favicon.png" />
     <Content Include="Global.asax" />
     <Content Include="images\narrow\divider.png" />
     <Content Include="images\narrow\panel_bottom.png" />
