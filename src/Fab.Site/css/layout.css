@@ -76,6 +76,19 @@ ul.nav li:first-child { padding-right: 30px;}
 
 ul.nav li a.loginButton { background-color: #2476E4; color: white; padding: 7px 15px; border-bottom: 0; }
 
+a.btnDownloadSilverlightPlugin {
+    background: url("../images/btnDownloadSilverlightPlugin.jpg") no-repeat scroll left top transparent;
+    display: block;
+    float: right;
+    margin-top: -5px;
+    height: 30px;
+    text-indent: -99999px;
+    width: 136px;
+}
+a.btnDownloadSilverlightPlugin:hover {
+    background-position: left bottom;
+}
+
 #loginMenu { float:right; }
 
 /* Clearing and Alignment Classes */
@@ -88,7 +101,11 @@ img.align-left { margin-top: 13px; margin-right: 12px; }
 .container .section{ padding: 38px 0 0 0; }
 .container .section .row { clear: both; overflow: hidden; margin-bottom: 0; }
 .container .section .no-bottom-margin{ margin-bottom: 0; }
-#home h2 { text-align: center; padding: 20px 0 30px; }
+#home h2 { text-align: center; padding: 30px 0 10px 0; }
+#home h4 { text-align: center; padding: 5px 0 25px; }
+
+#features { padding: 0; }
+
 
 /* Slider */
 
@@ -100,14 +117,6 @@ img.align-left { margin-top: 13px; margin-right: 12px; }
 #featured.orbit { background: none; }
 #featured.orbit img { display: block; }
 
-/* FAQ */
-
-#faq { position:relative; }
-#faq h4  { cursor:pointer; }
-#faq h4.active  { color:#d74646; }
-#faq div   { position:relative; }
-#faq div p  { padding:0; margin-bottom:15px; }
-
 /* Footer */
 
 ul.footer-menu { float: left; list-style: none; margin-bottom: 0; }
@@ -118,6 +127,12 @@ ul.footer-menu > li { font-size: .8em; vertical-align: middle; clear: both; disp
 
 ul.footer-menu li a { text-decoration:none; color:#888; }
 ul.footer-menu li a:hover { text-decoration:underline; }
+
+ul.footer-menu li.rss-feed a {
+    background: url(../images/rss.png) no-repeat right 0;
+    padding-right: 20px;
+}
+
 
 #bottom-line { margin: 50px 0 10px; }
 
