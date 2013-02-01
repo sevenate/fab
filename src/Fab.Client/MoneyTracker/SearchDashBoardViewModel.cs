@@ -37,11 +37,6 @@ namespace Fab.Client.MoneyTracker
 		/// </summary>
 		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
 
-		/// <summary>
-		/// Categories repository.
-		/// </summary>
-		private readonly ICategoriesRepository categoriesRepository = IoC.Get<ICategoriesRepository>();
-
 		#endregion
 
 		private readonly CollectionViewSource sourceAccountsViewSource = new CollectionViewSource();
