@@ -938,7 +938,7 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Copy Condition="" SourceFiles="$(OutputPath)\$(AssemblyName).xap" DestinationFolder="..\Fab.Service\ClientBin" />
+    <Copy Condition="" SourceFiles="$(OutputPath)\$(AssemblyName).xap" DestinationFolder="..\Fab.Server\ClientBin" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>
