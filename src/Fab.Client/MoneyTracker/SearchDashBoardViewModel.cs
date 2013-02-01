@@ -16,6 +16,7 @@ using Fab.Client.Framework;
 using Fab.Client.Localization;
 using Fab.Client.MoneyServiceReference;
 using Fab.Client.MoneyTracker.Accounts;
+using Fab.Client.MoneyTracker.Categories;
 using Fab.Client.MoneyTracker.Postings;
 using Fab.Client.MoneyTracker.Postings.Transactions;
 using Fab.Client.MoneyTracker.Postings.Transfers;
@@ -27,7 +28,7 @@ namespace Fab.Client.MoneyTracker
 	/// General search screen model.
 	/// </summary>
 	[Export(typeof (IModule))]
-	public class SearchDashBoardViewModel : PostingViewModelBase, IModule, IHandle<LoggedOutMessage>, IHandle<AccountsUpdatedMessage>
+	public class SearchDashBoardViewModel : PostingViewModelBase, IModule, IHandle<LoggedOutMessage>, IHandle<AccountsUpdatedMessage>, IHandle<CategoriesUpdatedMessage>
 	{
 		#region Fields
 
@@ -36,13 +37,24 @@ namespace Fab.Client.MoneyTracker
 		/// </summary>
 		private readonly IAccountsRepository accountsRepository = IoC.Get<IAccountsRepository>();
 
+		/// <summary>
+		/// Categories repository.
+		/// </summary>
+		private readonly ICategoriesRepository categoriesRepository = IoC.Get<ICategoriesRepository>();
+
 		#endregion
 
 		private readonly CollectionViewSource sourceAccountsViewSource = new CollectionViewSource();
+		private readonly CollectionViewSource sourceCategoriesViewSource = new CollectionViewSource();
 
 		public ICollectionView Accounts
 		{
 			get { return sourceAccountsViewSource.View; }
+		}
+
+		public ICollectionView Categories
+		{
+			get { return sourceCategoriesViewSource.View; }
 		}
 
 		private void InitSourceAccounts()
@@ -53,10 +65,18 @@ namespace Fab.Client.MoneyTracker
 			}
 		}
 
+		private void InitSourceCategories()
+		{
+			if (!Categories.IsEmpty)
+			{
+				Categories.MoveCurrentToFirst();
+			}
+		}
+
 		#region Ctor
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Caliburn.Micro.Conductor`1.Collection.AllActive"/> class.
+		/// Initializes a new instance of the <see cref="SearchDashBoardViewModel"/> class.
 		/// </summary>
 		[ImportingConstructor]
 		public SearchDashBoardViewModel(TransactionViewModel transactionDetails, TransferViewModel transferDetails)
@@ -72,7 +92,9 @@ namespace Fab.Client.MoneyTracker
 				NotifyOfPropertyChange(() => Name);
 				SearchStatus = Resources.Strings.PostingViewModelBase_SearchStatus_Search;
 			};
+			
 			sourceAccountsViewSource.Source = accountsRepository.Entities;
+			sourceCategoriesViewSource.Source = categoriesRepository.Entities;
 		}
 
 		#endregion
@@ -123,6 +145,11 @@ namespace Fab.Client.MoneyTracker
 				Accounts.MoveCurrentToFirst();
 			}
 
+			if (!Categories.IsEmpty && Categories.CurrentItem == null)
+			{
+				Categories.MoveCurrentToFirst();
+			}
+
 			//TODO: make this method common for all IModels
 			if (Parent is IHaveActiveItem && ((IHaveActiveItem) Parent).ActiveItem == this)
 			{
@@ -158,6 +185,19 @@ namespace Fab.Client.MoneyTracker
 		public void Handle(AccountsUpdatedMessage message)
 		{
 			InitSourceAccounts();
+		}
+
+		#endregion
+
+		#region Implementation of IHandle<AccountsUpdatedMessage>
+
+		/// <summary>
+		/// Handles the message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Handle(CategoriesUpdatedMessage message)
+		{
+			InitSourceCategories();
 		}
 
 		#endregion

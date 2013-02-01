@@ -75,6 +75,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -936,8 +937,8 @@
   <Target Name="BeforeBuild">
   </Target>
   -->
-	<Target Name="AfterBuild">
-		<Copy Condition="" SourceFiles="$(OutputPath)\$(AssemblyName).xap" DestinationFolder="..\Fab.Site\ClientBin" />
+  <Target Name="AfterBuild">
+    <Copy Condition="" SourceFiles="$(OutputPath)\$(AssemblyName).xap" DestinationFolder="..\Fab.Service\ClientBin" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>

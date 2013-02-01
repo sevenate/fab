@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
     <PublishDatabaseSettings>&lt;Objects&gt;&lt;ObjectGroup Name="ModelContainer" Order="1" Enabled="True"&gt;&lt;Destination Path="" /&gt;&lt;Object Type="dbFullSql"&gt;&lt;PreSource Path="metadata=res://%2a/Model.csdl|res://%2a/Model.ssdl|res://%2a/Model.msl%3bprovider=System.Data.SqlClient%3bprovider connection string=&amp;quot%3bData Source=.\SQLEXPRESS%3bAttachDbFilename=|DataDirectory|\Database.mdf%3bIntegrated Security=True%3bUser Instance=True%3bMultipleActiveResultSets=True&amp;quot%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" /&gt;&lt;Source Path="obj\Debug\AutoScripts\ModelContainer_SchemaOnly.sql" /&gt;&lt;/Object&gt;&lt;/ObjectGroup&gt;&lt;/Objects&gt;</PublishDatabaseSettings>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

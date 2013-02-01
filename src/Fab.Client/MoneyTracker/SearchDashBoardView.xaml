@@ -24,8 +24,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition
-                Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <sdk:DataGrid
             x:Name="TransactionsGrid"
@@ -226,45 +225,26 @@
                 </sdk:DataGridTemplateColumn>
             </sdk:DataGrid.Columns>
         </sdk:DataGrid>
-        <sdk:GridSplitter
-            Grid.Column="1"
-            Grid.RowSpan="2"
-            Margin="0,5"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Stretch" />
-        <Grid
-            Grid.Column="2"
-            Grid.RowSpan="2"
-            Margin="5">
+        <sdk:GridSplitter Grid.Column="1" Grid.RowSpan="2" Margin="0,5"
+            HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <Grid Grid.Column="2" Grid.RowSpan="2" Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ComboBox
-                x:Name="Accounts"
-                Grid.ColumnSpan="2"
-                Grid.Row="0"
+			<ComboBox x:Name="Accounts" Grid.Row="0" Grid.ColumnSpan="2"
                 VerticalAlignment="Center"
                 TabIndex="5"
                 MinWidth="180"
@@ -274,51 +254,42 @@
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
                 ItemTemplate="{StaticResource AccountBrief}" />
-            <CheckBox
-                x:Name="UseStartDate"
+			<ComboBox x:Name="Categories" Grid.Row="1" Grid.ColumnSpan="2"
+                VerticalAlignment="Center"
+                TabIndex="5"
+                MinWidth="180"
+                Margin="0,0,0,5"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
+                ItemTemplate="{StaticResource AccountBrief}" />
+			<CheckBox x:Name="UseStartDate" Grid.Row="2" Grid.Column="0"
                 VerticalAlignment="Center"
                 TabIndex="1"
-                Grid.Column="0"
-                Grid.Row="1"
                 Content="{Binding Path=LocalizedStrings.SearchDashBoardView_Filter_Start, FallbackValue='Start'}" />
-            <sdk:DatePicker
+			<sdk:DatePicker Grid.Row="2" Grid.Column="1"
                 IsTodayHighlighted="True"
-                Grid.Column="1"
-                Grid.Row="1"
                 TabIndex="2"
                 IsEnabled="{Binding IsChecked, ElementName=UseStartDate}"
-                SelectedDate="{Binding Path=StartDate,
-												   Mode=TwoWay,
-												   Converter={StaticResource dateTimeUtcToLocal}}"
+                SelectedDate="{Binding Path=StartDate, Mode=TwoWay, Converter={StaticResource dateTimeUtcToLocal}}"
                 SelectedDateFormat="Long" />
-            <CheckBox
-                x:Name="UseEndDate"
+			<CheckBox x:Name="UseEndDate" Grid.Row="3" Grid.Column="0"
                 VerticalAlignment="Center"
                 TabIndex="3"
-                Grid.Column="0"
-                Grid.Row="2"
                 Content="{Binding Path=LocalizedStrings.SearchDashBoardView_Filter_End, FallbackValue='End'}"
                 HorizontalAlignment="Left" />
-            <sdk:DatePicker
+			<sdk:DatePicker Grid.Row="3" Grid.Column="1"
                 IsTodayHighlighted="True"
                 VerticalAlignment="Center"
-                Grid.Column="1"
-                Grid.Row="2"
                 TabIndex="4"
                 IsEnabled="{Binding IsChecked, ElementName=UseEndDate}"
-                SelectedDate="{Binding Path=EndDate,
-												   Mode=TwoWay,
-												   Converter={StaticResource dateTimeUtcToLocal}}"
+                SelectedDate="{Binding Path=EndDate, Mode=TwoWay, Converter={StaticResource dateTimeUtcToLocal}}"
                 SelectedDateFormat="Long" />
-            <TextBlock
-                Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Contains, FallbackValue='Contains text:'}"
-                Grid.Column="0"
-                Grid.Row="3"
-                Margin="5" />
-            <TextBox
-                x:Name="ContainsText"
-                Grid.Column="1"
-                Grid.Row="3"
+			<TextBlock Grid.Row="4" Grid.Column="0"
+					   Margin="5"
+					   Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Contains, FallbackValue='Contains text:'}" />
+			<TextBox x:Name="ContainsText" Grid.Row="4" Grid.Column="1"
                 TabIndex="0"
                 LineHeight="1"
                 MaxLength="255"
@@ -332,7 +303,7 @@
                     <Behaviors:SelectTextOnFocusBehavior />
                 </i:Interaction.Behaviors>
             </TextBox>
-			<Button x:Name="DownloadAllTransactions" Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" TabIndex="6" Margin="0,5,0,0" Style="{StaticResource ButtonStyle}"
+			<Button x:Name="DownloadAllTransactions" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" TabIndex="6" Margin="0,5,0,0" Style="{StaticResource ButtonStyle}"
 					IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToNotBool}}">
 				<Grid>
 					<Grid.ColumnDefinitions>
@@ -348,102 +319,37 @@
 						   Text="{Binding Path=SearchStatusr, FallbackValue='Search'}" />
 				</Grid>
 			</Button>
-            <TextBlock
+			<TextBlock Grid.Row="6" Grid.Column="0"
                 Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Postings, FallbackValue='Postings:'}"
-                Grid.Column="0"
-                Grid.Row="5"
                 Margin="5" />
-            <TextBlock
+			<TextBlock Grid.Row="6"  Grid.Column="1"
                 Text="{Binding Path=TransactionRecords.Count}"
                 Margin="5"
-                Grid.Column="1"
-                Grid.Row="5"
                 HorizontalAlignment="Right" />
-            <TextBlock
+			<TextBlock Grid.Row="7" Grid.Column="0"
                 Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Income, FallbackValue='Income:'}"
-                Grid.Column="0"
-                Grid.Row="6"
                 Margin="5" />
-            <TextBlock
+			<TextBlock Grid.Row="7" Grid.Column="1"
                 Foreground="{Binding Path=TotalIncome, Converter={StaticResource balanceToColor}}"
                 Margin="5"
                 Text="{Binding Path=TotalIncome, StringFormat=n}"
-                Grid.Column="1"
-                Grid.Row="6"
                 HorizontalAlignment="Right" />
-            <TextBlock
+			<TextBlock Grid.Row="8" Grid.Column="0"
                 Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Expense, FallbackValue='Expense:'}"
-                Grid.Column="0"
-                Grid.Row="7"
                 Margin="5" />
-            <TextBlock
+			<TextBlock Grid.Row="8" Grid.Column="1"
                 Foreground="{Binding Path=TotalExpense, Converter={StaticResource balanceToColor}}"
                 Margin="5"
-                Grid.Column="1"
-                Grid.Row="7"
                 Text="{Binding Path=TotalExpense, StringFormat=n}"
                 HorizontalAlignment="Right" />
-            <TextBlock
+			<TextBlock Grid.Row="9" Grid.Column="0"
                 Text="{Binding Path=LocalizedStrings.SearchDashBoardView_Difference, FallbackValue='Difference:'}"
-                Margin="5"
-                Grid.Column="0"
-                Grid.Row="8" />
-            <TextBlock
+                Margin="5" />
+			<TextBlock Grid.Row="9" Grid.Column="1"
                 Foreground="{Binding Path=BalanceDiff, Converter={StaticResource balanceToColor}}"
                 Margin="5"
-                Grid.Column="1"
-                Grid.Row="8"
                 Text="{Binding Path=BalanceDiff, StringFormat=n}"
                 HorizontalAlignment="Right" />
-            <toolkit:Chart
-                Grid.ColumnSpan="2"
-                Grid.Row="9"
-                Title="{Binding Path=LocalizedStrings.SearchDashBoardView_Charts_Title, FallbackValue='Trends'}"
-                LegendTitle="{Binding Path=LocalizedStrings.SearchDashBoardView_Charts_LegendTitle, FallbackValue='Data'}">
-                <!-- Income -->
-                <toolkit:ColumnSeries
-                    Title="{Binding Path=LocalizedStrings.SearchDashBoardView_Charts_Line1, FallbackValue='Income'}"
-                    IndependentValueBinding="{Binding Path=Date}"
-                    DependentValueBinding="{Binding Path=Income}"
-                    ItemsSource="{Binding Path=TransactionRecords}"></toolkit:ColumnSeries>
-                <!-- Expense -->
-                <toolkit:ColumnSeries
-                    Title="{Binding Path=LocalizedStrings.SearchDashBoardView_Charts_Line2, FallbackValue='Expense'}"
-                    IndependentValueBinding="{Binding Path=Date}"
-                    DependentValueBinding="{Binding Path=Expense}"
-                    ItemsSource="{Binding Path=TransactionRecords}"></toolkit:ColumnSeries>
-                <toolkit:Chart.Axes>
-                    <!-- Axis for custom range -->
-                    <toolkit:LinearAxis
-                        Orientation="Y"
-                        ShowGridLines="True" />
-                    <!--				Minimum="0"-->
-                    <!--																		Maximum="100"-->
-                    <!-- Axis for custom labels -->
-                    <toolkit:DateTimeAxis
-                        Orientation="X">
-                        <toolkit:DateTimeAxis.AxisLabelStyle>
-                            <Style
-                                TargetType="toolkit:DateTimeAxisLabel">
-                                <Setter
-                                    Property="StringFormat"
-                                    Value="{}{0:MMM d}" />
-                            </Style>
-                        </toolkit:DateTimeAxis.AxisLabelStyle>
-                    </toolkit:DateTimeAxis>
-                </toolkit:Chart.Axes>
-            </toolkit:Chart>
         </Grid>
-        <ContentControl
-            x:Name="ActiveItem"
-            Grid.Row="1"
-            VerticalContentAlignment="Stretch"
-            HorizontalContentAlignment="Stretch" />
-        <ContentControl
-            x:Name="Dialogs"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="3"
-            VerticalContentAlignment="Stretch"
-            HorizontalContentAlignment="Stretch" />
     </Grid>
 </UserControl>
