@@ -10,8 +10,8 @@ Introduction
 Links
 --------
 
-* [Download](https://bitbucket.org/sevenate/fab/downloads)
-* [Installation](https://bitbucket.org/sevenate/fab/wiki/Installation)
+* [Download](../../releases)
+* [Installation](../../wiki/Installation)
 * [Changelog](https://bitbucket.org/sevenate/fab/wiki/Changelog)
 * [Roadmap](https://bitbucket.org/sevenate/fab/wiki/Roadmap)
 * [Documentation](https://bitbucket.org/sevenate/fab/wiki/Documentation)
