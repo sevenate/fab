@@ -12,6 +12,6 @@ Links
 
 * [Download](../../releases)
 * [Installation](../../wiki/Installation)
-* [Changelog](https://bitbucket.org/sevenate/fab/wiki/Changelog)
-* [Roadmap](https://bitbucket.org/sevenate/fab/wiki/Roadmap)
-* [Documentation](https://bitbucket.org/sevenate/fab/wiki/Documentation)
+* [Changelog](../../wiki/Changelog)
+* [Roadmap](../../milestones)
+* [Documentation](../../wiki/Documentation)
