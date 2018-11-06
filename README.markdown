@@ -15,3 +15,8 @@ Links
 * [Changelog](../../wiki/Changelog)
 * [Roadmap](../../milestones)
 * [Documentation](../../wiki/Documentation)
+
+Screenshot
+--------
+
+<img src="https://github.com/sevenate/fab/blob/master/fab-screenshot.png">
