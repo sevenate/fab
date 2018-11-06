@@ -20,3 +20,5 @@ Screenshot
 --------
 
 <img src="https://github.com/sevenate/fab/blob/master/fab-screenshot.png">
+
+Code base was imported from local **Hg** repo where I've managed it during somewhere around 2011-2012.
