@@ -1,3 +1,5 @@
+[![](https://tokei.rs/b1/github/sevenate/fab?category=code)](https://github.com/sevenate/fab)
+
 Introduction
 ------------
 
